@@ -107,8 +107,23 @@ class FormulaManager {
         // 添加 hover 样式
         formulaElement.classList.add('formula-hover');
         
-        // 显示 tooltip
-        this.showTooltip(formulaElement);
+        // 显示 tooltip - 使用全局管理器
+        if (typeof window.globalTooltipManager !== 'undefined') {
+            // 使用全局管理器
+            const formulaId = formulaElement.getAttribute('data-formula-id') || 
+                             'formula-' + Date.now();
+            
+            window.globalTooltipManager.show(
+                formulaId,
+                'formula',
+                formulaElement,
+                chrome.i18n.getMessage('copyLatexFormula'),
+                { placement: 'top' }
+            );
+        } else {
+            // 降级：使用旧逻辑
+            this.showTooltip(formulaElement);
+        }
     }
 
     /**
@@ -121,7 +136,11 @@ class FormulaManager {
         formulaElement.classList.remove('formula-hover');
         
         // 隐藏 tooltip
-        this.hideTooltip();
+        if (typeof window.globalTooltipManager !== 'undefined') {
+            window.globalTooltipManager.hide();
+        } else {
+            this.hideTooltip();
+        }
         
         if (this.currentHoverElement === formulaElement) {
             this.currentHoverElement = null;
@@ -154,7 +173,7 @@ class FormulaManager {
             await navigator.clipboard.writeText(latexCode);
             
             // 显示成功反馈
-            this.showCopyFeedback('✓ ' + chrome.i18n.getMessage('latexFormulaCopied'), formulaElement, false);
+            this.showCopyFeedback(chrome.i18n.getMessage('latexFormulaCopied'), formulaElement, false);
             
             // 隐藏 tooltip
             this.hideTooltip();
@@ -168,12 +187,29 @@ class FormulaManager {
      * 从公式元素中提取 LaTeX 源码
      */
     extractLatexCode(formulaElement) {
-        // 方法1: 当前元素的 data-math 属性
+        // 方法1: 豆包格式 - data-custom-copy-text 属性（当前元素）
+        if (formulaElement.hasAttribute('data-custom-copy-text')) {
+            return formulaElement.getAttribute('data-custom-copy-text').trim();
+        }
+
+        // 方法2: 豆包格式 - 向上查找 .math-inline 父元素
+        let mathInlineParent = formulaElement.closest('.math-inline');
+        if (mathInlineParent && mathInlineParent.hasAttribute('data-custom-copy-text')) {
+            return mathInlineParent.getAttribute('data-custom-copy-text').trim();
+        }
+
+        // 方法3: 豆包格式 - data-custom-copy-text 属性（子元素）
+        const doubaoChild = formulaElement.querySelector('[data-custom-copy-text]');
+        if (doubaoChild) {
+            return doubaoChild.getAttribute('data-custom-copy-text').trim();
+        }
+
+        // 方法4: 当前元素的 data-math 属性
         if (formulaElement.hasAttribute('data-math')) {
             return formulaElement.getAttribute('data-math').trim();
         }
 
-        // 方法2: Gemini 格式 - 从祖先元素的 data-math 属性获取
+        // 方法5: Gemini 格式 - 从祖先元素的 data-math 属性获取
         let parent = formulaElement.parentElement;
         while (parent) {
             if (parent.hasAttribute('data-math')) {
@@ -183,24 +219,24 @@ class FormulaManager {
             if (!parent || parent === document.body) break;
         }
 
-        // 方法3: ChatGPT 格式 - 从 annotation 标签获取
+        // 方法6: ChatGPT 格式 - 从 annotation 标签获取
         const annotation = formulaElement.querySelector('annotation[encoding="application/x-tex"]');
         if (annotation) {
             return annotation.textContent.trim();
         }
 
-        // 方法4: 从 .katex-mathml 中的 annotation 获取
+        // 方法7: 从 .katex-mathml 中的 annotation 获取
         const mathml = formulaElement.querySelector('.katex-mathml annotation');
         if (mathml) {
             return mathml.textContent.trim();
         }
 
-        // 方法5: 通用 data-latex 属性
+        // 方法8: 通用 data-latex 属性
         if (formulaElement.hasAttribute('data-latex')) {
             return formulaElement.getAttribute('data-latex').trim();
         }
 
-        // 无法获取
+        // 无法获取公式
         return null;
     }
 
@@ -276,65 +312,66 @@ class FormulaManager {
     }
 
     /**
-     * 显示复制反馈
+     * 显示复制反馈（使用全局 Toast 管理器）
      */
     showCopyFeedback(message, formulaElement, isError = false) {
-        if (!this.copyFeedback) return;
-
         // 检查元素是否还在 DOM 中
         if (!formulaElement.isConnected) return;
 
-        // 清除之前的定时器
-        if (this.feedbackTimer) {
+        if (typeof window.globalToastManager !== 'undefined') {
+            // 使用全局 Toast 管理器
+            if (isError) {
+                window.globalToastManager.error(message, formulaElement, {
+                    duration: 2000
+                });
+            } else {
+                window.globalToastManager.success(message, formulaElement, {
+                    duration: 2000
+                    // ✅ 使用默认的 ✓ 图标
+                });
+            }
+        } else {
+            // 降级：旧逻辑
+            if (!this.copyFeedback) return;
+            
             clearTimeout(this.feedbackTimer);
             this.feedbackTimer = null;
+            
+            this.copyFeedback.textContent = message;
+            
+            if (isError) {
+                this.copyFeedback.style.backgroundColor = '#ef4444';
+            } else {
+                this.copyFeedback.style.backgroundColor = 'var(--timeline-tooltip-bg)';
+            }
+            
+            const rect = formulaElement.getBoundingClientRect();
+            if (rect.width === 0 && rect.height === 0) return;
+            
+            const feedbackRect = this.copyFeedback.getBoundingClientRect();
+            const top = rect.top - feedbackRect.height - 8;
+            const left = rect.left + rect.width / 2 - feedbackRect.width / 2;
+            
+            if (top < 10) {
+                this.copyFeedback.style.top = `${rect.bottom + 8}px`;
+            } else {
+                this.copyFeedback.style.top = `${top}px`;
+            }
+            
+            if (left < 10) {
+                this.copyFeedback.style.left = '10px';
+            } else if (left + feedbackRect.width > window.innerWidth - 10) {
+                this.copyFeedback.style.left = `${window.innerWidth - feedbackRect.width - 10}px`;
+            } else {
+                this.copyFeedback.style.left = `${left}px`;
+            }
+            
+            this.copyFeedback.classList.add('visible');
+            
+            this.feedbackTimer = setTimeout(() => {
+                this.copyFeedback.classList.remove('visible');
+            }, 2000);
         }
-
-        // 设置文本
-        this.copyFeedback.textContent = message;
-        
-        // 设置样式（成功/错误）
-        if (isError) {
-            this.copyFeedback.style.backgroundColor = '#ef4444';
-        } else {
-            this.copyFeedback.style.backgroundColor = 'var(--timeline-tooltip-bg)';
-        }
-
-        // 计算位置（在公式上方，避免遮挡）
-        const rect = formulaElement.getBoundingClientRect();
-        
-        // 检查是否获取到有效的位置
-        if (rect.width === 0 && rect.height === 0) return;
-        
-        const feedbackRect = this.copyFeedback.getBoundingClientRect();
-        
-        // 在公式上方显示，间距 8px
-        const top = rect.top - feedbackRect.height - 8;
-        const left = rect.left + rect.width / 2 - feedbackRect.width / 2;
-
-        // 边界检查：如果上方空间不足，显示在下方
-        if (top < 10) {
-            this.copyFeedback.style.top = `${rect.bottom + 8}px`;
-        } else {
-            this.copyFeedback.style.top = `${top}px`;
-        }
-        
-        // 左右边界检查
-        if (left < 10) {
-            this.copyFeedback.style.left = '10px';
-        } else if (left + feedbackRect.width > window.innerWidth - 10) {
-            this.copyFeedback.style.left = `${window.innerWidth - feedbackRect.width - 10}px`;
-        } else {
-            this.copyFeedback.style.left = `${left}px`;
-        }
-        
-        // 显示
-        this.copyFeedback.classList.add('visible');
-
-        // 2秒后自动隐藏
-        this.feedbackTimer = setTimeout(() => {
-            this.copyFeedback.classList.remove('visible');
-        }, 2000);
     }
 
     /**
@@ -408,8 +445,13 @@ class FormulaManager {
     scanAndAttachFormulas() {
         if (!this.isEnabled) return;
         
-        const formulas = document.querySelectorAll('.katex:not([data-formula-interactive])');
-        formulas.forEach(formula => this.attachFormulaListeners(formula));
+        // 扫描 KaTeX 公式（ChatGPT, Gemini, DeepSeek）
+        const katexFormulas = document.querySelectorAll('.katex:not([data-formula-interactive])');
+        katexFormulas.forEach(formula => this.attachFormulaListeners(formula));
+        
+        // 扫描豆包的 .math-inline 公式
+        const doubaoFormulas = document.querySelectorAll('.math-inline:not([data-formula-interactive])');
+        doubaoFormulas.forEach(formula => this.attachFormulaListeners(formula));
     }
 
     /**

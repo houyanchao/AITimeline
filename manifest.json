@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "AI Chat Timeline",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "author": "yanchao hou",
@@ -33,6 +33,8 @@
       ],
       "js": [
         "js/common.js",
+        "js/tooltip-manager.js",
+        "js/toast-manager.js",
         "js/container-finder.js",
         "js/adapters/base.js",
         "js/adapters/chatgpt.js",
