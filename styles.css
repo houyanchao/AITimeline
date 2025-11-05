@@ -61,7 +61,7 @@ html.dark {
     right: 17px; /* Default fallback */
     width: 28px;
     height: calc(100vh - 100px); /* Default fallback */
-    z-index: 50; /* ensure above site chrome */
+    z-index: 30; /* ensure above site chrome */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -266,7 +266,7 @@ html.dark .timeline-dot.starred.active::before {
     /* ✅ 需求2：允许鼠标悬停在 tooltip 上（可以选择/复制文字）*/
     pointer-events: auto;
     cursor: text; /* 提示用户可以选择文字 */
-    z-index: 2147483647;
+    z-index: 2147483648;  /* 高于收藏面板 */
     /* ✅ 修复箭头显示：使用 overflow: visible 让箭头可见 */
     overflow: visible;
     /* Animation base */
@@ -291,9 +291,14 @@ html.dark .timeline-dot.starred.active::before {
     background-position: center;
 }
 
-/* 未收藏状态 - 空心五角星（边框色白色） */
+/* 未收藏状态 - 空心五角星（浅色tooltip主题：白色边框） */
 .timeline-tooltip-star.not-starred {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="none" stroke="%23ffffff" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+}
+
+/* 未收藏状态 - 深色tooltip主题（白色背景）：深灰色边框 */
+[data-tooltip-theme="dark"] .timeline-tooltip-star.not-starred {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="none" stroke="%231f2937" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
 }
 
 /* 收藏状态 - 实心五角星（橙色填充 rgb(255, 125, 3)） */
@@ -398,43 +403,6 @@ html.dark .timeline-copy-feedback {
   to { transform: scale(1); }
 }
 
-/* ✅ 需求2：箭头指向圆点（类似 antd/element 样式）*/
-.timeline-tooltip::after {
-    content: '';
-    position: absolute;
-    width: var(--timeline-tooltip-arrow-size);
-    height: var(--timeline-tooltip-arrow-size);
-    background: var(--timeline-tooltip-bg);
-    border: var(--timeline-tooltip-border-w) solid var(--timeline-tooltip-border);
-    transform: rotate(45deg);
-    /* 添加阴影让箭头更立体 */
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-    /* ✅ 修复：确保箭头显示在最上层 */
-    z-index: 1;
-    display: block;
-}
-
-/* 左侧显示时，箭头在右边指向圆点 */
-.timeline-tooltip[data-placement="left"]::after {
-    right: calc(-1 * var(--timeline-tooltip-arrow-outside));
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-    border-left: none; /* 隐藏左边框，视觉上与 tooltip 融合 */
-    border-bottom: none; /* 隐藏下边框 */
-    /* 只保留右上角的阴影 */
-    box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* 右侧显示时，箭头在左边指向圆点 */
-.timeline-tooltip[data-placement="right"]::after {
-    left: calc(-1 * var(--timeline-tooltip-arrow-outside));
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-    border-right: none; /* 隐藏右边框 */
-    border-top: none; /* 隐藏上边框 */
-    /* 只保留左下角的阴影 */
-    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
-}
 
 /* Hide native scrollbar of the track */
 .timeline-track::-webkit-scrollbar { width: 0; height: 0; }
@@ -487,7 +455,7 @@ html.dark .timeline-slider::before { background: rgba(255,255,255,0.10); }
     height: 160px; /* updated by JS */
     opacity: 0;
     transition: opacity 180ms ease;
-    z-index: 50; /* align with bar */
+    z-index: 30; /* align with bar */
     pointer-events: none;
 }
 .timeline-left-slider.visible { opacity: 1;  pointer-events: auto; }
@@ -530,7 +498,7 @@ html.dark .timeline-left-slider::before { background: rgba(255,255,255,0.10); }
     justify-content: center;
     padding: 3px;
     transition: background-color 0.2s ease, opacity 0.2s ease;
-    z-index: 50; /* 与 timeline-bar 同级 */
+    z-index: 30; /* 与 timeline-bar 同级 */
     opacity: 0.85;
     border-radius: 6px;
 }
@@ -550,17 +518,6 @@ html.dark .timeline-left-slider::before { background: rgba(255,255,255,0.10); }
     background-color: rgba(0, 0, 0, 0.12);
 }
 
-/* ✅ 收藏聊天按钮（原生UI集成，样式由JS内联设置）*/
-/* 大部分样式在JS中以内联方式设置，这里只定义必要的补充样式 */
-.timeline-star-chat-btn-native {
-    /* 基础样式在 JS 中设置 */
-}
-
-/* ✅ 收藏聊天按钮（固定定位模式，用于没有原生插入点的平台）*/
-.timeline-star-chat-btn-fixed {
-    /* position, top, right, z-index 由 JS 设置 */
-    /* 其他样式在 JS 中内联设置 */
-}
 
 /* ✅ 主题输入对话框遮罩 */
 .timeline-theme-dialog-overlay {
@@ -866,6 +823,7 @@ html.dark .timeline-starred-item:hover {
     border-radius: 4px;
     font-size: 12px;
     font-weight: 500;
+    line-height: 1;  /* ✅ 最小行高，确保垂直居中 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -887,6 +845,7 @@ html.dark .timeline-starred-item:hover {
     flex-shrink: 0;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;  /* ✅ 最小行高，确保垂直居中 */
     color: #6b7280;
     min-width: 60px;
 }
@@ -895,34 +854,44 @@ html.dark .timeline-starred-item-icon {
     color: #9ca3af;
 }
 
-/* ✅ 问题文本 - 弹性占据剩余空间 */
+/* ✅ 问题文本容器 - 占据剩余空间，让操作按钮靠右 */
 .timeline-starred-item-question {
-    flex: 1;
+    flex: 1;  /* 占据剩余空间，操作按钮自然靠右 */
+    min-width: 0;  /* 允许收缩 */
+    overflow: hidden;
+    position: relative;
+    display: flex;  /* ✅ 使用flex确保内容垂直居中 */
+    align-items: center;  /* ✅ 垂直居中 */
+}
+
+/* ✅ 问题文本内容 - 实际的文字span，tooltip会绑定到这里 */
+.timeline-starred-item-question-text {
+    display: inline-block; /* ✅ 让span宽度等于文字宽度，而不是整个容器宽度 */
+    max-width: 100%; /* ✅ 但不能超过容器宽度 */
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1;  /* ✅ 最小行高，配合父容器的 flex align-items: center 实现完美垂直居中 */
     color: #374151;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    position: relative;
-    cursor: pointer; /* ✅ 可点击复制 */
-    user-select: none; /* ✅ 禁止选中文字（因为点击是复制） */
+    cursor: pointer; /* ✅ 可点击前往 */
+    user-select: none; /* ✅ 禁止选中文字 */
     transition: opacity 0.15s ease;
 }
 
-html.dark .timeline-starred-item-question {
+html.dark .timeline-starred-item-question-text {
     color: #d1d5db;
 }
 
 /* ✅ 问题文本悬停效果 */
-.timeline-starred-item-question:hover {
+.timeline-starred-item-question-text:hover {
     color: var(--timeline-star-color);
-    opacity: 0.8; /* ✅ hover时略微变淡，提示可点击 */
+    opacity: 0.8; /* ✅ hover时略微变淡，提示可点击前往 */
 }
 
 /* ✅ 问题文本点击效果 */
-.timeline-starred-item-question:active {
-    opacity: 0.6; /* ✅ 点击时更明显的反馈 */
+.timeline-starred-item-question-text:active {
+    opacity: 0.6; /* ✅ 点击前往时的反馈 */
 }
 
 /* ✅ 操作按钮容器 - 收藏icon和前往按钮的容器 */
@@ -1013,83 +982,80 @@ html.dark .timeline-starred-footer-item {
     visibility: visible;
 }
 
-/* ✅ 黑色背景 tooltip */
+/* ✅ 黑色背景 tooltip（用于降级逻辑） */
 .timeline-tooltip-dark {
     background-color: var(--timeline-tooltip-bg);
     color: var(--timeline-tooltip-text);
     border: 1px solid var(--timeline-tooltip-border);
 }
 
-/* ✅ 白色背景 tooltip */
+/* ✅ 白色背景 tooltip（用于降级逻辑） */
 .timeline-tooltip-light {
     background-color: #ffffff;
     color: #000000;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ Tooltip 箭头基础样式 */
+/* ============================================
+   ✅ 统一的Tooltip箭头样式（所有tooltip共用）
+   ============================================ */
+
+/* 箭头基础样式 */
+.timeline-tooltip::after,
 .timeline-tooltip-base::after {
     content: '';
     position: absolute;
     width: 8px;
     height: 8px;
     transform: rotate(45deg);
-    left: var(--arrow-left, 50%);
-    margin-left: -4px;
-}
-
-/* 黑色背景箭头 */
-.timeline-tooltip-dark::after {
+    /* 使用CSS变量设置箭头颜色（支持动态切换） */
     background: var(--timeline-tooltip-bg);
     border: 1px solid var(--timeline-tooltip-border);
-}
-
-/* 白色背景箭头 */
-.timeline-tooltip-light::after {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
 /* 显示在上方时，箭头在底部指向下方 */
+.timeline-tooltip[data-placement="top"]::after,
 .timeline-tooltip-base[data-placement="top"]::after {
-    bottom: -5px;
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
     border-top: none;
     border-left: none;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* 显示在下方时，箭头在顶部指向上方 */
+.timeline-tooltip[data-placement="bottom"]::after,
 .timeline-tooltip-base[data-placement="bottom"]::after {
-    top: -5px;
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
     border-bottom: none;
     border-right: none;
     box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* 显示在左侧时，箭头在右边指向右方 */
+.timeline-tooltip[data-placement="left"]::after,
 .timeline-tooltip-base[data-placement="left"]::after {
-    left: auto;
-    right: -5px;
+    right: -5px; /* ✅ 向右移动1px，从-4px改为-5px，优化视觉效果 */
     top: 50%;
     margin-top: -4px;
-    margin-left: 0;
     border-left: none;
     border-bottom: none;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* ============================================
-   ✅ 具体 Tooltip 实例（继承通用类）
-   ============================================ */
-
-/* 收藏按钮和前往按钮的 tooltip（白色） */
-.timeline-starred-question-tooltip {
-    /* 继承 .timeline-tooltip-base .timeline-tooltip-light */
-}
-
-/* 问题文本的 tooltip（黑色） */
-.timeline-starred-question-text-tooltip {
-    /* 继承 .timeline-tooltip-base .timeline-tooltip-dark */
+/* 显示在右侧时，箭头在左边指向左方 */
+.timeline-tooltip[data-placement="right"]::after,
+.timeline-tooltip-base[data-placement="right"]::after {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+    border-right: none;
+    border-top: none;
+    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* ✅ 编辑按钮 - 与星标按钮尺寸一致 */
@@ -1169,25 +1135,51 @@ html.dark .timeline-starred-item-edit:hover svg {
     transform: scale(0.95);
 }
 
-/* ✅ 前往文字链接 - 不是按钮样式 */
-.timeline-starred-item-goto {
+/* ✅ 复制按钮 - 与编辑按钮尺寸一致 */
+.timeline-starred-item-copy {
     flex-shrink: 0;
-    font-size: 13px;
-    color: var(--timeline-star-color);
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 2px 4px;
+    padding: 0;
 }
 
-.timeline-starred-item-goto:hover {
-    color: rgb(230, 110, 0);
-    text-decoration: underline;
+.timeline-starred-item-copy svg {
+    width: 14px;
+    height: 14px;
+    color: #6b7280;
 }
 
-.timeline-starred-item-goto:active {
-    opacity: 0.7;
+html.dark .timeline-starred-item-copy svg {
+    color: #9ca3af;
+}
+
+.timeline-starred-item-copy:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+html.dark .timeline-starred-item-copy:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.timeline-starred-item-copy:hover svg {
+    color: #374151;
+}
+
+html.dark .timeline-starred-item-copy:hover svg {
+    color: #d1d5db;
+}
+
+.timeline-starred-item-copy:active {
+    transform: scale(0.95);
 }
 
 /* ============================================

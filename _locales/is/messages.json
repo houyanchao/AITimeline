@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Gagnvirk tímalína fyrir ChatGPT, Gemini, DeepSeek o.fl."
   },
   "extDescription": {
-    "message": "Tvöfalda AI spjallskilvirkni þína! Bættu gagnvirkri tímalínu við ChatGPT, Gemini, DeepSeek, 🚀 hoppaðu auðveldlega í hvaða samræðu sem er, 📌 merktu lykilsamræður, ⭐️ uppáhaldsspjall mikilvæg."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Skoða eftirlæti"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Loka"
   },
-  "clickToStar": {
-    "message": "Smelltu til að bæta við eftirlæti"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Smelltu til að fjarlægja úr eftirlætum"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Engin eftirlæti"
-  },
-  "goTo": {
-    "message": "Fara til"
-  },
-  "goToTooltip": {
-    "message": "Fara í spjallupplýsingar"
   },
   "copied": {
     "message": "Afritað"
@@ -36,7 +30,7 @@
     "message": "Merkja spjall sem eftirlæti"
   },
   "unstarChat": {
-    "message": "Fjarlægja spjall úr eftirlætum"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Sláðu inn uppáhalds titil:"

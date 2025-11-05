@@ -110,5 +110,30 @@ class SiteAdapter {
     getStarChatButtonPosition() {
         return null; // 默认不使用固定定位
     }
+    
+    /**
+     * Detect if the site is in dark mode
+     * @returns {boolean} - true if dark mode is detected
+     */
+    detectDarkMode() {
+        // 默认检测策略：
+        // 1. 检查 html 元素是否有 dark 类
+        if (document.documentElement.classList.contains('dark')) {
+            return true;
+        }
+        
+        // 2. 检查 body 元素是否有 dark 相关类
+        const bodyClasses = document.body.className.toLowerCase();
+        if (bodyClasses.includes('dark')) {
+            return true;
+        }
+        
+        // 3. 检查系统深色模式偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return true;
+        }
+        
+        return false;
+    }
 }
 

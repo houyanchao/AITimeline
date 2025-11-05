@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Интерактивна временска линија за ChatGPT, Gemini"
   },
   "extDescription": {
-    "message": "Удвостручите своју ефикасност АИ чата! Додајте интерактивну временску линију у ChatGPT, Gemini, DeepSeek, 🚀 лако скочите на било који разговор, 📌 означите кључне разговоре, ⭐️ омиљени важни разговори."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Погледај омиљене"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Затвори"
   },
-  "clickToStar": {
-    "message": "Кликните за додавање у омиљене"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Кликните за уклањање из омиљених"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Нема омиљених"
-  },
-  "goTo": {
-    "message": "Иди на"
-  },
-  "goToTooltip": {
-    "message": "Иди на детаље разговора"
   },
   "copied": {
     "message": "Копирано"
@@ -36,7 +30,7 @@
     "message": "Додај ћаскање у омиљене"
   },
   "unstarChat": {
-    "message": "Уклони ћаскање из омиљених"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Унесите наслов омиљеног:"

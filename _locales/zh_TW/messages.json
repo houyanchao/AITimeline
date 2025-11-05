@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - 為 AI 對話添加互動式時間軸，支援 ChatGPT、Gemini、DeepSeek 等平台"
   },
   "extDescription": {
-    "message": "讓你跟 AI 聊天的效率直接翻倍！給 ChatGPT、Gemini、DeepSeek 添加互動式時間軸，🚀輕鬆跳轉至任意對話，📌標記重點對話，⭐️收藏重要聊天。"
+    "message": "让你使用 AI 聊天的效率翻倍！通过交互式时间轴，🚀轻松跳转至任意对话，📌长按标记重要对话，⭐️收藏聊天、快捷复制 LaTeX 公式。"
   },
   "viewStarred": {
     "message": "檢視收藏"
@@ -14,20 +14,14 @@
   "close": {
     "message": "關閉"
   },
-  "clickToStar": {
-    "message": "收藏提問"
+  "unstarSuccess": {
+    "message": "已取消收藏"
   },
-  "clickToUnstar": {
-    "message": "取消收藏提問"
+  "starSuccess": {
+    "message": "已收藏"
   },
   "noStarredItems": {
     "message": "暫無收藏"
-  },
-  "goTo": {
-    "message": "前往"
-  },
-  "goToTooltip": {
-    "message": "前往聊天詳情頁"
   },
   "copied": {
     "message": "已複製"
@@ -36,7 +30,7 @@
     "message": "收藏聊天"
   },
   "unstarChat": {
-    "message": "取消收藏聊天"
+    "message": "取消收藏"
   },
   "inputChatTheme": {
     "message": "請輸入收藏標題："

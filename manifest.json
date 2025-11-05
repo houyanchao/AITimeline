@@ -57,7 +57,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["images/logo/*.png"],
+      "resources": ["images/logo/*.webp"],
       "matches": [
         "https://chatgpt.com/*",
         "https://chat.openai.com/*",

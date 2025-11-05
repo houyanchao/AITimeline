@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktyvi laiko juosta ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Padvigubinkite savo AI pokalbių efektyvumą! Pridėkite interaktyvią laiko juostą prie ChatGPT, Gemini, DeepSeek, 🚀 lengvai pereikite prie bet kurio pokalbio, 📌 pažymėkite pagrindinius pokalbius, ⭐️ mėgstamiausi svarbūs pokalbiai."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Peržiūrėti mėgstamiausius"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Uždaryti"
   },
-  "clickToStar": {
-    "message": "Spustelėkite, kad pridėtumėte į mėgstamiausius"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Spustelėkite, kad pašalintumėte iš mėgstamiausių"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Nėra mėgstamiausių"
-  },
-  "goTo": {
-    "message": "Eiti į"
-  },
-  "goToTooltip": {
-    "message": "Eiti į pokalbio informaciją"
   },
   "copied": {
     "message": "Nukopijuota"
@@ -36,7 +30,7 @@
     "message": "Pridėti pokalbį į mėgstamus"
   },
   "unstarChat": {
-    "message": "Pašalinti pokalbį iš mėgstamų"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Įveskite mėgstamo pavadinimą:"

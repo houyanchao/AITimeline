@@ -50,35 +50,62 @@ class GlobalTooltipManager {
                     allowHover: true,
                     className: 'timeline-tooltip',
                     placement: 'auto',
-                    gap: 20,
-                    // ✅ 可配置的颜色（留空则使用 CSS 默认）
-                    backgroundColor: null,  // 例如：'#ffffff' 或 '#0d0d0d'
-                    textColor: null,        // 例如：'#1f2937' 或 '#f5f5f5'
-                    borderColor: null       // 例如：'#e5e7eb' 或 '#404040'
+                    gap: 12,  // ✅ 修复：与CSS变量一致 (4+6+2=12)
+                    // ✅ 支持浅色/深色模式的颜色配置
+                    color: {
+                        light: {
+                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                            textColor: '#ffffff',        // 浅色模式：白色文字
+                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    }
                 },
                 button: {
                     maxWidth: 200,
                     showDelay: 0,
-                    hideDelay: 0,
+                    hideDelay: 100,  // 增加延迟，避免tooltip闪烁消失
                     allowHover: false,
-                    className: 'timeline-tooltip-base timeline-tooltip-dark',
+                    className: 'timeline-tooltip-base',  // 只使用基础类，颜色由color配置控制
                     placement: 'bottom',
                     gap: 12,
-                    backgroundColor: null,
-                    textColor: null,
-                    borderColor: null
+                    color: {
+                        light: {
+                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                            textColor: '#ffffff',        // 浅色模式：白色文字
+                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    }
                 },
                 formula: {
                     maxWidth: 250,
                     showDelay: 0,
                     hideDelay: 100,
                     allowHover: false,
-                    className: 'formula-tooltip timeline-tooltip-base timeline-tooltip-dark',
+                    className: 'formula-tooltip timeline-tooltip-base',  // 只使用基础类，颜色由color配置控制
                     placement: 'top',
                     gap: 12,
-                    backgroundColor: null,
-                    textColor: null,
-                    borderColor: null
+                    color: {
+                        light: {
+                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                            textColor: '#ffffff',        // 浅色模式：白色文字
+                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    }
                 }
             }
         };
@@ -102,6 +129,13 @@ class GlobalTooltipManager {
      * @param {HTMLElement} target - 触发元素
      * @param {Object} content - 内容配置
      * @param {Object} options - 可选配置（覆盖默认）
+     * @param {Object} options.color - 颜色配置对象 {light: {backgroundColor, textColor, borderColor}, dark: {...}}
+     * @param {number} options.maxWidth - 最大宽度
+     * @param {number} options.showDelay - 显示延迟
+     * @param {number} options.hideDelay - 隐藏延迟
+     * @param {boolean} options.allowHover - 是否允许鼠标悬停
+     * @param {string} options.placement - 位置：auto/top/bottom/left/right
+     * @param {number} options.gap - 与目标元素的距离
      */
     show(id, type, target, content, options = {}) {
         try {
@@ -114,14 +148,6 @@ class GlobalTooltipManager {
             if (this.state.currentId === id && this.state.isVisible) {
                 this._log('Same tooltip already visible, ignoring');
                 return;
-            }
-            
-            // 取消所有待处理的定时器
-            this._clearAllTimers();
-            
-            // 如果有其他 tooltip 正在显示，立即隐藏
-            if (this.state.isVisible && this.state.currentId !== id) {
-                this._hideImmediate();
             }
             
             // 获取配置
@@ -177,6 +203,14 @@ class GlobalTooltipManager {
         this._log('Force hide all tooltips');
         this._clearAllTimers();
         this._hideImmediate();
+        
+        // ✅ 清理所有实例池中的tooltip DOM
+        this.instances.forEach((tooltip, type) => {
+            if (tooltip && tooltip.parentNode) {
+                tooltip.parentNode.removeChild(tooltip);
+            }
+        });
+        this.instances.clear();
         
         // 额外清理：移除页面上所有可能残留的 tooltip
         this._cleanupOrphanTooltips();
@@ -251,12 +285,18 @@ class GlobalTooltipManager {
             return;
         }
         
-        // 获取或创建 tooltip DOM
-        let tooltip = this.instances.get(type);
-        if (!tooltip) {
-            tooltip = this._createTooltip(type, config);
-            this.instances.set(type, tooltip);
-        }
+        // ✅ 销毁所有其他tooltip（确保同一时间只存在一个tooltip）
+        this._clearAllTimers();  // 清理所有定时器
+        this.instances.forEach((existingTooltip, existingType) => {
+            if (existingTooltip && existingTooltip.parentNode) {
+                existingTooltip.parentNode.removeChild(existingTooltip);
+            }
+        });
+        this.instances.clear();
+        
+        // ✅ 创建新的tooltip DOM
+        const tooltip = this._createTooltip(type, config);
+        this.instances.set(type, tooltip);
         
         // 填充内容
         this._setContent(tooltip, content);
@@ -269,20 +309,63 @@ class GlobalTooltipManager {
         // 计算位置（传入配置）
         const position = this._calculatePosition(target, tooltip, config.placement, config);
         
-        // 应用位置
-        tooltip.style.left = `${position.left}px`;
-        tooltip.style.top = `${position.top}px`;
+        // 应用位置（根据placement使用对应的定位属性）
         tooltip.setAttribute('data-placement', position.placement);
         
-        // ✅ 应用自定义颜色（如果配置了）
-        if (config.backgroundColor) {
-            tooltip.style.backgroundColor = config.backgroundColor;
+        // ✅ 关键修复：根据箭头方向使用正确的定位属性
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        
+        if (position.placement === 'left') {
+            // tooltip在左侧，箭头朝右 → 用right定位（tooltip右边缘距离视口右边缘的距离）
+            tooltip.style.left = '';
+            const rightValue = vw - (position.left + position.width);
+            tooltip.style.right = `${rightValue}px`;
+            tooltip.style.top = `${position.top}px`;
+            tooltip.style.bottom = '';
+        } else if (position.placement === 'right') {
+            // tooltip在右侧，箭头朝左 → 用left定位
+            tooltip.style.right = '';
+            tooltip.style.left = `${position.left}px`;
+            tooltip.style.top = `${position.top}px`;
+            tooltip.style.bottom = '';
+        } else if (position.placement === 'top') {
+            // tooltip在上方，箭头朝下 → 用bottom定位
+            tooltip.style.top = '';
+            const bottomValue = vh - (position.top + position.height);
+            tooltip.style.bottom = `${bottomValue}px`;
+            tooltip.style.left = `${position.left}px`;
+            tooltip.style.right = '';
+        } else {
+            // tooltip在下方，箭头朝上 → 用top定位
+            tooltip.style.bottom = '';
+            tooltip.style.top = `${position.top}px`;
+            tooltip.style.left = `${position.left}px`;
+            tooltip.style.right = '';
         }
-        if (config.textColor) {
-            tooltip.style.color = config.textColor;
-        }
-        if (config.borderColor) {
-            tooltip.style.borderColor = config.borderColor;
+        
+        // ✅ 应用自定义颜色（根据当前主题模式）
+        if (config.color) {
+            // 检测当前是浅色还是深色模式
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const themeColors = isDarkMode ? config.color.dark : config.color.light;
+            
+            // ✅ 添加data属性标记tooltip主题（用于CSS选择器）
+            tooltip.setAttribute('data-tooltip-theme', isDarkMode ? 'dark' : 'light');
+            
+            if (themeColors.backgroundColor) {
+                // 同时设置内联样式和CSS变量（CSS变量用于伪元素）
+                tooltip.style.backgroundColor = themeColors.backgroundColor;
+                tooltip.style.setProperty('--timeline-tooltip-bg', themeColors.backgroundColor);
+            }
+            if (themeColors.textColor) {
+                tooltip.style.color = themeColors.textColor;
+                tooltip.style.setProperty('--timeline-tooltip-text', themeColors.textColor);
+            }
+            if (themeColors.borderColor) {
+                tooltip.style.borderColor = themeColors.borderColor;
+                tooltip.style.setProperty('--timeline-tooltip-border', themeColors.borderColor);
+            }
         }
         
         // 显示动画
@@ -319,22 +402,22 @@ class GlobalTooltipManager {
         
         const tooltip = this.instances.get(this.state.currentType);
         if (tooltip) {
-            // 移除 visible class 触发隐藏动画
-            tooltip.classList.remove('visible');
-            tooltip.setAttribute('aria-hidden', 'true');
-            tooltip.style.opacity = '';
-            tooltip.style.visibility = '';
-            
             // 移除事件监听
             tooltip.removeEventListener('mouseenter', this._onTooltipEnter);
             tooltip.removeEventListener('mouseleave', this._onTooltipLeave);
             
-            // 等待动画完成后清空内容
+            // ✅ 添加隐藏动画，然后销毁DOM
+            tooltip.classList.remove('visible');
+            tooltip.setAttribute('aria-hidden', 'true');
+            
+            // 等待动画完成后销毁DOM
             this.timers.cleanupAnimation = setTimeout(() => {
                 this.timers.cleanupAnimation = null;
-                if (tooltip && !tooltip.classList.contains('visible')) {
-                    tooltip.innerHTML = '';
+                if (tooltip && tooltip.parentNode) {
+                    tooltip.parentNode.removeChild(tooltip);
                 }
+                // ✅ 从实例池中移除
+                this.instances.delete(this.state.currentType);
             }, 200);
         }
         
@@ -363,7 +446,7 @@ class GlobalTooltipManager {
         
         // 通用样式
         tooltip.style.position = 'fixed';
-        tooltip.style.zIndex = '9999';
+        tooltip.style.zIndex = '2147483648';  // 高于收藏面板，与CSS保持一致
         tooltip.style.pointerEvents = config.allowHover ? 'auto' : 'none';
         
         document.body.appendChild(tooltip);
@@ -418,7 +501,9 @@ class GlobalTooltipManager {
         return {
             left: position.left,
             top: position.top,
-            placement: placement
+            placement: placement,
+            width: tooltipRect.width,   // ✅ 返回tooltip尺寸
+            height: tooltipRect.height  // ✅ 返回tooltip尺寸
         };
     }
     

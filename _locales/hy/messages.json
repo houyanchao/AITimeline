@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Ինտերակտիվ ժամանակացույց ChatGPT, Gemini, DeepSeek համար"
   },
   "extDescription": {
-    "message": "Կրկնապատկեք ձեր AI զրույցի արդյունավետությունը: Ավելացրեք ինտերակտիվ ժամանակացույց ChatGPT, Gemini, DeepSeek-ին, 🚀 հեշտությամբ անցեք ցանկացած խոսակցության, 📌 նշեք հիմնական խոսակցությունները, ⭐️ ընտրյալներ կարևոր չաթերը:"
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Դիտել ընտրանին"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Փակել"
   },
-  "clickToStar": {
-    "message": "Սեղմեք՝ ընտրանիում ավելացնելու համար"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Սեղմեք՝ ընտրանիից հեռացնելու համար"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Ընտրանի չկա"
-  },
-  "goTo": {
-    "message": "Անցնել"
-  },
-  "goToTooltip": {
-    "message": "Անցնել զրույցի մանրամասներին"
   },
   "copied": {
     "message": "Պատճենված է"
@@ -36,7 +30,7 @@
     "message": "Ավելացնել զրույցը նախընտրածներին"
   },
   "unstarChat": {
-    "message": "Հեռացնել զրույցը նախընտրածներից"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Մուտքագրեք ընտրյալի վերնագիրը:"

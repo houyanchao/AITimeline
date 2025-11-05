@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Garis waktu interaktif untuk ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Gandakan efisiensi obrolan AI Anda! Tambahkan garis waktu interaktif ke ChatGPT, Gemini, DeepSeek, 🚀 lompat ke percakapan apa pun dengan mudah, 📌 tandai percakapan kunci, ⭐️ favoritkan obrolan penting."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Lihat favorit"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Tutup"
   },
-  "clickToStar": {
-    "message": "Klik untuk menambahkan ke favorit"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Klik untuk menghapus dari favorit"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Tidak ada favorit"
-  },
-  "goTo": {
-    "message": "Pergi ke"
-  },
-  "goToTooltip": {
-    "message": "Pergi ke detail obrolan"
   },
   "copied": {
     "message": "Disalin"
@@ -36,7 +30,7 @@
     "message": "Tambahkan obrolan ke favorit"
   },
   "unstarChat": {
-    "message": "Hapus obrolan dari favorit"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Masukkan judul favorit:"

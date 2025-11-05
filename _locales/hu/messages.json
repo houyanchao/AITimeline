@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktív idővonal ChatGPT, Gemini, DeepSeek stb.-hez"
   },
   "extDescription": {
-    "message": "Duplázd meg az AI chat hatékonyságodat! Adj hozzá interaktív idővonalat a ChatGPT, Gemini, DeepSeek-hez, 🚀 könnyen ugorj bármely beszélgetéshez, 📌 jelöld meg a kulcs beszélgetéseket, ⭐️ kedvencekhez add a fontos chateket."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Kedvencek megtekintése"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Bezárás"
   },
-  "clickToStar": {
-    "message": "Kérdés hozzáadása a kedvencekhez"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Kattintson a kedvencekből eltávolításhoz"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Nincsenek kedvencek"
-  },
-  "goTo": {
-    "message": "Ugrás ide"
-  },
-  "goToTooltip": {
-    "message": "Ugrás a csevegés részleteihez"
   },
   "copied": {
     "message": "Másolva"
@@ -36,7 +30,7 @@
     "message": "Chat hozzáadása a kedvencekhez"
   },
   "unstarChat": {
-    "message": "Chat eltávolítása a kedvencekből"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Adja meg a kedvenc címét:"

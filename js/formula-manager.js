@@ -59,9 +59,24 @@ class FormulaManager {
         if (this.tooltip) return;
         
         this.tooltip = document.createElement('div');
-        this.tooltip.className = 'timeline-tooltip-base timeline-tooltip-dark formula-tooltip';
+        this.tooltip.className = 'timeline-tooltip-base formula-tooltip';
         this.tooltip.setAttribute('data-placement', 'top');
         this.tooltip.textContent = chrome.i18n.getMessage('copyLatexFormula');
+        
+        // 设置颜色（根据当前主题模式）
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const backgroundColor = isDarkMode ? '#ffffff' : '#0d0d0d';
+        const textColor = isDarkMode ? '#1f2937' : '#ffffff';
+        const borderColor = isDarkMode ? '#e5e7eb' : '#0d0d0d';
+        
+        this.tooltip.style.backgroundColor = backgroundColor;
+        this.tooltip.style.color = textColor;
+        this.tooltip.style.borderColor = borderColor;
+        // 设置CSS变量（用于箭头）
+        this.tooltip.style.setProperty('--timeline-tooltip-bg', backgroundColor);
+        this.tooltip.style.setProperty('--timeline-tooltip-text', textColor);
+        this.tooltip.style.setProperty('--timeline-tooltip-border', borderColor);
+        
         document.body.appendChild(this.tooltip);
     }
 

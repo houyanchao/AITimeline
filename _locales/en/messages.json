@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interactive timeline for ChatGPT, Gemini, DeepSeek, etc."
   },
   "extDescription": {
-    "message": "Double your AI chat efficiency! Add interactive timeline to ChatGPT, Gemini, 🚀jump between chats, 📌mark key moments."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "View starred"
@@ -14,26 +14,20 @@
   "close": {
     "message": "Close"
   },
-  "clickToStar": {
-    "message": "Star question"
+  "starSuccess": {
+    "message": "Starred"
   },
-  "clickToUnstar": {
-    "message": "Unstar question"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
   "starChat": {
     "message": "Star chat"
   },
   "unstarChat": {
-    "message": "Unstar chat"
+    "message": "Unstar"
   },
   "noStarredItems": {
     "message": "No starred items"
-  },
-  "goTo": {
-    "message": "Go to"
-  },
-  "goToTooltip": {
-    "message": "Go to chat details"
   },
   "copied": {
     "message": "Copied"

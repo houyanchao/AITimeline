@@ -116,16 +116,16 @@ class TimelineManager {
         
         // ✅ URL 到网站信息的映射字典（包含名称和颜色）
         this.siteNameMap = {
-            'chatgpt.com': { name: 'ChatGPT', color: '#0D0D0D', logo: chrome.runtime.getURL('images/logo/chatgpt.png') },
-            'chat.openai.com': { name: 'ChatGPT', color: '#0D0D0D', logo: chrome.runtime.getURL('images/logo/chatgpt.png') },
-            'gemini.google.com': { name: 'Gemini', color: '#4285F4', logo: chrome.runtime.getURL('images/logo/gemini.png') },
-            'doubao.com': { name: '豆包', color: '#7C3AED' },
-            'chat.deepseek.com': { name: 'DeepSeek', color: '#3B82F6', logo: chrome.runtime.getURL('images/logo/deepseek.png') },
-            'yiyan.baidu.com': { name: '文心一言', color: '#EF4444' },
-            'tongyi.com': { name: '通义千问', color: '#F59E0B', logo: chrome.runtime.getURL('images/logo/tongyi.png') },
-            'kimi.com': { name: 'Kimi', color: '#8B5CF6', logo: chrome.runtime.getURL('images/logo/kimi.png') },
-            'kimi.moonshot.cn': { name: 'Kimi', color: '#8B5CF6', logo: chrome.runtime.getURL('images/logo/kimi.png') },
-            'yuanbao.tencent.com': { name: '元宝', color: '#10B981' }
+            'chatgpt.com': { name: 'ChatGPT', color: '#0D0D0D', logo: chrome.runtime.getURL('images/logo/chatgpt.webp') },
+            'chat.openai.com': { name: 'ChatGPT', color: '#0D0D0D', logo: chrome.runtime.getURL('images/logo/chatgpt.webp') },
+            'gemini.google.com': { name: 'Gemini', color: '#4285F4', logo: chrome.runtime.getURL('images/logo/gemini.webp') },
+            'doubao.com': { name: '豆包', color: '#7C3AED', logo: chrome.runtime.getURL('images/logo/doubao.webp') },
+            'chat.deepseek.com': { name: 'DeepSeek', color: '#3B82F6', logo: chrome.runtime.getURL('images/logo/deepseek.webp') },
+            'yiyan.baidu.com': { name: '文心一言', color: '#EF4444', logo: chrome.runtime.getURL('images/logo/wenxin.webp') },
+            'tongyi.com': { name: '通义千问', color: '#F59E0B', logo: chrome.runtime.getURL('images/logo/tongyi.webp') },
+            'kimi.com': { name: 'Kimi', color: '#8B5CF6', logo: chrome.runtime.getURL('images/logo/kimi.webp') },
+            'kimi.moonshot.cn': { name: 'Kimi', color: '#8B5CF6', logo: chrome.runtime.getURL('images/logo/kimi.webp') },
+            'yuanbao.tencent.com': { name: '元宝', color: '#10B981', logo: chrome.runtime.getURL('images/logo/yuanbao.webp') }
         };
     }
 
@@ -145,6 +145,9 @@ class TimelineManager {
     async init() {
         const elementsFound = await this.findCriticalElements();
         if (!elementsFound) return;
+        
+        // ✅ 同步深色模式状态到 html 元素
+        this.syncDarkModeClass();
         
         this.injectTimelineUI();
         this.setupEventListeners();
@@ -308,49 +311,17 @@ class TimelineManager {
             
             // 鼠标悬停事件 - 使用全局 Tooltip 管理器
             starredBtn.addEventListener('mouseenter', async () => {
-                if (typeof window.globalTooltipManager !== 'undefined') {
-                    window.globalTooltipManager.show(
-                        'starred-btn',
-                        'button',
-                        starredBtn,
-                        chrome.i18n.getMessage('viewStarredList'),
-                        { placement: 'left' }
-                    );
-                } else {
-                    // 降级：旧逻辑
-                    document.querySelectorAll('.timeline-starred-btn-tooltip').forEach(el => el.remove());
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'timeline-tooltip-base timeline-tooltip-dark timeline-starred-btn-tooltip';
-                    tooltip.textContent = chrome.i18n.getMessage('viewStarredList');
-                    tooltip.setAttribute('data-placement', 'left');
-                    document.body.appendChild(tooltip);
-                    const rect = starredBtn.getBoundingClientRect();
-                    const tooltipRect = tooltip.getBoundingClientRect();
-                    const left = rect.left - tooltipRect.width - 12;
-                    const top = rect.top + (rect.height - tooltipRect.height) / 2;
-                    tooltip.style.left = `${left}px`;
-                    tooltip.style.top = `${top}px`;
-                    requestAnimationFrame(() => {
-                        tooltip.classList.add('visible');
-                    });
-                }
+                window.globalTooltipManager.show(
+                    'starred-btn',
+                    'button',
+                    starredBtn,
+                    chrome.i18n.getMessage('viewStarredList'),
+                    { placement: 'left' }
+                );
             });
             
             starredBtn.addEventListener('mouseleave', () => {
-                if (typeof window.globalTooltipManager !== 'undefined') {
-                    window.globalTooltipManager.hide();
-                } else {
-                    // 降级：旧逻辑
-                    const tooltips = document.querySelectorAll('.timeline-starred-btn-tooltip');
-                    tooltips.forEach(tooltip => {
-                        tooltip.classList.remove('visible');
-                        setTimeout(() => {
-                            if (tooltip.parentNode) {
-                                tooltip.parentNode.removeChild(tooltip);
-                            }
-                        }, 200);
-                    });
-                }
+                window.globalTooltipManager.hide();
             });
             
             document.body.appendChild(starredBtn);
@@ -495,55 +466,18 @@ class TimelineManager {
             const isStarred = await this.isChatStarred();
             const tooltipText = isStarred ? chrome.i18n.getMessage('unstarChat') : chrome.i18n.getMessage('starChat');
             
-            if (typeof window.globalTooltipManager !== 'undefined') {
-                window.globalTooltipManager.show(
-                    'star-chat-btn',
-                    'button',
-                    starChatBtn,
-                    tooltipText,
-                    { placement: 'bottom' }
-                );
-            } else {
-                // 降级：旧逻辑
-                const oldTooltips = starChatBtn.querySelectorAll('.timeline-tooltip-base');
-                oldTooltips.forEach(t => t.remove());
-                const tooltipElement = document.createElement('div');
-                tooltipElement.className = 'timeline-tooltip-base timeline-tooltip-dark';
-                tooltipElement.setAttribute('data-placement', 'bottom');
-                tooltipElement.style.cssText = `
-                    position: absolute;
-                    top: 100%;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    margin-top: 12px;
-                    white-space: nowrap;
-                    pointer-events: none;
-                `;
-                tooltipElement.textContent = tooltipText;
-                starChatBtn.appendChild(tooltipElement);
-                requestAnimationFrame(() => {
-                    tooltipElement.classList.add('visible');
-                });
-            }
+            window.globalTooltipManager.show(
+                'star-chat-btn',
+                'button',
+                starChatBtn,
+                tooltipText,
+                { placement: 'bottom' }
+            );
         };
         
         starChatBtn.onmouseleave = () => {
             starChatBtn.style.backgroundColor = 'transparent';
-            
-            if (typeof window.globalTooltipManager !== 'undefined') {
-                window.globalTooltipManager.hide();
-            } else {
-                // 降级：旧逻辑
-                const tooltips = starChatBtn.querySelectorAll('.timeline-tooltip-base');
-                tooltips.forEach(tooltip => {
-                    tooltip.classList.remove('visible');
-                    setTimeout(() => {
-                        if (tooltip.parentNode) {
-                            tooltip.parentNode.removeChild(tooltip);
-                        }
-                    }, 200);
-                });
-            }
+            window.globalTooltipManager.hide();
         };
         
         // 8. 点击事件
@@ -555,16 +489,8 @@ class TimelineManager {
                 starChatBtn.querySelector('svg').setAttribute('stroke', nowStarred ? 'rgb(255, 125, 3)' : 'currentColor');
                 
                 // 更新 tooltip 文本
-                if (typeof window.globalTooltipManager !== 'undefined') {
-                    const newText = nowStarred ? chrome.i18n.getMessage('unstarChat') : chrome.i18n.getMessage('starChat');
-                    window.globalTooltipManager.updateContent(newText);
-                } else {
-                    // 降级：旧逻辑
-                    const existingTooltip = starChatBtn.querySelector('.timeline-tooltip-base.visible');
-                    if (existingTooltip) {
-                        existingTooltip.textContent = nowStarred ? chrome.i18n.getMessage('unstarChat') : chrome.i18n.getMessage('starChat');
-                    }
-                }
+                const newText = nowStarred ? chrome.i18n.getMessage('unstarChat') : chrome.i18n.getMessage('starChat');
+                window.globalTooltipManager.updateContent(newText);
             }
         });
         
@@ -1446,27 +1372,74 @@ class TimelineManager {
     }
     
     /**
+     * ✅ 同步深色模式状态到 html 元素
+     * 确保时间轴样式能正确应用深色模式
+     */
+    syncDarkModeClass() {
+        const isDarkMode = this.adapter.detectDarkMode?.() || false;
+        const htmlElement = document.documentElement;
+        
+        if (isDarkMode) {
+            if (!htmlElement.classList.contains('dark')) {
+                htmlElement.classList.add('dark');
+            }
+        } else {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+            }
+        }
+    }
+    
+    /**
      * ✅ 优化：设置主题变化监听器
      * 当主题切换时，重新缓存 CSS 变量并清空截断缓存
      */
     setupThemeChangeListener() {
-        // 监听 html 元素的 class 变化（dark 模式切换）
-        const themeObserver = new MutationObserver((mutations) => {
+        // 监听 html 元素的 class、data-theme、style 和 yb-theme-mode 属性变化
+        // style 用于 ChatGPT (color-scheme)
+        // data-theme 用于通义
+        // yb-theme-mode 用于元宝
+        const htmlObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'class' || 
+                     mutation.attributeName === 'data-theme' ||
+                     mutation.attributeName === 'style' ||
+                     mutation.attributeName === 'yb-theme-mode')) {
                     this.onThemeChange();
                 }
             });
         });
         
         try {
-            themeObserver.observe(document.documentElement, {
+            htmlObserver.observe(document.documentElement, {
                 attributes: true,
-                attributeFilter: ['class']
+                attributeFilter: ['class', 'data-theme', 'style', 'yb-theme-mode']
             });
             
             // 保存引用以便在 destroy 时清理
-            this.themeObserver = themeObserver;
+            this.htmlObserver = htmlObserver;
+        } catch (e) {
+        }
+        
+        // 监听 body 元素的 class 和 yb-theme-mode 属性变化（Gemini、DeepSeek、元宝等网站在 body 上切换主题）
+        const bodyObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && 
+                    (mutation.attributeName === 'class' || mutation.attributeName === 'yb-theme-mode')) {
+                    this.onThemeChange();
+                }
+            });
+        });
+        
+        try {
+            bodyObserver.observe(document.body, {
+                attributes: true,
+                attributeFilter: ['class', 'yb-theme-mode']
+            });
+            
+            // 保存引用以便在 destroy 时清理
+            this.bodyObserver = bodyObserver;
         } catch (e) {
         }
         
@@ -1498,6 +1471,9 @@ class TimelineManager {
     onThemeChange() {
         // 延迟到下一帧，确保新主题的样式已应用
         requestAnimationFrame(() => {
+            // ✅ 同步深色模式类
+            this.syncDarkModeClass();
+            
             // 重新缓存 CSS 变量
             this.cacheTooltipConfig();
             
@@ -1657,24 +1633,18 @@ class TimelineManager {
     showTooltipForDot(dot) {
         if (!dot) return;
         
-        // 使用全局 Tooltip 管理器
-        if (typeof window.globalTooltipManager !== 'undefined') {
-            const id = 'node-' + (dot.dataset.targetTurnId || '');
-            const messageText = (dot.getAttribute('aria-label') || '').trim();
-            
-            // 构建内容元素（包含交互逻辑）
-            const contentElement = this._buildNodeTooltipElement(dot, messageText);
-            
-            window.globalTooltipManager.show(id, 'node', dot, {
-                element: contentElement
-            }, {
-                placement: 'auto',
-                maxWidth: this.getCSSVarNumber(this.ui.tooltip, '--timeline-tooltip-max', 288)
-            });
-        } else {
-            // 降级：使用旧逻辑（确保兼容性）
-            this._showTooltipFallback(dot);
-        }
+        const id = 'node-' + (dot.dataset.targetTurnId || '');
+        const messageText = (dot.getAttribute('aria-label') || '').trim();
+        
+        // 构建内容元素（包含交互逻辑）
+        const contentElement = this._buildNodeTooltipElement(dot, messageText);
+        
+        window.globalTooltipManager.show(id, 'node', dot, {
+            element: contentElement
+        }, {
+            placement: 'auto',
+            maxWidth: this.getCSSVarNumber(this.ui.tooltip, '--timeline-tooltip-max', 288)
+        });
     }
     
     /**
@@ -1713,16 +1683,12 @@ class TimelineManager {
         starSpan.className = 'timeline-tooltip-star';
         starSpan.dataset.targetTurnId = id; // 保存消息 ID
         
-        if (isStarred) {
-            // 已收藏：橙色背景
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToUnstar'));
-        } else {
-            // 未收藏：透明背景 + 灰色边框
+        // ✅ 根据当前收藏状态设置初始CSS类
+        if (!isStarred) {
             starSpan.classList.add('not-starred');
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToStar'));
         }
         
-        // ✅ 添加点击切换收藏事件
+        // ✅ 添加点击切换收藏事件（不需要悬停tooltip，点击时显示toast）
         starSpan.addEventListener('click', (e) => {
             e.stopPropagation(); // 阻止事件冒泡
             const turnId = starSpan.dataset.targetTurnId;
@@ -1730,21 +1696,15 @@ class TimelineManager {
             
             // 立即更新样式类
             const nowStarred = this.starred.has(turnId);
-            const newTooltipText = nowStarred 
-                ? chrome.i18n.getMessage('clickToUnstar') 
-                : chrome.i18n.getMessage('clickToStar');
             
             if (nowStarred) {
                 starSpan.classList.remove('not-starred');
+                // ✅ 显示收藏成功toast
+                window.globalToastManager.success(chrome.i18n.getMessage('starSuccess'), starSpan);
             } else {
                 starSpan.classList.add('not-starred');
-            }
-            starSpan.setAttribute('data-tooltip', newTooltipText);
-            
-            // ✅ 更新当前显示的自定义 tooltip 文本（如果存在）
-            const existingCustomTooltip = document.querySelector('.timeline-custom-tooltip.visible');
-            if (existingCustomTooltip) {
-                existingCustomTooltip.textContent = newTooltipText;
+                // ✅ 显示取消收藏toast
+                window.globalToastManager.info(chrome.i18n.getMessage('unstarSuccess'), starSpan);
             }
         });
         
@@ -1752,27 +1712,11 @@ class TimelineManager {
         container.appendChild(content);
         container.appendChild(starSpan);
         
-        // ✅ 为星标绑定快速响应的自定义tooltip
-        this.bindCustomTooltip(starSpan);
-        
         return container;
     }
     
     /**
-     * ✅ 降级方案：旧的 tooltip 逻辑（保持兼容性）
-     */
-    _showTooltipFallback(dot) {
-        if (!this.ui.tooltip) return;
-        
-        this.tooltipUpdateDebounceTimer = TimelineUtils.clearTimerSafe(this.tooltipUpdateDebounceTimer);
-        this.tooltipUpdateDebounceTimer = setTimeout(() => {
-            this.tooltipUpdateDebounceTimer = null;
-            this._showTooltipImmediate(dot);
-        }, 80);
-    }
-    
-    /**
-     * ✅ 优化：立即显示 Tooltip（内部方法）
+     * ✅ 优化：立即显示 Tooltip（内部方法 - 仅用于降级逻辑，保留以备不时之需）
      */
     _showTooltipImmediate(dot) {
         if (!this.ui.tooltip || !dot) return;
@@ -1815,16 +1759,12 @@ class TimelineManager {
         starSpan.className = 'timeline-tooltip-star';
         starSpan.dataset.targetTurnId = id; // 保存消息 ID
         
-        if (isStarred) {
-            // 已收藏：橙色背景
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToUnstar'));
-        } else {
-            // 未收藏：透明背景 + 灰色边框
+        // ✅ 根据当前收藏状态设置初始CSS类
+        if (!isStarred) {
             starSpan.classList.add('not-starred');
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToStar'));
         }
         
-        // 添加点击事件
+        // ✅ 添加点击切换收藏事件（不需要悬停tooltip，点击时显示toast）
         starSpan.addEventListener('click', (e) => {
             e.stopPropagation(); // 阻止事件冒泡
             const turnId = starSpan.dataset.targetTurnId;
@@ -1832,30 +1772,21 @@ class TimelineManager {
             
             // 立即更新样式类
             const nowStarred = this.starred.has(turnId);
-            const newTooltipText = nowStarred 
-                ? chrome.i18n.getMessage('clickToUnstar') 
-                : chrome.i18n.getMessage('clickToStar');
             
             if (nowStarred) {
                 starSpan.classList.remove('not-starred');
+                // ✅ 显示收藏成功toast
+                window.globalToastManager.success(chrome.i18n.getMessage('starSuccess'), starSpan);
             } else {
                 starSpan.classList.add('not-starred');
-            }
-            starSpan.setAttribute('data-tooltip', newTooltipText);
-            
-            // ✅ 更新当前显示的自定义 tooltip 文本（如果存在）
-            const existingCustomTooltip = document.querySelector('.timeline-custom-tooltip.visible');
-            if (existingCustomTooltip) {
-                existingCustomTooltip.textContent = newTooltipText;
+                // ✅ 显示取消收藏toast
+                window.globalToastManager.info(chrome.i18n.getMessage('unstarSuccess'), starSpan);
             }
         });
         
         // 组装：content 和 star 平级，使用 flex 布局
         tip.appendChild(content);
         tip.appendChild(starSpan);
-        
-        // 为星标绑定快速响应的自定义tooltip
-        this.bindCustomTooltip(starSpan);
         
         // ✅ 先设置宽度和基本样式，让tooltip可以正确渲染
         tip.style.maxWidth = `${Math.floor(p.width)}px`;
@@ -1899,48 +1830,9 @@ class TimelineManager {
     }
 
     hideTooltip(immediate = false) {
-        // 使用全局 Tooltip 管理器
-        if (typeof window.globalTooltipManager !== 'undefined') {
-            window.globalTooltipManager.hide(immediate);
-        } else {
-            // 降级：使用旧逻辑
-            this._hideTooltipFallback(immediate);
-        }
+        window.globalTooltipManager.hide(immediate);
     }
     
-    /**
-     * ✅ 降级方案：旧的隐藏逻辑（保持兼容性）
-     */
-    _hideTooltipFallback(immediate = false) {
-        if (!this.ui.tooltip) return;
-        
-        // ✅ 优化：取消待处理的显示
-        this.tooltipUpdateDebounceTimer = TimelineUtils.clearTimerSafe(this.tooltipUpdateDebounceTimer);
-        
-        const doHide = () => {
-            // 先触发 CSS 隐藏动画
-            this.ui.tooltip.classList.remove('visible');
-            this.ui.tooltip.setAttribute('aria-hidden', 'true');
-            this.ui.tooltip.style.opacity = '';
-            this.ui.tooltip.style.visibility = '';
-            
-            // ✅ 修复：等待动画结束后再清空内容（避免动画中断）
-            // CSS 动画时长约 100-120ms，等待 200ms 确保动画完成
-            setTimeout(() => {
-                if (this.ui.tooltip && !this.ui.tooltip.classList.contains('visible')) {
-                    this.ui.tooltip.innerHTML = '';
-                }
-            }, 200);
-            
-            this.tooltipHideTimer = null;
-        };
-        
-        if (immediate) return doHide();
-        
-        this.tooltipHideTimer = TimelineUtils.clearTimerSafe(this.tooltipHideTimer);
-        this.tooltipHideTimer = setTimeout(doHide, TIMELINE_CONFIG.TOOLTIP_HIDE_DELAY);
-    }
-
     placeTooltipAt(dot, placement, width, height) {
         if (!this.ui.tooltip) return;
         const tip = this.ui.tooltip;
@@ -2029,13 +1921,11 @@ class TimelineManager {
         const starSpan = tip.querySelector('.timeline-tooltip-star');
         if (!starSpan) return;
         
-        // 只更新 CSS 类和 data-tooltip，避免重排（无需移除 visible，无需重建）
+        // ✅ 只更新 CSS 类，不需要tooltip（点击时会显示toast）
         if (isStarred) {
             starSpan.classList.remove('not-starred');
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToUnstar'));
         } else {
             starSpan.classList.add('not-starred');
-            starSpan.setAttribute('data-tooltip', chrome.i18n.getMessage('clickToStar'));
         }
     }
 
@@ -2481,8 +2371,24 @@ class TimelineManager {
         const containerRect = this.scrollContainer.getBoundingClientRect();
         
         // ========== 优先检测：是否在顶部或底部 ==========
+        // ✅ 检测平台是否使用反向滚动（如豆包）
+        const isReverseScroll = typeof this.adapter.isReverseScroll === 'function' && this.adapter.isReverseScroll();
+        
+        let isAtTop, isAtBottom;
+        
+        if (isReverseScroll) {
+            // 反向滚动：scrollTop = 0 在底部，负数越大越接近顶部
+            const absScrollTop = Math.abs(scrollTop);
+            isAtTop = absScrollTop + clientHeight >= scrollHeight - 10;
+            isAtBottom = absScrollTop < 10;
+        } else {
+            // 正常滚动：scrollTop = 0 在顶部（默认逻辑）
+            isAtTop = scrollTop < 10;
+            isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+        }
+        
         // 如果滚动到顶部（距离顶部 < 10px），强制激活第一个节点
-        if (scrollTop < 10) {
+        if (isAtTop) {
             const firstId = this.markers[0].id;
             if (this.activeTurnId !== firstId) {
                 this.activeTurnId = firstId;
@@ -2493,7 +2399,7 @@ class TimelineManager {
         }
         
         // 如果滚动到底部（距离底部 < 10px），强制激活最后一个节点
-        if (scrollTop + clientHeight >= scrollHeight - 10) {
+        if (isAtBottom) {
             const lastId = this.markers[this.markers.length - 1].id;
             if (this.activeTurnId !== lastId) {
                 this.activeTurnId = lastId;
@@ -2922,6 +2828,12 @@ class TimelineManager {
     async updateStarredListUI() {
         if (!this.ui.starredList) return;
         
+        // ✅ 修复：只在收藏面板可见时才隐藏tooltip（避免影响节点tooltip）
+        const isPanelVisible = this.ui.starredPanel?.classList.contains('visible');
+        if (isPanelVisible) {
+            window.globalTooltipManager.forceHideAll();
+        }
+        
         const starredMessages = await this.getStarredMessages();
         
         if (starredMessages.length === 0) {
@@ -2954,7 +2866,9 @@ class TimelineManager {
             return `
                 <div class="timeline-starred-item" data-url="${this.escapeHTML(item.urlWithoutProtocol)}" data-index="${item.index}">
                     ${tagHTML}
-                    <span class="timeline-starred-item-question" data-full-text='${this.escapeHTML(item.question)}'>${this.escapeHTML(item.question)}</span>
+                    <span class="timeline-starred-item-question">
+                        <span class="timeline-starred-item-question-text" data-full-text='${this.escapeHTML(item.question)}'>${this.escapeHTML(item.question)}</span>
+                    </span>
                     <div class="timeline-starred-item-actions">
                         <button class="timeline-starred-item-edit" data-url="${this.escapeHTML(item.urlWithoutProtocol)}" data-index="${item.index}" data-current-text='${this.escapeHTML(item.question)}' data-tooltip="${this.escapeHTML(chrome.i18n.getMessage('edit'))}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2962,10 +2876,17 @@ class TimelineManager {
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                         </button>
-                        <button class="timeline-starred-item-star" data-url="${this.escapeHTML(item.urlWithoutProtocol)}" data-index="${item.index}" data-tooltip="${this.escapeHTML(chrome.i18n.getMessage('unstar'))}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <button class="timeline-starred-item-copy" data-full-text='${this.escapeHTML(item.question)}' data-tooltip="复制">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
                         </button>
-                        <span class="timeline-starred-item-goto" data-url="${this.escapeHTML(item.url)}" data-index="${item.index}" data-is-current="${item.isCurrentPage}" data-tooltip="${this.escapeHTML(chrome.i18n.getMessage('goToTooltip'))}">${chrome.i18n.getMessage('goTo')}</span>
+                        <button class="timeline-starred-item-star" data-url="${this.escapeHTML(item.urlWithoutProtocol)}" data-index="${item.index}" data-tooltip="${this.escapeHTML(chrome.i18n.getMessage('unstar'))}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             `;
@@ -2975,8 +2896,23 @@ class TimelineManager {
         
         // 绑定编辑按钮点击事件
         this.ui.starredList.querySelectorAll('.timeline-starred-item-edit').forEach(btn => {
-            // 添加自定义tooltip
-            this.bindCustomTooltip(btn);
+            // 添加tooltip事件（使用全局TooltipManager）
+            btn.addEventListener('mouseenter', () => {
+                const tooltipText = btn.getAttribute('data-tooltip');
+                if (!tooltipText) return;
+                
+                window.globalTooltipManager.show(
+                    `edit-btn-${btn.dataset.url}-${btn.dataset.index}`,
+                    'button',
+                    btn,
+                    tooltipText,
+                    { placement: 'top' }
+                );
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                window.globalTooltipManager.hide();
+            });
             
             btn.addEventListener('click', async (e) => {
                 e.stopPropagation();
@@ -3009,22 +2945,29 @@ class TimelineManager {
         
         // 绑定五角星点击事件（取消收藏）
         this.ui.starredList.querySelectorAll('.timeline-starred-item-star').forEach(btn => {
-            // 添加自定义tooltip
-            this.bindCustomTooltip(btn);
+            // 添加tooltip事件（使用全局TooltipManager）
+            btn.addEventListener('mouseenter', () => {
+                const tooltipText = btn.getAttribute('data-tooltip');
+                if (!tooltipText) return;
+                
+                window.globalTooltipManager.show(
+                    `star-btn-${btn.dataset.url}-${btn.dataset.index}`,
+                    'button',
+                    btn,
+                    tooltipText,
+                    { placement: 'top' }
+                );
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                window.globalTooltipManager.hide();
+            });
             
             btn.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 
-                // ✅ 修复：立即移除当前tooltip，避免残留
-                const existingTooltips = document.querySelectorAll('.timeline-tooltip-base.visible');
-                existingTooltips.forEach(tooltip => {
-                    tooltip.classList.remove('visible');
-                    setTimeout(() => {
-                        if (tooltip && tooltip.parentNode) {
-                            tooltip.parentNode.removeChild(tooltip);
-                        }
-                    }, 150);
-                });
+                // ✅ 修复：使用全局TooltipManager隐藏tooltip
+                window.globalTooltipManager.hide();
                 
                 const url = btn.dataset.url;
                 const index = parseInt(btn.dataset.index, 10);
@@ -3074,95 +3017,50 @@ class TimelineManager {
         });
         
         // 绑定问题文本的tooltip事件（即时显示完整文本）
-        this.ui.starredList.querySelectorAll('.timeline-starred-item-question').forEach(questionEl => {
-            questionEl.addEventListener('mouseenter', (e) => {
-                const fullText = questionEl.getAttribute('data-full-text');
+        this.ui.starredList.querySelectorAll('.timeline-starred-item-question-text').forEach(questionTextEl => {
+            questionTextEl.addEventListener('mouseenter', () => {
+                const fullText = questionTextEl.getAttribute('data-full-text');
                 if (!fullText) return;
                 
-                // 先清理所有可能存在的旧 tooltip
-                document.querySelectorAll('.timeline-starred-question-text-tooltip').forEach(el => el.remove());
-                
-                // 创建tooltip元素（白色背景）
-                const tooltipEl = document.createElement('div');
-                tooltipEl.className = 'timeline-tooltip-base timeline-tooltip-light timeline-starred-question-text-tooltip';
-                tooltipEl.textContent = fullText;
-                document.body.appendChild(tooltipEl);
-                
-                // 计算位置
-                const rect = questionEl.getBoundingClientRect();
-                const tooltipRect = tooltipEl.getBoundingClientRect();
-                
-                let left = rect.left;
-                let top = rect.top - tooltipRect.height - 8;
-                let placement = 'top'; // 默认显示在上方
-                
-                // 防止超出视口
-                if (left + tooltipRect.width > window.innerWidth - 20) {
-                    left = window.innerWidth - tooltipRect.width - 20;
-                }
-                if (left < 20) {
-                    left = 20;
-                }
-                if (top < 20) {
-                    top = rect.bottom + 8; // 显示在下方
-                    placement = 'bottom';
-                }
-                
-                tooltipEl.style.left = `${left}px`;
-                tooltipEl.style.top = `${top}px`;
-                tooltipEl.setAttribute('data-placement', placement); // 设置位置属性，用于箭头定位
-                
-                // 计算箭头的水平位置（指向元素左侧起点）
-                const elementLeftX = rect.left + 20; // 箭头指向问题文本的左侧偏移一点
-                const arrowLeft = elementLeftX - left;
-                tooltipEl.style.setProperty('--arrow-left', `${arrowLeft}px`);
-                
-                // 触发显示动画
-                requestAnimationFrame(() => {
-                    tooltipEl.classList.add('visible');
-                });
+                window.globalTooltipManager.show(
+                    `question-text-${questionTextEl.getAttribute('data-full-text')?.substring(0, 20)}`,
+                    'button',
+                    questionTextEl,
+                    fullText,
+                    {
+                        placement: 'top',
+                        maxWidth: 500  // 问题文本tooltip宽度更大
+                    }
+                );
             });
             
-            questionEl.addEventListener('mouseleave', () => {
-                // 查找并移除所有该类型的 tooltip
-                const tooltips = document.querySelectorAll('.timeline-starred-question-text-tooltip');
-                tooltips.forEach(tooltip => {
-                    tooltip.classList.remove('visible');
-                    setTimeout(() => {
-                        if (tooltip.parentNode) {
-                            tooltip.parentNode.removeChild(tooltip);
-                        }
-                    }, 150);
-                });
+            questionTextEl.addEventListener('mouseleave', () => {
+                window.globalTooltipManager.hide();
             });
             
-            // ✅ 添加点击复制功能
-            questionEl.addEventListener('click', (e) => {
+            // ✅ 添加点击前往功能（改为与前往按钮相同的逻辑）
+            questionTextEl.addEventListener('click', async (e) => {
                 e.stopPropagation();
-                const fullText = questionEl.getAttribute('data-full-text');
-                if (fullText) {
-                    this.copyToClipboard(fullText, questionEl);
-                }
-            });
-        });
-        
-        // 绑定前往按钮点击事件
-        this.ui.starredList.querySelectorAll('.timeline-starred-item-goto').forEach(btn => {
-            // 添加自定义tooltip
-            this.bindCustomTooltip(btn);
-            
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const targetUrl = btn.dataset.url;
-                const index = parseInt(btn.dataset.index, 10);
-                const isCurrentPage = btn.dataset.isCurrent === 'true';
+                
+                // 获取父元素的data属性
+                const item = questionTextEl.closest('.timeline-starred-item');
+                if (!item) return;
+                
+                const targetUrl = item.dataset.url;
+                const index = parseInt(item.dataset.index, 10);
+                
+                // 判断是否是当前页面
+                const currentUrl = location.href.replace(/^https?:\/\//, '');
+                const isCurrentPage = targetUrl === currentUrl;
                 
                 // 判断是否跨网站
                 const currentHostname = location.hostname;
                 let targetHostname = currentHostname;
                 
                 try {
-                    const url = new URL(targetUrl);
+                    // targetUrl没有协议，需要补充
+                    const fullUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+                    const url = new URL(fullUrl);
                     targetHostname = url.hostname;
                 } catch (e) {
                     // 解析失败，假设是同一网站
@@ -3178,10 +3076,12 @@ class TimelineManager {
                         this.hideStarredPanel();
                     } else if (isCrossSite) {
                         // 跨网站，新标签页打开
-                        window.open(targetUrl, '_blank');
+                        const fullUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+                        window.open(fullUrl, '_blank');
                     } else {
                         // 同一网站，当前标签页打开
-                        window.location.href = targetUrl;
+                        const fullUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+                        window.location.href = fullUrl;
                     }
                     return;
                 }
@@ -3198,16 +3098,46 @@ class TimelineManager {
                 } else {
                     // 跨页面跳转
                     if (isCrossSite) {
-                        // ✅ 跨网站：保存导航数据（使用目标URL作为key）
-                        await this.setNavigateDataForUrl(targetUrl, index);
-                        // 新标签页打开
-                        window.open(targetUrl, '_blank');
-                        this.hideStarredPanel();
+                        // 跨网站：新标签页打开，并设置导航数据
+                        const fullUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+                        await this.setNavigateDataForUrl(fullUrl, index);
+                        window.open(fullUrl, '_blank');
                     } else {
-                        // 同一网站：当前标签页打开
+                        // 同一网站：当前标签页跳转
+                        const fullUrl = targetUrl.startsWith('http') ? targetUrl : `https://${targetUrl}`;
+                        await this.setNavigateDataForUrl(fullUrl, index);
                         await this.setNavigateData('targetIndex', index);
-                        window.location.href = targetUrl;
+                        window.location.href = fullUrl;
                     }
+                }
+            });
+        });
+        
+        // 绑定复制按钮点击事件
+        this.ui.starredList.querySelectorAll('.timeline-starred-item-copy').forEach(btn => {
+            // 添加tooltip事件（使用全局TooltipManager）
+            btn.addEventListener('mouseenter', () => {
+                const tooltipText = btn.getAttribute('data-tooltip');
+                if (!tooltipText) return;
+                
+                window.globalTooltipManager.show(
+                    `copy-btn-${btn.getAttribute('data-full-text')?.substring(0, 20)}`,
+                    'button',
+                    btn,
+                    tooltipText,
+                    { placement: 'top' }
+                );
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                window.globalTooltipManager.hide();
+            });
+            
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const fullText = btn.getAttribute('data-full-text');
+                if (fullText) {
+                    this.copyToClipboard(fullText, btn);
                 }
             });
         });
@@ -3244,135 +3174,17 @@ class TimelineManager {
     
     // ✅ 显示复制成功的反馈提示（使用全局 Toast 管理器）
     showCopyFeedback(targetElement) {
-        if (typeof window.globalToastManager !== 'undefined') {
-            window.globalToastManager.success(
-                chrome.i18n.getMessage('copied'),
-                targetElement
-            );
-        } else {
-            // 降级：旧逻辑
-            const feedback = document.createElement('div');
-            feedback.className = 'timeline-copy-feedback';
-            feedback.textContent = chrome.i18n.getMessage('copied');
-            document.body.appendChild(feedback);
-            const targetRect = targetElement.getBoundingClientRect();
-            const feedbackRect = feedback.getBoundingClientRect();
-            const x = targetRect.left + (targetRect.width - feedbackRect.width) / 2;
-            const y = targetRect.top - feedbackRect.height - 10;
-            feedback.style.left = `${x}px`;
-            feedback.style.top = `${y}px`;
-            requestAnimationFrame(() => {
-                feedback.classList.add('visible');
-            });
-            setTimeout(() => {
-                feedback.classList.remove('visible');
-                setTimeout(() => {
-                    if (feedback.parentNode) {
-                        feedback.parentNode.removeChild(feedback);
-                    }
-                }, 150);
-            }, 1000);
-        }
+        window.globalToastManager.success(
+            chrome.i18n.getMessage('copied'),
+            targetElement
+        );
     }
     
     // ✅ 显示错误提示（使用全局 Toast 管理器）
     showErrorToast(message, targetElement) {
-        if (typeof window.globalToastManager !== 'undefined') {
-            window.globalToastManager.error(message, targetElement);
-        } else {
-            // 降级：旧逻辑
-            const toast = document.createElement('div');
-            toast.className = 'timeline-error-toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            const targetRect = targetElement.getBoundingClientRect();
-            const toastRect = toast.getBoundingClientRect();
-            const x = targetRect.left + (targetRect.width - toastRect.width) / 2;
-            const y = targetRect.top - toastRect.height - 10;
-            toast.style.left = `${x}px`;
-            toast.style.top = `${y}px`;
-            requestAnimationFrame(() => {
-                toast.classList.add('visible');
-            });
-            setTimeout(() => {
-                toast.classList.remove('visible');
-                setTimeout(() => {
-                    if (toast.parentNode) {
-                        toast.parentNode.removeChild(toast);
-                    }
-                }, 150);
-            }, 1500);
-        }
+        window.globalToastManager.error(message, targetElement);
     }
     
-    // ✅ 为元素绑定自定义tooltip（快速响应，无延迟，带箭头）
-    bindCustomTooltip(element) {
-        if (!element) return;
-        
-        element.addEventListener('mouseenter', (e) => {
-            const tooltipText = element.getAttribute('data-tooltip');
-            if (!tooltipText) return;
-            
-            // 先清理所有可能存在的旧 tooltip
-            document.querySelectorAll('.timeline-custom-tooltip').forEach(el => el.remove());
-            
-            // 创建tooltip元素（白色背景）
-            const tooltipEl = document.createElement('div');
-            tooltipEl.className = 'timeline-tooltip-base timeline-tooltip-light timeline-custom-tooltip';
-            tooltipEl.textContent = tooltipText;
-            document.body.appendChild(tooltipEl);
-            
-            // 计算位置
-            const rect = element.getBoundingClientRect();
-            const tooltipRect = tooltipEl.getBoundingClientRect();
-            
-            let left = rect.left + (rect.width - tooltipRect.width) / 2; // 水平居中
-            let top = rect.top - tooltipRect.height - 8; // 显示在上方
-            let placement = 'top'; // 默认显示在上方
-            
-            // 防止超出视口
-            if (left + tooltipRect.width > window.innerWidth - 20) {
-                left = window.innerWidth - tooltipRect.width - 20;
-            }
-            if (left < 20) {
-                left = 20;
-            }
-            if (top < 20) {
-                top = rect.bottom + 8; // 显示在下方
-                placement = 'bottom';
-            }
-            
-            tooltipEl.style.left = `${left}px`;
-            tooltipEl.style.top = `${top}px`;
-            tooltipEl.setAttribute('data-placement', placement); // 设置位置属性，用于箭头定位
-            
-            // 计算箭头的水平位置（指向元素中心）
-            const elementCenterX = rect.left + rect.width / 2;
-            const arrowLeft = elementCenterX - left;
-            tooltipEl.style.setProperty('--arrow-left', `${arrowLeft}px`);
-            
-            // 立即显示（无延迟）
-            requestAnimationFrame(() => {
-                tooltipEl.classList.add('visible');
-            });
-        });
-        
-        element.addEventListener('mouseleave', () => {
-            // 查找并移除所有该类型的 tooltip
-            const tooltips = document.querySelectorAll('.timeline-custom-tooltip');
-            tooltips.forEach(tooltip => {
-                tooltip.classList.remove('visible');
-                setTimeout(() => {
-                    if (tooltip.parentNode) {
-                        tooltip.parentNode.removeChild(tooltip);
-                    }
-                }, 150);
-            });
-        });
-    }
-    
-    // HTML 转义（防止XSS）
-    // ✅ 设置导航数据（用于跨页面导航）
     // ✅ 检查是否有收藏数据
     async hasStarredData() {
         try {

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - បន្ទាត់ពេលវេលាអន្តរកម្មសម្រាប់ ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "បង្កើនប្រសិទ្ធភាពការជជែក AI របស់អ្នកទ្វេដង! បន្ថែមបន្ទាត់ពេលវេលាអន្តរកម្មទៅ ChatGPT, Gemini, DeepSeek, 🚀 លោតទៅការសន្ទនាណាមួយបានយ៉ាងងាយស្រួល, 📌 សម្គាល់ការសន្ទនាសំខាន់ៗ, ⭐️ ការសន្ទនាសំខាន់ៗដែលចូលចិត្ត។"
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "មើលចំណូលចិត្ត"
@@ -14,20 +14,14 @@
   "close": {
     "message": "បិទ"
   },
-  "clickToStar": {
-    "message": "ចុចដើម្បីបន្ថែមទៅចំណូលចិត្ត"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "ចុចដើម្បីដកចេញពីចំណូលចិត្ត"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "មិនមានចំណូលចិត្ត"
-  },
-  "goTo": {
-    "message": "ទៅកាន់"
-  },
-  "goToTooltip": {
-    "message": "ទៅកាន់ព័ត៌មានលម្អិតការជជែក"
   },
   "copied": {
     "message": "បានចម្លង"
@@ -36,7 +30,7 @@
     "message": "បន្ថែមការជជែកទៅចំណូលចិត្ត"
   },
   "unstarChat": {
-    "message": "លុបការជជែកចេញពីចំណូលចិត្ត"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "បញ្ចូលចំណងជើងសំណព្វ:"

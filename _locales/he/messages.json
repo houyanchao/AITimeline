@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - ציר זמן אינטראקטיבי עבור ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "הכפל את יעילות הצ'אט שלך עם הבינה המלאכותית! הוסף ציר זמן אינטראקטיבי ל-ChatGPT, Gemini, DeepSeek, 🚀 קפוץ בקלות לכל שיחה, 📌 סמן שיחות מפתח, ⭐️ שיחות חשובות מועדפות."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "הצג מועדפים"
@@ -14,20 +14,14 @@
   "close": {
     "message": "סגור"
   },
-  "clickToStar": {
-    "message": "הוסף שאלה למועדפים"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "הסר שאלה מהמועדפים"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "אין מועדפים"
-  },
-  "goTo": {
-    "message": "עבור אל"
-  },
-  "goToTooltip": {
-    "message": "עבור לפרטי הצ'אט"
   },
   "copied": {
     "message": "הועתק"
@@ -36,7 +30,7 @@
     "message": "הוסף שיחה למועדפים"
   },
   "unstarChat": {
-    "message": "הסר שיחה מהמועדפים"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "הזן כותרת מועדף:"

@@ -116,5 +116,15 @@ class DeepSeekAdapter extends SiteAdapter {
         
         return formulaManager;
     }
+    
+    /**
+     * 检测 DeepSeek 的深色模式
+     * DeepSeek 通过 body 元素的 class 控制主题 (dark/light)
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 body 的 class 中是否有 dark
+        return document.body.classList.contains('dark');
+    }
 }
 

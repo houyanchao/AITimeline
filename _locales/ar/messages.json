@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - خط زمني تفاعلي لـ ChatGPT، Gemini، DeepSeek"
   },
   "extDescription": {
-    "message": "ضاعف كفاءة الدردشة مع الذكاء الاصطناعي لديك! أضف خطًا زمنيًا تفاعليًا إلى ChatGPT وGemini وDeepSeek، 🚀 انتقل بسهولة إلى أي محادثة، 📌 ضع علامة على المحادثات الرئيسية، ⭐️ أضف الدردشات المهمة إلى المفضلة."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "عرض المفضلة"
@@ -14,20 +14,14 @@
   "close": {
     "message": "إغلاق"
   },
-  "clickToStar": {
-    "message": "انقر للإضافة إلى المفضلة"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "انقر للإزالة من المفضلة"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "لا توجد عناصر مفضلة"
-  },
-  "goTo": {
-    "message": "الانتقال إلى"
-  },
-  "goToTooltip": {
-    "message": "الانتقال إلى تفاصيل المحادثة"
   },
   "copied": {
     "message": "تم النسخ"
@@ -36,7 +30,7 @@
     "message": "إضافة المحادثة إلى المفضلة"
   },
   "unstarChat": {
-    "message": "إزالة المحادثة من المفضلة"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "أدخل عنوان المفضلة:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - ChatGPT, Gemini, DeepSeek үшін интерактивті уақыт шкаласы"
   },
   "extDescription": {
-    "message": "AI чат тиімділігіңізді екі еселеңіз! ChatGPT, Gemini, DeepSeek-ке интерактивті уақыт шкаласын қосыңыз, 🚀 кез келген әңгімеге оңай секіріңіз, 📌 негізгі әңгімелерді белгілеңіз, ⭐️ маңызды чаттарды таңдаулыларға қосыңыз."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Таңдаулыларды көру"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Жабу"
   },
-  "clickToStar": {
-    "message": "Таңдаулыларға қосу үшін басыңыз"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Таңдаулылардан алып тастау үшін басыңыз"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Таңдаулылар жоқ"
-  },
-  "goTo": {
-    "message": "Өту"
-  },
-  "goToTooltip": {
-    "message": "Чат мәліметтеріне өту"
   },
   "copied": {
     "message": "Көшірілді"
@@ -36,7 +30,7 @@
     "message": "Чатты таңдаулыларға қосу"
   },
   "unstarChat": {
-    "message": "Чатты таңдаулылардан алып тастау"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Таңдаулының тақырыбын енгізіңіз:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - ChatGPT, Gemini, DeepSeek အတွက် အပြန်အလှန်အချိန်ဇယား"
   },
   "extDescription": {
-    "message": "သင့်၏ AI ချက် စွမ်းဆောင်ရည် နှစ်ဆတိုးပါ! ChatGPT၊ Gemini၊ DeepSeek သို့ အပြန်အလှန်အချိန်ဇယားထည့်ပါ၊ 🚀 မည်သည့် စကားစမြည်သို့မဆို အလွယ်တကူ သွားပါ၊ 📌 အဓိက စကားစမြည်များကို အမှတ်အသားပြုပါ၊ ⭐️ အရေးကြီးသော ချက်များကို အကြိုက်ဆုံးထားပါ။"
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "အကြိုက်ဆုံးများကြည့်ရန်"
@@ -14,20 +14,14 @@
   "close": {
     "message": "ပိတ်မည်"
   },
-  "clickToStar": {
-    "message": "အကြိုက်ဆုံးများသို့ ထည့်ရန် နှိပ်ပါ"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "အကြိုက်ဆုံးများမှ ဖယ်ရန် နှိပ်ပါ"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "အကြိုက်ဆုံးများ မရှိပါ"
-  },
-  "goTo": {
-    "message": "သွားမည်"
-  },
-  "goToTooltip": {
-    "message": "ချတ်အသေးစိတ်သို့ သွားရန်"
   },
   "copied": {
     "message": "ကူးယူပြီးပါပြီ"
@@ -36,7 +30,7 @@
     "message": "ချက်တင်ကို အကြိုက်ဆုံးများတွင် ထည့်မည်"
   },
   "unstarChat": {
-    "message": "ချက်တင်ကို အကြိုက်ဆုံးများမှ ဖယ်မည်"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "အကြိုက်ဆုံးခေါင်းစဉ်ကို ထည့်ပါ:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Dòng thời gian tương tác cho ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Tăng gấp đôi hiệu quả trò chuyện AI của bạn! Thêm dòng thời gian tương tác vào ChatGPT, Gemini, DeepSeek, 🚀 chuyển đến bất kỳ cuộc trò chuyện nào một cách dễ dàng, 📌 đánh dấu các cuộc trò chuyện chính, ⭐️ yêu thích các cuộc trò chuyện quan trọng."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Xem yêu thích"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Đóng"
   },
-  "clickToStar": {
-    "message": "Nhấp để thêm vào yêu thích"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Nhấp để xóa khỏi yêu thích"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Không có mục yêu thích"
-  },
-  "goTo": {
-    "message": "Đi tới"
-  },
-  "goToTooltip": {
-    "message": "Đi tới chi tiết trò chuyện"
   },
   "copied": {
     "message": "Đã sao chép"
@@ -36,7 +30,7 @@
     "message": "Lưu cuộc trò chuyện"
   },
   "unstarChat": {
-    "message": "Bỏ lưu cuộc trò chuyện"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Nhập tiêu đề yêu thích:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktywna oś czasu dla ChatGPT, Gemini, DeepSeek itp."
   },
   "extDescription": {
-    "message": "Podwój swoją efektywność czatu AI! Dodaj interaktywną oś czasu do ChatGPT, Gemini, DeepSeek, 🚀 łatwo przeskocz do dowolnej rozmowy, 📌 oznacz kluczowe rozmowy, ⭐️ dodaj ważne czaty do ulubionych."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Zobacz ulubione"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Zamknij"
   },
-  "clickToStar": {
-    "message": "Dodaj pytanie do ulubionych"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Usuń pytanie z ulubionych"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Brak ulubionych"
-  },
-  "goTo": {
-    "message": "Przejdź do"
-  },
-  "goToTooltip": {
-    "message": "Przejdź do szczegółów czatu"
   },
   "copied": {
     "message": "Skopiowano"
@@ -36,7 +30,7 @@
     "message": "Dodaj czat do ulubionych"
   },
   "unstarChat": {
-    "message": "Usuń czat z ulubionych"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Wprowadź tytuł ulubionego:"

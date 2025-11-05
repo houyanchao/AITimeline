@@ -1,7 +1,11 @@
 /**
  * ChatGPT Adapter
  * 
- * Supports: chatgpt.com, chat.openai.com, chatgpt.com/share/e/*
+ * Supports: 
+ *   - chatgpt.com/c/xxx (普通对话)
+ *   - chatgpt.com/g/xxx/c/xxx (GPT 对话)
+ *   - chatgpt.com/share/e/xxx (分享页面)
+ *   - chat.openai.com (旧域名)
  * Features: Uses native data-message-id when available, falls back to index
  */
 
@@ -42,6 +46,18 @@ class ChatGPTAdapter extends SiteAdapter {
             }
         }
         
+        // 检查 GPT 对话路径: /g/{gpt_id}/c/{conversation_id}
+        const gIndex = segs.indexOf('g');
+        if (gIndex !== -1 && segs[gIndex + 2] === 'c') {
+            const gptId = segs[gIndex + 1];
+            const conversationId = segs[gIndex + 3];
+            if (gptId && conversationId && 
+                /^[A-Za-z0-9_-]+$/.test(gptId) && 
+                /^[A-Za-z0-9_-]+$/.test(conversationId)) {
+                return true;
+            }
+        }
+        
         // 检查分享页面路径: /share/e/{id}
         const shareIndex = segs.indexOf('share');
         if (shareIndex !== -1 && segs[shareIndex + 1] === 'e') {
@@ -57,6 +73,13 @@ class ChatGPTAdapter extends SiteAdapter {
     extractConversationId(pathname) {
         try {
             const segs = pathname.split('/').filter(Boolean);
+            
+            // 尝试提取 GPT 对话 ID: /g/{gpt_id}/c/{conversation_id}
+            const gIndex = segs.indexOf('g');
+            if (gIndex !== -1 && segs[gIndex + 2] === 'c') {
+                const conversationId = segs[gIndex + 3];
+                if (conversationId && /^[A-Za-z0-9_-]+$/.test(conversationId)) return conversationId;
+            }
             
             // 尝试提取普通对话 ID: /c/{id}
             const cIndex = segs.indexOf('c');
@@ -118,6 +141,17 @@ class ChatGPTAdapter extends SiteAdapter {
         formulaManager.init();
         
         return formulaManager;
+    }
+    
+    /**
+     * 检测 ChatGPT 的深色模式
+     * ChatGPT 通过 html 元素的 style.colorScheme 控制主题
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 html 元素的 color-scheme 样式
+        const colorScheme = document.documentElement.style.colorScheme;
+        return colorScheme === 'dark';
     }
 }
 

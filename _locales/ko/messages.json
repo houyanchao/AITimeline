@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - AI 대화에 인터랙티브 타임라인 추가, ChatGPT, DeepSeek 등 지원"
   },
   "extDescription": {
-    "message": "AI 채팅 효율성을 2배로! ChatGPT, Gemini, DeepSeek에 대화식 타임라인 추가, 🚀 원하는 대화로 쉽게 이동, 📌 주요 대화 표시, ⭐️ 중요한 채팅 즐겨찾기."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "즐겨찾기 보기"
@@ -14,20 +14,14 @@
   "close": {
     "message": "닫기"
   },
-  "clickToStar": {
-    "message": "클릭하여 즐겨찾기에 추가"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "클릭하여 즐겨찾기에서 제거"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "즐겨찾기 없음"
-  },
-  "goTo": {
-    "message": "이동"
-  },
-  "goToTooltip": {
-    "message": "채팅 세부정보로 이동"
   },
   "copied": {
     "message": "복사됨"
@@ -36,7 +30,7 @@
     "message": "채팅 즐겨찾기"
   },
   "unstarChat": {
-    "message": "채팅 즐겨찾기 취소"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "즐겨찾기 제목 입력："

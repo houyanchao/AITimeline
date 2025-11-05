@@ -74,5 +74,15 @@ class KimiAdapter extends SiteAdapter {
         const title = document.title || '';
         return title.replace(/\s*-\s*Kimi\s*$/i, '').trim();
     }
+    
+    /**
+     * 检测 Kimi 的深色模式
+     * Kimi 通过 html 元素的 class 控制主题 (dark/light)
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 html 的 class 中是否有 dark
+        return document.documentElement.classList.contains('dark');
+    }
 }
 

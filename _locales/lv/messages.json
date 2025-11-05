@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktīva laika skala ChatGPT, Gemini, DeepSeek u.c."
   },
   "extDescription": {
-    "message": "Dubultojiet savu AI tērzēšanas efektivitāti! Pievienojiet interaktīvu laika skalu ChatGPT, Gemini, DeepSeek, 🚀 viegli pārejiet uz jebkuru sarunu, 📌 atzīmējiet galvenās sarunas, ⭐️ iecienītākās svarīgās tērzēšanas."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Skatīt izlasi"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Aizvērt"
   },
-  "clickToStar": {
-    "message": "Noklikšķiniet, lai pievienotu izlasei"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Noklikšķiniet, lai noņemtu no izlases"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Nav izlases"
-  },
-  "goTo": {
-    "message": "Doties uz"
-  },
-  "goToTooltip": {
-    "message": "Doties uz tērzēšanas detaļām"
   },
   "copied": {
     "message": "Nokopēts"
@@ -36,7 +30,7 @@
     "message": "Pievienot tērzēšanu izlasei"
   },
   "unstarChat": {
-    "message": "Noņemt tērzēšanu no izlases"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Ievadiet izlases nosaukumu:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Garis masa interaktif untuk ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Gandakan kecekapan sembang AI anda! Tambahkan garis masa interaktif kepada ChatGPT, Gemini, DeepSeek, 🚀 lompat ke mana-mana perbualan dengan mudah, 📌 tandakan perbualan utama, ⭐️ kegemaran sembang penting."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Lihat kegemaran"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Tutup"
   },
-  "clickToStar": {
-    "message": "Klik untuk menambah ke kegemaran"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Klik untuk mengeluarkan dari kegemaran"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Tiada kegemaran"
-  },
-  "goTo": {
-    "message": "Pergi ke"
-  },
-  "goToTooltip": {
-    "message": "Pergi ke butiran sembang"
   },
   "copied": {
     "message": "Disalin"
@@ -36,7 +30,7 @@
     "message": "Tambah sembang ke kegemaran"
   },
   "unstarChat": {
-    "message": "Buang sembang dari kegemaran"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Masukkan tajuk kegemaran:"

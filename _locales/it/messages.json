@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Timeline interattiva per ChatGPT, Gemini, DeepSeek ecc."
   },
   "extDescription": {
-    "message": "Raddoppia la tua efficienza di chat AI! Aggiungi timeline interattiva a ChatGPT, Gemini, DeepSeek, 🚀 salta facilmente a qualsiasi conversazione, 📌 segna conversazioni chiave, ⭐️ preferiti per chat importanti."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Visualizza preferiti"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Chiudi"
   },
-  "clickToStar": {
-    "message": "Aggiungi domanda ai preferiti"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Rimuovi domanda dai preferiti"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Nessun preferito"
-  },
-  "goTo": {
-    "message": "Vai a"
-  },
-  "goToTooltip": {
-    "message": "Vai ai dettagli della chat"
   },
   "copied": {
     "message": "Copiato"
@@ -36,7 +30,7 @@
     "message": "Aggiungi chat ai preferiti"
   },
   "unstarChat": {
-    "message": "Rimuovi chat dai preferiti"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Inserisci il titolo del preferito:"

@@ -71,5 +71,16 @@ class YuanbaoAdapter extends SiteAdapter {
         // 元宝使用页面标题作为默认主题
         return document.title || '';
     }
+    
+    /**
+     * 检测元宝的深色模式
+     * 元宝通过 html 元素的 yb-theme-mode 属性控制主题 (dark/light)
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 html 的 yb-theme-mode 属性
+        const theme = document.documentElement.getAttribute('yb-theme-mode');
+        return theme === 'dark';
+    }
 }
 

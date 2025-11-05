@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktiivinen aikajana ChatGPT, Gemini, DeepSeek jne."
   },
   "extDescription": {
-    "message": "Kaksinkertaista AI-chat-tehokkuutesi! Lisää interaktiivinen aikajana ChatGPT:hen, Geminiin, DeepSeekiin, 🚀 hyppää helposti mihin tahansa keskusteluun, 📌 merkitse avainlausunnot, ⭐️ lisää tärkeät chatit suosikkeihin."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Näytä suosikit"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Sulje"
   },
-  "clickToStar": {
-    "message": "Klikkaa lisätäksesi suosikkeihin"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Klikkaa poistaaksesi suosikeista"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Ei suosikkeja"
-  },
-  "goTo": {
-    "message": "Siirry"
-  },
-  "goToTooltip": {
-    "message": "Siirry keskustelun tietoihin"
   },
   "copied": {
     "message": "Kopioitu"
@@ -36,7 +30,7 @@
     "message": "Lisää keskustelu suosikkeihin"
   },
   "unstarChat": {
-    "message": "Poista keskustelu suosikeista"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Syötä suosikkiotsikko:"

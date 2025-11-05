@@ -44,8 +44,40 @@ class DoubaoAdapter extends SiteAdapter {
     }
 
     findConversationContainer(firstMessage) {
-        // 使用统一的容器查找策略
-        return ContainerFinder.findConversationContainer(firstMessage);
+        // ✅ 豆包特殊处理：直接从消息向上找第一个可滚动容器
+        // 避免找到侧边栏的滚动容器
+        let parent = firstMessage;
+        while (parent && parent !== document.body) {
+            parent = parent.parentElement;
+            if (!parent) break;
+            
+            const style = window.getComputedStyle(parent);
+            const isScrollable = style.overflow === 'auto' || 
+                               style.overflow === 'scroll' || 
+                               style.overflowY === 'auto' || 
+                               style.overflowY === 'scroll';
+            
+            // 找到第一个可滚动且包含消息的容器
+            if (isScrollable && parent.scrollHeight > parent.clientHeight) {
+                return parent;
+            }
+        }
+        
+        // 兜底：向上查找固定深度
+        let container = firstMessage;
+        for (let i = 0; i < 10 && container.parentElement && container.parentElement !== document.body; i++) {
+            container = container.parentElement;
+        }
+        return container || firstMessage.parentElement;
+    }
+    
+    /**
+     * ✅ 豆包使用反向滚动布局（scrollTop=0在底部，负数向上）
+     * 其他平台如果也有反向滚动，可以在适配器中添加此方法返回 true
+     * @returns {boolean}
+     */
+    isReverseScroll() {
+        return true;
     }
 
     getTimelinePosition() {
@@ -84,6 +116,17 @@ class DoubaoAdapter extends SiteAdapter {
         formulaManager.init();
         
         return formulaManager;
+    }
+    
+    /**
+     * 检测豆包的深色模式
+     * 豆包通过 html 元素的 data-theme 属性控制主题 (dark/light)
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 html 的 data-theme 属性
+        const theme = document.documentElement.getAttribute('data-theme');
+        return theme === 'dark';
     }
 }
 

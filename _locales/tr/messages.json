@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - ChatGPT, Gemini için etkileşimli zaman çizelgesi"
   },
   "extDescription": {
-    "message": "AI sohbet verimliliğinizi iki katına çıkarın! ChatGPT, Gemini, DeepSeek'e etkileşimli zaman çizelgesi ekleyin, 🚀 kolayca herhangi bir konuşmaya atlayın, 📌 önemli konuşmaları işaretleyin, ⭐️ önemli sohbetleri favorilere ekleyin."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Favorileri görüntüle"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Kapat"
   },
-  "clickToStar": {
-    "message": "Soruyu favorilere ekle"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Soruyu favorilerden kaldır"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Favori yok"
-  },
-  "goTo": {
-    "message": "Git"
-  },
-  "goToTooltip": {
-    "message": "Sohbet detaylarına git"
   },
   "copied": {
     "message": "Kopyalandı"
@@ -36,7 +30,7 @@
     "message": "Sohbeti favorilere ekle"
   },
   "unstarChat": {
-    "message": "Sohbeti favorilerden kaldır"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Favori başlığını girin:"

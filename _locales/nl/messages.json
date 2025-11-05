@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interactieve tijdlijn voor ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Verdubbel uw AI-chatefficiëntie! Voeg interactieve tijdlijn toe aan ChatGPT, Gemini, DeepSeek, 🚀 spring eenvoudig naar elk gesprek, 📌 markeer belangrijke gesprekken, ⭐️ favoriete belangrijke chats."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Favorieten bekijken"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Sluiten"
   },
-  "clickToStar": {
-    "message": "Vraag toevoegen aan favorieten"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Vraag verwijderen uit favorieten"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Geen favorieten"
-  },
-  "goTo": {
-    "message": "Ga naar"
-  },
-  "goToTooltip": {
-    "message": "Ga naar chatdetails"
   },
   "copied": {
     "message": "Gekopieerd"
@@ -36,7 +30,7 @@
     "message": "Chat toevoegen aan favorieten"
   },
   "unstarChat": {
-    "message": "Chat verwijderen uit favorieten"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Voer favoriettitel in:"

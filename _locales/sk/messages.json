@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktívna časová os pre ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Zdvojnásobte svoju efektivitu AI chatu! Pridajte interaktívnu časovú os do ChatGPT, Gemini, DeepSeek, 🚀 ľahko preskočte na akúkoľvek konverzáciu, 📌 označte kľúčové konverzácie, ⭐️ obľúbené dôležité chaty."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Zobraziť obľúbené"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Zavrieť"
   },
-  "clickToStar": {
-    "message": "Kliknite pre pridanie do obľúbených"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Kliknite pre odstránenie z obľúbených"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Žiadne obľúbené"
-  },
-  "goTo": {
-    "message": "Prejsť na"
-  },
-  "goToTooltip": {
-    "message": "Prejsť na podrobnosti chatu"
   },
   "copied": {
     "message": "Skopírované"
@@ -36,7 +30,7 @@
     "message": "Pridať chat do obľúbených"
   },
   "unstarChat": {
-    "message": "Odstrániť chat z obľúbených"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Zadajte názov obľúbenej položky:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Interaktiv tidslinje til ChatGPT, Gemini, DeepSeek osv."
   },
   "extDescription": {
-    "message": "Fordoble din AI-chateffektivitet! Tilføj interaktiv tidslinje til ChatGPT, Gemini, DeepSeek, 🚀 spring nemt til enhver samtale, 📌 marker nøglesamtaler, ⭐️ favoriser vigtige chats."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Vis favoritter"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Luk"
   },
-  "clickToStar": {
-    "message": "Klik for at tilføje til favoritter"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Klik for at fjerne fra favoritter"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Ingen favoritter"
-  },
-  "goTo": {
-    "message": "Gå til"
-  },
-  "goToTooltip": {
-    "message": "Gå til chatdetaljer"
   },
   "copied": {
     "message": "Kopieret"
@@ -36,7 +30,7 @@
     "message": "Markér chat som favorit"
   },
   "unstarChat": {
-    "message": "Fjern chat fra favoritter"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Indtast favorittitel:"

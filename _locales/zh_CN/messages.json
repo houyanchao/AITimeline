@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Chat Timeline - 为 AI 对话添加交互式时间轴，支持 ChatGPT、Gemini、DeepSeek、Claude 等"
+    "message": "AI Chat Timeline - 给 AI 对话添加交互式时间轴，支持 ChatGPT、Gemini、DeepSeek、Claude 等"
   },
   "extDescription": {
-    "message": "让你跟 AI 聊天的效率直接翻倍！给 ChatGPT、Gemini、DeepSeek 添加交互式时间轴，🚀轻松跳转至任意对话，📌标记重点对话，⭐️收藏重要聊天。"
+    "message": "让你使用 AI 聊天的效率翻倍！通过交互式时间轴，🚀轻松跳转至任意对话，📌长按标记重要对话，⭐️收藏聊天、快捷复制 LaTeX 公式。"
   },
   "viewStarred": {
     "message": "查看收藏"
@@ -14,26 +14,20 @@
   "close": {
     "message": "关闭"
   },
-  "clickToStar": {
-    "message": "收藏提问"
+  "starSuccess": {
+    "message": "已收藏"
   },
-  "clickToUnstar": {
-    "message": "取消收藏提问"
+  "unstarSuccess": {
+    "message": "已取消收藏"
   },
   "starChat": {
     "message": "收藏聊天"
   },
   "unstarChat": {
-    "message": "取消收藏聊天"
+    "message": "取消收藏"
   },
   "noStarredItems": {
     "message": "暂无收藏"
-  },
-  "goTo": {
-    "message": "前往"
-  },
-  "goToTooltip": {
-    "message": "前往聊天详情页"
   },
   "copied": {
     "message": "已复制"

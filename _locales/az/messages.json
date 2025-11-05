@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - ChatGPT, Gemini, DeepSeek üçün interaktiv zaman xətti"
   },
   "extDescription": {
-    "message": "AI söhbət səmərəliliyinizi iki dəfə artırın! ChatGPT, Gemini, DeepSeek-ə interaktiv zaman xətti əlavə edin, 🚀 asanlıqla istənilən söhbətə keçin, 📌 açar söhbətləri qeyd edin, ⭐️ vacib söhbətləri sevimlilərə əlavə edin."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Sevimliləri göstər"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Bağla"
   },
-  "clickToStar": {
-    "message": "Sevimlilərə əlavə etmək üçün klikləyin"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Sevimlilərdən çıxarmaq üçün klikləyin"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Sevimlilər yoxdur"
-  },
-  "goTo": {
-    "message": "Get"
-  },
-  "goToTooltip": {
-    "message": "Söhbət təfərrüatlarına get"
   },
   "copied": {
     "message": "Kopyalandı"
@@ -36,7 +30,7 @@
     "message": "Söhbəti sevimlilərə əlavə et"
   },
   "unstarChat": {
-    "message": "Söhbəti sevimlilərdən sil"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Sevimlinin başlığını daxil edin:"

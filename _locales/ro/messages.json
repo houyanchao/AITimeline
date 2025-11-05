@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Cronologie interactivă pentru ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Dublați-vă eficiența chat-ului AI! Adăugați cronologie interactivă la ChatGPT, Gemini, DeepSeek, 🚀 săriți ușor la orice conversație, 📌 marcați conversații cheie, ⭐️ favorite chat-uri importante."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Vezi favoritele"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Închide"
   },
-  "clickToStar": {
-    "message": "Faceți clic pentru a adăuga la favorite"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Faceți clic pentru a elimina din favorite"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Niciun favorit"
-  },
-  "goTo": {
-    "message": "Mergi la"
-  },
-  "goToTooltip": {
-    "message": "Mergi la detaliile conversației"
   },
   "copied": {
     "message": "Copiat"
@@ -36,7 +30,7 @@
     "message": "Adaugă conversația la favorite"
   },
   "unstarChat": {
-    "message": "Elimină conversația din favorite"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Introduceți titlul favorit:"

@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - Інтерактивна хронологія для ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "Подвойте ефективність вашого AI-чату! Додайте інтерактивну часову шкалу до ChatGPT, Gemini, DeepSeek, 🚀 легко переходьте до будь-якої розмови, 📌 позначайте ключові розмови, ⭐️ додайте важливі чати до обраного."
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "Переглянути вибране"
@@ -14,20 +14,14 @@
   "close": {
     "message": "Закрити"
   },
-  "clickToStar": {
-    "message": "Натисніть, щоб додати до вибраного"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "Натисніть, щоб видалити з вибраного"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "Немає вибраного"
-  },
-  "goTo": {
-    "message": "Перейти до"
-  },
-  "goToTooltip": {
-    "message": "Перейти до деталей чату"
   },
   "copied": {
     "message": "Скопійовано"
@@ -36,7 +30,7 @@
     "message": "Додати чат в обране"
   },
   "unstarChat": {
-    "message": "Видалити чат з обраного"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "Введіть назву обраного:"

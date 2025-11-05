@@ -25,36 +25,72 @@ class GlobalToastManager {
             centerGap: 60,       // 屏幕中央堆叠的起始位置
             types: {
                 success: {
-                    backgroundColor: '#ffffff',
-                    textColor: '#1f2937',
-                    borderColor: '#e5e7eb',
+                    color: {
+                        light: {
+                            backgroundColor: '#ffffff',  // 浅色模式：白色背景
+                            textColor: '#1f2937',        // 浅色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 浅色模式：浅灰色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    },
                     icon: '✓',
                     duration: 1000,
                     position: 'top',  // 相对元素：top/bottom/center
                     gap: 10           // 与目标元素的距离
                 },
                 error: {
-                    backgroundColor: '#ef4444',
-                    textColor: '#ffffff',
-                    borderColor: '#ef4444',
+                    color: {
+                        light: {
+                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                            textColor: '#ffffff',        // 浅色模式：白色文字
+                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    },
                     icon: '⚠',
                     duration: 1500,
                     position: 'top',
                     gap: 10
                 },
                 info: {
-                    backgroundColor: '#3b82f6',
-                    textColor: '#ffffff',
-                    borderColor: '#3b82f6',
-                    icon: 'ℹ',
+                    color: {
+                        light: {
+                            backgroundColor: '#ffffff',  // 浅色模式：白色背景
+                            textColor: '#1f2937',        // 浅色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 浅色模式：浅灰色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    },
+                    icon: '✓',
                     duration: 2000,
                     position: 'top',
                     gap: 10
                 },
                 warning: {
-                    backgroundColor: '#f59e0b',
-                    textColor: '#ffffff',
-                    borderColor: '#f59e0b',
+                    color: {
+                        light: {
+                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                            textColor: '#ffffff',        // 浅色模式：白色文字
+                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                        },
+                        dark: {
+                            backgroundColor: '#ffffff',  // 深色模式：白色背景
+                            textColor: '#1f2937',        // 深色模式：深灰色文字
+                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                        }
+                    },
                     icon: '⚡',
                     duration: 2000,
                     position: 'top',
@@ -74,10 +110,9 @@ class GlobalToastManager {
      * @param {HTMLElement} options.target - 目标元素（相对定位）
      * @param {number} options.duration - 显示时长（覆盖默认）
      * @param {string} options.position - 位置（覆盖默认）
-     * @param {string} options.backgroundColor - 背景色
-     * @param {string} options.textColor - 文字色
-     * @param {string} options.borderColor - 边框色
+     * @param {Object} options.color - 颜色配置对象 {light: {backgroundColor, textColor, borderColor}, dark: {...}}
      * @param {string} options.icon - 图标
+     * @param {number} options.gap - 与目标元素的距离
      */
     show(type, message, options = {}) {
         try {
@@ -208,15 +243,21 @@ class GlobalToastManager {
             max-width: 400px;
         `;
         
-        // 应用配置的颜色
-        if (config.backgroundColor) {
-            element.style.backgroundColor = config.backgroundColor;
-        }
-        if (config.textColor) {
-            element.style.color = config.textColor;
-        }
-        if (config.borderColor) {
-            element.style.border = `1px solid ${config.borderColor}`;
+        // 应用配置的颜色（根据当前主题模式）
+        if (config.color) {
+            // 检测当前是浅色还是深色模式
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const themeColors = isDarkMode ? config.color.dark : config.color.light;
+            
+            if (themeColors.backgroundColor) {
+                element.style.backgroundColor = themeColors.backgroundColor;
+            }
+            if (themeColors.textColor) {
+                element.style.color = themeColors.textColor;
+            }
+            if (themeColors.borderColor) {
+                element.style.border = `1px solid ${themeColors.borderColor}`;
+            }
         }
         
         // 添加图标（如果有）

@@ -1,7 +1,10 @@
 /**
  * Gemini Adapter
  * 
- * Supports: gemini.google.com, gemini.google.com/share/*
+ * Supports: 
+ *   - gemini.google.com/app/xxx
+ *   - gemini.google.com/share/xxx
+ *   - gemini.google.com/gem/xxx/xxx
  * Features: Angular custom element, index-based ID, filters Angular comment nodes
  */
 
@@ -36,8 +39,8 @@ class GeminiAdapter extends SiteAdapter {
     }
 
     isConversationRoute(pathname) {
-        // Gemini conversation URLs: /app/xxx 或分享页面 /share/xxx
-        return pathname.includes('/app/') || pathname.includes('/share/');
+        // Gemini conversation URLs: /app/xxx, /share/xxx, /gem/xxx/xxx
+        return pathname.includes('/app/') || pathname.includes('/share/') || pathname.includes('/gem/');
     }
 
     extractConversationId(pathname) {
@@ -49,6 +52,10 @@ class GeminiAdapter extends SiteAdapter {
             // Extract conversation ID from /share/xxx pattern
             const shareMatch = pathname.match(/\/share\/([A-Za-z0-9_-]+)/);
             if (shareMatch) return shareMatch[1];
+            
+            // Extract conversation ID from /gem/xxx/xxx pattern
+            const gemMatch = pathname.match(/\/gem\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+)/);
+            if (gemMatch) return `${gemMatch[1]}-${gemMatch[2]}`; // 拼接两部分作为唯一ID
             
             return null;
         } catch {
@@ -132,6 +139,16 @@ class GeminiAdapter extends SiteAdapter {
         formulaManager.init();
         
         return formulaManager;
+    }
+    
+    /**
+     * 检测 Gemini 的深色模式
+     * Gemini 通过 body 元素的 class 控制主题 (dark-theme/light-theme)
+     * @returns {boolean}
+     */
+    detectDarkMode() {
+        // 检查 body 的 class 中是否有 dark-theme
+        return document.body.classList.contains('dark-theme');
     }
 }
 

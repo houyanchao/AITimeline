@@ -3,7 +3,7 @@
     "message": "AI Chat Timeline - AI対話にインタラクティブなタイムラインを追加、ChatGPT、DeepSeek等対応"
   },
   "extDescription": {
-    "message": "AIチャットの効率を2倍にします！ChatGPT、Gemini、DeepSeekにインタラクティブなタイムラインを追加、🚀任意の会話に簡単にジャンプ、📌重要な会話をマーク、⭐️重要なチャットをお気に入り。"
+    "message": "Double your AI chat efficiency! With an interactive timeline, 🚀 easily jump to any conversation, 📌 long-press to mark important chats, ⭐️ bookmark chats and quickly copy LaTeX formulas."
   },
   "viewStarred": {
     "message": "お気に入りを表示"
@@ -14,20 +14,14 @@
   "close": {
     "message": "閉じる"
   },
-  "clickToStar": {
-    "message": "クリックしてお気に入りに追加"
+  "unstarSuccess": {
+    "message": "Unstarred"
   },
-  "clickToUnstar": {
-    "message": "クリックしてお気に入りから削除"
+  "starSuccess": {
+    "message": "Starred"
   },
   "noStarredItems": {
     "message": "お気に入りがありません"
-  },
-  "goTo": {
-    "message": "移動"
-  },
-  "goToTooltip": {
-    "message": "チャット詳細へ移動"
   },
   "copied": {
     "message": "コピーしました"
@@ -36,7 +30,7 @@
     "message": "チャットをスター"
   },
   "unstarChat": {
-    "message": "チャットのスターを解除"
+    "message": "Unstar"
   },
   "inputChatTheme": {
     "message": "お気に入りタイトルを入力："
