@@ -44,31 +44,20 @@ class DoubaoAdapter extends SiteAdapter {
     }
 
     findConversationContainer(firstMessage) {
-        // ✅ 豆包特殊处理：直接从消息向上找第一个可滚动容器
-        // 避免找到侧边栏的滚动容器
-        let parent = firstMessage;
-        while (parent && parent !== document.body) {
-            parent = parent.parentElement;
-            if (!parent) break;
-            
-            const style = window.getComputedStyle(parent);
-            const isScrollable = style.overflow === 'auto' || 
-                               style.overflow === 'scroll' || 
-                               style.overflowY === 'auto' || 
-                               style.overflowY === 'scroll';
-            
-            // 找到第一个可滚动且包含消息的容器
-            if (isScrollable && parent.scrollHeight > parent.clientHeight) {
-                return parent;
-            }
-        }
-        
-        // 兜底：向上查找固定深度
-        let container = firstMessage;
-        for (let i = 0; i < 10 && container.parentElement && container.parentElement !== document.body; i++) {
-            container = container.parentElement;
-        }
-        return container || firstMessage.parentElement;
+        /**
+         * 查找对话容器
+         * 
+         * 使用 LCA（最近共同祖先）算法查找所有对话记录的最近父容器。
+         * 传递 messageSelector 参数，让 ContainerFinder 能够：
+         * 1. 查询所有用户消息元素
+         * 2. 找到它们的最近共同祖先
+         * 3. 确保容器是直接包裹所有对话的最小容器
+         * 
+         * 优势：比传统的向上遍历更精确，避免找到过于外层的容器
+         */
+        return ContainerFinder.findConversationContainer(firstMessage, {
+            messageSelector: this.getUserMessageSelector()
+        });
     }
     
     /**

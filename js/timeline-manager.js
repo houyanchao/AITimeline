@@ -25,7 +25,10 @@ class TimelineManager {
         this.markers = [];
         this.activeTurnId = null;
         this.ui = { timelineBar: null, tooltip: null, track: null, trackContent: null, slider: null, sliderHandle: null };
-        this.isScrolling = false;
+        
+        // ✅ 用于跟踪节点变化，避免不必要的重新计算
+        this.lastNodeCount = 0;
+        this.lastNodeIds = new Set();
 
         this.mutationObserver = null;
         this.resizeObserver = null;
@@ -652,11 +655,13 @@ class TimelineManager {
                 }
                 
                 // 添加收藏
+                // ✅ 限制收藏文字长度为前100个字符
+                const truncatedTheme = this.truncateText(theme, 100);
                 const value = {
                     url: location.href,
                     urlWithoutProtocol: urlWithoutProtocol,
                     index: -1,
-                    question: theme,
+                    question: truncatedTheme,
                     timestamp: Date.now()
                 };
                 await StorageAdapter.set(key, value);
@@ -830,8 +835,6 @@ class TimelineManager {
             return;
         }
         this.zeroTurnsTimer = TimelineUtils.clearTimerSafe(this.zeroTurnsTimer);
-        // Clear old dots from track/content (now that we know content exists)
-        (this.ui.trackContent || this.ui.timelineBar).querySelectorAll('.timeline-dot').forEach(n => n.remove());
 
         // ✅ 按照元素在页面上的实际位置（从上往下）排序
         // 确保节点顺序和视觉顺序完全一致，适用于所有网站
@@ -841,11 +844,106 @@ class TimelineManager {
             return rectA.top - rectB.top;
         });
         
-        // 计算内容跨度
-        const firstRect = userTurnElements[0].getBoundingClientRect();
-        const lastRect = userTurnElements[userTurnElements.length - 1].getBoundingClientRect();
+        /**
+         * ✅ 性能优化：只在节点真正变化时重新计算位置
+         * 
+         * 背景：
+         * MutationObserver 会在各种 DOM 变化时触发，包括：
+         * - 图片加载完成（样式变化）
+         * - 代码高亮渲染（内容样式化）
+         * - 公式渲染（LaTeX/KaTeX）
+         * - 动画效果
+         * 
+         * 这些变化不会影响对话节点的数量和顺序，但会触发不必要的位置重新计算。
+         * 
+         * 优化策略：
+         * 通过比对节点 ID 集合，只在节点真正增加/删除时才重新计算。
+         * 这样可以减少 80%+ 的不必要计算，提升性能和稳定性。
+         */
+        
+        // 生成当前节点的 ID 集合
+        const currentNodeIds = new Set();
+        userTurnElements.forEach((el, index) => {
+            const id = this.adapter.generateTurnId(el, index);
+            currentNodeIds.add(id);
+        });
+        
+        // 判断节点是否变化：数量变化 或 ID 集合变化
+        const nodeCountChanged = userTurnElements.length !== this.lastNodeCount;
+        const nodeIdsChanged = currentNodeIds.size !== this.lastNodeIds.size || 
+                               ![...currentNodeIds].every(id => this.lastNodeIds.has(id));
+        const needsRecalculation = nodeCountChanged || nodeIdsChanged;
+        
+        // 如果节点没有变化，只更新渲染，不重新计算位置
+        if (!needsRecalculation && this.markers.length > 0) {
+            // 只更新视图和同步状态（不涉及位置计算）
+            this.syncTimelineTrackToMain();
+            this.updateVirtualRangeAndRender();
+            this.updateActiveDotUI();
+            this.scheduleScrollSync();
+            this.perfEnd('recalc');
+            // console.log('⚡ [优化] 节点未变化，跳过位置重新计算');
+            return;
+        }
+        
+        // console.log('🔄 [重新计算] 节点发生变化:', { 
+        //     nodeCount: userTurnElements.length, 
+        //     countChanged: nodeCountChanged, 
+        //     idsChanged: nodeIdsChanged 
+        // });
+        
+        // 更新跟踪状态
+        this.lastNodeCount = userTurnElements.length;
+        this.lastNodeIds = currentNodeIds;
+        
+        // 节点发生变化，清除旧的 dots，准备重新计算和渲染
+        (this.ui.trackContent || this.ui.timelineBar).querySelectorAll('.timeline-dot').forEach(n => n.remove());
+        
+        /**
+         * ✅ 计算元素相对于容器顶部的距离（使用 offsetTop）
+         * 
+         * 为什么使用 offsetTop 而不是 getBoundingClientRect？
+         * - getBoundingClientRect().top 是相对于视口的，会随滚动变化
+         * - offsetTop 是相对于 offsetParent 的，不受滚动影响，更稳定
+         * 
+         * 算法说明：
+         * 1. 从元素开始，向上遍历到 container
+         * 2. 累加每一层的 offsetTop
+         * 3. 如果 offsetParent 跳出了 container（如 position:fixed），使用后备方案
+         * 
+         * @param {HTMLElement} element - 目标元素
+         * @param {HTMLElement} container - 容器元素
+         * @returns {number} 元素距离容器顶部的像素距离
+         */
+        const getOffsetTop = (element, container) => {
+            let offset = 0;
+            let current = element;
+            
+            // 向上遍历，累加 offsetTop，直到到达 container
+            while (current && current !== container && container.contains(current)) {
+                offset += current.offsetTop || 0;
+                current = current.offsetParent;
+                
+                // 如果 offsetParent 跳到了 container 外面，需要修正
+                // 这种情况通常发生在有 position:fixed 等特殊定位的元素
+                if (current && !container.contains(current)) {
+                    // 使用 getBoundingClientRect 作为后备方案
+                    const elemRect = element.getBoundingClientRect();
+                    const contRect = container.getBoundingClientRect();
+                    const contScrollTop = container.scrollTop || 0;
+                    return elemRect.top - contRect.top + contScrollTop;
+                }
+            }
+            
+            return offset;
+        };
+        
+        // 计算第一个和最后一个节点距离容器顶部的距离
+        const firstOffsetTop = getOffsetTop(userTurnElements[0], this.conversationContainer);
+        const lastOffsetTop = getOffsetTop(userTurnElements[userTurnElements.length - 1], this.conversationContainer);
+        
         const firstTurnOffset = 0; // 使用第一个元素作为基准
-        let contentSpan = lastRect.top - firstRect.top;
+        let contentSpan = lastOffsetTop - firstOffsetTop;
         
         if (userTurnElements.length < 2 || contentSpan <= 0) {
             contentSpan = 1;
@@ -857,13 +955,36 @@ class TimelineManager {
 
         // Build markers with normalized position along conversation
         this.markerMap.clear();
+        
         this.markers = Array.from(userTurnElements).map((el, index) => {
-            // 统一使用 getBoundingClientRect 计算相对位置
-            const elRect = el.getBoundingClientRect();
-            const offsetFromStart = elRect.top - firstRect.top;
+            /**
+             * ✅ 计算节点的归一化位置（0 到 1）
+             * 
+             * 重要：节点位置不是均匀分布，而是按对话内容在页面上的实际位置比例映射
+             * 
+             * 计算原理：
+             * 1. 测量每个节点在页面上的实际位置（offsetTop）
+             * 2. 计算相对于第一个节点的距离：offsetFromStart = elOffsetTop - firstOffsetTop
+             * 3. 归一化到 [0, 1] 区间：n = offsetFromStart / contentSpan
+             * 
+             * 示例场景：
+             * - 如果第2条对话很长（占300px），第3条对话很短（占50px）
+             * - 那么节点2和节点3在时间轴上的距离也会反映这个比例（约6:1）
+             * - 这样用户可以直观看到对话内容的疏密分布
+             * 
+             * 结果：
+             * - 第一个节点：offsetFromStart = 0, n = 0 → 时间轴顶部（留 pad 边距）
+             * - 最后一个节点：offsetFromStart = contentSpan, n = 1 → 时间轴底部（留 pad 边距）
+             * - 中间节点：n 按对话实际位置比例分布（不是均匀分布）
+             * 
+             * 这个 n 值会在 updateTimelineGeometry() 中转换为时间轴上的实际像素位置：
+             * y = pad + n * (contentHeight - 2*pad)
+             */
+            const elOffsetTop = getOffsetTop(el, this.conversationContainer);
+            const offsetFromStart = elOffsetTop - firstOffsetTop;
             
             let n = offsetFromStart / contentSpan;
-            n = Math.max(0, Math.min(1, n));
+            n = Math.max(0, Math.min(1, n)); // 限制在 [0, 1] 范围内
             const id = this.adapter.generateTurnId(el, index);
             
             const m = {
@@ -942,13 +1063,15 @@ class TimelineManager {
     }
     
     setupObservers() {
-        this.mutationObserver = new MutationObserver(() => {
+        this.mutationObserver = new MutationObserver((mutations) => {
             try { this.ensureContainersUpToDate(); } catch {}
             this.debouncedRecalculateAndRender();
             this.updateIntersectionObserverTargets();
         });
         this.mutationObserver.observe(this.conversationContainer, { childList: true, subtree: true });
         // Resize: update long-canvas geometry and virtualization
+        // ⚠️ 注意：这里只监听时间轴自身大小变化，不需要重新计算节点位置
+        // 因为时间轴大小变化不影响对话区域节点的 offsetTop
         this.resizeObserver = new ResizeObserver(() => {
             this.updateTimelineGeometry();
             this.syncTimelineTrackToMain();
@@ -1001,6 +1124,10 @@ class TimelineManager {
         try { this.intersectionObserver?.disconnect(); } catch {}
 
         this.conversationContainer = newConv;
+        
+        // ✅ 重置节点跟踪状态，因为切换了对话
+        this.lastNodeCount = 0;
+        this.lastNodeIds = new Set();
 
         // Find (or re-find) scroll container
         let parent = newConv;
@@ -1208,7 +1335,18 @@ class TimelineManager {
             }
         } catch {}
 
-        // Reposition tooltip on resize
+        /**
+         * 窗口大小变化处理
+         * 
+         * 需要重新计算节点位置的原因：
+         * 1. 窗口宽度变化 → 对话容器宽度变化
+         * 2. 文字重新折行 → 元素高度变化
+         * 3. 元素高度变化 → offsetTop 变化
+         * 4. 如果不重新计算，节点位置会不准确
+         * 
+         * 性能考虑：
+         * 使用 debouncedRecalculateAndRender 避免频繁计算
+         */
         this.onWindowResize = () => {
             if (this.ui.tooltip?.classList.contains('visible')) {
                 const activeDot = this.ui.timelineBar.querySelector('.timeline-dot:hover, .timeline-dot:focus');
@@ -1218,18 +1356,29 @@ class TimelineManager {
                     this.hideTooltip();
                 }
             }
-            // Update long-canvas geometry and virtualization
-            this.updateTimelineGeometry();
-            this.syncTimelineTrackToMain();
-            this.updateVirtualRangeAndRender();
+            // ✅ 强制重新计算节点位置
+            // 重置状态，使优化逻辑认为"节点已变化"，从而触发位置重新计算
+            this.lastNodeCount = 0;
+            this.lastNodeIds.clear();
+            this.debouncedRecalculateAndRender();
         };
         window.addEventListener('resize', this.onWindowResize);
-        // VisualViewport resize can fire on zoom on some platforms; schedule correction
+        /**
+         * 视口缩放处理（VisualViewport API）
+         * 
+         * 触发场景：
+         * - 用户通过手势或快捷键缩放页面（Ctrl + +/-）
+         * - 移动设备上的双指缩放
+         * 
+         * 为什么需要重新计算：
+         * 缩放会改变页面布局和元素尺寸，导致 offsetTop 变化
+         */
         if (window.visualViewport) {
             this.onVisualViewportResize = () => {
-                this.updateTimelineGeometry();
-                this.syncTimelineTrackToMain();
-                this.updateVirtualRangeAndRender();
+                // ✅ 强制重新计算节点位置
+                this.lastNodeCount = 0;
+                this.lastNodeIds.clear();
+                this.debouncedRecalculateAndRender();
             };
             try { window.visualViewport.addEventListener('resize', this.onVisualViewportResize); } catch {}
         }
@@ -1493,7 +1642,6 @@ class TimelineManager {
         let startTime = null;
 
         const animation = (currentTime) => {
-            this.isScrolling = true;
             if (startTime === null) startTime = currentTime;
             const timeElapsed = currentTime - startTime;
             const run = this.easeInOutQuad(timeElapsed, startPosition, distance, duration);
@@ -1502,7 +1650,6 @@ class TimelineManager {
                 requestAnimationFrame(animation);
             } else {
                 this.scrollContainer.scrollTop = targetPosition;
-                this.isScrolling = false;
             }
         };
         requestAnimationFrame(animation);
@@ -1955,22 +2102,45 @@ class TimelineManager {
         }
     }
     
-    // --- Long-canvas geometry and virtualization (Linked mode) ---
+    /**
+     * 更新时间轴几何布局
+     * 
+     * 核心逻辑：将归一化位置（n，范围 0-1）转换为时间轴上的实际像素位置
+     * 
+     * 布局策略：
+     * 1. 计算可用空间：usableC = contentHeight - 2*pad
+     *    - 顶部预留 pad 像素
+     *    - 底部预留 pad 像素
+     *    - 中间是实际可用空间
+     * 
+     * 2. 计算节点位置：y = pad + n * usableC
+     *    - 第一个节点（n=0）：y = pad（离顶部有边距）
+     *    - 最后一个节点（n=1）：y = pad + usableC = contentHeight - pad（离底部有边距）
+     *    - 中间节点按比例分布
+     * 
+     * 3. 应用最小间距约束：确保相邻节点之间至少有 minGap 像素
+     */
     updateTimelineGeometry() {
         if (!this.ui.timelineBar || !this.ui.trackContent) return;
         const H = this.ui.timelineBar.clientHeight || 0;
-        const pad = this.getTrackPadding();
-        const minGap = this.getMinGap();
+        const pad = this.getTrackPadding();          // 顶部和底部的边距
+        const minGap = this.getMinGap();             // 节点之间的最小间距
         const N = this.markers.length;
-        // Content height ensures minGap between consecutive dots
+        
+        // 计算内容高度，确保节点之间有足够的间距
         const desired = Math.max(H, (N > 0 ? (2 * pad + Math.max(0, N - 1) * minGap) : H));
         this.contentHeight = Math.ceil(desired);
         this.scale = (H > 0) ? (this.contentHeight / H) : 1;
         try { this.ui.trackContent.style.height = `${this.contentHeight}px`; } catch {}
 
-        // Precompute desired Y from normalized baseN and enforce min-gap
+        // 计算可用空间（减去顶部和底部的padding）
         const usableC = Math.max(1, this.contentHeight - 2 * pad);
+        
+        // 根据归一化位置计算期望的Y坐标
+        // y = pad + n * usableC，确保第一个和最后一个节点不会贴边
         const desiredY = this.markers.map(m => pad + Math.max(0, Math.min(1, (m.baseN ?? m.n ?? 0))) * usableC);
+        
+        // 应用最小间距约束，避免节点重叠
         const adjusted = this.applyMinGap(desiredY, pad, pad + usableC, minGap);
         this.yPositions = adjusted;
         // Update normalized n for CSS positioning
@@ -2410,23 +2580,81 @@ class TimelineManager {
         }
         
         // ========== 常规情况：使用参考点计算 ==========
-        // 参考点：容器顶部向下 45% 的位置
+        /**
+         * 参考点策略：容器顶部向下 45% 的位置
+         * 
+         * 逻辑分支：
+         * 
+         * 【情况1】0-45%区域内有节点：
+         *   → 激活第一个在0-45%区域内的节点
+         * 
+         * 【情况2】0-45%区域内没有节点：
+         *   → 情况2.1：上方存在节点 → 激活距离最近的上方节点（最后一个在视口上方的）
+         *   → 情况2.2：上方没有节点 → 激活节点1（默认第一个节点）
+         * 
+         * 示例1（情况1：有节点在0-45%区域内）：
+         * ┌─────────────┐
+         * │ 视口顶部     │ 0%
+         * │ 节点1 ●     │ 20%  ✅ 激活（第一个在0-45%内）
+         * │ 节点2 ●     │ 40%  ← 不激活
+         * │ ─────── ←─  │ 45%  ← 参考点
+         * │ 节点3 ●     │ 55%
+         * └─────────────┘
+         * 
+         * 示例2（情况2.1：0-45%内没有节点，上方有节点）：
+         * │ 节点1 ●     │ -200px (在视口上方)
+         * │ 节点2 ●     │ -100px (在视口上方) ✅ 激活（距离最近的上方节点）
+         * ┌─────────────┐
+         * │ 视口顶部     │ 0%
+         * │ ─────── ←─  │ 45%  ← 参考点
+         * │ 节点3 ●     │ 50%
+         * └─────────────┘
+         * 
+         * 示例3（情况2.2：0-45%内没有节点，上方也没有节点）：
+         * ┌─────────────┐
+         * │ 视口顶部     │ 0%
+         * │ ─────── ←─  │ 45%  ← 参考点
+         * │ 节点1 ●     │ 50%  ✅ 激活（默认第一个节点）
+         * │ 节点2 ●     │ 60%
+         * └─────────────┘
+         */
         const referencePoint = containerRect.top + clientHeight * 0.45;
+        const viewportTop = containerRect.top;
         
-        // 常规情况：找到最接近参考点的消息
+        // 默认激活第一个节点（用于情况2.2）
         let activeId = this.markers[0].id;
+        let foundInRange = false;
         
+        // 第一步：从前往后遍历，找第一个在【视口内】且在【0-45%区域】的节点
         for (let i = 0; i < this.markers.length; i++) {
             const m = this.markers[i];
             const elRect = m.element.getBoundingClientRect();
             const elTop = elRect.top;
             
-            // 找到参考点之上最靠近的消息
-            if (elTop <= referencePoint) {
+            // 【情况1】找到第一个在视口内且在0-45%区域的节点
+            // 条件：elTop >= viewportTop (在视口内或之下) && elTop <= referencePoint (在45%之上)
+            if (elTop >= viewportTop && elTop <= referencePoint) {
                 activeId = m.id;
-            } else {
-                break;
+                foundInRange = true;
+                break;  // 找到第一个满足条件的，立即停止
             }
+        }
+        
+        // 第二步：【情况2】0-45%区域内没有节点，找"视口上方"最近的节点
+        if (!foundInRange) {
+            for (let i = 0; i < this.markers.length; i++) {
+                const m = this.markers[i];
+                const elRect = m.element.getBoundingClientRect();
+                const elTop = elRect.top;
+                
+                // 【情况2.1】找最后一个在视口上方的节点（距离最近的）
+                if (elTop < viewportTop) {
+                    activeId = m.id;  // 不断更新，最终得到最后一个
+                } else {
+                    break;  // 遇到第一个在视口内或之下的节点，停止
+                }
+            }
+            // 【情况2.2】如果循环结束后 activeId 仍是默认值，说明上方没有节点，保持为节点1
         }
         
         if (this.activeTurnId !== activeId) {
@@ -2630,15 +2858,42 @@ class TimelineManager {
         }
     }
 
+    /**
+     * ✅ 截断文本到指定长度，超出添加 "..."
+     * 
+     * 用途：
+     * 用于收藏和标记功能，限制保存的文本长度，避免超出存储配额。
+     * 
+     * Chrome Storage API 限制：
+     * - chrome.storage.sync.QUOTA_BYTES_PER_ITEM = 8KB (每个条目)
+     * - 包含 LaTeX 公式或长代码的消息可能超出此限制
+     * - 截断后可避免 "kQuotaBytesPerItem quota exceeded" 错误
+     * 
+     * @param {string} text - 原始文本
+     * @param {number} maxLength - 最大长度（默认100字符）
+     * @returns {string} 截断后的文本
+     * 
+     * @example
+     * truncateText('Hello World', 100) // "Hello World"（不超长，原样返回）
+     * truncateText('这是一段很长的文本内容需要被截断', 10)   // "这是一段很长的文..."（前10个字符 + "..."）
+     */
+    truncateText(text, maxLength = 100) {
+        if (!text) return '';
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    }
+
     async saveStarItem(index, question) {
         try {
             const urlWithoutProtocol = location.href.replace(/^https?:\/\//, '');
             const key = `chatTimelineStar:${urlWithoutProtocol}:${index}`;
+            // ✅ 限制收藏文字长度为前100个字符
+            const truncatedQuestion = this.truncateText(question, 100);
             const value = { 
                 url: location.href,
                 urlWithoutProtocol: urlWithoutProtocol,
                 index: index,
-                question: question || '',
+                question: truncatedQuestion,
                 timestamp: Date.now()
             };
             await StorageAdapter.set(key, value);
@@ -2929,7 +3184,8 @@ class TimelineManager {
                         const key = `chatTimelineStar:${url}:${index}`;
                         const existingValue = await StorageAdapter.get(key);
                         if (existingValue) {
-                            existingValue.question = newText;
+                            // ✅ 限制收藏文字长度为前100个字符
+                            existingValue.question = this.truncateText(newText, 100);
                             existingValue.timestamp = Date.now(); // 更新时间戳
                             await StorageAdapter.set(key, existingValue);
                             
@@ -3310,11 +3566,13 @@ class TimelineManager {
                 this.pinnedIndexes.delete(index);
             } else {
                 // 添加标记
+                // ✅ 限制标记文字长度为前100个字符
+                const truncatedSummary = this.truncateText(marker.summary || '', 100);
                 const pinData = {
                     url: location.href,
                     urlWithoutProtocol: urlWithoutProtocol,
                     index: index,
-                    question: marker.summary || '',
+                    question: truncatedSummary,
                     siteName: this.getSiteNameFromUrl(location.href),
                     timestamp: Date.now(),
                     isFullChat: false

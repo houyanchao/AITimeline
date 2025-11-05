@@ -67,8 +67,13 @@ class DeepSeekAdapter extends SiteAdapter {
     }
 
     findConversationContainer(firstMessage) {
-        // 使用统一的容器查找策略
-        return ContainerFinder.findConversationContainer(firstMessage);
+        /**
+         * 查找对话容器
+         * 使用 LCA（最近共同祖先）算法查找所有对话记录的最近父容器
+         */
+        return ContainerFinder.findConversationContainer(firstMessage, {
+            messageSelector: this.getUserMessageSelector()
+        });
     }
 
     getTimelinePosition() {

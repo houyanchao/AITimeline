@@ -102,8 +102,20 @@ class ChatGPTAdapter extends SiteAdapter {
     }
 
     findConversationContainer(firstMessage) {
-        // 使用统一的容器查找策略
-        return ContainerFinder.findConversationContainer(firstMessage);
+        /**
+         * 查找对话容器
+         * 
+         * 使用 LCA（最近共同祖先）算法查找所有对话记录的最近父容器。
+         * 传递 messageSelector 参数，让 ContainerFinder 能够：
+         * 1. 查询所有用户消息元素
+         * 2. 找到它们的最近共同祖先
+         * 3. 确保容器是直接包裹所有对话的最小容器
+         * 
+         * 优势：比传统的向上遍历更精确，避免找到过于外层的容器
+         */
+        return ContainerFinder.findConversationContainer(firstMessage, {
+            messageSelector: this.getUserMessageSelector()
+        });
     }
 
     getTimelinePosition() {
