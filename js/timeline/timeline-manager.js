@@ -33,6 +33,7 @@ class TimelineManager {
         this.mutationObserver = null;
         this.resizeObserver = null;
         this.intersectionObserver = null;
+        this.hideStateObserver = null; // ✅ 监听需要隐藏时间轴的元素
         this.visibleUserTurns = new Set();
         
         // Event handlers
@@ -197,27 +198,36 @@ class TimelineManager {
     }
     
     injectTimelineUI() {
+        // ✅ 创建或获取包装容器
+        let wrapper = document.querySelector('.chat-timeline-wrapper');
+        if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.className = 'chat-timeline-wrapper';
+            document.body.appendChild(wrapper);
+        }
+        this.ui.wrapper = wrapper;
+        
         // Idempotent: ensure bar exists, then ensure track + content exist
-        let timelineBar = document.querySelector('.chat-timeline-bar');
+        let timelineBar = wrapper.querySelector('.chat-timeline-bar');
         if (!timelineBar) {
             timelineBar = document.createElement('div');
             timelineBar.className = 'chat-timeline-bar';
-            document.body.appendChild(timelineBar);
+            wrapper.appendChild(timelineBar);
         }
         this.ui.timelineBar = timelineBar;
         
-        // Apply site-specific position from adapter
+        // Apply site-specific position from adapter to wrapper
         const position = this.adapter.getTimelinePosition();
         if (position) {
-            if (position.top) timelineBar.style.top = position.top;
+            if (position.top) wrapper.style.top = position.top;
             
             // ✅ 支持左右两侧定位
             if (position.right) {
-                timelineBar.style.right = position.right;
-                timelineBar.style.left = 'auto'; // 清除可能存在的 left 样式
+                wrapper.style.right = position.right;
+                wrapper.style.left = 'auto'; // 清除可能存在的 left 样式
             } else if (position.left) {
-                timelineBar.style.left = position.left;
-                timelineBar.style.right = 'auto'; // 清除可能存在的 right 样式
+                wrapper.style.left = position.left;
+                wrapper.style.right = 'auto'; // 清除可能存在的 right 样式
             }
             
             if (position.bottom) {
@@ -326,7 +336,8 @@ class TimelineManager {
                 window.globalTooltipManager.hide();
             });
             
-            document.body.appendChild(starredBtn);
+            // ✅ 将收藏按钮添加到包装容器内（时间轴的兄弟元素）
+            wrapper.appendChild(starredBtn);
         } else {
             // ✅ 修复：复用的元素，clone后替换，清除旧的事件监听器
             isReusedBtn = true;
@@ -336,34 +347,7 @@ class TimelineManager {
         }
         this.ui.starredBtn = starredBtn;
         
-        // ✅ 动态设置收藏按钮位置，与 timeline-bar 垂直居中对齐
-        if (position) {
-            // 1. 计算 bottom 位置
-            if (position.bottom) {
-                const bottomValue = parseInt(position.bottom, 10) || 100;
-                // 收藏按钮在 timeline-bar 下方 10px，按钮高度 26px
-                starredBtn.style.bottom = `${bottomValue - 10 - 26}px`;
-            }
-            
-            // 2. 计算水平位置，使两者中心对齐
-            // timeline-bar: width=28px
-            // 收藏按钮: width=26px
-            // 中心对齐偏移: 28/2 - 26/2 = 1
-            
-            if (position.right) {
-                // 时间轴在右侧（大多数平台）
-                const timelineBarRight = parseInt(position.right, 10) || 20;
-                const starredBtnRight = timelineBarRight + 1;
-                starredBtn.style.right = `${starredBtnRight}px`;
-                starredBtn.style.left = 'auto'; // 清除可能存在的 left 样式
-            } else if (position.left) {
-                // 时间轴在左侧（如 Grok）
-                const timelineBarLeft = parseInt(position.left, 10) || 20;
-                const starredBtnLeft = timelineBarLeft + 1;
-                starredBtn.style.left = `${starredBtnLeft}px`;
-                starredBtn.style.right = 'auto'; // 清除可能存在的 right 样式
-            }
-        }
+        // ✅ 收藏按钮使用相对定位，不需要动态计算位置
         
         // ✅ 添加收藏整个聊天的按钮（插入到平台原生UI中）
         this.injectStarChatButton();
@@ -1108,6 +1092,44 @@ class TimelineManager {
         });
 
         this.updateIntersectionObserverTargets();
+        
+        // ✅ 设置隐藏状态监听（监听特定元素出现/消失）
+        this.setupHideStateObserver();
+    }
+
+    /**
+     * ✅ 设置隐藏状态监听器
+     * 监听DOM变化，调用adapter的检测方法判断是否应该隐藏时间轴
+     */
+    setupHideStateObserver() {
+        // 检查并更新时间轴可见性
+        const checkAndUpdateTimelineVisibility = () => {
+            // 调用adapter的检测方法
+            const shouldHide = this.adapter.shouldHideTimeline();
+            
+            // 设置时间轴可见性
+            if (this.ui.wrapper) {
+                this.ui.wrapper.style.display = shouldHide ? 'none' : 'flex';
+            }
+        };
+        
+        // 立即检查一次
+        checkAndUpdateTimelineVisibility();
+        
+        // 监听DOM变化
+        this.hideStateObserver = new MutationObserver(() => {
+            checkAndUpdateTimelineVisibility();
+        });
+        
+        // 监听整个body的变化（因为这些元素可能在任何地方出现）
+        try {
+            this.hideStateObserver.observe(document.body, { 
+                childList: true, 
+                subtree: true 
+            });
+        } catch (e) {
+            console.warn('[Timeline] Failed to setup hide state observer:', e);
+        }
     }
 
     // Ensure our conversation/scroll containers are still current after DOM replacements
@@ -1313,7 +1335,7 @@ class TimelineManager {
         
         this.onTooltipLeave = (e) => {
             // 鼠标离开 tooltip
-            const toTimeline = e.relatedTarget?.closest?.('.chat-timeline-bar');
+            const toTimeline = e.relatedTarget?.closest?.('.chat-timeline-wrapper');
             const toDot = e.relatedTarget?.closest?.('.timeline-dot');
             
             // 如果不是移回圆点或时间轴，隐藏 tooltip
@@ -2084,10 +2106,10 @@ class TimelineManager {
     }
 
     /**
-     * ✅ 更新时间轴高度和相关按钮位置
+     * ✅ 更新时间轴高度和包装容器位置
      */
     updateTimelineHeight() {
-        if (!this.ui.timelineBar) return;
+        if (!this.ui.timelineBar || !this.ui.wrapper) return;
         
         const position = this.adapter.getTimelinePosition();
         if (!position || !position.top || !position.bottom) return;
@@ -2099,14 +2121,13 @@ class TimelineManager {
         const topValue = `${defaultTop}px`;
         const bottomValue = `${defaultBottom}px`;
         
-        // 设置时间轴高度和位置
-        this.ui.timelineBar.style.top = topValue;
+        // 设置包装容器位置（包含时间轴和收藏按钮）
+        this.ui.wrapper.style.top = topValue;
+        
+        // 设置时间轴高度
         this.ui.timelineBar.style.height = `max(200px, calc(100vh - ${topValue} - ${bottomValue}))`;
         
-        // 同时更新收藏按钮位置（在时间轴下方）
-        if (this.ui.starredBtn) {
-            this.ui.starredBtn.style.bottom = `${defaultBottom - 10 - 26}px`;
-        }
+        // ✅ 收藏按钮使用相对定位，不需要动态调整位置
     }
     
     /**
@@ -2720,6 +2741,7 @@ class TimelineManager {
         TimelineUtils.disconnectObserverSafe(this.mutationObserver);
         TimelineUtils.disconnectObserverSafe(this.resizeObserver);
         TimelineUtils.disconnectObserverSafe(this.intersectionObserver);
+        TimelineUtils.disconnectObserverSafe(this.hideStateObserver); // ✅ 清理隐藏状态监听器
         TimelineUtils.disconnectObserverSafe(this.themeObserver); // ✅ 优化：清理主题监听器
         this.visibleUserTurns.clear();
         

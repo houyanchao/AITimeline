@@ -135,10 +135,9 @@ function initializeTimeline() {
     }
     
     // Remove any leftover UI before creating a new instance
-    TimelineUtils.removeElementSafe(document.querySelector('.chat-timeline-bar'));
+    TimelineUtils.removeElementSafe(document.querySelector('.chat-timeline-wrapper')); // ✅ 清理包装容器（包含时间轴和收藏按钮）
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-left-slider'));
     TimelineUtils.removeElementSafe(document.getElementById('chat-timeline-tooltip'));
-    TimelineUtils.removeElementSafe(document.querySelector('.timeline-starred-btn'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-starred-panel'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-star-chat-btn-native'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-star-chat-btn-fixed'));
@@ -163,10 +162,9 @@ function handleUrlChange() {
         timelineManagerInstance = null;
     }
     
-    TimelineUtils.removeElementSafe(document.querySelector('.chat-timeline-bar'));
+    TimelineUtils.removeElementSafe(document.querySelector('.chat-timeline-wrapper')); // ✅ 清理包装容器（包含时间轴和收藏按钮）
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-left-slider'));
     TimelineUtils.removeElementSafe(document.getElementById('chat-timeline-tooltip'));
-    TimelineUtils.removeElementSafe(document.querySelector('.timeline-starred-btn'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-starred-panel'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-star-chat-btn-native'));
     TimelineUtils.removeElementSafe(document.querySelector('.timeline-star-chat-btn-fixed'));

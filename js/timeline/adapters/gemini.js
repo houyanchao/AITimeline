@@ -135,5 +135,14 @@ class GeminiAdapter extends SiteAdapter {
         // 检查 body 的 class 中是否有 dark-theme
         return document.body.classList.contains('dark-theme');
     }
+    
+    /**
+     * 检测是否应该隐藏时间轴
+     * Gemini: 当存在沉浸式面板时隐藏
+     * @returns {boolean}
+     */
+    shouldHideTimeline() {
+        return document.querySelector('.ng-trigger-immersivePanelTransitions') !== null;
+    }
 }
 

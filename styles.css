@@ -54,14 +54,23 @@ html.dark {
     --timeline-bar-bg: rgba(45, 45, 48, 0.95); /* ✅✅ 更高不透明度：0.92 → 0.95，背景更扎实 */
 }
 
-.chat-timeline-bar {
+/* ✅ 时间轴包装容器（包含时间轴和收藏按钮） */
+.chat-timeline-wrapper {
     position: fixed;
-    /* Position values (top, right, height) are set by JavaScript based on site adapter */
+    /* Position values (top, right) are set by JavaScript based on site adapter */
     top: 60px; /* Default fallback */
     right: 17px; /* Default fallback */
+    z-index: 30; /* ensure above site chrome */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* 时间轴和收藏按钮之间的间距 */
+}
+
+.chat-timeline-bar {
+    position: relative; /* 相对于包装容器定位 */
     width: 28px;
     height: calc(100vh - 100px); /* Default fallback */
-    z-index: 30; /* ensure above site chrome */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -484,10 +493,9 @@ html.dark .timeline-left-slider::before { background: rgba(255,255,255,0.10); }
 .timeline-left-slider .timeline-left-handle:hover { background: rgba(16,163,127,0.45); }
 .timeline-left-slider .timeline-left-handle:active { cursor: grabbing; }
 
-/* ✅ 收藏按钮（纯五角星，timeline-bar 下方 10px，位置由 JS 动态设置） */
+/* ✅ 收藏按钮（纯五角星，在时间轴元素外部下方，通过包装容器的 gap 控制间距） */
 .timeline-starred-btn {
-    position: fixed;
-    /* right 和 bottom 值由 JS 根据 timeline-bar 动态计算，保证垂直居中对齐 */
+    position: relative; /* 相对于包装容器定位 */
     width: 28px;
     height: 28px;
     border: none;
@@ -498,9 +506,9 @@ html.dark .timeline-left-slider::before { background: rgba(255,255,255,0.10); }
     justify-content: center;
     padding: 3px;
     transition: background-color 0.2s ease, opacity 0.2s ease;
-    z-index: 30; /* 与 timeline-bar 同级 */
     opacity: 0.85;
     border-radius: 6px;
+    flex-shrink: 0; /* 防止收缩 */
 }
 
 .timeline-starred-btn svg {

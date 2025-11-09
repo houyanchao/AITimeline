@@ -146,5 +146,14 @@ class ChatGPTAdapter extends SiteAdapter {
         const colorScheme = document.documentElement.style.colorScheme;
         return colorScheme === 'dark';
     }
+    
+    /**
+     * 检测是否应该隐藏时间轴
+     * ChatGPT: 当页面存在 .text-token-primary 元素时隐藏
+     * @returns {boolean}
+     */
+    shouldHideTimeline() {
+        return document.querySelector('.text-token-primary') !== null;
+    }
 }
 

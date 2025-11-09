@@ -137,5 +137,13 @@ class SiteAdapter {
         return false;
     }
     
+    /**
+     * Check if timeline should be hidden in current state
+     * @returns {boolean} - true if timeline should be hidden
+     */
+    shouldHideTimeline() {
+        return false; // 默认不隐藏
+    }
+    
 }
 
