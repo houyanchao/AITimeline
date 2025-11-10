@@ -146,6 +146,7 @@ function initializeTimeline() {
     try {
         timelineManagerInstance = new TimelineManager(currentAdapter);
         timelineManagerInstance.init().catch(err => {});
+        
     } catch (err) {
     }
 }

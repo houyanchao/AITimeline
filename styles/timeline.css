@@ -1,58 +1,18 @@
-/*
-  chat Timeline Stylesheet
-  This CSS is designed to be resilient and adapt to chat's light/dark themes.
-*/
+/**
+ * Timeline Styles - 时间轴样式
+ * 
+ * 包含内容：
+ * - 时间轴容器和节点
+ * - 收藏按钮和面板
+ * - Tooltip 样式
+ * - 滑块和主题对话框
+ * 
+ * @requires variables.css
+ */
 
-/* Use CSS variables for easy theme management. We sample chat's own colors. */
-:root {
-    --timeline-dot-color: #D1D5DB; /* Light mode gray */
-    --timeline-dot-active-color: #6128FF; /* 紫色 rgb(97, 40, 255) */
-    --timeline-star-color: #FF7D03; /* 收藏橙色 rgb(255, 125, 3) */
-
-    /* AI Studio-like tooltip tokens (light) */
-    --timeline-tooltip-bg: #0d0d0d;
-    --timeline-tooltip-text: #FFFFFF;
-    --timeline-tooltip-border: #0d0d0d;
-    --timeline-tooltip-radius: 12px;
-    --timeline-tooltip-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
-    /* geometry */
-    --timeline-tooltip-lh: 18px;
-    --timeline-tooltip-pad-y: 10px;
-    --timeline-tooltip-pad-x: 12px;
-    --timeline-tooltip-border-w: 1px;
-    --timeline-tooltip-arrow-size: 12px; /* ✅ 需求1：箭头放大 1.5 倍 (8px → 12px) */
-    --timeline-tooltip-arrow-outside: 6px; /* ✅ 需求1：同步调整突出距离 (4px → 6px) */
-    --timeline-tooltip-anim-in: 120ms cubic-bezier(0, 0, 0.2, 1);
-    --timeline-tooltip-anim-out: 100ms linear;
-
-    --timeline-bar-bg: rgba(246, 246, 248, 0.8);
-    --timeline-dot-size: 14px;
-    --timeline-star-size: 17px; /* 五角星盒子尺寸（增加1px） */
-    --timeline-active-ring: 3px;
-    --timeline-star-ring: 5px; /* 五角星边框环宽度（增加1px，使边框更明显） */
-    --timeline-track-padding: 16px;
-    --timeline-tooltip-max: 288px;
-    --timeline-min-gap: 20px;
-    /* enlarged hit area for easier clicking */
-    --timeline-hit-size: 30px;
-    /* spacing model */
-    --timeline-tooltip-gap-visual: 4px;   /* ✅ 需求1：减少间距，让 tooltip 靠近圆点 (8px → 4px) */
-    --timeline-tooltip-gap-box: 2px;      /* ✅ 需求1：同步减少 box gap (4px → 2px) */
-    /* ✅ 移除：--timeline-hold-ms 已删除，长按功能已移除 */
-}
-
-/* Override variables when chat's dark mode is active */
-html.dark {
-    --timeline-dot-color: #A0A0A0; /* ✅✅ 进一步提升亮度：#888 → #A0A0A0，深色主题下更清晰 */
-    --timeline-dot-active-color: #8B5CF6; /* ✅✅ 更明亮的紫色：#7C3AED → #8B5CF6 (violet-500)，对比度更强 */
-    --timeline-star-color: #FB923C; /* 橙色保持不变，已经很好 */
-    --timeline-active-ring: 4px; /* ✅✅ 加粗激活环：3px → 4px，深色主题下更醒目 */
-    /* Dark tooltip palette */
-    --timeline-tooltip-bg: #262626; /* ✅✅ 再提亮一点：#1f1f1f → #262626 */
-    --timeline-tooltip-text: #F5F5F5;
-    --timeline-tooltip-border: #404040; /* ✅✅ 更明显的边框：#2a2a2a → #404040 */
-    --timeline-bar-bg: rgba(45, 45, 48, 0.95); /* ✅✅ 更高不透明度：0.92 → 0.95，背景更扎实 */
-}
+/* ============================================
+   时间轴核心样式
+   ============================================ */
 
 /* ✅ 时间轴包装容器（包含时间轴和收藏按钮） */
 .chat-timeline-wrapper {
@@ -338,54 +298,6 @@ html.dark .timeline-dot.starred.active::before {
 
 .timeline-tooltip-content:active {
     opacity: 0.6; /* 点击时更明显的反馈 */
-}
-
-/* ✅ 复制成功提示 - 与 tooltip 保持一致的样式 */
-.timeline-copy-feedback {
-    position: fixed;
-    background-color: #ffffff; /* ✅ 白色背景 */
-    color: #1f2937; /* ✅ 深灰色文字 */
-    padding: 8px 12px;
-    border-radius: var(--timeline-tooltip-radius);
-    border: 1px solid #e5e7eb; /* ✅ 浅灰色边框 */
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* ✅ 柔和阴影 */
-    z-index: 2147483647;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-}
-
-/* ✅ 深色主题下的"已复制"toast */
-html.dark .timeline-copy-feedback {
-    background-color: #ffffff;
-    color: #1f2937;
-    border-color: #d1d5db;
-}
-
-.timeline-copy-feedback.visible {
-    opacity: 1;
-}
-
-/* ✅ 错误提示 toast */
-.timeline-error-toast {
-    position: fixed;
-    background-color: #ef4444;
-    color: #ffffff;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-    z-index: 2147483649;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-}
-
-.timeline-error-toast.visible {
-    opacity: 1;
 }
 
 /* Visible state toggled by JS */
@@ -975,110 +887,6 @@ html.dark .timeline-starred-footer-item {
     text-decoration: underline;
 }
 
-/* ============================================
-   ✅ 通用 Tooltip 样式（基础类）
-   ============================================ */
-
-/* ✅ 通用 tooltip 基础样式 */
-.timeline-tooltip-base {
-    position: fixed;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.5;
-    white-space: normal;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    word-break: break-word;
-    max-width: 400px;
-    z-index: 2147483648;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
-    pointer-events: none;
-}
-
-.timeline-tooltip-base.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* ✅ 黑色背景 tooltip（用于降级逻辑） */
-.timeline-tooltip-dark {
-    background-color: var(--timeline-tooltip-bg);
-    color: var(--timeline-tooltip-text);
-    border: 1px solid var(--timeline-tooltip-border);
-}
-
-/* ✅ 白色背景 tooltip（用于降级逻辑） */
-.timeline-tooltip-light {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* ============================================
-   ✅ 统一的Tooltip箭头样式（所有tooltip共用）
-   ============================================ */
-
-/* 箭头基础样式 */
-.timeline-tooltip::after,
-.timeline-tooltip-base::after {
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    transform: rotate(45deg);
-    /* 使用CSS变量设置箭头颜色（支持动态切换） */
-    background: var(--timeline-tooltip-bg);
-    border: 1px solid var(--timeline-tooltip-border);
-    z-index: 1;
-}
-
-/* 显示在上方时，箭头在底部指向下方 */
-.timeline-tooltip[data-placement="top"]::after,
-.timeline-tooltip-base[data-placement="top"]::after {
-    bottom: -4px;
-    left: 50%;
-    margin-left: -4px;
-    border-top: none;
-    border-left: none;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* 显示在下方时，箭头在顶部指向上方 */
-.timeline-tooltip[data-placement="bottom"]::after,
-.timeline-tooltip-base[data-placement="bottom"]::after {
-    top: -4px;
-    left: 50%;
-    margin-left: -4px;
-    border-bottom: none;
-    border-right: none;
-    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* 显示在左侧时，箭头在右边指向右方 */
-.timeline-tooltip[data-placement="left"]::after,
-.timeline-tooltip-base[data-placement="left"]::after {
-    right: -5px; /* ✅ 向右移动1px，从-4px改为-5px，优化视觉效果 */
-    top: 50%;
-    margin-top: -4px;
-    border-left: none;
-    border-bottom: none;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* 显示在右侧时，箭头在左边指向左方 */
-.timeline-tooltip[data-placement="right"]::after,
-.timeline-tooltip-base[data-placement="right"]::after {
-    left: -4px;
-    top: 50%;
-    margin-top: -4px;
-    border-right: none;
-    border-top: none;
-    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
-}
-
 /* ✅ 编辑按钮 - 与星标按钮尺寸一致 */
 .timeline-starred-item-edit {
     flex-shrink: 0;
@@ -1203,56 +1011,3 @@ html.dark .timeline-starred-item-copy:hover svg {
     transform: scale(0.95);
 }
 
-/* ============================================
-   ✅ 公式交互样式（FormulaManager）
-   ============================================ */
-
-/* 公式基础交互样式（统一识别 .katex、.mwe-math-element 和 MathJax 元素）*/
-.katex.formula-interactive,
-.mwe-math-element.formula-interactive,
-.MathJax_SVG.formula-interactive,
-.MathJax.formula-interactive {
-    position: relative;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-    border-radius: 6px;
-}
-
-/* 公式 hover 效果 */
-.katex.formula-interactive.formula-hover,
-.mwe-math-element.formula-interactive.formula-hover,
-.MathJax_SVG.formula-interactive.formula-hover,
-.MathJax.formula-interactive.formula-hover {
-    background-color: rgba(0, 0, 0, 0.06) !important;
-    cursor: pointer;
-}
-
-html.dark .katex.formula-interactive.formula-hover,
-html.dark .mwe-math-element.formula-interactive.formula-hover,
-html.dark .MathJax_SVG.formula-interactive.formula-hover,
-html.dark .MathJax.formula-interactive.formula-hover {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-/* 公式点击效果 */
-.katex.formula-interactive:active,
-.mwe-math-element.formula-interactive:active,
-.MathJax_SVG.formula-interactive:active,
-.MathJax.formula-interactive:active {
-    transform: scale(0.998);
-}
-
-/* 公式 tooltip（继承通用 tooltip 样式）*/
-.formula-tooltip {
-    /* 基础样式已在 .timeline-tooltip-base 中定义 */
-    font-size: 13px;
-    padding: 8px 14px;
-    white-space: nowrap;
-}
-
-/* 公式复制反馈样式优化 */
-.timeline-copy-feedback {
-    /* 基础样式已定义，这里添加公式特定的优化 */
-    min-width: 80px;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}

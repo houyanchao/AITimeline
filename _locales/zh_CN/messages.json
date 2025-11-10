@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "AI Timeline - 为 AI 对话添加交互式时间轴，支持 ChatGPT、Gemini、DeepSeek、Claude 等"
+    "message": "AI Timeline - 为 AI 对话添加可交互时间轴，ChatGPT, Gemini, DeepSeek, grok"
   },
   "extDescription": {
     "message": "把你跟 AI 的对话整理成可交互时间轴，🚀快速预览并跳转、📌标记重点对话、⭐️收藏重要聊天、❤️复制 LaTeX 公式，让效率翻倍！"

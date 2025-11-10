@@ -1,0 +1,120 @@
+/**
+ * Global Tooltip Manager Styles
+ * 
+ * 通用 Tooltip 组件样式
+ * 
+ * 对应 JS: js/global/tooltip-manager.js
+ * 
+ * 包含内容：
+ * - 基础 tooltip 样式
+ * - 主题变体（深色/浅色）
+ * - 箭头样式（上下左右）
+ * - 显示/隐藏动画
+ * 
+ * @requires ../variables.css
+ */
+
+/* ============================================
+   通用 Tooltip 基础样式
+   ============================================ */
+
+/* 基础 tooltip 样式 */
+.timeline-tooltip-base {
+    position: fixed;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: normal;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    word-break: break-word;
+    max-width: 400px;
+    z-index: 2147483648;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    pointer-events: none;
+}
+
+.timeline-tooltip-base.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 黑色背景 tooltip（用于降级逻辑） */
+.timeline-tooltip-dark {
+    background-color: var(--timeline-tooltip-bg);
+    color: var(--timeline-tooltip-text);
+    border: 1px solid var(--timeline-tooltip-border);
+}
+
+/* 白色背景 tooltip（用于降级逻辑） */
+.timeline-tooltip-light {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Tooltip 箭头样式（所有 tooltip 共用）
+   ============================================ */
+
+/* 箭头基础样式 */
+.timeline-tooltip::after,
+.timeline-tooltip-base::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    /* 使用CSS变量设置箭头颜色（支持动态切换） */
+    background: var(--timeline-tooltip-bg);
+    border: 1px solid var(--timeline-tooltip-border);
+    z-index: 1;
+}
+
+/* 显示在上方时，箭头在底部指向下方 */
+.timeline-tooltip[data-placement="top"]::after,
+.timeline-tooltip-base[data-placement="top"]::after {
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+    border-top: none;
+    border-left: none;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* 显示在下方时，箭头在顶部指向上方 */
+.timeline-tooltip[data-placement="bottom"]::after,
+.timeline-tooltip-base[data-placement="bottom"]::after {
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+    border-bottom: none;
+    border-right: none;
+    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* 显示在左侧时，箭头在右边指向右方 */
+.timeline-tooltip[data-placement="left"]::after,
+.timeline-tooltip-base[data-placement="left"]::after {
+    right: -5px;
+    top: 50%;
+    margin-top: -4px;
+    border-left: none;
+    border-bottom: none;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* 显示在右侧时，箭头在左边指向左方 */
+.timeline-tooltip[data-placement="right"]::after,
+.timeline-tooltip-base[data-placement="right"]::after {
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+    border-right: none;
+    border-top: none;
+    box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.05);
+}
+

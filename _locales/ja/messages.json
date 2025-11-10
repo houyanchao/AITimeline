@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "AI Timeline - AI対話にインタラクティブなタイムラインを追加、ChatGPT、DeepSeek等対応"
+    "message": "AI Timeline - AI対話にインタラクティブなタイムラインを追加、ChatGPT, Gemini, DeepSeek, grok対応"
   },
   "extDescription": {
     "message": "AIとの会話をインタラクティブなタイムラインに整理。🚀素早くプレビュー・ジャンプ、📌重要な対話をマーク、⭐️大切なチャットをお気に入り、❤️LaTeX数式をコピー、効率が倍増！"

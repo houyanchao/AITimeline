@@ -1,0 +1,67 @@
+/**
+ * Global Toast Manager Styles
+ * 
+ * 通用 Toast 提示组件样式
+ * 
+ * 对应 JS: js/global/toast-manager.js
+ * 
+ * 包含内容：
+ * - 复制成功提示
+ * - 错误提示
+ * - 显示/隐藏动画
+ * 
+ * @requires ../variables.css
+ */
+
+/* ============================================
+   Toast 提示样式
+   ============================================ */
+
+/* 复制成功提示 - 与 tooltip 保持一致的样式 */
+.timeline-copy-feedback {
+    position: fixed;
+    background-color: #ffffff;
+    color: #1f2937;
+    padding: 8px 12px;
+    border-radius: var(--timeline-tooltip-radius);
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    z-index: 2147483647;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+/* 深色主题下的"已复制"toast */
+html.dark .timeline-copy-feedback {
+    background-color: #ffffff;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.timeline-copy-feedback.visible {
+    opacity: 1;
+}
+
+/* 错误提示 toast */
+.timeline-error-toast {
+    position: fixed;
+    background-color: #ef4444;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    z-index: 2147483649;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.timeline-error-toast.visible {
+    opacity: 1;
+}
+
