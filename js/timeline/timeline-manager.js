@@ -52,6 +52,8 @@ class TimelineManager {
         this.startLongPress = null;
         this.checkLongPressMove = null;
         this.cancelLongPress = null;
+        // ✅ 键盘导航
+        this.onKeyDown = null;
         // Timers and RAF IDs
         this.scrollRafId = null;
         this.activeChangeTimer = null;
@@ -1012,6 +1014,43 @@ class TimelineManager {
             }
         };
         this.ui.timelineBar.addEventListener('click', this.onTimelineBarClick);
+        
+        // ✅ 键盘导航：上下方向键切换节点
+        this.onKeyDown = (e) => {
+            // 只处理上下方向键
+            if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+            
+            // 阻止默认滚动行为
+            e.preventDefault();
+            
+            // 如果没有节点或没有当前选中节点，不处理
+            if (this.markers.length === 0 || !this.activeTurnId) return;
+            
+            // 找到当前选中节点的索引
+            const currentIndex = this.markers.findIndex(m => m.id === this.activeTurnId);
+            if (currentIndex === -1) return;
+            
+            // 计算目标索引
+            let targetIndex;
+            if (e.key === 'ArrowUp') {
+                // 上键：跳转到上一个节点（索引减小）
+                targetIndex = currentIndex - 1;
+                // 边界检查：已经在第一个节点，保持不动
+                if (targetIndex < 0) return;
+            } else {
+                // 下键：跳转到下一个节点（索引增加）
+                targetIndex = currentIndex + 1;
+                // 边界检查：已经在最后一个节点，保持不动
+                if (targetIndex >= this.markers.length) return;
+            }
+            
+            // 获取目标节点并跳转
+            const targetMarker = this.markers[targetIndex];
+            if (targetMarker && targetMarker.element) {
+                this.smoothScrollTo(targetMarker.element);
+            }
+        };
+        document.addEventListener('keydown', this.onKeyDown);
         
         // ✅ 保存为实例方法以便在 destroy 中清理
         this.startLongPress = (e) => {
@@ -2263,6 +2302,8 @@ class TimelineManager {
         
         // Remove event listeners
         TimelineUtils.removeEventListenerSafe(this.ui.timelineBar, 'click', this.onTimelineBarClick);
+        // ✅ 清理键盘导航监听器
+        TimelineUtils.removeEventListenerSafe(document, 'keydown', this.onKeyDown);
         // ✅ 正确清理存储监听器（使用 StorageAdapter）
         try {
             if (this.onStorage) {
@@ -2325,6 +2366,8 @@ class TimelineManager {
         this.onVisualViewportResize = null;
         // ✅ 清理长按相关的引用
         this.startLongPress = this.checkLongPressMove = this.cancelLongPress = null;
+        // ✅ 清理键盘导航引用
+        this.onKeyDown = null;
         this.pendingActiveId = null;
     }
 
