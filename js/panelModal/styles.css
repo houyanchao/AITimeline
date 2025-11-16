@@ -46,7 +46,7 @@
 /* ========== 弹窗容器（居中） ========== */
 .panel-modal-wrapper {
     position: relative;
-    width: 800px;
+    width: 820px;
     max-width: 90vw;
     height: 600px;
     max-height: 80vh;
@@ -61,7 +61,7 @@
 
 /* ========== 左侧边栏 ========== */
 .panel-modal-sidebar {
-    width: 200px;
+    width: 210px;
     background: #f6f6f8;
     display: flex;
     flex-direction: column;
@@ -84,8 +84,8 @@
 }
 
 .panel-modal-close svg {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     padding: 4px;
     border-radius: 4px;
     cursor: pointer;
@@ -125,16 +125,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 6px 8px;
-    margin: 0 12px;
+    padding: 10px 12px;
+    margin: 0 12px 6px 12px;
     width: calc(100% - 24px);
     background: transparent;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
     color: #666;
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
 }
 
@@ -144,14 +144,27 @@
 }
 
 .panel-tab.active {
-    background: #0000000a;
-    color: #333;
+    background: rgba(116, 80, 255, 0.1);
+    color: #7450ff;
     font-weight: 500;
 }
 
 .panel-tab .tab-icon {
     font-size: 18px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+/* SVG 图标样式 */
+.panel-tab .tab-icon svg {
+    width: 20px;
+    height: 20px;
+    color: currentColor;
+    transition: color 0.2s;
 }
 
 .panel-tab .tab-label {
@@ -218,7 +231,7 @@
 
 /* 标题栏（右侧顶部） */
 .panel-modal-header {
-    height: 48px;
+    height: 56px;
     padding: 0 24px;
     display: flex;
     align-items: center;
@@ -228,7 +241,7 @@
 
 .panel-modal-title {
     margin: 0;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
 }
@@ -272,78 +285,5 @@
     to {
         opacity: 1;
         transform: scale(1);
-    }
-}
-
-/* ========== 深色模式 ========== */
-@media (prefers-color-scheme: dark) {
-    .panel-modal-wrapper {
-        background: #1e1e1e;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    }
-    
-    .panel-modal-sidebar {
-        background: #2a2a2a;
-        border-right-color: #404040;
-    }
-    
-    .panel-modal-close {
-        color: #aaa;
-    }
-    
-    .panel-modal-close svg:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-    }
-    
-    .panel-modal-tabs::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
-    }
-    
-    .panel-tab {
-        color: #aaa;
-    }
-    
-    .panel-tab:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-    }
-    
-    .panel-tab.active {
-        background: #1e1e1e;
-        color: #fff;
-    }
-    
-    .panel-modal-footer {
-        border-top-color: #404040;
-        color: #888;
-    }
-    
-    .panel-modal-footer-item svg {
-        color: #777;
-    }
-    
-    .panel-modal-footer-item span {
-        color: #999;
-    }
-    
-    .panel-modal-footer-link {
-        color: #409eff;
-    }
-    
-    .panel-modal-main {
-        background: #1e1e1e;
-    }
-    
-    .panel-modal-header {
-        border-bottom-color: #404040;
-    }
-    
-    .panel-modal-title {
-        color: #fff;
-    }
-    
-    .panel-modal-content::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
     }
 }

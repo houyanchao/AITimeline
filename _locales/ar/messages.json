@@ -63,7 +63,7 @@
     "message": "عرض قائمة المفضلة"
   },
   "edit": {
-    "message": "تحرير"
+    "message": "تحرير المحتوى"
   },
   "editStarredContent": {
     "message": "تحرير عنوان المفضلة"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "نقل إلى"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "هل أنت متأكد أنك تريد حذف المجلد «{folderName}»؟"
+  },
+  "searchStarred": {
+    "message": "البحث في المفضلة..."
   }
 }

@@ -63,7 +63,7 @@
     "message": "প্রিয় তালিকা দেখুন"
   },
   "edit": {
-    "message": "সম্পাদনা"
+    "message": "Edit Content"
   },
   "editStarredContent": {
     "message": "পছন্দের শিরোনাম সম্পাদনা করুন"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Move to"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Are you sure you want to delete folder «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Search starred..."
   }
 }

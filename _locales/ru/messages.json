@@ -63,7 +63,7 @@
     "message": "Просмотр списка избранного"
   },
   "edit": {
-    "message": "Редактировать"
+    "message": "Редактировать содержимое"
   },
   "editStarredContent": {
     "message": "Редактировать название избранного"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Переместить в"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Вы уверены, что хотите удалить папку «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Поиск в избранном..."
   }
 }

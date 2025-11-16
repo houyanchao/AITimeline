@@ -63,7 +63,7 @@
     "message": "Vezi lista de favorite"
   },
   "edit": {
-    "message": "Editează"
+    "message": "Edit Content"
   },
   "editStarredContent": {
     "message": "Editare titlu favorit"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Move to"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Are you sure you want to delete folder «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Search starred..."
   }
 }

@@ -63,7 +63,7 @@
     "message": "Favori listesini görüntüle"
   },
   "edit": {
-    "message": "Düzenle"
+    "message": "İçeriği düzenle"
   },
   "editStarredContent": {
     "message": "Favori başlığını düzenle"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Taşı"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "«{folderName}» klasörünü silmek istediğinizden emin misiniz?"
+  },
+  "searchStarred": {
+    "message": "Favorilerde ara..."
   }
 }

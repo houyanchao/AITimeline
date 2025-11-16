@@ -63,7 +63,7 @@
     "message": "Xem danh sách yêu thích"
   },
   "edit": {
-    "message": "Chỉnh sửa"
+    "message": "Chỉnh sửa nội dung"
   },
   "editStarredContent": {
     "message": "Chỉnh sửa tiêu đề yêu thích"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Di chuyển đến"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Bạn có chắc chắn muốn xóa thư mục «{folderName}» không?"
+  },
+  "searchStarred": {
+    "message": "Tìm kiếm yêu thích..."
   }
 }

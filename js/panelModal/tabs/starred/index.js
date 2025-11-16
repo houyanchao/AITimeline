@@ -8,22 +8,30 @@ class StarredTab extends BaseTab {
         super();
         this.id = 'starred';
         this.name = chrome.i18n.getMessage('starredList') || '收藏列表';
-        this.icon = '⭐';
+        this.icon = `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0.5">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>`;
         
         // 引用 timeline manager（用于访问收藏数据和方法）
         this.timelineManager = timelineManager;
         
         // 文件夹管理器
         this.folderManager = new FolderManager(StorageAdapter);
-        
-        // DOM 元素
-        this.listContainer = null;
-        
-        // 存储监听器
-        this.storageListener = null;
-        
-        // 文件夹展开/折叠状态
-        this.folderStates = {}; // { folderId: isExpanded }
+    }
+    
+    /**
+     * 定义初始状态
+     * ✨ 使用 BaseTab 的自动状态管理
+     */
+    getInitialState() {
+        return {
+            transient: {
+                searchQuery: ''  // 搜索关键词（每次打开重置）
+            },
+            persistent: {
+                folderStates: {}  // 文件夹展开/折叠状态（保留用户偏好）
+            }
+        };
     }
     
     /**
@@ -47,7 +55,8 @@ class StarredTab extends BaseTab {
                 <line x1="9" y1="14" x2="15" y2="14"/>
             </svg>
         `;
-        addFolderBtn.addEventListener('mouseenter', () => {
+        // ✨ 使用 BaseTab 的自动事件管理
+        this.addEventListener(addFolderBtn, 'mouseenter', () => {
             window.globalTooltipManager.show(
                 'add-folder-btn',
                 'button',
@@ -56,71 +65,90 @@ class StarredTab extends BaseTab {
                 { placement: 'top' }
             );
         });
-        addFolderBtn.addEventListener('mouseleave', () => {
+        this.addEventListener(addFolderBtn, 'mouseleave', () => {
             window.globalTooltipManager.hide();
         });
-        addFolderBtn.addEventListener('click', () => this.handleCreateFolder());
+        this.addEventListener(addFolderBtn, 'click', () => this.handleCreateFolder());
         
         toolbar.appendChild(addFolderBtn);
+        
+        // 搜索输入框
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.className = 'starred-toolbar-search';
+        searchInput.placeholder = chrome.i18n.getMessage('searchStarred') || '搜索收藏...';
+        searchInput.autocomplete = 'off'; // ✨ 防止浏览器缓存输入值
+        searchInput.value = ''; // ✨ 总是用空值初始化
+        
+        // ✨ 使用 BaseTab 的自动事件管理和状态管理
+        this.addEventListener(searchInput, 'input', (e) => {
+            this.setState('searchQuery', e.target.value.trim().toLowerCase());
+            this.updateList();
+        });
+        
+        // 清空搜索框的快捷键（Escape）
+        this.addEventListener(searchInput, 'keydown', (e) => {
+            if (e.key === 'Escape') {
+                const input = this.getDomRef('searchInput');
+                if (input) {
+                    input.value = '';
+                }
+                this.setState('searchQuery', '');
+                this.updateList();
+            }
+        });
+        
+        // ✨ 保存 DOM 引用
+        this.setDomRef('searchInput', searchInput);
+        
+        toolbar.appendChild(searchInput);
         container.appendChild(toolbar);
         
         // 列表容器
-        this.listContainer = document.createElement('div');
-        this.listContainer.className = 'starred-list-tree';
+        const listContainer = document.createElement('div');
+        listContainer.className = 'starred-list-tree';
         
-        container.appendChild(this.listContainer);
+        // ✨ 保存 DOM 引用
+        this.setDomRef('listContainer', listContainer);
+        
+        container.appendChild(listContainer);
         
         return container;
     }
     
     /**
      * Tab 被激活时更新列表并监听存储变化
+     * ✨ 使用 BaseTab 的自动状态管理
      */
     async mounted() {
-        // 清空文件夹状态（不记录上次状态）
-        this.folderStates = {};
+        super.mounted();  // ✅ 必须先调用（初始化状态）
         
         await this.updateList();
         
-        // 监听存储变化
-        this.storageListener = async () => {
+        // ✨ 使用 BaseTab 的自动事件管理
+        this.addStorageListener(async () => {
             if (window.panelModal && window.panelModal.currentTabId === 'starred') {
                 await this.updateList();
             }
-        };
-        
-        try {
-            StorageAdapter.addChangeListener(this.storageListener);
-        } catch (e) {
-            console.error('[StarredTab] Failed to add storage listener:', e);
-        }
+        });
     }
     
     /**
      * Tab 被卸载时清理事件
+     * ✨ 使用 BaseTab 的自动清理机制
      */
     unmounted() {
-        // 清理 tooltip
-        if (window.globalTooltipManager) {
-            window.globalTooltipManager.hide();
-        }
-        
-        // 移除存储监听器
-        if (this.storageListener) {
-            try {
-                StorageAdapter.removeChangeListener(this.storageListener);
-            } catch (e) {
-                console.error('[StarredTab] Failed to remove storage listener:', e);
-            }
-            this.storageListener = null;
-        }
+        super.unmounted();  // ✅ 自动清理所有状态、引用、监听器
+        // ✨ 不需要手动清理任何东西！
     }
     
     /**
      * 更新收藏列表（树状结构）
+     * ✨ 使用 BaseTab 的状态管理
      */
     async updateList() {
-        if (!this.listContainer) return;
+        const listContainer = this.getDomRef('listContainer');
+        if (!listContainer) return;
         
         // 隐藏tooltip
         if (window.globalTooltipManager) {
@@ -131,13 +159,13 @@ class StarredTab extends BaseTab {
         const tree = await this.folderManager.getStarredByFolder();
         
         // 清空列表
-        this.listContainer.innerHTML = '';
+        listContainer.innerHTML = '';
         
         // 检查是否有任何数据
         const hasData = tree.folders.length > 0 || tree.uncategorized.length > 0;
         
         if (!hasData) {
-            this.listContainer.innerHTML = `<div class="timeline-starred-empty">${chrome.i18n.getMessage('noStarredItems')}</div>`;
+            listContainer.innerHTML = `<div class="timeline-starred-empty">${chrome.i18n.getMessage('noStarredItems')}</div>`;
             return;
         }
         
@@ -145,11 +173,24 @@ class StarredTab extends BaseTab {
         const onlyDefaultFolder = tree.folders.length === 0;
         
         // 始终先渲染默认文件夹（虚拟）
-        this.renderUncategorized(tree.uncategorized, this.listContainer, onlyDefaultFolder);
+        this.renderUncategorized(tree.uncategorized, listContainer, onlyDefaultFolder);
         
         // 渲染文件夹树
         for (const folder of tree.folders) {
-            this.renderFolder(folder, this.listContainer);
+            this.renderFolder(folder, listContainer);
+        }
+        
+        // ✨ 搜索模式下，如果没有任何结果，显示提示
+        const searchQuery = this.getState('searchQuery');
+        if (searchQuery && listContainer.children.length === 0) {
+            listContainer.innerHTML = `
+                <div class="timeline-starred-empty">
+                    <div style="margin-bottom: 8px;">未找到匹配的收藏</div>
+                    <div style="font-size: 13px; color: #9ca3af;">
+                        搜索关键词：<strong>"${this.escapeHtml(searchQuery)}"</strong>
+                    </div>
+                </div>
+            `;
         }
     }
     
@@ -160,7 +201,38 @@ class StarredTab extends BaseTab {
      * @param {number} level - 层级（0=根，1=子）
      */
     renderFolder(folder, container, level = 0) {
-        const isExpanded = this.folderStates[folder.id] === true; // 默认收起
+        // ✨ 使用 BaseTab 的状态管理
+        const searchQuery = this.getState('searchQuery');
+        const folderStates = this.getPersistentState('folderStates');
+        
+        // ✨ 检查文件夹名是否匹配
+        const folderNameMatches = searchQuery && folder.name.toLowerCase().includes(searchQuery);
+        
+        // ✨ 搜索模式下，过滤收藏项
+        // 如果文件夹名匹配，显示所有收藏项；否则过滤收藏项
+        const filteredItems = searchQuery 
+            ? (folderNameMatches 
+                ? folder.items  // 文件夹名匹配，显示所有
+                : folder.items.filter(item => this.matchesSearch(item, searchQuery)))  // 过滤
+            : folder.items;
+        
+        // ✨ 递归检查子文件夹是否有匹配项
+        const hasMatchingChildren = (folder.children || []).some(child => {
+            const childFolderNameMatches = searchQuery && child.name.toLowerCase().includes(searchQuery);
+            const childHasItems = child.items.some(item => this.matchesSearch(item, searchQuery));
+            const childHasMatchingChildren = (child.children || []).length > 0; // 递归检查
+            return childFolderNameMatches || childHasItems || childHasMatchingChildren;
+        });
+        
+        // ✨ 如果搜索模式下，当前文件夹和子文件夹都没有匹配项，隐藏该文件夹
+        if (searchQuery && !folderNameMatches && filteredItems.length === 0 && !hasMatchingChildren) {
+            return; // 不渲染该文件夹
+        }
+        
+        // ✨ 搜索模式下自动展开有匹配项的文件夹
+        const isExpanded = searchQuery 
+            ? true  // 搜索时自动展开
+            : (folderStates[folder.id] === true); // 否则使用保存的状态
         
         const folderElement = document.createElement('div');
         folderElement.className = `folder-item folder-level-${level}`;
@@ -173,6 +245,11 @@ class StarredTab extends BaseTab {
         // 展开/折叠图标
         const toggleIcon = document.createElement('span');
         toggleIcon.className = `folder-toggle ${isExpanded ? 'expanded' : ''}`;
+        toggleIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 6 15 12 9 18"></polyline>
+            </svg>
+        `;
         toggleIcon.addEventListener('click', () => this.toggleFolder(folder.id));
         
         // 文件夹图标和名称
@@ -191,95 +268,89 @@ class StarredTab extends BaseTab {
         folderInfo.style.cursor = 'pointer';
         folderInfo.addEventListener('click', () => this.toggleFolder(folder.id));
         
-        // 操作按钮
+        // 操作按钮（使用 Dropdown）
         const folderActions = document.createElement('div');
         folderActions.className = 'folder-actions';
         
-        // 新建子文件夹按钮（只在根文件夹显示）
-        if (level === 0) {
-            const addChildBtn = document.createElement('button');
-            addChildBtn.className = 'folder-action-btn';
-            addChildBtn.innerHTML = `
+        // 操作按钮（三个横向的点）
+        const actionsBtn = document.createElement('button');
+        actionsBtn.className = 'folder-action-btn';
+        actionsBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="5" cy="12" r="2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <circle cx="19" cy="12" r="2"/>
+            </svg>
+        `;
+        
+        // 点击显示下拉菜单
+        actionsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // 构建下拉菜单选项
+            const items = [];
+            
+            // 新建子文件夹（只在根文件夹显示）
+            if (level === 0) {
+                const addChildIcon = document.createElement('div');
+                addChildIcon.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        <line x1="12" y1="11" x2="12" y2="17"/>
+                        <line x1="9" y1="14" x2="15" y2="14"/>
+                    </svg>
+                `;
+                items.push({
+                    label: chrome.i18n.getMessage('createSubfolder'),
+                    icon: addChildIcon.firstElementChild.outerHTML,
+                    onClick: () => this.handleCreateFolder(folder.id)
+                });
+            }
+            
+            // 编辑
+            const editIcon = document.createElement('div');
+            editIcon.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-                    <line x1="12" y1="11" x2="12" y2="17"/>
-                    <line x1="9" y1="14" x2="15" y2="14"/>
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                 </svg>
             `;
-            addChildBtn.addEventListener('mouseenter', () => {
-                window.globalTooltipManager.show(
-                    `add-child-btn-${folder.id}`,
-                    'button',
-                    addChildBtn,
-                    chrome.i18n.getMessage('createSubfolder'),
-                    { placement: 'top' }
-                );
+            items.push({
+                label: chrome.i18n.getMessage('renameFolder'),
+                icon: editIcon.firstElementChild.outerHTML,
+                onClick: () => this.handleEditFolder(folder.id, folder.name)
             });
-            addChildBtn.addEventListener('mouseleave', () => {
-                window.globalTooltipManager.hide();
+            
+            // 删除
+            if (items.length > 0) {
+                items.push({ type: 'divider' });
+            }
+            const deleteIcon = document.createElement('div');
+            deleteIcon.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    <line x1="10" y1="11" x2="10" y2="17"/>
+                    <line x1="14" y1="11" x2="14" y2="17"/>
+                </svg>
+            `;
+            items.push({
+                label: chrome.i18n.getMessage('delete'),
+                icon: deleteIcon.firstElementChild.outerHTML,
+                className: 'danger',
+                onClick: () => this.handleDeleteFolder(folder.id)
             });
-            addChildBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.handleCreateFolder(folder.id);
+            
+            // 显示下拉菜单
+            window.globalDropdownManager.show({
+                trigger: actionsBtn,
+                items: items,
+                position: 'bottom-right',
+                width: 160
             });
-            folderActions.appendChild(addChildBtn);
-        }
+        });
         
-        // 编辑按钮
-        const editBtn = document.createElement('button');
-        editBtn.className = 'folder-action-btn';
-        editBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-            </svg>
-        `;
-        editBtn.addEventListener('mouseenter', () => {
-            window.globalTooltipManager.show(
-                `edit-btn-${folder.id}`,
-                'button',
-                editBtn,
-                chrome.i18n.getMessage('edit'),
-                { placement: 'top' }
-            );
-        });
-        editBtn.addEventListener('mouseleave', () => {
-            window.globalTooltipManager.hide();
-        });
-        editBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.handleEditFolder(folder.id, folder.name);
-        });
-        folderActions.appendChild(editBtn);
-        
-        // 删除按钮
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'folder-action-btn';
-        deleteBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="3 6 5 6 21 6"/>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                <line x1="10" y1="11" x2="10" y2="17"/>
-                <line x1="14" y1="11" x2="14" y2="17"/>
-            </svg>
-        `;
-        deleteBtn.addEventListener('mouseenter', () => {
-            window.globalTooltipManager.show(
-                `delete-btn-${folder.id}`,
-                'button',
-                deleteBtn,
-                chrome.i18n.getMessage('delete'),
-                { placement: 'top' }
-            );
-        });
-        deleteBtn.addEventListener('mouseleave', () => {
-            window.globalTooltipManager.hide();
-        });
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.handleDeleteFolder(folder.id);
-        });
-        folderActions.appendChild(deleteBtn);
+        folderActions.appendChild(actionsBtn);
         
         folderHeader.appendChild(toggleIcon);
         folderHeader.appendChild(folderInfo);
@@ -290,8 +361,8 @@ class StarredTab extends BaseTab {
         const folderContent = document.createElement('div');
         folderContent.className = `folder-content ${isExpanded ? 'expanded' : ''}`;
         
-        // 渲染当前文件夹的收藏项
-        for (const item of folder.items) {
+        // ✨ 渲染过滤后的收藏项
+        for (const item of filteredItems) {
             folderContent.appendChild(this.renderStarredItem(item));
         }
         
@@ -313,10 +384,26 @@ class StarredTab extends BaseTab {
      * @param {boolean} onlyDefaultFolder - 是否只有默认文件夹（如果是，则默认展开）
      */
     renderUncategorized(items, container, onlyDefaultFolder = false) {
+        // ✨ 使用 BaseTab 的状态管理
+        const searchQuery = this.getState('searchQuery');
+        const folderStates = this.getPersistentState('folderStates');
+        
+        // ✨ 搜索模式下，过滤收藏项
+        const filteredItems = searchQuery 
+            ? items.filter(item => this.matchesSearch(item, searchQuery))
+            : items;
+        
+        // ✨ 如果搜索模式下没有匹配项，隐藏默认文件夹
+        if (searchQuery && filteredItems.length === 0) {
+            return; // 不渲染默认文件夹
+        }
         
         // 如果只有默认文件夹且有收藏项，则默认展开
-        const shouldAutoExpand = onlyDefaultFolder && items.length > 0;
-        const isExpanded = shouldAutoExpand || this.folderStates['default'] === true;
+        const shouldAutoExpand = onlyDefaultFolder && filteredItems.length > 0;
+        // ✨ 搜索模式下自动展开
+        const isExpanded = searchQuery 
+            ? true 
+            : (shouldAutoExpand || folderStates['default'] === true);
         
         const defaultFolder = document.createElement('div');
         defaultFolder.className = 'folder-item default-folder';
@@ -329,6 +416,11 @@ class StarredTab extends BaseTab {
         // 展开/折叠图标
         const toggleIcon = document.createElement('span');
         toggleIcon.className = `folder-toggle ${isExpanded ? 'expanded' : ''}`;
+        toggleIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 6 15 12 9 18"></polyline>
+            </svg>
+        `;
         toggleIcon.addEventListener('click', () => this.toggleFolder('default'));
         
         // 文件夹信息
@@ -341,7 +433,7 @@ class StarredTab extends BaseTab {
                 </svg>
             </span>
             <span class="folder-name">${chrome.i18n.getMessage('defaultFolder')}</span>
-            <span class="folder-count">(${items.length})</span>
+            <span class="folder-count">(${filteredItems.length})</span>
         `;
         // 点击文件夹名称也可以展开/收起
         folderInfo.style.cursor = 'pointer';
@@ -355,8 +447,8 @@ class StarredTab extends BaseTab {
         const content = document.createElement('div');
         content.className = `folder-content ${isExpanded ? 'expanded' : ''}`;
         
-        
-        for (const item of items) {
+        // ✨ 渲染过滤后的收藏项
+        for (const item of filteredItems) {
             content.appendChild(this.renderStarredItem(item));
         }
         
@@ -376,66 +468,126 @@ class StarredTab extends BaseTab {
         // 获取网站信息
         const siteInfo = this.getSiteInfo(item.url);
         
-        // 网站logo和标签
-        const siteTag = document.createElement('div');
-        siteTag.className = 'timeline-starred-item-tag';
+        // 左侧：Logo
+        const logo = document.createElement('div');
+        logo.className = 'timeline-starred-item-logo';
         
         if (siteInfo.logo) {
-            const logo = document.createElement('img');
-            logo.src = siteInfo.logo;
-            logo.className = 'timeline-starred-item-logo';
-            logo.alt = siteInfo.name;
-            siteTag.appendChild(logo);
+            const img = document.createElement('img');
+            img.src = siteInfo.logo;
+            img.alt = siteInfo.name;
+            logo.appendChild(img);
         } else {
-            siteTag.textContent = siteInfo.name;
+            // 如果没有logo，显示网站名称首字母
+            const initial = document.createElement('div');
+            initial.className = 'timeline-starred-item-initial';
+            initial.textContent = siteInfo.name.charAt(0).toUpperCase();
+            logo.appendChild(initial);
         }
         
-        itemElement.appendChild(siteTag);
+        itemElement.appendChild(logo);
         
-        // 问题文本
-        const question = document.createElement('div');
-        question.className = 'timeline-starred-item-question';
-        
-        const questionText = document.createElement('div');
-        questionText.className = 'timeline-starred-item-question-text';
-        questionText.textContent = item.theme;
-        questionText.title = item.theme;
+        // 中间：名称（可点击）
+        const name = document.createElement('div');
+        name.className = 'timeline-starred-item-name';
+        name.textContent = item.theme;
         
         // 点击跳转
-        questionText.addEventListener('click', () => {
-            window.open(item.url, '_blank');
-            if (window.panelModal) {
-                window.panelModal.hide();
+        name.addEventListener('click', () => {
+            // 判断是否是当前网站
+            const isSameSite = this.isSameSite(item.url);
+            
+            if (isSameSite) {
+                // 同网站：在当前标签页跳转，关闭弹窗
+                location.href = item.url;
+                if (window.panelModal) {
+                    window.panelModal.hide();
+                }
+            } else {
+                // 不同网站：新标签页打开，不关闭弹窗
+                window.open(item.url, '_blank');
             }
         });
         
-        question.appendChild(questionText);
-        itemElement.appendChild(question);
+        itemElement.appendChild(name);
         
-        // 操作按钮
+        // 操作按钮（三个点 - 使用 Dropdown）
         const actions = document.createElement('div');
         actions.className = 'timeline-starred-item-actions';
         
-        // 移动按钮
-        const moveBtn = this.createActionButton('move', chrome.i18n.getMessage('move'), () => this.handleMoveStarred(item.turnId));
-        actions.appendChild(moveBtn);
+        // 更多按钮（三个横向的点）
+        const moreBtn = document.createElement('button');
+        moreBtn.className = 'timeline-starred-item-more';
+        moreBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="5" cy="12" r="2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <circle cx="19" cy="12" r="2"/>
+            </svg>
+        `;
         
-        // 编辑按钮
-        const editBtn = this.createActionButton('edit', chrome.i18n.getMessage('edit'), () => this.handleEditStarred(item.turnId, item.theme));
-        actions.appendChild(editBtn);
+        // 点击显示下拉菜单
+        moreBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            
+            // 构建"移动到"子菜单
+            const moveChildren = await this._buildMoveToSubmenu(item.turnId);
+            
+            const items = [
+                {
+                    label: chrome.i18n.getMessage('move'),
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="17 1 21 5 17 9"/>
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                        <polyline points="7 23 3 19 7 15"/>
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                    </svg>`,
+                    children: moveChildren  // ✨ 使用子菜单
+                },
+                {
+                    label: chrome.i18n.getMessage('edit'),
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>`,
+                    onClick: () => this.handleEditStarred(item.turnId, item.theme)
+                },
+                {
+                    label: chrome.i18n.getMessage('copyContent') || '复制内容',
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>`,
+                    onClick: () => this.handleCopy(item.theme)
+                },
+                {
+                    label: chrome.i18n.getMessage('copyLink'),
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>`,
+                    onClick: () => this.handleCopy(item.url)
+                },
+                { type: 'divider' },
+                {
+                    label: chrome.i18n.getMessage('unstar'),
+                    icon: `<svg viewBox="0 0 24 24" fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="0.5">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>`,
+                    className: 'danger',
+                    onClick: () => this.handleUnstar(item.turnId, item.url)
+                }
+            ];
+            
+            window.globalDropdownManager.show({
+                trigger: moreBtn,
+                items: items,
+                position: 'bottom-right',
+                width: 160
+            });
+        });
         
-        // 复制内容按钮
-        const copyContentBtn = this.createActionButton('copy', chrome.i18n.getMessage('copyContent') || '复制内容', () => this.handleCopy(item.theme));
-        actions.appendChild(copyContentBtn);
-        
-        // 复制链接按钮
-        const copyLinkBtn = this.createActionButton('link', chrome.i18n.getMessage('copyLink'), () => this.handleCopy(item.url));
-        actions.appendChild(copyLinkBtn);
-        
-        // 取消收藏按钮
-        const starBtn = this.createActionButton('star', chrome.i18n.getMessage('unstar'), () => this.handleUnstar(item.turnId, item.url));
-        actions.appendChild(starBtn);
-        
+        actions.appendChild(moreBtn);
         itemElement.appendChild(actions);
         
         return itemElement;
@@ -516,20 +668,43 @@ class StarredTab extends BaseTab {
     }
     
     /**
+     * 检查收藏项是否匹配搜索
+     * @param {Object} item - 收藏项
+     * @param {string} query - 搜索关键词（已转小写）
+     * @returns {boolean}
+     */
+    matchesSearch(item, query) {
+        if (!query) return true;
+        
+        // 只搜索标题
+        if (item.theme && item.theme.toLowerCase().includes(query)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /**
      * 切换文件夹展开/折叠
+     * ✨ 使用 BaseTab 的持久状态管理
      */
     toggleFolder(folderId) {
-        // 保持与 renderFolder 逻辑一致：默认收起，只有明确为 true 才展开
-        const isExpanded = this.folderStates[folderId] === true;
-        this.folderStates[folderId] = !isExpanded;
+        // ✨ 使用 BaseTab 的持久状态
+        const folderStates = this.getPersistentState('folderStates');
+        const isExpanded = folderStates[folderId] === true;
+        folderStates[folderId] = !isExpanded;
+        this.setPersistentState('folderStates', folderStates);
         
-        const folderElement = this.listContainer.querySelector(`[data-folder-id="${folderId}"]`);
+        const listContainer = this.getDomRef('listContainer');
+        if (!listContainer) return;
+        
+        const folderElement = listContainer.querySelector(`[data-folder-id="${folderId}"]`);
         if (folderElement) {
             const toggle = folderElement.querySelector('.folder-toggle');
             const content = folderElement.querySelector('.folder-content');
             
             if (toggle && content) {
-                if (this.folderStates[folderId]) {
+                if (folderStates[folderId]) {
                     toggle.classList.add('expanded');
                     content.classList.add('expanded');
                 } else {
@@ -647,13 +822,19 @@ class StarredTab extends BaseTab {
             const totalItems = folderData.items.length + 
                 (folderData.children || []).reduce((sum, child) => sum + child.items.length, 0);
             
+            // 总是弹窗二次确认
+            let message;
             if (totalItems > 0) {
-                const message = chrome.i18n.getMessage('confirmDeleteFolder')
+                message = chrome.i18n.getMessage('confirmDeleteFolder')
                     .replace('{folderName}', folderData.name)
                     .replace('{count}', totalItems);
-                const confirmed = confirm(message);
-                if (!confirmed) return;
+            } else {
+                message = chrome.i18n.getMessage('confirmDeleteEmptyFolder')
+                    ? chrome.i18n.getMessage('confirmDeleteEmptyFolder').replace('{folderName}', folderData.name)
+                    : `确定要删除文件夹「${folderData.name}」吗？`;
             }
+            const confirmed = confirm(message);
+            if (!confirmed) return;
             
             await this.folderManager.deleteFolder(folderId, null);
             window.globalToastManager.success(chrome.i18n.getMessage('folderDeleted'));
@@ -665,35 +846,72 @@ class StarredTab extends BaseTab {
     }
     
     /**
-     * 处理移动收藏项
+     * 构建"移动到"子菜单
+     * @param {string} turnId - 收藏项 ID
+     * @returns {Array} 子菜单数组
      */
-    async handleMoveStarred(turnId) {
+    async _buildMoveToSubmenu(turnId) {
+        console.log('[StarredTab] Building move submenu for:', turnId);
+        const folders = await this.folderManager.getFolders();
+        console.log('[StarredTab] Folders count:', folders.length);
+        const children = [];
+        
+        // 添加"默认文件夹"选项
+        children.push({
+            label: chrome.i18n.getMessage('defaultFolder') || '默认文件夹',
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>`,
+            onClick: () => this.handleMoveToFolder(turnId, null)
+        });
+        
+        if (folders.length > 0) {
+            children.push({ type: 'divider' });
+        }
+        
+        // 添加文件夹选项（包括根文件夹和子文件夹）
+        // 按层级排序：先根文件夹，再子文件夹
+        const rootFolders = folders.filter(f => !f.parentId).sort((a, b) => a.order - b.order);
+        
+        rootFolders.forEach(rootFolder => {
+            // 检查该根文件夹是否有子文件夹
+            const childFolders = folders
+                .filter(f => f.parentId === rootFolder.id)
+                .sort((a, b) => a.order - b.order);
+            
+            const folderItem = {
+                label: rootFolder.name,
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                </svg>`,
+                onClick: () => this.handleMoveToFolder(turnId, rootFolder.id)
+            };
+            
+            // ✨ 如果有子文件夹，添加 children 属性（三级菜单）
+            if (childFolders.length > 0) {
+                folderItem.children = childFolders.map(childFolder => ({
+                    label: childFolder.name,
+                    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>`,
+                    onClick: () => this.handleMoveToFolder(turnId, childFolder.id)
+                }));
+            }
+            
+            children.push(folderItem);
+        });
+        
+        console.log('[StarredTab] Built submenu children:', children.length, children);
+        return children;
+    }
+    
+    /**
+     * 处理移动收藏项到指定文件夹
+     * @param {string} turnId - 收藏项 ID
+     * @param {string|null} targetFolderId - 目标文件夹 ID（null = 未分类）
+     */
+    async handleMoveToFolder(turnId, targetFolderId) {
         try {
-            const folders = await this.folderManager.getFolders();
-            
-            if (folders.length === 0) {
-                window.globalToastManager.info(chrome.i18n.getMessage('createFolderFirst'));
-                return;
-            }
-            
-            // TODO: 显示文件夹选择对话框（可以使用简单的prompt或自定义modal）
-            // 这里先用简单的方式
-            let options = '请选择目标文件夹（输入序号）：\n0. 未分类\n';
-            folders.forEach((folder, index) => {
-                const prefix = folder.parentId ? '  └─ ' : '';
-                options += `${index + 1}. ${prefix}${folder.name}\n`;
-            });
-            
-            const choice = prompt(options);
-            if (choice === null) return;
-            
-            const index = parseInt(choice);
-            if (isNaN(index) || index < 0 || index > folders.length) {
-                window.globalToastManager.error(chrome.i18n.getMessage('invalidSelection'));
-                return;
-            }
-            
-            const targetFolderId = index === 0 ? null : folders[index - 1].id;
             await this.folderManager.moveStarredToFolder(turnId, targetFolderId);
             window.globalToastManager.success(chrome.i18n.getMessage('moved'));
             await this.updateList();
@@ -781,6 +999,41 @@ class StarredTab extends BaseTab {
         } catch (error) {
             console.error('[StarredTab] Unstar failed:', error);
             window.globalToastManager.error(chrome.i18n.getMessage('unstarFailed') || '取消收藏失败');
+        }
+    }
+    
+    /**
+     * 判断 URL 是否与当前页面是同一个网站
+     * @param {string} url - 要检查的 URL
+     * @returns {boolean}
+     */
+    isSameSite(url) {
+        try {
+            const urlObj = new URL(url);
+            const currentHostname = location.hostname;
+            const targetHostname = urlObj.hostname;
+            
+            // 完全匹配
+            if (currentHostname === targetHostname) {
+                return true;
+            }
+            
+            // 处理子域名情况（如 chatgpt.com 和 chat.openai.com 都算同网站）
+            // 提取主域名（去掉子域名）
+            const getMainDomain = (hostname) => {
+                const parts = hostname.split('.');
+                if (parts.length >= 2) {
+                    return parts.slice(-2).join('.');
+                }
+                return hostname;
+            };
+            
+            const currentMainDomain = getMainDomain(currentHostname);
+            const targetMainDomain = getMainDomain(targetHostname);
+            
+            return currentMainDomain === targetMainDomain;
+        } catch (e) {
+            return false;
         }
     }
     

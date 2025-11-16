@@ -63,7 +63,7 @@
     "message": "Zobacz listę ulubionych"
   },
   "edit": {
-    "message": "Edytuj"
+    "message": "Edytuj treść"
   },
   "editStarredContent": {
     "message": "Edytuj tytuł ulubionego"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Przenieś do"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Czy na pewno chcesz usunąć folder «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Szukaj w ulubionych..."
   }
 }

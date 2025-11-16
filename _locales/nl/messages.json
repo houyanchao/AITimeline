@@ -63,7 +63,7 @@
     "message": "Toon lijst met favorieten"
   },
   "edit": {
-    "message": "Bewerken"
+    "message": "Inhoud bewerken"
   },
   "editStarredContent": {
     "message": "Favorietentitel bewerken"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Verplaatsen naar"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Weet u zeker dat u de map «{folderName}» wilt verwijderen?"
+  },
+  "searchStarred": {
+    "message": "Zoek in favorieten..."
   }
 }

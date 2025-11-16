@@ -19,7 +19,7 @@
    ============================================ */
 
 .starred-toolbar {
-    padding: 0 16px 12px;
+    padding: 0 6px 12px;
     display: flex;
     gap: 8px;
 }
@@ -28,8 +28,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     border: 1px solid #e5e7eb;
     border-radius: 6px;
@@ -37,6 +37,7 @@
     color: #333;
     cursor: pointer;
     transition: all 0.2s;
+    flex-shrink: 0;
 }
 
 .starred-toolbar-btn:hover {
@@ -45,20 +46,37 @@
 }
 
 .starred-toolbar-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
-html.dark .starred-toolbar-btn {
-    background: #2a2a2a;
-    color: #fff;
-    border-color: #404040;
+
+
+/* 搜索输入框 */
+.starred-toolbar-search {
+    flex: 1;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s;
 }
 
-html.dark .starred-toolbar-btn:hover {
-    background: #333;
-    border-color: #555;
+.starred-toolbar-search::placeholder {
+    color: #9ca3af;
 }
+
+.starred-toolbar-search:focus {
+    border-color: #7450ff;
+    box-shadow: 0 0 0 2px rgba(116, 80, 255, 0.1);
+}
+
+
+
 
 /* 列表区域 - 可滚动（树状结构） */
 .starred-list-tree {
@@ -85,108 +103,77 @@ html.dark .starred-toolbar-btn:hover {
     font-size: 14px;
 }
 
-/* 收藏项 - 一行布局 */
+/* 收藏项 - 优化后的布局 */
 .timeline-starred-item {
-    background: #f9fafb;
-    border-radius: 6px;
-    padding: 6px 12px;
-    margin-bottom: 6px;
-    transition: all 0.2s ease;
-    border: 1px solid #e5e7eb;
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-html.dark .timeline-starred-item {
-    background: #1f1f1f;
-    border-color: #333333;
+    gap: 10px;
+    padding: 5px 12px;
+    margin-bottom: 2px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    cursor: pointer;
 }
 
 .timeline-starred-item:hover {
-    background: #f3f4f6;
-    box-shadow: 0 2px 8px rgba(255, 125, 3, 0.1);
+    background: rgba(0, 0, 0, 0.03);
 }
 
-html.dark .timeline-starred-item:hover {
-    background: #2a2a2a;
-}
 
-/* 网站标签 - 无背景色 */
-.timeline-starred-item-tag {
+/* Logo 容器 */
+.timeline-starred-item-logo {
     flex-shrink: 0;
-    padding: 0;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* 网站 Logo */
-.timeline-starred-item-logo {
-    flex-shrink: 0;
-    height: 18px;
-    width: auto;
-    max-width: 70px;
-    object-fit: contain;
-    display: block;
-}
-
-/* 收藏项图标 - 用于显示 #序号 或 💬 图标 */
-.timeline-starred-item-icon {
-    flex-shrink: 0;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-    color: #6b7280;
-    min-width: 60px;
-}
-
-html.dark .timeline-starred-item-icon {
-    color: #9ca3af;
-}
-
-/* 问题文本容器 - 占据剩余空间，让操作按钮靠右 */
-.timeline-starred-item-question {
-    flex: 1;
-    min-width: 0;
+    border-radius: 4px;
     overflow: hidden;
-    position: relative;
+}
+
+.timeline-starred-item-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Logo 首字母（备用方案）*/
+.timeline-starred-item-initial {
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
 }
 
-/* 问题文本内容 - 实际的文字span，tooltip会绑定到这里 */
-.timeline-starred-item-question-text {
-    display: inline-block;
-    max-width: 100%;
+
+/* 名称文本 */
+.timeline-starred-item-name {
+    flex: 1;
+    min-width: 0;
     font-size: 14px;
-    line-height: 1;
+    line-height: 1.5;
     color: #374151;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    user-select: none;
-    transition: all 0.2s ease;
+    transition: color 0.15s ease;
 }
 
-html.dark .timeline-starred-item-question-text {
-    color: #d1d5db;
+
+.timeline-starred-item-name:hover {
+    color: #1f2937;
 }
 
-/* 问题文本悬停效果 */
-.timeline-starred-item-question-text:hover {
-    color: var(--timeline-star-color);
-    opacity: 0.8;
-}
-
-/* 问题文本点击效果 */
-.timeline-starred-item-question-text:active {
-    opacity: 0.6;
-}
 
 /* 操作按钮容器 - 收藏icon和前往按钮的容器 */
 .timeline-starred-item-actions {
@@ -217,26 +204,17 @@ html.dark .timeline-starred-item-question-text {
     color: #6b7280;
 }
 
-html.dark .timeline-starred-item-edit svg {
-    color: #9ca3af;
-}
 
 .timeline-starred-item-edit:hover {
     background-color: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 
-html.dark .timeline-starred-item-edit:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
 
 .timeline-starred-item-edit:hover svg {
     color: #374151;
 }
 
-html.dark .timeline-starred-item-edit:hover svg {
-    color: #d1d5db;
-}
 
 .timeline-starred-item-edit:active {
     transform: scale(0.95);
@@ -292,26 +270,17 @@ html.dark .timeline-starred-item-edit:hover svg {
     color: #6b7280;
 }
 
-html.dark .timeline-starred-item-copy svg {
-    color: #9ca3af;
-}
 
 .timeline-starred-item-copy:hover {
     background-color: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 
-html.dark .timeline-starred-item-copy:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
 
 .timeline-starred-item-copy:hover svg {
     color: #374151;
 }
 
-html.dark .timeline-starred-item-copy:hover svg {
-    color: #d1d5db;
-}
 
 .timeline-starred-item-copy:active {
     transform: scale(0.95);
@@ -338,26 +307,17 @@ html.dark .timeline-starred-item-copy:hover svg {
     color: #6b7280;
 }
 
-html.dark .timeline-starred-item-link svg {
-    color: #9ca3af;
-}
 
 .timeline-starred-item-link:hover {
     background-color: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 
-html.dark .timeline-starred-item-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
 
 .timeline-starred-item-link:hover svg {
     color: #374151;
 }
 
-html.dark .timeline-starred-item-link:hover svg {
-    color: #d1d5db;
-}
 
 .timeline-starred-item-link:active {
     transform: scale(0.95);
@@ -368,30 +328,32 @@ html.dark .timeline-starred-item-link:hover svg {
    ============================================ */
 
 /* 文件夹项 */
-.folder-item.folder-level-1 {
-    margin-left: 24px;
-}
+/* 注：二级文件夹不需要额外的 margin-left，因为 folder-content 已经有 padding-left: 24px */
+/* 这样二级文件夹会与同级收藏项对齐 */
 
 /* 文件夹头部 */
 .folder-header {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-radius: 6px;
     transition: background 0.2s;
     cursor: pointer;
+}
+
+/* 第一个文件夹头部（默认文件夹）增加上下间距 */
+.starred-list-tree > .folder-item:first-child .folder-header {
+    padding-top: 9px;
+    padding-bottom: 9px;
 }
 
 .folder-header:hover {
     background: rgba(0, 0, 0, 0.03);
 }
 
-html.dark .folder-header:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
 
-/* 展开/折叠图标 - 使用CSS绘制三角形 */
+/* 展开/折叠图标 - SVG 箭头 */
 .folder-toggle {
     width: 20px;
     height: 20px;
@@ -401,36 +363,26 @@ html.dark .folder-header:hover {
     cursor: pointer;
     user-select: none;
     flex-shrink: 0;
-    position: relative;
     transition: transform 0.2s ease;
-    transform-origin: center center;
+    color: #9ca3af;
 }
 
-.folder-toggle::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 3.5px 0 3.5px 6px;
-    border-color: transparent transparent transparent #9ca3af;
-    transition: border-color 0.2s ease;
+.folder-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+    color: currentColor;
 }
 
-.folder-toggle.expanded {
+.folder-toggle.expanded svg {
     transform: rotate(90deg);
 }
 
-.folder-toggle:hover::before {
-    border-left-color: #6b7280;
+.folder-toggle:hover {
+    color: #6b7280;
 }
 
-html.dark .folder-toggle::before {
-    border-left-color: #9ca3af;
-}
 
-html.dark .folder-toggle:hover::before {
-    border-left-color: #d1d5db;
-}
 
 /* 文件夹信息 */
 .folder-info {
@@ -442,8 +394,8 @@ html.dark .folder-toggle:hover::before {
 }
 
 .folder-icon {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -459,17 +411,10 @@ html.dark .folder-toggle:hover::before {
     fill: #FFA726;
 }
 
-html.dark .folder-icon svg path {
-    fill: #FFB74D;
-}
 
 .folder-name {
     font-weight: 500;
     color: #374151;
-}
-
-html.dark .folder-name {
-    color: #e5e7eb;
 }
 
 .folder-count {
@@ -482,14 +427,6 @@ html.dark .folder-name {
     display: flex;
     align-items: center;
     gap: 4px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-}
-
-.folder-header:hover .folder-actions {
-    opacity: 1;
-    visibility: visible;
 }
 
 .folder-action-btn {
@@ -511,26 +448,17 @@ html.dark .folder-name {
     color: #6b7280;
 }
 
-html.dark .folder-action-btn svg {
-    color: #9ca3af;
-}
 
 .folder-action-btn:hover {
     background: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 
-html.dark .folder-action-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
 
 .folder-action-btn:hover svg {
     color: #374151;
 }
 
-html.dark .folder-action-btn:hover svg {
-    color: #d1d5db;
-}
 
 .folder-action-btn:active {
     transform: scale(0.95);
@@ -574,27 +502,55 @@ html.dark .folder-action-btn:hover svg {
     color: #6b7280;
 }
 
-html.dark .timeline-starred-item-move svg {
-    color: #9ca3af;
-}
 
 .timeline-starred-item-move:hover {
     background-color: rgba(0, 0, 0, 0.05);
     transform: scale(1.1);
 }
 
-html.dark .timeline-starred-item-move:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
 
 .timeline-starred-item-move:hover svg {
     color: #374151;
 }
 
-html.dark .timeline-starred-item-move:hover svg {
-    color: #d1d5db;
-}
 
 .timeline-starred-item-move:active {
+    transform: scale(0.95);
+}
+
+/* 更多按钮（三个点）*/
+.timeline-starred-item-more {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-more svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-more:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-more:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-more:active {
     transform: scale(0.95);
 }

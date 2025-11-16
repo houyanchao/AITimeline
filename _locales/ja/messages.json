@@ -63,7 +63,7 @@
     "message": "スターリストを表示"
   },
   "edit": {
-    "message": "編集"
+    "message": "内容を編集"
   },
   "editStarredContent": {
     "message": "お気に入りタイトルを編集"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "移動先"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "フォルダ「{folderName}」を削除してもよろしいですか？"
+  },
+  "searchStarred": {
+    "message": "お気に入りを検索..."
   }
 }

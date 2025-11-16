@@ -63,7 +63,7 @@
     "message": "즐겨찾기 목록 보기"
   },
   "edit": {
-    "message": "편집"
+    "message": "내용 편집"
   },
   "editStarredContent": {
     "message": "즐겨찾기 제목 편집"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "이동 대상"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "폴더 «{folderName}»를 삭제하시겠습니까?"
+  },
+  "searchStarred": {
+    "message": "즐겨찾기 검색..."
   }
 }

@@ -63,7 +63,13 @@
     "message": "查看收藏列表"
   },
   "edit": {
-    "message": "编辑"
+    "message": "编辑内容"
+  },
+  "renameFolder": {
+    "message": "重命名"
+  },
+  "actions": {
+    "message": "操作"
   },
   "editStarredContent": {
     "message": "编辑收藏标题"
@@ -117,7 +123,7 @@
     "message": "文件夹名称不能为空"
   },
   "editFolderName": {
-    "message": "编辑文件夹名称"
+    "message": "修改文件夹名称"
   },
   "newNamePlaceholder": {
     "message": "请输入新名称"
@@ -159,7 +165,7 @@
     "message": "已移动"
   },
   "move": {
-    "message": "转移"
+    "message": "转移到"
   },
   "copyLink": {
     "message": "复制链接"
@@ -170,7 +176,13 @@
   "confirmDeleteFolder": {
     "message": "删除文件夹「{folderName}」？\n\n该文件夹及其子文件夹中有 {count} 个收藏项，删除后这些收藏项将移至未分类。"
   },
+  "confirmDeleteEmptyFolder": {
+    "message": "确定要删除文件夹「{folderName}」吗？"
+  },
   "uncategorized": {
     "message": "未分类"
+  },
+  "searchStarred": {
+    "message": "搜索收藏..."
   }
 }

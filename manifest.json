@@ -25,6 +25,7 @@
         "js/global/tooltip-manager/index.js",
         "js/global/toast-manager/index.js",
         "js/global/input-modal/index.js",
+        "js/global/dropdown-manager/index.js",
         "js/formula/latex-extractor.js",
         "js/formula/formula-manager.js",
         "js/formula/index.js",
@@ -55,6 +56,7 @@
         "js/global/tooltip-manager/styles.css",
         "js/global/toast-manager/styles.css",
         "js/global/input-modal/styles.css",
+        "js/global/dropdown-manager/styles.css",
         "js/panelModal/styles.css",
         "js/panelModal/tabs/starred/styles.css",
         "js/timeline/timeline.css",
@@ -66,7 +68,9 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["images/logo/*.webp"],
+      "resources": [
+        "images/logo/*.webp"
+      ],
       "matches": [
         "<all_urls>"
       ]

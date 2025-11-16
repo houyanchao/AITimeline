@@ -63,7 +63,7 @@
     "message": "Tingnan ang listahan ng mga paborito"
   },
   "edit": {
-    "message": "I-edit"
+    "message": "Edit Content"
   },
   "editStarredContent": {
     "message": "I-edit ang paboritong pamagat"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Move to"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Are you sure you want to delete folder «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Search starred..."
   }
 }

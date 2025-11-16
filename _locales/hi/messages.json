@@ -63,7 +63,7 @@
     "message": "पसंदीदा सूची देखें"
   },
   "edit": {
-    "message": "संपादित करें"
+    "message": "सामग्री संपादित करें"
   },
   "editStarredContent": {
     "message": "पसंदीदा शीर्षक संपादित करें"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "यहां ले जाएं"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "क्या आप वाकई फ़ोल्डर «{folderName}» को हटाना चाहते हैं?"
+  },
+  "searchStarred": {
+    "message": "पसंदीदा खोजें..."
   }
 }

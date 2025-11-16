@@ -63,7 +63,13 @@
     "message": "View starred list"
   },
   "edit": {
-    "message": "Edit"
+    "message": "Edit Content"
+  },
+  "renameFolder": {
+    "message": "Rename Folder"
+  },
+  "actions": {
+    "message": "Actions"
   },
   "editStarredContent": {
     "message": "Edit starred title"
@@ -159,7 +165,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Move to"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -170,7 +176,13 @@
   "confirmDeleteFolder": {
     "message": "Delete folder «{folderName}»?\n\n{count} starred items in this folder and its subfolders will be moved to Uncategorized."
   },
+  "confirmDeleteEmptyFolder": {
+    "message": "Are you sure you want to delete folder «{folderName}»?"
+  },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "searchStarred": {
+    "message": "Search starred..."
   }
 }

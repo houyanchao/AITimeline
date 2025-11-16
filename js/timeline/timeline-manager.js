@@ -282,7 +282,6 @@ class TimelineManager {
         
         // ✅ 添加收藏按钮（在 timeline-bar 下方 10px 处，垂直居中对齐）
         let starredBtn = document.querySelector('.timeline-starred-btn');
-        let isReusedBtn = false;
         if (!starredBtn) {
             starredBtn = document.createElement('button');
             starredBtn.className = 'timeline-starred-btn';
@@ -308,13 +307,8 @@ class TimelineManager {
             
             // ✅ 将收藏按钮添加到包装容器内（时间轴的兄弟元素）
             wrapper.appendChild(starredBtn);
-        } else {
-            // ✅ 修复：复用的元素，clone后替换，清除旧的事件监听器
-            isReusedBtn = true;
-            const newBtn = starredBtn.cloneNode(true);
-            starredBtn.replaceWith(newBtn);
-            starredBtn = newBtn;
         }
+        // 如果按钮已存在，直接复用，保留原有事件监听器
         this.ui.starredBtn = starredBtn;
         
         // ✅ 收藏按钮使用相对定位，不需要动态计算位置
@@ -337,12 +331,21 @@ class TimelineManager {
         
         // 2. 检查是否已存在按钮
         let starChatBtn = document.querySelector('.timeline-star-chat-btn-native');
+        
         if (starChatBtn) {
-            // 已存在，移除旧的
-            starChatBtn.remove();
+            // ✅ 按钮已存在，只更新状态，不重建（避免事件监听器丢失）
+            const isStarred = await this.isChatStarred();
+            const svg = starChatBtn.querySelector('svg');
+            if (svg) {
+                svg.setAttribute('fill', isStarred ? 'rgb(255, 125, 3)' : 'none');
+                svg.setAttribute('stroke', isStarred ? 'rgb(255, 125, 3)' : 'currentColor');
+            }
+            // 保存引用
+            this.ui.starChatBtn = starChatBtn;
+            return;
         }
         
-        // 3. 创建按钮
+        // 3. 创建新按钮
         starChatBtn = document.createElement('button');
         starChatBtn.className = 'timeline-star-chat-btn-native';
         

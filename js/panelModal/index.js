@@ -209,7 +209,16 @@ class PanelModal {
         // Tab 图标
         const icon = document.createElement('span');
         icon.className = 'tab-icon';
-        icon.textContent = tab.icon;
+        
+        // 支持 SVG 图标或 emoji
+        if (typeof tab.icon === 'string' && tab.icon.trim().startsWith('<')) {
+            // SVG 图标
+            icon.innerHTML = tab.icon;
+        } else {
+            // Emoji 或文本
+            icon.textContent = tab.icon;
+        }
+        
         tabButton.appendChild(icon);
         
         // Tab 文字标签
@@ -261,6 +270,11 @@ class PanelModal {
         const tab = this.tabs.get(tabId);
         if (!tab) {
             console.error(`[PanelModal] Tab "${tabId}" not found`);
+            return;
+        }
+        
+        // 如果已经是当前 tab，不重复切换
+        if (this.currentTabId === tabId) {
             return;
         }
         
@@ -324,7 +338,19 @@ class PanelModal {
             if (tab && tab.unmounted) {
                 tab.unmounted();
             }
+            
+            // 移除 tab 按钮的 active 状态
+            const currentButton = this.tabsContainer.querySelector(`[data-tab-id="${this.currentTabId}"]`);
+            if (currentButton) {
+                currentButton.classList.remove('active');
+            }
         }
+        
+        // ✨ 彻底销毁：清空内容和状态
+        this.content.innerHTML = '';
+        this.currentTabId = null;
+        
+        console.log('[PanelModal] Panel hidden and destroyed');
     }
     
     /**

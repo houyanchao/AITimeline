@@ -63,7 +63,7 @@
     "message": "檢視收藏清單"
   },
   "edit": {
-    "message": "編輯"
+    "message": "編輯內容"
   },
   "editStarredContent": {
     "message": "編輯收藏標題"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "轉移到"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "確定要刪除資料夾「{folderName}」嗎？"
+  },
+  "searchStarred": {
+    "message": "搜尋收藏..."
   }
 }

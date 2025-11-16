@@ -63,7 +63,7 @@
     "message": "ดูรายการโปรด"
   },
   "edit": {
-    "message": "แก้ไข"
+    "message": "แก้ไขเนื้อหา"
   },
   "editStarredContent": {
     "message": "แก้ไขชื่อรายการโปรด"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "ย้ายไปยัง"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "ค้นหารายการโปรด..."
   }
 }

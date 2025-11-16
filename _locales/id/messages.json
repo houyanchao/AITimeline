@@ -63,7 +63,7 @@
     "message": "Lihat daftar favorit"
   },
   "edit": {
-    "message": "Edit"
+    "message": "Edit konten"
   },
   "editStarredContent": {
     "message": "Edit judul favorit"
@@ -159,7 +159,7 @@
     "message": "Moved successfully"
   },
   "move": {
-    "message": "Move"
+    "message": "Pindahkan ke"
   },
   "copyLink": {
     "message": "Copy Link"
@@ -172,5 +172,11 @@
   },
   "uncategorized": {
     "message": "Uncategorized"
+  },
+  "confirmDeleteEmptyFolder": {
+    "message": "Apakah Anda yakin ingin menghapus folder «{folderName}»?"
+  },
+  "searchStarred": {
+    "message": "Cari favorit..."
   }
 }
