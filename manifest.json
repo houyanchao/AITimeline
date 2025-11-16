@@ -48,6 +48,7 @@
         "js/timeline/constants.js",
         "js/timeline/common.js",
         "js/timeline/container-finder.js",
+        "js/timeline/star-input-modal/star-input-modal.js",
         "js/timeline/timeline-manager.js",
         "js/timeline/index.js"
       ],
@@ -59,6 +60,7 @@
         "js/global/dropdown-manager/styles.css",
         "js/panelModal/styles.css",
         "js/panelModal/tabs/starred/styles.css",
+        "js/timeline/star-input-modal/star-input-modal.css",
         "js/timeline/timeline.css",
         "js/formula/formula.css"
       ],

@@ -112,6 +112,15 @@ class TimelineManager {
         // ✅ URL 到网站信息的映射字典（包含名称和颜色）
         // 使用 constants.js 中的函数生成 siteNameMap
         this.siteNameMap = getSiteNameMap();
+        
+        // ✅ 文件夹管理器（用于收藏功能）
+        this.folderManager = null;
+        // 延迟初始化，确保 FolderManager 类已加载
+        setTimeout(() => {
+            if (typeof FolderManager !== 'undefined') {
+                this.folderManager = new FolderManager(StorageAdapter);
+            }
+        }, 0);
     }
 
     perfStart(name) {
@@ -463,22 +472,38 @@ class TimelineManager {
                 await StorageAdapter.remove(key);
                 return true;
             } else {
-                // 未收藏，显示输入主题弹窗
-                const theme = await this.showThemeInputDialog();
-                if (!theme) {
+                // 未收藏，显示输入主题弹窗（带文件夹选择器）
+                if (!window.starInputModal) {
+                    console.error('[TimelineManager] starInputModal not available');
+                    return false;
+                }
+                
+                // 获取默认主题（通过 Adapter 提供）
+                const defaultTheme = this.adapter.getDefaultChatTheme?.() || '';
+                
+                const result = await window.starInputModal.show({
+                    title: chrome.i18n.getMessage('inputChatTheme'),
+                    defaultValue: defaultTheme,
+                    placeholder: chrome.i18n.getMessage('themePlaceholder'),
+                    folderManager: this.folderManager,
+                    defaultFolderId: null
+                });
+                
+                if (!result) {
                     // 用户取消了，返回 false
                     return false;
                 }
                 
                 // 添加收藏
                 // ✅ 限制收藏文字长度为前100个字符
-                const truncatedTheme = this.truncateText(theme, 100);
+                const truncatedTheme = this.truncateText(result.value, 100);
                 const value = {
                     url: location.href,
                     urlWithoutProtocol: urlWithoutProtocol,
                     index: -1,
                     question: truncatedTheme,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    folderId: result.folderId || null
                 };
                 await StorageAdapter.set(key, value);
                 
@@ -2404,6 +2429,29 @@ class TimelineManager {
         }
     }
     
+    /**
+     * ✅ 保存收藏项（带文件夹）
+     */
+    async saveStarItemWithFolder(index, question, folderId = null) {
+        try {
+            const urlWithoutProtocol = location.href.replace(/^https?:\/\//, '');
+            const key = `chatTimelineStar:${urlWithoutProtocol}:${index}`;
+            // ✅ 限制收藏文字长度为前100个字符
+            const truncatedQuestion = this.truncateText(question, 100);
+            const value = { 
+                url: location.href,
+                urlWithoutProtocol: urlWithoutProtocol,
+                index: index,
+                question: truncatedQuestion,
+                timestamp: Date.now(),
+                folderId: folderId || null
+            };
+            await StorageAdapter.set(key, value);
+        } catch (e) {
+            // Silently fail
+        }
+    }
+    
     // ✅ 从 URL 获取网站信息（名称和颜色）
     getSiteInfoFromUrl(url) {
         try {
@@ -2457,7 +2505,7 @@ class TimelineManager {
         }
     }
 
-    toggleStar(turnId) {
+    async toggleStar(turnId) {
         const id = String(turnId || '');
         if (!id) return;
         
@@ -2469,13 +2517,34 @@ class TimelineManager {
         
         // 切换收藏状态
         if (this.starred.has(id)) {
+            // 取消收藏
             this.starred.delete(id);
             this.starredIndexes.delete(index);
             this.removeStarItem(index);
         } else {
+            // 添加收藏 - 显示弹窗输入主题和选择文件夹
+            if (!window.starInputModal) {
+                console.error('[TimelineManager] starInputModal not available');
+                return;
+            }
+            
+            const result = await window.starInputModal.show({
+                title: chrome.i18n.getMessage('inputChatTheme'),
+                defaultValue: m.summary,
+                placeholder: chrome.i18n.getMessage('themePlaceholder'),
+                folderManager: this.folderManager,
+                defaultFolderId: null
+            });
+            
+            if (!result) {
+                // 用户取消了
+                return;
+            }
+            
             this.starred.add(id);
             this.starredIndexes.add(index);
-            this.saveStarItem(index, m.summary);
+            // 使用用户输入的主题和选择的文件夹保存
+            this.saveStarItemWithFolder(index, result.value, result.folderId);
         }
         
         m.starred = this.starred.has(id);

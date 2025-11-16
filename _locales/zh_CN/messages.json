@@ -42,7 +42,7 @@
     "message": "复制失败"
   },
   "inputChatTheme": {
-    "message": "请输入收藏标题："
+    "message": "收藏："
   },
   "themePlaceholder": {
     "message": "请输入"
@@ -165,7 +165,7 @@
     "message": "已移动"
   },
   "move": {
-    "message": "转移到"
+    "message": "移动到"
   },
   "copyLink": {
     "message": "复制链接"
@@ -184,5 +184,14 @@
   },
   "searchStarred": {
     "message": "搜索收藏..."
+  },
+  "selectFolder": {
+    "message": "选择文件夹"
+  },
+  "noFolderSelected": {
+    "message": "不选择"
+  },
+  "starTitle": {
+    "message": "标题"
   }
 }
