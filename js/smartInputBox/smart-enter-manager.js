@@ -406,28 +406,43 @@ class SmartEnterManager {
      * 显示换行提示Toast
      * @param {HTMLElement} inputElement - 输入框元素
      */
-    _showNewlineToast(inputElement) {
+    async _showNewlineToast(inputElement) {
         try {
             // 检查全局Toast管理器是否存在
-            if (typeof window.globalToastManager !== 'undefined' && window.globalToastManager) {
-                const message = chrome.i18n.getMessage('vxmkpz');
-                window.globalToastManager.info(message, inputElement, {
-                    duration: 2000,
-                    icon: '',  // 不显示图标
-                    color: {
-                        light: {
-                            backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
-                            textColor: '#ffffff',        // 浅色模式：白色文字
-                            borderColor: '#0d0d0d'       // 浅色模式：黑色边框
-                        },
-                        dark: {
-                            backgroundColor: '#ffffff',  // 深色模式：白色背景
-                            textColor: '#1f2937',        // 深色模式：深灰色文字
-                            borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
-                        }
-                    }
-                });
+            if (typeof window.globalToastManager === 'undefined' || !window.globalToastManager) {
+                return;
             }
+            
+            // 检查提示次数（所有平台共享）
+            const result = await chrome.storage.local.get('smartEnterToastCount');
+            const count = result.smartEnterToastCount || 0;
+            
+            // 如果已提示超过5次，不再提示
+            if (count >= 5) {
+                return;
+            }
+            
+            // 显示Toast
+            const message = chrome.i18n.getMessage('vxmkpz');
+            window.globalToastManager.info(message, inputElement, {
+                duration: 2200,
+                icon: '',  // 不显示图标
+                color: {
+                    light: {
+                        backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                        textColor: '#ffffff',        // 浅色模式：白色文字
+                        borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                    },
+                    dark: {
+                        backgroundColor: '#ffffff',  // 深色模式：白色背景
+                        textColor: '#1f2937',        // 深色模式：深灰色文字
+                        borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                    }
+                }
+            });
+            
+            // 增加提示次数
+            await chrome.storage.local.set({ smartEnterToastCount: count + 1 });
         } catch (e) {
             console.error('[SmartInputBox] Failed to show toast:', e);
         }
