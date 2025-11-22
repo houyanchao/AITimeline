@@ -125,6 +125,9 @@ class TimelineManager {
                 this.folderManager = new FolderManager(StorageAdapter);
             }
         }, 0);
+
+        // ✅ 健康检查定时器
+        this.healthCheckInterval = null;
     }
 
     perfStart(name) {
@@ -175,6 +178,9 @@ class TimelineManager {
                     await this.updateStarredBtnVisibility();
                 });
             });
+            
+            // ✅ 启动健康检查
+            this.startHealthCheck();
         }, TIMELINE_CONFIG.INITIAL_RENDER_DELAY);
     }
     
@@ -917,13 +923,33 @@ class TimelineManager {
         }
     }
 
+    /**
+     * ✅ 启动健康检查，定期检测容器是否有效
+     * 处理 SPA 页面 DOM 整体替换的情况
+     */
+    startHealthCheck() {
+        if (this.healthCheckInterval) clearInterval(this.healthCheckInterval);
+        
+        this.healthCheckInterval = setInterval(() => {
+            // 检查容器是否仍然连接在文档中
+            const isContainerValid = this.conversationContainer && this.conversationContainer.isConnected;
+            
+            if (!isContainerValid) {
+                // 容器失效，尝试更新
+                this.ensureContainersUpToDate();
+            }
+        }, 5000); // 每 5 秒检查一次
+    }
+
     // Ensure our conversation/scroll containers are still current after DOM replacements
     ensureContainersUpToDate() {
         const selector = this.adapter.getUserMessageSelector();
         const first = document.querySelector(selector);
         if (!first) return;
+        
         const newConv = this.adapter.findConversationContainer(first);
-        if (newConv && newConv !== this.conversationContainer) {
+        // ✅ 增强判断：如果新容器存在且 (新容器不等于旧容器 OR 旧容器已经断开连接)
+        if (newConv && (newConv !== this.conversationContainer || !this.conversationContainer?.isConnected)) {
             // Rebind observers and listeners to the new conversation root
             this.rebindConversationContainer(newConv);
         }
@@ -1019,6 +1045,23 @@ class TimelineManager {
             // 只处理上下方向键
             if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
             
+            // ✅ 检查焦点元素，避免干扰可编辑元素和表单控件
+            const activeElement = document.activeElement;
+            if (activeElement) {
+                // 检查是否为可编辑元素或表单控件
+                // 按常见程度排序，优化短路求值性能
+                const isEditableElement = 
+                    activeElement.isContentEditable ||        // 最常见：ChatGPT/富文本编辑器
+                    activeElement.tagName === 'INPUT' ||      // 常见：普通输入框
+                    activeElement.tagName === 'TEXTAREA' ||   // 常见：多行文本
+                    activeElement.tagName === 'SELECT' ||     // 常见：下拉框
+                    activeElement.tagName === 'IFRAME' ||     // 特殊：iframe 内可能有输入框
+                    activeElement.contentEditable === 'true'; // 冗余检查，增加兼容性
+                
+                // 如果焦点在可编辑元素上，不拦截，让原生行为生效
+                if (isEditableElement) return;
+            }
+            
             // ✅ 检查功能是否启用
             if (!this.arrowKeysNavigationEnabled) {
                 return; // 功能关闭，不处理
@@ -1032,14 +1075,35 @@ class TimelineManager {
             // 阻止默认滚动行为
             e.preventDefault();
             
-            // 如果没有节点或没有当前选中节点，不处理
-            if (this.markers.length === 0 || !this.activeTurnId) return;
+            // 如果没有节点，不处理
+            if (this.markers.length === 0) return;
             
-            // 找到当前选中节点的索引
-            const currentIndex = this.markers.findIndex(m => m.id === this.activeTurnId);
-            if (currentIndex === -1) return;
+            // ✅ 优化：只查找一次索引，避免重复遍历
+            let currentIndex = -1;
+            if (this.activeTurnId) {
+                currentIndex = this.markers.findIndex(m => m.id === this.activeTurnId);
+            }
             
-            // 计算目标索引
+            // 如果没有激活节点，或激活节点已失效（索引为-1），提供智能默认行为
+            if (currentIndex === -1) {
+                // 没有激活节点或激活节点失效（DOM 替换后可能发生）
+                // 根据按键方向选择合适的默认节点
+                let defaultMarker;
+                if (e.key === 'ArrowUp') {
+                    // 按上键：从最后一个节点开始（符合用户向上浏览的意图）
+                    defaultMarker = this.markers[this.markers.length - 1];
+                } else {
+                    // 按下键：从第一个节点开始（符合用户向下浏览的意图）
+                    defaultMarker = this.markers[0];
+                }
+                
+                if (defaultMarker && defaultMarker.element) {
+                    this.smoothScrollTo(defaultMarker.element);
+                }
+                return;
+            }
+            
+            // 此时 currentIndex 一定是有效的（>= 0），直接计算目标索引
             let targetIndex;
             if (e.key === 'ArrowUp') {
                 // 上键：跳转到上一个节点（索引减小）
@@ -2307,6 +2371,13 @@ class TimelineManager {
         TimelineUtils.disconnectObserverSafe(this.intersectionObserver);
         TimelineUtils.disconnectObserverSafe(this.hideStateObserver); // ✅ 清理隐藏状态监听器
         TimelineUtils.disconnectObserverSafe(this.themeObserver); // ✅ 优化：清理主题监听器
+        
+        // ✅ 清理健康检查定时器
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval);
+            this.healthCheckInterval = null;
+        }
+
         this.visibleUserTurns.clear();
         
         // ✅ 优化：清理媒体查询监听器

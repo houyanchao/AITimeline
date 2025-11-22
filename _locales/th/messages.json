@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: LaTeX, ไทม์ไลน์, Enter บรรทัดใหม่, บันทึกพรอมต์"
+    "message": "AI Timeline: ผู้ช่วย AI ที่ทรงพลังที่สุด: ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "สำหรับ ChatGPT, DeepSeek, Gemini, Grok และโมเดลอื่นๆ เครื่องมือการทำงานร่วมกับ AI ที่ทรงพลังที่สุด เพิ่มประสิทธิภาพการทำงานกับ AI เป็นสองเท่า!"
+    "message": "คุณสมบัติ: คัดลอกสูตร LaTeX, ไทม์ไลน์, Enter ขึ้นบรรทัดใหม่, Prompt. เพิ่มประสิทธิภาพ AI เป็นสองเท่า!"
   },
   "qwxpzm": {
     "message": "บันทึก"

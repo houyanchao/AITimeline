@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: LaTeX, временная шкала, Enter новая строка, memo"
+    "message": "AI Timeline: Самый мощный помощник по эффективности ИИ: ChatGPT, Gemini"
   },
   "extDescription": {
-    "message": "Для ChatGPT, DeepSeek, Gemini, Grok и других моделей. Самый мощный инструмент для совместной работы с ИИ, удвойте эффективность работы с ИИ!"
+    "message": "Копирование LaTeX, хронология, Enter для новой строки, помощь с Prompt. Удвойте эффективность работы с ИИ!"
   },
   "qwxpzm": {
     "message": "Сохранить"

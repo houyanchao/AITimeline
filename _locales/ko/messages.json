@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: LaTeX 복사, 타임라인, Enter로 줄바꿈, 프롬프트 메모"
+    "message": "AI Timeline: 가장 강력한 AI 효율성 어시스턴트: ChatGPT, Gemini, DeepSeek"
   },
   "extDescription": {
-    "message": "ChatGPT, DeepSeek, Gemini, Grok 등 모든 주류 AI 모델 지원. 가장 강력한 AI 협업 도구로 AI 작업 효율을 두 배로!"
+    "message": "기능: LaTeX 수식 복사, 대화 타임라인, Enter 키 줄바꿈, 프롬프트 지원. 모든 주류 AI 플랫폼 지원. AI 효율을 두 배로 높입니다!"
   },
   "qwxpzm": {
     "message": "저장"

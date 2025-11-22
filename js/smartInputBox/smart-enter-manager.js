@@ -41,6 +41,9 @@ class SmartEnterManager {
         // 使用 WeakMap 跟踪已附加的元素及其事件处理器
         // WeakMap 的好处：当元素被移除时会自动清理，不会造成内存泄漏
         this.attachedElements = new WeakMap();
+        
+        // ✅ 健康检查定时器
+        this.healthCheckInterval = null;
     }
     
     /**
@@ -58,6 +61,9 @@ class SmartEnterManager {
         
         // 4. 始终启动 DOM 监听（不管开关状态）
         this._startObserving();
+        
+        // 5. ✅ 启动健康检查
+        this._startHealthCheck();
     }
     
     /**
@@ -183,6 +189,36 @@ class SmartEnterManager {
             this.mutationObserver.disconnect();
             this.mutationObserver = null;
         }
+    }
+    
+    /**
+     * ✅ 启动健康检查
+     * 定期检测输入框是否仍然有效，如果失效则重新绑定
+     */
+    _startHealthCheck() {
+        if (this.healthCheckInterval) clearInterval(this.healthCheckInterval);
+        
+        this.healthCheckInterval = setInterval(() => {
+            try {
+                const selector = this.adapter.getInputSelector();
+                const currentInput = document.querySelector(selector);
+                
+                // 情况1: 页面上找不到输入框了 (可能正在加载或切换)
+                if (!currentInput) return;
+                
+                // 情况2: 找到了输入框，但还没有被绑定 (可能是新生成的)
+                if (!this.attachedElements.has(currentInput)) {
+                    // console.log('[SmartInputBox] Detected new input element, rebinding...');
+                    this._attachListener(currentInput);
+                }
+                
+                // 情况3: 检查已绑定的元素是否还在文档中
+                // (由于使用了 WeakMap，不需要手动清理旧的，只需要确保新的被绑定)
+                
+            } catch (e) {
+                // 忽略错误
+            }
+        }, 5000); // 每 5 秒检查一次
     }
     
     /**
@@ -599,6 +635,12 @@ class SmartEnterManager {
     destroy() {
         // 停止 DOM 监听
         this._stopObserving();
+        
+        // ✅ 停止健康检查
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval);
+            this.healthCheckInterval = null;
+        }
         
         // 移除 Storage 监听
         this._detachStorageListener();
