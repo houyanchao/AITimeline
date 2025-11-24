@@ -48,7 +48,7 @@ const SITE_INFO = [
     {
         id: 'doubao',
         sites: ['doubao.com'],
-        name: '豆包 Doubao',
+        name: '豆包',
         logoPath: 'images/logo/doubao.webp',
         features: {
             timeline: true,
@@ -78,7 +78,7 @@ const SITE_INFO = [
     {
         id: 'tongyi',
         sites: ['tongyi.com', 'qianwen.com'],
-        name: '千问 Qwen',
+        name: '千问',
         logoPath: 'images/logo/tongyi.webp',
         features: {
             timeline: true,
@@ -98,7 +98,7 @@ const SITE_INFO = [
     {
         id: 'yuanbao',
         sites: ['yuanbao.tencent.com'],
-        name: '元宝 Yuanbao',
+        name: '元宝',
         logoPath: 'images/logo/yuanbao.webp',
         features: {
             timeline: true,
