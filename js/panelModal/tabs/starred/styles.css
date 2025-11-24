@@ -408,11 +408,6 @@
     color: #FFA726;
 }
 
-html.dark .folder-icon svg {
-    color: #FFB74D;
-}
-
-
 .folder-name {
     font-weight: 500;
     color: #374151;

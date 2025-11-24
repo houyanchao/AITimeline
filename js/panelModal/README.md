@@ -167,7 +167,6 @@ function initializePanelModalTabs(timelineManager) {
 ### 颜色变量
 - 使用 `var(--timeline-bar-bg)` 作为背景色
 - 使用 `var(--timeline-text-color)` 作为文本颜色
-- 支持深色模式：`html.dark` class
 
 ### 动画时长
 - Panel 滑入/滑出: 300ms

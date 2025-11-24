@@ -18,10 +18,6 @@
     margin: 20px 0;
 }
 
-html.dark .timeline-settings .divider {
-    background: #374151;
-}
-
 /* 设置区块 */
 .setting-section {
     margin-bottom: 0;
@@ -39,16 +35,8 @@ html.dark .timeline-settings .divider {
     transition: background 0.2s;
 }
 
-html.dark .setting-item {
-    background: #1f1f1f;
-}
-
 .setting-item:hover {
     background: #f3f4f6;
-}
-
-html.dark .setting-item:hover {
-    background: #262626;
 }
 
 /* 设置信息 */
@@ -63,18 +51,10 @@ html.dark .setting-item:hover {
     margin-bottom: 6px;
 }
 
-html.dark .setting-label {
-    color: #f3f4f6;
-}
-
 .setting-hint {
     font-size: 13px;
     color: #6b7280;
     line-height: 1.6;
-}
-
-html.dark .setting-hint {
-    color: #9ca3af;
 }
 
 /* Toggle Switch */
@@ -104,10 +84,6 @@ html.dark .setting-hint {
     transition: background-color 0.3s;
 }
 
-html.dark .toggle-slider {
-    background-color: #4b5563;
-}
-
 .toggle-slider:before {
     position: absolute;
     content: "";
@@ -124,24 +100,12 @@ html.dark .toggle-slider {
     background-color: #000000;
 }
 
-html.dark .toggle-switch input:checked + .toggle-slider {
-    background-color: #ffffff;
-}
-
 .toggle-switch input:checked + .toggle-slider:before {
     transform: translateX(22px);
 }
 
-html.dark .toggle-switch input:checked + .toggle-slider:before {
-    background-color: #000000;
-}
-
 .toggle-switch input:focus + .toggle-slider {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-}
-
-html.dark .toggle-switch input:focus + .toggle-slider {
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
 /* ==================== 平台列表样式 ==================== */
@@ -160,10 +124,6 @@ html.dark .toggle-switch input:focus + .toggle-slider {
     padding: 0;
 }
 
-html.dark .platform-list-title {
-    color: #f3f4f6;
-}
-
 /* 平台列表提示文字 */
 .platform-list-hint {
     font-size: 13px;
@@ -173,19 +133,11 @@ html.dark .platform-list-title {
     padding: 0;
 }
 
-html.dark .platform-list-hint {
-    color: #9ca3af;
-}
-
 /* 平台列表容器（统一背景框） */
 .platform-list-container {
     background: #f9fafb;
     border-radius: 8px;
     padding: 12px;
-}
-
-html.dark .platform-list-container {
-    background: #1f1f1f;
 }
 
 /* 平台项 */
@@ -202,10 +154,6 @@ html.dark .platform-list-container {
 
 .platform-item:hover {
     background: rgba(0, 0, 0, 0.03);
-}
-
-html.dark .platform-item:hover {
-    background: rgba(255, 255, 255, 0.05);
 }
 
 .platform-item:last-child {
@@ -243,19 +191,10 @@ html.dark .platform-item:hover {
     flex-shrink: 0;
 }
 
-html.dark .platform-logo-placeholder {
-    background: #374151;
-    color: #9ca3af;
-}
-
 /* 平台名称 */
 .platform-name {
     font-size: 14px;
     font-weight: 500;
     color: #1f2937;
-}
-
-html.dark .platform-name {
-    color: #f3f4f6;
 }
 

@@ -77,8 +77,8 @@ const SITE_INFO = [
     },
     {
         id: 'tongyi',
-        sites: ['tongyi.com'],
-        name: '通义千问',
+        sites: ['tongyi.com', 'qianwen.com'],
+        name: '千问',
         logoPath: 'images/logo/tongyi.webp',
         features: {
             timeline: true,

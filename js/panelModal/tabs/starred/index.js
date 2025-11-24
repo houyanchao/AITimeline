@@ -262,14 +262,14 @@ class StarredTab extends BaseTab {
         const folderInfo = document.createElement('div');
         folderInfo.className = 'folder-info';
         
-        // 根据展开状态选择不同的图标
+        // 根据展开状态选择不同的图标（对比度强的设计）
         const folderIconSvg = isExpanded 
-            ? `<svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-            </svg>`  // 打开的文件夹
+            ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>`  // 展开状态 - 空心轮廓文件夹（对比强烈）
             : `<svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
-            </svg>`;  // 关闭的文件夹
+            </svg>`;  // 关闭状态 - 实心文件夹
         
         // 递归统计所有收藏项
         const totalItems = this._countAllItems(folder);

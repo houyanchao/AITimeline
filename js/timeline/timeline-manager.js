@@ -319,7 +319,7 @@ class TimelineManager {
                     'starred-btn',
                     'button',
                     starredBtn,
-                    chrome.i18n.getMessage('vnkxpm'),
+                    chrome.i18n.getMessage('xvpmkz'),
                     { placement: 'left' }
                 );
             });

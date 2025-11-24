@@ -187,5 +187,8 @@
   },
   "mkpxvz": {
     "message": "When enabled, in the AI conversation input box, press Enter key once for new line, double-press Enter key quickly to send message."
+  },
+  "xvpmkz": {
+    "message": "View Starred List"
   }
 }

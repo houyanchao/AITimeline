@@ -187,5 +187,8 @@
   },
   "mkpxvz": {
     "message": "启用后，在 AI 对话输入框中，单击 Enter 键换行，快速双击 Enter 键发送消息。"
+  },
+  "xvpmkz": {
+    "message": "查看收藏列表"
   }
 }
