@@ -32,7 +32,7 @@
     --timeline-star-ring: 5px; /* 五角星边框环宽度（增加1px，使边框更明显） */
     --timeline-track-padding: 16px;
     --timeline-tooltip-max: 288px;
-    --timeline-min-gap: 20px;
+    --timeline-min-gap: 25px;
     /* enlarged hit area for easier clicking */
     --timeline-hit-size: 30px;
     /* spacing model */

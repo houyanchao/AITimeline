@@ -1556,8 +1556,8 @@ class TimelineManager {
     }
 
     getMinGap() {
-        if (!this.ui.timelineBar) return 12;
-        return this.getCSSVarNumber(this.ui.timelineBar, '--timeline-min-gap', 12);
+        if (!this.ui.timelineBar) return 25;
+        return this.getCSSVarNumber(this.ui.timelineBar, '--timeline-min-gap', 25);
     }
 
     // Enforce a minimum pixel gap between positions while staying within bounds
@@ -1619,22 +1619,33 @@ class TimelineManager {
     // Lightweight correction: map cached n -> pixel, apply min-gap, write back updated n
     reapplyMinGapAfterResize() {
         this.perfStart('minGapIdle');
-        if (!this.ui.timelineBar || this.markers.length === 0) return;
-        const barHeight = this.ui.timelineBar.clientHeight || 0;
+        if (!this.ui.timelineBar || !this.ui.trackContent || this.markers.length === 0) return;
+        
         const trackPadding = this.getTrackPadding();
-        const usable = Math.max(1, barHeight - 2 * trackPadding);
+        const minGap = this.getMinGap();
+        const N = this.markers.length;
+        
+        // ✅ 使用实际内容高度，确保有足够空间容纳所有节点的最小间距
+        const barHeight = this.ui.timelineBar.clientHeight || 0;
+        const requiredHeight = 2 * trackPadding + Math.max(0, N - 1) * minGap;
+        const contentHeight = Math.max(barHeight, requiredHeight);
+        
+        // 更新 trackContent 高度
+        try { this.ui.trackContent.style.height = `${contentHeight}px`; } catch {}
+        
+        const usable = Math.max(1, contentHeight - 2 * trackPadding);
         const minTop = trackPadding;
         const maxTop = trackPadding + usable;
-        const minGap = this.getMinGap();
+        
         // Use cached normalized positions (default 0)
         const desired = this.markers.map(m => {
-            const n = Math.max(0, Math.min(1, (m.n ?? 0)));
+            const n = Math.max(0, Math.min(1, (m.baseN ?? m.n ?? 0)));
             return minTop + n * usable;
         });
         const adjusted = this.applyMinGap(desired, minTop, maxTop, minGap);
         for (let i = 0; i < this.markers.length; i++) {
             const top = adjusted[i];
-            const n = (top - minTop) / Math.max(1, (maxTop - minTop));
+            const n = (top - minTop) / Math.max(1, usable);
             this.markers[i].n = Math.max(0, Math.min(1, n));
             try { this.markers[i].dotElement?.style.setProperty('--n', String(this.markers[i].n)); } catch {}
         }
