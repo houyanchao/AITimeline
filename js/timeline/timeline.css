@@ -316,9 +316,9 @@ html.dark .timeline-dot.active::after {
 .timeline-track::-webkit-scrollbar { width: 0; height: 0; }
 .timeline-track { scrollbar-width: none; }
 
-/* ✅ 收藏按钮（纯五角星，在时间轴元素外部下方，通过包装容器的 gap 控制间距） */
+/* ✅ 菜单按钮（三横线图标，在时间轴下方） */
 .timeline-starred-btn {
-    position: relative; /* 相对于包装容器定位 */
+    position: relative;
     width: 28px;
     height: 28px;
     border: none;
@@ -328,38 +328,36 @@ html.dark .timeline-dot.active::after {
     align-items: center;
     justify-content: center;
     padding: 3px;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
-    opacity: 0.85;
+    transition: background-color 0.2s ease;
     border-radius: 6px;
-    flex-shrink: 0; /* 防止收缩 */
+    flex-shrink: 0;
+    color: #6b6b6b;
 }
 
 .timeline-starred-btn svg {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
 }
 
 .timeline-starred-btn:hover {
-    opacity: 1;
     background-color: rgba(0, 0, 0, 0.08);
 }
 
 .timeline-starred-btn:active {
-    opacity: 0.7;
     background-color: rgba(0, 0, 0, 0.12);
 }
 
-/* ✅ 没有收藏记录时的灰色状态 */
-.timeline-starred-btn.no-starred-data svg path {
-    fill: #9CA3AF; /* 明亮模式：灰色 */
-    stroke: #9CA3AF;
+/* 深色模式 */
+html.dark .timeline-starred-btn {
+    color: #9a9a9a;
 }
 
-@media (prefers-color-scheme: dark) {
-    .timeline-starred-btn.no-starred-data svg path {
-        fill: #6B7280; /* 暗黑模式：更深的灰色 */
-        stroke: #6B7280;
-    }
+html.dark .timeline-starred-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .timeline-starred-btn:active {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================================

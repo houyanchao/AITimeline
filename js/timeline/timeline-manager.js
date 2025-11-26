@@ -311,7 +311,7 @@ class TimelineManager {
         if (!starredBtn) {
             starredBtn = document.createElement('button');
             starredBtn.className = 'timeline-starred-btn';
-            starredBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+            starredBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
             starredBtn.setAttribute('aria-label', chrome.i18n.getMessage('hkjvnr'));
             // ✅ 初始状态：隐藏，等时间轴渲染完成后再显示
             starredBtn.style.display = 'none';
