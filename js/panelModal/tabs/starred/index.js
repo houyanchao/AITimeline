@@ -518,18 +518,50 @@ class StarredTab extends BaseTab {
         name.textContent = item.theme;
         
         // 点击跳转
-        name.addEventListener('click', () => {
+        name.addEventListener('click', async () => {
             // 判断是否是当前网站
             const isSameSite = this.isSameSite(item.url);
             
+            // ✅ 获取收藏项的 index（用于滚动到具体节点）
+            // index === -1 表示整个对话的收藏，不需要滚动
+            const targetIndex = item.index;
+            const needsScroll = targetIndex !== undefined && targetIndex !== -1;
+            
             if (isSameSite) {
-                // 同网站：在当前标签页跳转，关闭弹窗
-                location.href = item.url;
-                if (window.panelModal) {
-                    window.panelModal.hide();
+                // 同网站：在当前标签页跳转
+                
+                // ✅ 检查是否是当前页面（URL 完全相同）
+                const isSamePage = location.href === item.url || 
+                    location.href.replace(/^https?:\/\//, '') === item.url.replace(/^https?:\/\//, '');
+                
+                if (isSamePage) {
+                    // ✅ 当前页面
+                    if (needsScroll && this.timelineManager && this.timelineManager.markers[targetIndex]) {
+                        // 需要滚动：直接滚动到目标节点，不刷新页面
+                        const marker = this.timelineManager.markers[targetIndex];
+                        if (marker && marker.element) {
+                            this.timelineManager.smoothScrollTo(marker.element);
+                        }
+                    }
+                    // 不需要滚动（整个对话收藏）：直接关闭弹窗，无需刷新
+                    if (window.panelModal) {
+                        window.panelModal.hide();
+                    }
+                } else {
+                    // ✅ 同网站不同页面：设置导航数据后跳转
+                    if (needsScroll && this.timelineManager) {
+                        await this.timelineManager.setNavigateDataForUrl(item.url, targetIndex);
+                    }
+                    location.href = item.url;
+                    if (window.panelModal) {
+                        window.panelModal.hide();
+                    }
                 }
             } else {
-                // 不同网站：新标签页打开，不关闭弹窗
+                // ✅ 不同网站：设置跨站导航数据后，新标签页打开
+                if (needsScroll && this.timelineManager) {
+                    await this.timelineManager.setNavigateDataForUrl(item.url, targetIndex);
+                }
                 window.open(item.url, '_blank');
             }
         });
