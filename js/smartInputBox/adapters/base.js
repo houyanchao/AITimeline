@@ -50,5 +50,14 @@ class BaseSmartEnterAdapter {
     getName() {
         return this.constructor.name.replace('SmartEnterAdapter', '');
     }
+    
+    /**
+     * 获取提示词按钮位置偏移量
+     * 用于微调按钮相对于输入框左上角的位置
+     * @returns {{ top: number, left: number }}
+     */
+    getPromptButtonOffset() {
+        return { top: 0, left: 0 };
+    }
 }
 

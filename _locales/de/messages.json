@@ -165,7 +165,7 @@
     "message": "Drücken Sie lange auf einen Gesprächsknoten in der Zeitleiste, um ihn als wichtig zu markieren."
   },
   "xmvkpz": {
-    "message": "Gesprächseingabefeld"
+    "message": "Chatfeld"
   },
   "kvzmxp": {
     "message": "Tastatur Enter-Taste für neue Zeile"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Diese Funktion ist immer aktiviert und kann nicht ausgeschaltet werden"
+  }
+,
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Prompt-Button links neben dem Chatfeld anzeigen"
   }
 }
 

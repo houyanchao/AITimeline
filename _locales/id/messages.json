@@ -165,7 +165,7 @@
     "message": "Tekan lama pada node percakapan di timeline untuk menandainya sebagai penting."
   },
   "xmvkpz": {
-    "message": "Kotak input percakapan"
+    "message": "Kotak obrolan"
   },
   "kvzmxp": {
     "message": "Gunakan tombol Enter keyboard untuk baris baru"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Fitur ini selalu aktif dan tidak dapat dimatikan"
+  }
+,
+  "promptWord": {
+    "message": "Prompt"
+  }
+,
+  "promptButtonHint": {
+    "message": "Tampilkan tombol prompt di sisi kiri kotak obrolan"
   }
 }
 

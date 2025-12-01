@@ -165,7 +165,7 @@
     "message": "Długo naciśnij węzeł rozmowy na osi czasu, aby oznaczyć go jako ważny."
   },
   "xmvkpz": {
-    "message": "Pole wprowadzania rozmowy"
+    "message": "Pole czatu"
   },
   "kvzmxp": {
     "message": "Użyj klawisza Enter klawiatury dla nowej linii"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Ta funkcja jest zawsze włączona i nie można jej wyłączyć"
+  }
+,
+  "promptWord": {
+    "message": "Prompty"
+  }
+,
+  "promptButtonHint": {
+    "message": "Pokaż przycisk prompty po lewej stronie pola czatu"
   }
 }
 

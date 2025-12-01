@@ -1,43 +1,34 @@
 /**
- * Smart Enter - 主入口
+ * Smart Input Box - 主入口
  * 
- * 智能 Enter 功能初始化
+ * 智能输入框功能初始化
  * 
  * 功能：
- * - Enter 键：换行
- * - 快速双击 Enter：发送消息
+ * - 提示词按钮（独立开关控制）
+ * - Enter 键换行 + 快速双击 Enter 发送（独立开关控制）
  * 
  * 支持平台：
- * - ChatGPT
- * - 更多平台待添加...
+ * - 所有 features.smartInput === true 的平台
  */
 
 (function() {
     'use strict';
     
-    // 检查当前平台是否启用
-    async function isPlatformEnabled() {
+    // ✅ 检查当前平台是否支持智能输入功能
+    function isPlatformSupported() {
         try {
             const platform = getCurrentPlatform();
-            if (!platform) return true; // 未知平台，默认启用
+            if (!platform) return false;
             
-            // ✅ 首先检查平台是否支持智能输入功能
-            if (platform.features?.smartInput !== true) {
-                return false; // 平台不支持该功能
-            }
-            
-            const result = await chrome.storage.local.get('smartInputPlatformSettings');
-            const settings = result.smartInputPlatformSettings || {};
-            
-            // 默认关闭（=== true）
-            return settings[platform.id] === true;
+            // 检查平台是否支持智能输入功能
+            return platform.features?.smartInput === true;
         } catch (e) {
-            return true; // 出错默认启用
+            return false;
         }
     }
     
     // 等待 DOM 和依赖加载完成
-    const initSmartEnter = async () => {
+    const initSmartInputBox = async () => {
         try {
             // 检查依赖是否加载
             if (typeof SmartEnterAdapterRegistry === 'undefined') {
@@ -64,14 +55,13 @@
                 return;
             }
             
-            // ✅ 检查当前平台是否启用
-            const platformEnabled = await isPlatformEnabled();
-            if (!platformEnabled) {
-                console.log('[SmartInputBox] Current platform is disabled');
+            // ✅ 检查当前平台是否支持智能输入功能
+            if (!isPlatformSupported()) {
                 return;
             }
             
-            // 创建管理器实例
+            // ✅ 只要平台支持，就创建管理器实例
+            // Enter 换行和提示词按钮各自受自己的开关控制
             const manager = new SmartEnterManager(adapter, {
                 debug: SMART_ENTER_CONFIG.DEBUG
             });
@@ -87,61 +77,13 @@
         }
     };
     
-    // ✅ 监听平台设置变化，动态启用/禁用
-    function setupPlatformSettingsListener() {
-        chrome.storage.onChanged.addListener((changes, areaName) => {
-            if (areaName !== 'local') return;
-            
-            if (changes.smartInputPlatformSettings) {
-                const platform = getCurrentPlatform();
-                if (!platform) return;
-                
-                // ✅ 检查平台是否支持智能输入功能
-                if (platform.features?.smartInput !== true) {
-                    return; // 平台不支持该功能，忽略
-                }
-                
-                const oldSettings = changes.smartInputPlatformSettings.oldValue || {};
-                const newSettings = changes.smartInputPlatformSettings.newValue || {};
-                
-                const wasEnabled = oldSettings[platform.id] === true;
-                const isEnabled = newSettings[platform.id] === true;
-                
-                // 状态发生变化
-                if (wasEnabled !== isEnabled) {
-                    if (isEnabled) {
-                        // 从禁用到启用：重新初始化
-                        if (!window.smartEnterManager) {
-                            console.log('[SmartInputBox] Platform enabled, reinitializing...');
-                            initSmartEnter();
-                        }
-                    } else {
-                        // 从启用到禁用：销毁
-                        if (window.smartEnterManager) {
-                            console.log('[SmartInputBox] Platform disabled, destroying...');
-                            try {
-                                window.smartEnterManager.destroy();
-                                window.smartEnterManager = null;
-                            } catch (e) {
-                                console.error('[SmartInputBox] Failed to destroy:', e);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-    
     // DOM 加载完成后初始化
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSmartEnter);
+        document.addEventListener('DOMContentLoaded', initSmartInputBox);
     } else {
         // DOM 已经加载完成
-        initSmartEnter();
+        initSmartInputBox();
     }
-    
-    // ✅ 设置平台设置监听器
-    setupPlatformSettingsListener();
     
 })();
 

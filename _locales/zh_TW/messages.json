@@ -165,7 +165,7 @@
     "message": "長按時間軸上的對話節點，即可標記重點。"
   },
   "xmvkpz": {
-    "message": "對話輸入框"
+    "message": "對話框"
   },
   "kvzmxp": {
     "message": "使用鍵盤 Enter 鍵換行"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "此功能預設開啟，無法關閉"
+  }
+,
+  "promptWord": {
+    "message": "提示詞"
+  }
+,
+  "promptButtonHint": {
+    "message": "在對話框左邊展示提示詞按鈕"
   }
 }
 

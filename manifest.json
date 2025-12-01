@@ -49,6 +49,7 @@
         "js/smartInputBox/adapters/tongyi.js",
         "js/smartInputBox/adapters/grok.js",
         "js/smartInputBox/adapters/registry.js",
+        "js/smartInputBox/prompt-button-manager.js",
         "js/smartInputBox/smart-enter-manager.js",
         "js/smartInputBox/index.js",
         "js/timeline/adapters/base.js",
@@ -82,7 +83,8 @@
         "js/panelModal/tabs/formula/styles.css",
         "js/timeline/star-input-modal/star-input-modal.css",
         "js/timeline/timeline.css",
-        "js/formula/formula.css"
+        "js/formula/formula.css",
+        "js/smartInputBox/prompt-button.css"
       ],
       "run_at": "document_idle"
     }

@@ -11,6 +11,13 @@
     box-sizing: border-box;
 }
 
+/* 分隔线 */
+.smart-input-box-settings .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
 /* Toggle Switch */
 .toggle-switch {
     position: relative;

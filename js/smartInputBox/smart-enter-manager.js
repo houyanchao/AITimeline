@@ -44,6 +44,9 @@ class SmartEnterManager {
         
         // ✅ 健康检查定时器
         this.healthCheckInterval = null;
+        
+        // ✅ 提示词按钮管理器
+        this.promptButtonManager = null;
     }
     
     /**
@@ -64,6 +67,29 @@ class SmartEnterManager {
         
         // 5. ✅ 启动健康检查
         this._startHealthCheck();
+        
+        // 6. ✅ 初始化提示词按钮
+        await this._initPromptButton();
+    }
+    
+    /**
+     * ✅ 初始化提示词按钮
+     */
+    async _initPromptButton() {
+        try {
+            // 检查 PromptButtonManager 是否已加载
+            if (typeof PromptButtonManager === 'undefined') {
+                console.error('[SmartInputBox] PromptButtonManager not loaded');
+                return;
+            }
+            
+            // 创建并初始化
+            this.promptButtonManager = new PromptButtonManager(this.adapter);
+            await this.promptButtonManager.init();
+            
+        } catch (e) {
+            console.error('[SmartInputBox] Failed to init prompt button:', e);
+        }
     }
     
     /**
@@ -654,6 +680,16 @@ class SmartEnterManager {
             }
         } catch (e) {
             console.error('[SmartInputBox] Failed to detach listener on destroy:', e);
+        }
+        
+        // ✅ 销毁提示词按钮
+        if (this.promptButtonManager) {
+            try {
+                this.promptButtonManager.destroy();
+                this.promptButtonManager = null;
+            } catch (e) {
+                console.error('[SmartInputBox] Failed to destroy prompt button:', e);
+            }
         }
         
         // 清除所有定时器和状态

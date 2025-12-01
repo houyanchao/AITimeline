@@ -19,5 +19,21 @@ class KimiSmartEnterAdapter extends BaseSmartEnterAdapter {
     getInputSelector() {
         return '.chat-input-editor[contenteditable="true"]';
     }
+
+    /**
+     * 获取定位参考元素
+     * 使用 .chat-editor 祖先元素作为定位参考
+     * @param {HTMLElement} inputElement - 输入框元素
+     */
+    getPositionReferenceElement(inputElement) {
+        return inputElement?.closest('.chat-editor') || inputElement;
+    }
+    
+    /**
+     * 获取提示词按钮位置偏移量
+     */
+    getPromptButtonOffset() {
+        return { top: 5, left: -2 };
+    }
 }
 

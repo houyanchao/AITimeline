@@ -19,5 +19,21 @@ class GrokSmartEnterAdapter extends BaseSmartEnterAdapter {
     getInputSelector() {
         return '.ProseMirror[contenteditable="true"]';
     }
+ 
+    /**
+     * 获取定位参考元素
+     * 使用 .query-bar 祖先元素作为定位参考
+     * @param {HTMLElement} inputElement - 输入框元素
+     */
+    getPositionReferenceElement(inputElement) {
+        return inputElement?.closest('.query-bar') || inputElement;
+    }
+    
+    /**
+     * 获取提示词按钮位置偏移量
+     */
+    getPromptButtonOffset() {
+        return { top: 12, left: -2 };
+    }
 }
 

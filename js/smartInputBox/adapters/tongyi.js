@@ -19,5 +19,21 @@ class TongyiSmartEnterAdapter extends BaseSmartEnterAdapter {
     getInputSelector() {
         return '[class*="textareaWrap"] textarea';
     }
+
+    /**
+     * 获取定位参考元素
+     * 使用 class 包含 inputContainer 的祖先元素作为定位参考
+     * @param {HTMLElement} inputElement - 输入框元素
+     */
+    getPositionReferenceElement(inputElement) {
+        return inputElement?.closest('[class*="inputContainer"]') || inputElement;
+    }
+    
+    /**
+     * 获取提示词按钮位置偏移量
+     */
+    getPromptButtonOffset() {
+        return { top: 10, left: -2 };
+    }
 }
 

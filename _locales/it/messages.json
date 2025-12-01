@@ -165,7 +165,7 @@
     "message": "Premi a lungo su un nodo di conversazione nella timeline per contrassegnarlo come importante."
   },
   "xmvkpz": {
-    "message": "Casella di input conversazione"
+    "message": "Casella chat"
   },
   "kvzmxp": {
     "message": "Usa il tasto Invio della tastiera per nuova riga"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Questa funzione è sempre abilitata e non può essere disattivata"
+  }
+,
+  "promptWord": {
+    "message": "Prompt"
+  }
+,
+  "promptButtonHint": {
+    "message": "Mostra pulsante prompt a sinistra della casella chat"
   }
 }
 

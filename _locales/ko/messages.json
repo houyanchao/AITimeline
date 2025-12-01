@@ -165,7 +165,7 @@
     "message": "타임라인의 대화 노드를 길게 눌러 중요 표시를 할 수 있습니다."
   },
   "xmvkpz": {
-    "message": "대화 입력 상자"
+    "message": "채팅창"
   },
   "kvzmxp": {
     "message": "키보드 Enter 키로 줄바꿈"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "이 기능은 항상 활성화되어 있으며 끌 수 없습니다"
+  }
+,
+  "promptWord": {
+    "message": "프롬프트"
+  }
+,
+  "promptButtonHint": {
+    "message": "채팅창 왼쪽에 프롬프트 버튼 표시"
   }
 }
 

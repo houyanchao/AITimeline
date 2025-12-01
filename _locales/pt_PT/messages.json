@@ -165,7 +165,7 @@
     "message": "Pressione longamente num nó de conversa na linha do tempo para o marcar como importante."
   },
   "xmvkpz": {
-    "message": "Caixa de entrada de conversação"
+    "message": "Caixa de chat"
   },
   "kvzmxp": {
     "message": "Usar tecla Enter do teclado para nova linha"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Esta funcionalidade está sempre ativada e não pode ser desativada"
+  }
+,
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Mostrar botão de prompts à esquerda da caixa de chat"
   }
 }
 

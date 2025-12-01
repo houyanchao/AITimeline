@@ -165,7 +165,7 @@
     "message": "长按时间轴上的对话节点，即可标记重点。"
   },
   "xmvkpz": {
-    "message": "对话输入框"
+    "message": "对话框"
   },
   "kvzmxp": {
     "message": "使用键盘 Enter 键换行"
@@ -199,5 +199,12 @@
   },
   "qoytxz": {
     "message": "此功能默认开启，无法关闭"
+  },
+  "promptWord": {
+    "message": "提示词"
+  }
+,
+  "promptButtonHint": {
+    "message": "在对话框左边展示提示词按钮"
   }
 }

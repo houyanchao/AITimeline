@@ -165,7 +165,7 @@
     "message": "Nhấn giữ vào nút hội thoại trên dòng thời gian để đánh dấu là quan trọng."
   },
   "xmvkpz": {
-    "message": "Hộp nhập cuộc trò chuyện"
+    "message": "Hộp trò chuyện"
   },
   "kvzmxp": {
     "message": "Sử dụng phím Enter trên bàn phím để xuống dòng"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Tính năng này luôn được bật và không thể tắt"
+  }
+,
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Hiển thị nút prompt ở bên trái hộp trò chuyện"
   }
 }
 

@@ -165,7 +165,7 @@
     "message": "Mantenga presionado un nodo de conversación en la línea de tiempo para marcarlo como importante."
   },
   "xmvkpz": {
-    "message": "Cuadro de entrada de conversación"
+    "message": "Cuadro de chat"
   },
   "kvzmxp": {
     "message": "Usar tecla Enter del teclado para nueva línea"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Esta función está siempre activada y no se puede desactivar"
+  }
+,
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Mostrar botón de prompts a la izquierda del cuadro de chat"
   }
 }
 

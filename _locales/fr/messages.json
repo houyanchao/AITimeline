@@ -165,7 +165,7 @@
     "message": "Appuyez longuement sur un nœud de conversation dans la chronologie pour le marquer comme important."
   },
   "xmvkpz": {
-    "message": "Zone de saisie de conversation"
+    "message": "Zone de chat"
   },
   "kvzmxp": {
     "message": "Utiliser la touche Entrée du clavier pour nouvelle ligne"
@@ -202,6 +202,14 @@
   },
   "qoytxz": {
     "message": "Cette fonctionnalité est toujours activée et ne peut pas être désactivée"
+  }
+,
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Afficher le bouton prompts à gauche de la zone de chat"
   }
 }
 

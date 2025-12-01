@@ -165,7 +165,7 @@
     "message": "Long press on a conversation node in the timeline to mark it as important."
   },
   "xmvkpz": {
-    "message": "Conversation Input Box"
+    "message": "Chat Box"
   },
   "kvzmxp": {
     "message": "Use Keyboard Enter Key for New Line"
@@ -199,5 +199,12 @@
   },
   "qoytxz": {
     "message": "This feature is always enabled and cannot be turned off"
+  },
+  "promptWord": {
+    "message": "Prompts"
+  }
+,
+  "promptButtonHint": {
+    "message": "Show prompt button on the left side of the chat box"
   }
 }

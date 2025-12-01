@@ -19,6 +19,22 @@ class DeepSeekSmartEnterAdapter extends BaseSmartEnterAdapter {
     getInputSelector() {
         return 'textarea.ds-scroll-area[rows="2"]';
     }
+
+    /**
+     * 获取定位参考元素
+     * 使用 .ds-scroll-area__gutters 祖先元素作为定位参考
+     * @param {HTMLElement} inputElement - 输入框元素
+     */
+    getPositionReferenceElement(inputElement) {
+        return inputElement?.closest('.ds-scroll-area__gutters') || inputElement;
+    }
+    
+    /**
+     * 获取提示词按钮位置偏移量
+     */
+    getPromptButtonOffset() {
+        return { top: 10, left: -2 };
+    }
 }
 
 
