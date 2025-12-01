@@ -200,11 +200,70 @@
   "qoytxz": {
     "message": "This feature is always enabled and cannot be turned off"
   },
-  "promptWord": {
+  "hosegod": {
     "message": "Prompts"
-  }
-,
-  "promptButtonHint": {
-    "message": "Show prompt button on the left side of the chat box"
+  },
+  "hobsidbg": {
+    "message": "When enabled, show prompt shortcut button on the left side of the chat box"
+  },
+  "biwhckdj": {
+    "message": "Prompt List"
+  },
+  "byaskjndg": {
+    "message": "Add Prompt"
+  },
+  "hsksuywm": {
+    "message": "Edit Prompt"
+  },
+  "hsuywkw": {
+    "message": "Name"
+  },
+  "hsuywkwPlaceholder": {
+    "message": "Enter prompt name"
+  },
+  "promptContent": {
+    "message": "Content"
+  },
+  "uwkjwjw": {
+    "message": "Enter prompt content"
+  },
+  "hsiwhwl": {
+    "message": "No prompts yet"
+  },
+  "shwsuwk": {
+    "message": "Prompt added"
+  },
+  "hwkwbhwk": {
+    "message": "Prompt updated"
+  },
+  "qrtypd": {
+    "message": "Prompt deleted"
+  },
+  "dcnfmq": {
+    "message": "Delete this prompt?"
+  },
+  "mngpqt": {
+    "message": "Manage Prompts"
+  },
+  "pbtdsq": {
+    "message": "Prompt Button"
+  },
+  "svkbtn": {
+    "message": "Save"
+  },
+  "pmpknd": {
+    "message": "Pinned"
+  },
+  "pmuknp": {
+    "message": "Unpinned"
+  },
+  "addkbt": {
+    "message": "Add"
+  },
+  "ptfmsl": {
+    "message": "Applies to"
+  },
+  "allptfm": {
+    "message": "All AI Platforms"
   }
 }

@@ -200,11 +200,14 @@
   "qoytxz": {
     "message": "This feature is always enabled and cannot be turned off"
   },
-  "promptWord": {
+  "hosegod": {
     "message": "Prompts"
   }
 ,
-  "promptButtonHint": {
-    "message": "Show prompt button on the left side of the chat box"
+  "promptButtonDisplay": {
+    "message": "Prompt Button"
+  },
+  "hobsidbg": {
+    "message": "When enabled, show prompt shortcut button on the left side of the chat box"
   }
 }

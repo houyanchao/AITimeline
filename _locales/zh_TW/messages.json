@@ -204,12 +204,15 @@
     "message": "此功能預設開啟，無法關閉"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "提示詞"
   }
 ,
-  "promptButtonHint": {
-    "message": "在對話框左邊展示提示詞按鈕"
+  "promptButtonDisplay": {
+    "message": "提示詞按鈕"
+  },
+  "hobsidbg": {
+    "message": "開啟後，在對話框左邊顯示提示詞快捷按鈕"
   }
 }
 

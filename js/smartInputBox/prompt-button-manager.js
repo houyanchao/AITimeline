@@ -26,6 +26,9 @@ class PromptButtonManager {
         this.mutationObserver = null;
         this._mutationDebounceTimer = null;  // MutationObserver 防抖定时器
         
+        // 提示词列表
+        this.prompts = [];
+        
         // 事件处理器引用
         this._onResize = null;
         this._rafPending = false;  // RAF 节流标志
@@ -43,15 +46,31 @@ class PromptButtonManager {
         // 1. 加载平台设置
         await this._loadPlatformSettings();
         
-        // 2. 监听 Storage 变化
+        // 2. 加载提示词列表
+        await this._loadPrompts();
+        
+        // 3. 监听 Storage 变化
         this._attachStorageListener();
         
-        // 3. 创建按钮
+        // 4. 创建按钮
         this._createButton();
         
-        // 4. 检查是否启用
+        // 5. 检查是否启用
         if (this._isPlatformEnabled()) {
             this._enable();
+        }
+    }
+    
+    /**
+     * 加载提示词列表
+     */
+    async _loadPrompts() {
+        try {
+            const result = await chrome.storage.local.get('biwhckdj');
+            this.prompts = result.biwhckdj || [];
+        } catch (e) {
+            console.error('[PromptButton] Failed to load prompts:', e);
+            this.prompts = [];
         }
     }
     
@@ -126,14 +145,22 @@ class PromptButtonManager {
             // ✅ 已销毁则忽略
             if (this.isDestroyed) return;
             
-            if (areaName === 'local' && changes.promptButtonPlatformSettings) {
-                this.platformSettings = changes.promptButtonPlatformSettings.newValue || {};
-                const shouldEnable = this._isPlatformEnabled();
+            if (areaName === 'local') {
+                // 监听平台设置变化
+                if (changes.promptButtonPlatformSettings) {
+                    this.platformSettings = changes.promptButtonPlatformSettings.newValue || {};
+                    const shouldEnable = this._isPlatformEnabled();
+                    
+                    if (shouldEnable && !this.isEnabled) {
+                        this._enable();
+                    } else if (!shouldEnable && this.isEnabled) {
+                        this._disable();
+                    }
+                }
                 
-                if (shouldEnable && !this.isEnabled) {
-                    this._enable();
-                } else if (!shouldEnable && this.isEnabled) {
-                    this._disable();
+                // 监听提示词列表变化
+                if (changes.biwhckdj) {
+                    this.prompts = changes.biwhckdj.newValue || [];
                 }
             }
         };
@@ -338,7 +365,153 @@ class PromptButtonManager {
      */
     _handleClick() {
         console.log('[PromptButton] Button clicked');
-        // TODO: 实现点击逻辑
+        
+        if (!this.buttonElement || !window.globalDropdownManager) {
+            return;
+        }
+        
+        // 构建下拉菜单项
+        const items = this._buildDropdownItems();
+        
+        // 显示下拉菜单（往上展开）
+        window.globalDropdownManager.show({
+            trigger: this.buttonElement,
+            items: items,
+            position: 'top-left',
+            width: 220,
+            className: 'prompt-dropdown',
+            id: 'prompt-button-dropdown'
+        });
+    }
+    
+    /**
+     * 构建下拉菜单项
+     */
+    _buildDropdownItems() {
+        const items = [];
+        
+        // 1. 顶部"新增/管理"按钮
+        items.push({
+            label: chrome.i18n.getMessage('mngpqt'),
+            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>`,
+            className: 'prompt-manage-item',
+            onClick: () => {
+                // 打开 PanelModal 的提示词 tab
+                if (window.panelModal) {
+                    window.panelModal.show('prompt');
+                }
+            }
+        });
+        
+        // 2. 根据当前平台筛选提示词
+        const currentPlatform = typeof getCurrentPlatform === 'function' ? getCurrentPlatform() : null;
+        const currentPlatformId = currentPlatform?.id || '';
+        
+        // 筛选：platformId 为空（全部平台）或等于当前平台
+        const filteredPrompts = this.prompts.filter(p => !p.platformId || p.platformId === currentPlatformId);
+        
+        // 分割线（如果有提示词）
+        if (filteredPrompts.length > 0) {
+            items.push({ type: 'divider' });
+        }
+        
+        // 3. 提示词列表（置顶的在前面）
+        const sortedPrompts = [...filteredPrompts].sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return 0;
+        });
+        
+        sortedPrompts.forEach(prompt => {
+            // 截取内容前30个字符作为显示
+            const displayText = prompt.content ? 
+                (prompt.content.length > 30 ? prompt.content.substring(0, 30) + '...' : prompt.content) 
+                : '空提示词';
+            
+            const item = {
+                label: displayText,
+                onClick: () => {
+                    this._insertPrompt(prompt);
+                }
+            };
+            
+            // 只有置顶的才显示置顶 icon（颜色与 tab 列表中一致 #facc15）
+            if (prompt.pinned) {
+                item.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.5">
+                    <line x1="5" y1="3" x2="19" y2="3"/>
+                    <line x1="12" y1="7" x2="12" y2="21"/>
+                    <polyline points="8 11 12 7 16 11"/>
+                </svg>`;
+            }
+            
+            items.push(item);
+        });
+        
+        // 4. 如果没有适用的提示词，显示提示
+        if (filteredPrompts.length === 0) {
+            items.push({ type: 'divider' });
+            items.push({
+                label: chrome.i18n.getMessage('hsiwhwl'),
+                disabled: true,
+                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>`
+            });
+        }
+        
+        return items;
+    }
+    
+    /**
+     * 插入提示词到输入框
+     */
+    _insertPrompt(prompt) {
+        if (!this.inputElement || !prompt.content) {
+            return;
+        }
+        
+        try {
+            // 获取适配器的插入方法
+            if (this.adapter.insertText) {
+                this.adapter.insertText(this.inputElement, prompt.content);
+            } else {
+                // 默认插入逻辑
+                this._defaultInsertText(prompt.content);
+            }
+        } catch (e) {
+            console.error('[PromptButton] Failed to insert prompt:', e);
+        }
+    }
+    
+    /**
+     * 默认的文本插入逻辑
+     */
+    _defaultInsertText(text) {
+        if (!this.inputElement) return;
+        
+        // 聚焦输入框
+        this.inputElement.focus();
+        
+        // 尝试使用 execCommand（适用于 contenteditable）
+        if (this.inputElement.isContentEditable) {
+            document.execCommand('insertText', false, text);
+        } else {
+            // textarea 或 input
+            const start = this.inputElement.selectionStart || 0;
+            const end = this.inputElement.selectionEnd || 0;
+            const value = this.inputElement.value || '';
+            
+            this.inputElement.value = value.substring(0, start) + text + value.substring(end);
+            this.inputElement.selectionStart = this.inputElement.selectionEnd = start + text.length;
+            
+            // 触发 input 事件
+            this.inputElement.dispatchEvent(new Event('input', { bubbles: true }));
+        }
     }
     
     /**

@@ -204,12 +204,15 @@
     "message": "Tính năng này luôn được bật và không thể tắt"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "Prompts"
   }
 ,
-  "promptButtonHint": {
-    "message": "Hiển thị nút prompt ở bên trái hộp trò chuyện"
+  "promptButtonDisplay": {
+    "message": "Nút Prompt"
+  },
+  "hobsidbg": {
+    "message": "Khi bật, hiển thị nút phím tắt prompt ở bên trái hộp trò chuyện"
   }
 }
 

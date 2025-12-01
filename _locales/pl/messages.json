@@ -204,12 +204,15 @@
     "message": "Ta funkcja jest zawsze włączona i nie można jej wyłączyć"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "Prompty"
   }
 ,
-  "promptButtonHint": {
-    "message": "Pokaż przycisk prompty po lewej stronie pola czatu"
+  "promptButtonDisplay": {
+    "message": "Przycisk Prompty"
+  },
+  "hobsidbg": {
+    "message": "Po włączeniu pokaż przycisk skrótu prompty po lewej stronie pola czatu"
   }
 }
 

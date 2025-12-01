@@ -204,12 +204,15 @@
     "message": "Esta funcionalidade está sempre ativada e não pode ser desativada"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "Prompts"
   }
 ,
-  "promptButtonHint": {
-    "message": "Mostrar botão de prompts à esquerda da caixa de chat"
+  "promptButtonDisplay": {
+    "message": "Botão de Prompts"
+  },
+  "hobsidbg": {
+    "message": "Quando ativado, mostrar botão de atalho de prompts à esquerda da caixa de chat"
   }
 }
 

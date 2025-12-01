@@ -204,12 +204,15 @@
     "message": "Fitur ini selalu aktif dan tidak dapat dimatikan"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "Prompt"
   }
 ,
-  "promptButtonHint": {
-    "message": "Tampilkan tombol prompt di sisi kiri kotak obrolan"
+  "promptButtonDisplay": {
+    "message": "Tombol Prompt"
+  },
+  "hobsidbg": {
+    "message": "Saat diaktifkan, tampilkan tombol pintasan prompt di sisi kiri kotak obrolan"
   }
 }
 

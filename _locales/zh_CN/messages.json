@@ -200,11 +200,70 @@
   "qoytxz": {
     "message": "此功能默认开启，无法关闭"
   },
-  "promptWord": {
+  "hosegod": {
     "message": "提示词"
-  }
-,
-  "promptButtonHint": {
-    "message": "在对话框左边展示提示词按钮"
+  },
+  "hobsidbg": {
+    "message": "开启后，在对话框左边显示提示词快捷按钮"
+  },
+  "biwhckdj": {
+    "message": "提示词列表"
+  },
+  "byaskjndg": {
+    "message": "添加提示词"
+  },
+  "hsksuywm": {
+    "message": "编辑提示词"
+  },
+  "hsuywkw": {
+    "message": "名称"
+  },
+  "hsuywkwPlaceholder": {
+    "message": "输入提示词名称"
+  },
+  "promptContent": {
+    "message": "内容"
+  },
+  "uwkjwjw": {
+    "message": "输入提示词内容"
+  },
+  "hsiwhwl": {
+    "message": "暂无提示词"
+  },
+  "shwsuwk": {
+    "message": "提示词已添加"
+  },
+  "hwkwbhwk": {
+    "message": "提示词已更新"
+  },
+  "qrtypd": {
+    "message": "提示词已删除"
+  },
+  "dcnfmq": {
+    "message": "确定删除这个提示词吗？"
+  },
+  "mngpqt": {
+    "message": "管理提示词"
+  },
+  "pbtdsq": {
+    "message": "提示词按钮"
+  },
+  "svkbtn": {
+    "message": "保存"
+  },
+  "pmpknd": {
+    "message": "已置顶"
+  },
+  "pmuknp": {
+    "message": "已取消置顶"
+  },
+  "addkbt": {
+    "message": "添加"
+  },
+  "ptfmsl": {
+    "message": "适用于"
+  },
+  "allptfm": {
+    "message": "全部AI平台"
   }
 }

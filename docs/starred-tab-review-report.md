@@ -16,7 +16,7 @@
 constructor(timelineManager) {
     super();  // ✅ 正确调用 super
     this.id = 'starred';
-    this.name = chrome.i18n.getMessage('starredList') || '收藏列表';
+    this.name = chrome.i18n.getMessage('starredList');
     this.icon = `...`;
     
     this.timelineManager = timelineManager;  // ✅ 保留必要的实例变量

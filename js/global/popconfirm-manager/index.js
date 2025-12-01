@@ -55,8 +55,8 @@ class GlobalPopconfirmManager {
             const finalConfig = {
                 title: options.title || '',
                 content: options.content || '',
-                confirmText: options.confirmText || chrome.i18n.getMessage('vkmzpx') || '确定',
-                cancelText: options.cancelText || chrome.i18n.getMessage('pxvkmz') || '取消'
+                confirmText: options.confirmText || chrome.i18n.getMessage('vkmzpx'),
+                cancelText: options.cancelText || chrome.i18n.getMessage('pxvkmz')
             };
             
             // 保存状态

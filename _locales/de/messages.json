@@ -204,12 +204,15 @@
     "message": "Diese Funktion ist immer aktiviert und kann nicht ausgeschaltet werden"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "Prompts"
   }
 ,
-  "promptButtonHint": {
-    "message": "Prompt-Button links neben dem Chatfeld anzeigen"
+  "promptButtonDisplay": {
+    "message": "Prompt-Button"
+  },
+  "hobsidbg": {
+    "message": "Wenn aktiviert, Prompt-Schnellzugriff links neben dem Chatfeld anzeigen"
   }
 }
 

@@ -204,12 +204,15 @@
     "message": "이 기능은 항상 활성화되어 있으며 끌 수 없습니다"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "프롬프트"
   }
 ,
-  "promptButtonHint": {
-    "message": "채팅창 왼쪽에 프롬프트 버튼 표시"
+  "promptButtonDisplay": {
+    "message": "프롬프트 버튼"
+  },
+  "hobsidbg": {
+    "message": "활성화 시 채팅창 왼쪽에 프롬프트 바로가기 버튼 표시"
   }
 }
 

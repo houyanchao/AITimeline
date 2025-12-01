@@ -192,8 +192,7 @@ class PanelModal {
         }
         
         if (this.tabs.has(tab.id)) {
-            console.warn(`[PanelModal] Tab "${tab.id}" already registered`);
-            return;
+            return; // 已注册，静默跳过
         }
         
         // 保存 tab
@@ -211,10 +210,8 @@ class PanelModal {
         
         // 支持 SVG 图标或 emoji
         if (typeof tab.icon === 'string' && tab.icon.trim().startsWith('<')) {
-            // SVG 图标
             icon.innerHTML = tab.icon;
         } else {
-            // Emoji 或文本
             icon.textContent = tab.icon;
         }
         
@@ -233,8 +230,6 @@ class PanelModal {
         
         // 添加到 tab 栏
         this.tabsContainer.appendChild(tabButton);
-        
-        console.log(`[PanelModal] Tab "${tab.id}" registered`);
     }
     
     /**
@@ -242,6 +237,11 @@ class PanelModal {
      * @param {string} tabId - 要显示的 tab ID（可选）
      */
     show(tabId = null) {
+        // ✅ 确保所有可用的 tabs 已注册（按固定顺序）
+        if (typeof registerAllTabs === 'function') {
+            registerAllTabs();
+        }
+        
         // 确定要显示的 tab
         const targetTabId = tabId || this.currentTabId || this.tabs.keys().next().value;
         
@@ -381,6 +381,6 @@ class PanelModal {
 if (typeof window !== 'undefined') {
     window.panelModal = new PanelModal();
     
-    // ✅ 注意：设置 Tabs 在 Timeline 初始化后注册，确保顺序正确
+    // ✅ 注意：所有 Tabs 在 Timeline 初始化后统一注册，确保顺序正确
     // 见 tab-registry.js 中的 registerTimelineTabs()
 }

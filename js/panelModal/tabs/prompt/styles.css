@@ -1,0 +1,601 @@
+/**
+ * Prompt Tab Styles
+ * 提示词设置样式
+ */
+
+/* 设置容器 */
+.prompt-settings {
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 分隔线 */
+.prompt-settings .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
+/* ==================== 提示词列表管理模块 ==================== */
+
+.prompt-list-section {
+    padding: 0;
+}
+
+.prompt-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.prompt-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.prompt-list-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* 添加按钮 */
+.prompt-add-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.prompt-add-btn:hover {
+    background: #333;
+}
+
+.prompt-add-btn:active {
+    transform: scale(0.98);
+}
+
+.prompt-add-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* 提示词列表容器 */
+.prompt-list-container {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* 空状态 */
+.prompt-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    color: #9ca3af;
+}
+
+.prompt-empty svg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+.prompt-empty span {
+    font-size: 13px;
+}
+
+/* 提示词项 */
+.prompt-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+}
+
+.prompt-item:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-item:hover {
+    border-color: #eef0f2;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.prompt-item-content {
+    flex: 1;
+    min-width: 0;
+    margin-right: 8px;
+}
+
+.prompt-item-text {
+    font-size: 14px;
+    color: #1f2937;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+/* 操作按钮 */
+.prompt-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    flex-shrink: 0;
+}
+
+.prompt-item:hover .prompt-item-actions {
+    opacity: 1;
+}
+
+.prompt-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.prompt-item-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.prompt-item-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* 删除按钮 hover 样式 */
+.prompt-delete-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* 置顶徽章 */
+.prompt-pin-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4px;
+    color: #facc15;
+    position: relative;
+    top: 2px;
+}
+
+.prompt-pin-badge svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 3;
+}
+
+/* 置顶按钮激活状态 */
+.prompt-pin-btn.active {
+    color: #facc15;
+}
+
+.prompt-pin-btn.active svg {
+    stroke-width: 2.5;
+}
+
+
+/* ==================== Toggle Switch ==================== */
+
+.prompt-settings .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.prompt-settings .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.prompt-settings .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d1d5db;
+    border-radius: 26px;
+    transition: background-color 0.3s;
+}
+
+.prompt-settings .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.prompt-settings .toggle-switch input:checked + .toggle-slider {
+    background-color: #000000;
+}
+
+.prompt-settings .toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+}
+
+.prompt-settings .toggle-switch input:focus + .toggle-slider {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== 平台列表样式 ==================== */
+
+.prompt-settings .platform-list {
+    padding: 0;
+}
+
+.prompt-settings .platform-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+    padding: 0;
+}
+
+.prompt-settings .platform-list-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    padding: 0;
+}
+
+.prompt-settings .platform-list-container {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.prompt-settings .platform-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 8px;
+    background: transparent;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    transition: background 0.2s;
+}
+
+.prompt-settings .platform-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.prompt-settings .platform-item:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-settings .platform-info-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.prompt-settings .platform-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* ==================== 提示词下拉菜单样式 ==================== */
+
+/* 下拉菜单容器 - 最大高度和滚动 */
+.global-dropdown.prompt-dropdown {
+    max-height: min(400px, calc(100vh - 100px));
+    overflow-y: auto;
+    background: #f0f4f9;
+}
+
+/* 提示词下拉菜单样式 */
+.global-dropdown.prompt-dropdown .global-dropdown-item {
+    gap: 4px;
+}
+
+.global-dropdown.prompt-dropdown .global-dropdown-item-icon {
+    margin-left: -4px;
+    margin-right: -2px;
+}
+
+.global-dropdown.prompt-dropdown .global-dropdown-item:hover {
+    background: color-mix(in srgb, #1f1f1f 12%, transparent);
+}
+
+.global-dropdown.prompt-dropdown .global-dropdown-item-label {
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
+/* 管理提示词按钮样式 */
+.global-dropdown .prompt-manage-item {
+    color: #6366f1;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.global-dropdown .prompt-manage-item:hover {
+    background-color: #eef2ff;
+}
+
+.global-dropdown .prompt-manage-item .global-dropdown-item-icon svg {
+    color: #6366f1;
+}
+
+/* ==================== 滚动条样式 ==================== */
+
+.prompt-list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.prompt-list-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.prompt-list-container::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+}
+
+.prompt-list-container::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ==================== 提示词编辑弹窗 ==================== */
+
+.prompt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.prompt-modal-overlay.visible {
+    opacity: 1;
+}
+
+.prompt-modal {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.2s ease;
+}
+
+.prompt-modal-overlay.visible .prompt-modal {
+    transform: scale(1) translateY(0);
+}
+
+.prompt-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.prompt-modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.prompt-modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.prompt-modal-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.prompt-modal-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.prompt-modal-body {
+    padding: 20px;
+}
+
+.prompt-modal-field {
+    margin-bottom: 16px;
+}
+
+.prompt-modal-field:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-modal-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.prompt-modal-field .required-mark {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+.prompt-modal-input,
+.prompt-modal-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #1f2937;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+}
+
+.prompt-modal-input:focus,
+.prompt-modal-textarea:focus {
+    background: #fff;
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.prompt-modal-input::placeholder,
+.prompt-modal-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.prompt-modal-textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+/* 平台选择器 */
+.prompt-platform-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.prompt-platform-select:hover .prompt-platform-select-text {
+    color: #000;
+}
+
+.prompt-platform-label {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.prompt-platform-select-text {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.prompt-platform-select svg {
+    width: 12px;
+    height: 12px;
+    color: #9ca3af;
+    margin-left: 1px;
+}
+
+.prompt-char-counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 6px;
+}
+
+.prompt-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 20px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.prompt-modal-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.prompt-modal-cancel {
+    background: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.prompt-modal-cancel:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.prompt-modal-confirm {
+    background: #000;
+    color: #fff;
+    border: none;
+}
+
+.prompt-modal-confirm:hover {
+    background: #333;
+}
+
+.prompt-modal-confirm:active {
+    transform: scale(0.98);
+}

@@ -2,8 +2,6 @@
  * Smart Input Box Settings Tab - 智能输入框设置
  * 
  * 功能：
- * - 提供开关控制智能输入框功能
- * - 提示词按钮控制
  * - 单击 Enter 换行，快速双击 Enter 发送
  * - 控制各平台的智能输入功能
  */
@@ -31,27 +29,6 @@ class SmartInputBoxTab extends BaseTab {
         // 平台列表
         const smartInputPlatforms = getPlatformsByFeature('smartInput');
         
-        // ==================== 提示词按钮控制模块 ====================
-        const promptButtonSection = `
-            <div class="platform-list">
-                <div class="platform-list-title">${chrome.i18n.getMessage('promptWord') || '提示词'}</div>
-                <div class="platform-list-hint">${chrome.i18n.getMessage('promptButtonHint') || '在输入框上方显示提示词快捷按钮'}</div>
-                <div class="platform-list-container">
-                    ${smartInputPlatforms.map(platform => `
-                        <div class="platform-item">
-                            <div class="platform-info-left">
-                                <span class="platform-name">${platform.name}</span>
-                            </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="prompt-button-toggle" data-platform-id="${platform.id}">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-        
         // ==================== Enter 换行控制模块 ====================
         const enterKeySection = `
             <div class="platform-list">
@@ -73,10 +50,7 @@ class SmartInputBoxTab extends BaseTab {
             </div>
         `;
         
-        // 分隔线
-        const divider = `<div class="divider"></div>`;
-        
-        container.innerHTML = promptButtonSection + divider + enterKeySection;
+        container.innerHTML = enterKeySection;
         
         return container;
     }
@@ -89,53 +63,6 @@ class SmartInputBoxTab extends BaseTab {
         
         // 加载平台设置
         await this.loadPlatformSettings();
-        
-        // 加载提示词按钮设置
-        await this.loadPromptButtonSettings();
-    }
-    
-    /**
-     * 加载并初始化提示词按钮设置
-     */
-    async loadPromptButtonSettings() {
-        try {
-            // 从 Storage 读取提示词按钮设置
-            const result = await chrome.storage.local.get('promptButtonPlatformSettings');
-            const promptButtonSettings = result.promptButtonPlatformSettings || {};
-            
-            // 为每个平台开关设置状态和事件
-            const promptButtonToggles = document.querySelectorAll('.prompt-button-toggle');
-            promptButtonToggles.forEach(toggle => {
-                const platformId = toggle.getAttribute('data-platform-id');
-                
-                // 设置初始状态（默认开启：!== false）
-                toggle.checked = promptButtonSettings[platformId] !== false;
-                
-                // 监听开关变化
-                this.addEventListener(toggle, 'change', async (e) => {
-                    try {
-                        const enabled = e.target.checked;
-                        
-                        // 读取当前所有设置
-                        const result = await chrome.storage.local.get('promptButtonPlatformSettings');
-                        const settings = result.promptButtonPlatformSettings || {};
-                        
-                        // 更新当前平台
-                        settings[platformId] = enabled;
-                        
-                        // 保存到 Storage
-                        await chrome.storage.local.set({ promptButtonPlatformSettings: settings });
-                    } catch (e) {
-                        console.error('[SmartInputBoxTab] Failed to save prompt button setting:', e);
-                        
-                        // 保存失败，恢复开关状态
-                        toggle.checked = !toggle.checked;
-                    }
-                });
-            });
-        } catch (e) {
-            console.error('[SmartInputBoxTab] Failed to load prompt button settings:', e);
-        }
     }
     
     /**

@@ -204,12 +204,15 @@
     "message": "この機能は常に有効で、無効にできません"
   }
 ,
-  "promptWord": {
+  "hosegod": {
     "message": "プロンプト"
   }
 ,
-  "promptButtonHint": {
-    "message": "チャットボックスの左側にプロンプトボタンを表示"
+  "promptButtonDisplay": {
+    "message": "プロンプトボタン"
+  },
+  "hobsidbg": {
+    "message": "有効にすると、チャットボックスの左側にプロンプトショートカットボタンを表示"
   }
 }
 

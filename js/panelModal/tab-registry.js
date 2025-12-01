@@ -1,85 +1,65 @@
 /**
- * Tab Registry
+ * Tab Registry - 统一的 Tab 注册管理
  * 
- * 这个文件提供了便捷函数，用于注册需要特定依赖的 tabs
- * 
- * ✨ 设计理念：
- * - PanelModal 独立初始化（脚本加载时）
- * - 独立的 tabs 可以在 PanelModal 初始化时注册
- * - 依赖其他模块的 tabs 延迟注册（由依赖模块调用）
+ * ✨ 设计理念：所有 tabs 用相同的逻辑注册，按固定顺序
  */
 
+// 缓存 TimelineManager 实例
+let cachedTimelineManager = null;
+
 /**
- * 注册依赖 TimelineManager 的 tabs
- * 由 TimelineManager 初始化时调用
- * 
- * @param {TimelineManager} timelineManager - Timeline 管理器实例
+ * 注册所有可用的 tabs（按固定顺序）
+ * @param {TimelineManager} timelineManager - 可选，StarredTab 需要
  */
-function registerTimelineTabs(timelineManager) {
+function registerAllTabs(timelineManager = null) {
     if (!window.panelModal) {
         console.error('[TabRegistry] PanelModal not initialized');
         return;
     }
     
-    if (!timelineManager) {
-        console.error('[TabRegistry] TimelineManager is required');
-        return;
+    // 缓存 TimelineManager（后续调用可能不传）
+    if (timelineManager) {
+        cachedTimelineManager = timelineManager;
     }
     
-    try {
-        // 1. 注册 Starred Tab（收藏列表）
-        const starredTab = new StarredTab(timelineManager);
-        window.panelModal.registerTab(starredTab);
+    const pm = window.panelModal;
         
-        // 2. 注册独立的设置 Tabs（在收藏列表之后）
-        registerSettingsTabs();
+    // 1. 收藏列表（需要 TimelineManager）
+    if (!pm.tabs.has('starred') && typeof StarredTab !== 'undefined' && cachedTimelineManager) {
+        pm.registerTab(new StarredTab(cachedTimelineManager));
+    }
+    
+    // 2. 时间轴设置
+    if (!pm.tabs.has('timeline-settings') && typeof TimelineSettingsTab !== 'undefined') {
+        pm.registerTab(new TimelineSettingsTab());
+    }
+    
+    // 3. 提示词
+    if (!pm.tabs.has('prompt') && typeof PromptTab !== 'undefined') {
+        pm.registerTab(new PromptTab());
+        }
         
-        console.log('[TabRegistry] Timeline tabs registered');
-    } catch (error) {
-        console.error('[TabRegistry] Failed to register timeline tabs:', error);
+    // 4. 智能输入框
+    if (!pm.tabs.has('smart-input-box') && typeof SmartInputBoxTab !== 'undefined') {
+        pm.registerTab(new SmartInputBoxTab());
+        }
+        
+    // 5. 复制公式
+    if (!pm.tabs.has('formula') && typeof FormulaTab !== 'undefined') {
+        pm.registerTab(new FormulaTab());
     }
 }
 
 /**
- * 注册独立的设置 Tabs
- * 由 PanelModal 初始化时调用（不依赖其他模块）
+ * TimelineManager 初始化时调用
  */
-function registerSettingsTabs() {
-    if (!window.panelModal) {
-        console.error('[TabRegistry] PanelModal not initialized');
-        return;
-    }
-    
-    try {
-        // 1. 注册时间轴设置 Tab（第二位）
-        if (typeof TimelineSettingsTab !== 'undefined') {
-            const timelineSettingsTab = new TimelineSettingsTab();
-            window.panelModal.registerTab(timelineSettingsTab);
-        }
-        
-        // 2. 注册智能输入框设置 Tab（第三位）
-        if (typeof SmartInputBoxTab !== 'undefined') {
-            const smartInputBoxTab = new SmartInputBoxTab();
-            window.panelModal.registerTab(smartInputBoxTab);
-        }
-        
-        // 3. 注册复制公式设置 Tab（第四位）
-        if (typeof FormulaTab !== 'undefined') {
-            const formulaTab = new FormulaTab();
-            window.panelModal.registerTab(formulaTab);
-        }
-        
-        console.log('[TabRegistry] Settings tabs registered');
-    } catch (error) {
-        console.error('[TabRegistry] Failed to register settings tabs:', error);
-    }
+function registerTimelineTabs(timelineManager) {
+    registerAllTabs(timelineManager);
 }
 
 /**
  * @deprecated 使用 registerTimelineTabs 代替
- * 保留此函数以保持向后兼容
  */
 function initializePanelModalTabs(timelineManager) {
-    console.warn('[TabRegistry] initializePanelModalTabs is deprecated, use registerTimelineTabs instead');
     registerTimelineTabs(timelineManager);
 }

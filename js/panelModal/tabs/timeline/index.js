@@ -125,7 +125,7 @@ class TimelineSettingsTab extends BaseTab {
                 
                 // 显示 toast 提示
                 if (window.globalToastManager) {
-                    const message = chrome.i18n.getMessage('qoytxz') || '此功能默认开启，无法关闭';
+                    const message = chrome.i18n.getMessage('qoytxz');
                     window.globalToastManager.info(message, e.target, {
                         duration: 2200,
                         icon: '',  // 不显示图标
