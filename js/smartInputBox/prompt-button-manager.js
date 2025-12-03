@@ -148,13 +148,13 @@ class PromptButtonManager {
             if (areaName === 'local') {
                 // 监听平台设置变化
                 if (changes.promptButtonPlatformSettings) {
-                    this.platformSettings = changes.promptButtonPlatformSettings.newValue || {};
-                    const shouldEnable = this._isPlatformEnabled();
-                    
-                    if (shouldEnable && !this.isEnabled) {
-                        this._enable();
-                    } else if (!shouldEnable && this.isEnabled) {
-                        this._disable();
+                this.platformSettings = changes.promptButtonPlatformSettings.newValue || {};
+                const shouldEnable = this._isPlatformEnabled();
+                
+                if (shouldEnable && !this.isEnabled) {
+                    this._enable();
+                } else if (!shouldEnable && this.isEnabled) {
+                    this._disable();
                     }
                 }
                 
@@ -366,105 +366,284 @@ class PromptButtonManager {
     _handleClick() {
         console.log('[PromptButton] Button clicked');
         
-        if (!this.buttonElement || !window.globalDropdownManager) {
+        if (!this.buttonElement) {
             return;
         }
         
-        // 构建下拉菜单项
-        const items = this._buildDropdownItems();
+        // 如果已经显示，则关闭
+        if (this._promptDropdown) {
+            this._hidePromptDropdown();
+            return;
+        }
         
-        // 显示下拉菜单（往上展开）
-        window.globalDropdownManager.show({
-            trigger: this.buttonElement,
-            items: items,
-            position: 'top-left',
-            width: 220,
-            className: 'prompt-dropdown',
-            id: 'prompt-button-dropdown'
-        });
+        // 显示自定义下拉菜单
+        this._showPromptDropdown();
     }
     
     /**
-     * 构建下拉菜单项
+     * 显示提示词下拉菜单（自定义分区结构）
      */
-    _buildDropdownItems() {
-        const items = [];
+    _showPromptDropdown() {
+        // 先关闭其他 dropdown
+        if (window.globalDropdownManager) {
+            window.globalDropdownManager.hide(true);
+        }
         
-        // 1. 顶部"新增/管理"按钮
-        items.push({
-            label: chrome.i18n.getMessage('mngpqt'),
-            icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-            </svg>`,
-            className: 'prompt-manage-item',
-            onClick: () => {
-                // 打开 PanelModal 的提示词 tab
-                if (window.panelModal) {
-                    window.panelModal.show('prompt');
-                }
+        // 创建遮罩层
+        this._promptOverlay = document.createElement('div');
+        this._promptOverlay.className = 'prompt-dropdown-overlay';
+        this._promptOverlay.addEventListener('click', () => this._hidePromptDropdown());
+        document.body.appendChild(this._promptOverlay);
+        
+        // 创建下拉菜单容器
+        this._promptDropdown = document.createElement('div');
+        this._promptDropdown.className = 'prompt-dropdown-container';
+        
+        // ============ Header 区域（固定，标题 + 操作icon） ============
+        const header = document.createElement('div');
+        header.className = 'prompt-dropdown-header';
+        header.innerHTML = `
+            <div class="prompt-dropdown-title-wrapper">
+                <span class="prompt-dropdown-title">${chrome.i18n.getMessage('hosegod')}</span>
+            </div>
+            <button class="prompt-dropdown-action-btn" title="${chrome.i18n.getMessage('addpmpt') || '新增提示词'}">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px!important;height:14px!important">
+                    <path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        `;
+        
+        // 绑定按钮点击事件
+        const actionBtn = header.querySelector('.prompt-dropdown-action-btn');
+        actionBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this._hidePromptDropdown();
+            if (window.panelModal) {
+                window.panelModal.show('prompt');
             }
         });
         
-        // 2. 根据当前平台筛选提示词
+        this._promptDropdown.appendChild(header);
+        
+        // ============ Body 区域（可滚动） ============
+        const body = document.createElement('div');
+        body.className = 'prompt-dropdown-body';
+        
+        // 获取当前平台筛选提示词
         const currentPlatform = typeof getCurrentPlatform === 'function' ? getCurrentPlatform() : null;
         const currentPlatformId = currentPlatform?.id || '';
-        
-        // 筛选：platformId 为空（全部平台）或等于当前平台
         const filteredPrompts = this.prompts.filter(p => !p.platformId || p.platformId === currentPlatformId);
         
-        // 分割线（如果有提示词）
-        if (filteredPrompts.length > 0) {
-            items.push({ type: 'divider' });
-        }
-        
-        // 3. 提示词列表（置顶的在前面）
+        // 排序：置顶的在前面
         const sortedPrompts = [...filteredPrompts].sort((a, b) => {
             if (a.pinned && !b.pinned) return -1;
             if (!a.pinned && b.pinned) return 1;
             return 0;
         });
         
-        sortedPrompts.forEach(prompt => {
-            // 截取内容前30个字符作为显示
-            const displayText = prompt.content ? 
-                (prompt.content.length > 30 ? prompt.content.substring(0, 30) + '...' : prompt.content) 
-                : '空提示词';
-            
-            const item = {
-                label: displayText,
-                onClick: () => {
-                    this._insertPrompt(prompt);
-                }
-            };
-            
-            // 只有置顶的才显示置顶 icon（颜色与 tab 列表中一致 #facc15）
-            if (prompt.pinned) {
-                item.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.5">
+        if (sortedPrompts.length > 0) {
+            sortedPrompts.forEach(prompt => {
+                const item = this._createPromptItem(prompt);
+                body.appendChild(item);
+            });
+        } else {
+            // 暂无提示词
+            const emptyItem = document.createElement('div');
+            emptyItem.className = 'prompt-dropdown-empty';
+            emptyItem.innerHTML = `
+                <div class="prompt-dropdown-empty-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <span class="prompt-dropdown-empty-text">${chrome.i18n.getMessage('hsiwhwl')}</span>
+            `;
+            body.appendChild(emptyItem);
+        }
+        
+        this._promptDropdown.appendChild(body);
+        
+        // 添加到 body
+        document.body.appendChild(this._promptDropdown);
+        
+        // 计算位置（往上展开，顶部至少 20px，底部不超过按钮上方）
+        this._positionPromptDropdown();
+        
+        // 显示动画
+        requestAnimationFrame(() => {
+            this._promptDropdown.classList.add('visible');
+        });
+        
+        // 监听点击外部关闭
+        this._boundCloseOnClickOutside = (e) => {
+            if (!this._promptDropdown?.contains(e.target) && e.target !== this.buttonElement) {
+                this._hidePromptDropdown();
+            }
+        };
+        setTimeout(() => {
+            document.addEventListener('click', this._boundCloseOnClickOutside, true);
+        }, 0);
+    }
+    
+    /**
+     * 创建提示词项
+     */
+    _createPromptItem(prompt) {
+        const item = document.createElement('div');
+        item.className = 'prompt-dropdown-item';
+        
+        // 截取内容前30个字符
+        const displayText = prompt.content ? 
+            (prompt.content.length > 30 ? prompt.content.substring(0, 30) + '...' : prompt.content) 
+            : '空提示词';
+        
+        // 置顶图标
+        const iconHtml = prompt.pinned ? `
+            <span class="prompt-dropdown-item-icon pinned-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.5">
                     <line x1="5" y1="3" x2="19" y2="3"/>
                     <line x1="12" y1="7" x2="12" y2="21"/>
                     <polyline points="8 11 12 7 16 11"/>
-                </svg>`;
-            }
-            
-            items.push(item);
+                </svg>
+            </span>
+        ` : '';
+        
+        item.innerHTML = `${iconHtml}<span class="prompt-dropdown-item-label">${this._escapeHtml(displayText)}</span>`;
+        
+        item.addEventListener('click', () => {
+            this._hidePromptDropdown();
+            this._insertPrompt(prompt);
         });
         
-        // 4. 如果没有适用的提示词，显示提示
-        if (filteredPrompts.length === 0) {
-            items.push({ type: 'divider' });
-            items.push({
-                label: chrome.i18n.getMessage('hsiwhwl'),
-                disabled: true,
-                icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>`
-            });
+        // Tooltip 显示完整内容
+        const tooltipId = `prompt-item-${prompt.id}`;
+        item.addEventListener('mouseenter', () => {
+            if (window.globalTooltipManager && prompt.content) {
+                window.globalTooltipManager.show(
+                    tooltipId,
+                    'button',
+                    item,
+                    prompt.content,
+                    {
+                        placement: 'right',
+                        maxWidth: 300,
+                        showDelay: 300,
+                        gap: 14,  // 默认12，增加2px
+                        color: {
+                            light: {
+                                backgroundColor: '#0d0d0d',  // 浅色模式：黑色背景
+                                textColor: '#ffffff',        // 浅色模式：白色文字
+                                borderColor: '#0d0d0d'       // 浅色模式：黑色边框
+                            },
+                            dark: {
+                                backgroundColor: '#ffffff',  // 深色模式：白色背景
+                                textColor: '#1f2937',        // 深色模式：深灰色文字
+                                borderColor: '#e5e7eb'       // 深色模式：浅灰色边框
+                            }
+                        }
+                    }
+                );
+            }
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            if (window.globalTooltipManager) {
+                window.globalTooltipManager.hide();
+            }
+        });
+        
+        return item;
+    }
+    
+    /**
+     * HTML 转义
+     */
+    _escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    /**
+     * 计算下拉菜单位置
+     */
+    _positionPromptDropdown() {
+        if (!this._promptDropdown || !this.buttonElement) return;
+        
+        const buttonRect = this.buttonElement.getBoundingClientRect();
+        const dropdownWidth = 250;
+        const dropdownHeight = 420;
+        const topPadding = 20; // 顶部安全距离
+        const gap = 8; // 弹窗与按钮的间距
+        
+        // 先设置宽度以便计算高度
+        this._promptDropdown.style.width = `${dropdownWidth}px`;
+        this._promptDropdown.style.visibility = 'hidden';
+        this._promptDropdown.style.display = 'flex';
+        
+        // 水平位置：与按钮左对齐
+        let left = buttonRect.left;
+        if (left + dropdownWidth > window.innerWidth - 8) {
+            left = window.innerWidth - dropdownWidth - 8;
+        }
+        left = Math.max(8, left);
+        
+        // 垂直位置：往上展开，底部挨着按钮顶部
+        // 可用高度 = 按钮顶部位置 - 顶部安全距离 - gap
+        const availableHeight = buttonRect.top - topPadding - gap;
+        
+        // 设置 body 的最大高度
+        const headerHeight = 44; // header 高度
+        const maxBodyHeight = Math.min(dropdownHeight - headerHeight, availableHeight - headerHeight);
+        const bodyEl = this._promptDropdown.querySelector('.prompt-dropdown-body');
+        if (bodyEl && maxBodyHeight > 0) {
+            bodyEl.style.maxHeight = `${maxBodyHeight}px`;
         }
         
-        return items;
+        // 重新获取弹窗实际高度
+        const actualHeight = this._promptDropdown.offsetHeight;
+        
+        // 底部位置 = 按钮顶部 - gap，顶部位置 = 底部位置 - 弹窗高度
+        const bottom = buttonRect.top - gap;
+        const top = Math.max(topPadding, bottom - actualHeight);
+        
+        this._promptDropdown.style.left = `${left}px`;
+        this._promptDropdown.style.top = `${top}px`;
+        this._promptDropdown.style.visibility = 'visible';
+    }
+    
+    /**
+     * 隐藏提示词下拉菜单
+     */
+    _hidePromptDropdown() {
+        if (this._boundCloseOnClickOutside) {
+            document.removeEventListener('click', this._boundCloseOnClickOutside, true);
+            this._boundCloseOnClickOutside = null;
+        }
+        
+        // 关闭可能还在显示的 tooltip
+        if (window.globalTooltipManager) {
+            window.globalTooltipManager.hide();
+        }
+        
+        if (this._promptDropdown) {
+            this._promptDropdown.classList.remove('visible');
+            setTimeout(() => {
+                if (this._promptDropdown?.parentNode) {
+                    this._promptDropdown.parentNode.removeChild(this._promptDropdown);
+                }
+                this._promptDropdown = null;
+            }, 150);
+        }
+        
+        if (this._promptOverlay?.parentNode) {
+            this._promptOverlay.parentNode.removeChild(this._promptOverlay);
+        }
+        this._promptOverlay = null;
     }
     
     /**
@@ -489,7 +668,7 @@ class PromptButtonManager {
     }
     
     /**
-     * 默认的文本插入逻辑
+     * 默认的文本插入逻辑（追加到末尾）
      */
     _defaultInsertText(text) {
         if (!this.inputElement) return;
@@ -499,15 +678,29 @@ class PromptButtonManager {
         
         // 尝试使用 execCommand（适用于 contenteditable）
         if (this.inputElement.isContentEditable) {
-            document.execCommand('insertText', false, text);
-        } else {
-            // textarea 或 input
-            const start = this.inputElement.selectionStart || 0;
-            const end = this.inputElement.selectionEnd || 0;
-            const value = this.inputElement.value || '';
+            // 获取当前内容
+            const currentText = this.inputElement.textContent || '';
+            // 如果内容不为空且不全是空格，则添加换行分隔
+            const separator = currentText.trim() ? '\n' : '';
             
-            this.inputElement.value = value.substring(0, start) + text + value.substring(end);
-            this.inputElement.selectionStart = this.inputElement.selectionEnd = start + text.length;
+            // 将光标移到末尾
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(this.inputElement);
+            range.collapse(false); // false = 折叠到末尾
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            // 插入文本
+            document.execCommand('insertText', false, separator + text);
+        } else {
+            // textarea 或 input - 追加到末尾
+            const value = this.inputElement.value || '';
+            // 如果内容不为空且不全是空格，则添加换行分隔
+            const separator = value.trim() ? '\n' : '';
+            
+            this.inputElement.value = value + separator + text;
+            this.inputElement.selectionStart = this.inputElement.selectionEnd = this.inputElement.value.length;
             
             // 触发 input 事件
             this.inputElement.dispatchEvent(new Event('input', { bubbles: true }));
@@ -536,6 +729,9 @@ class PromptButtonManager {
     destroy() {
         this.isDestroyed = true;
         this._disable();
+        
+        // 关闭下拉菜单
+        this._hidePromptDropdown();
         
         // 移除 Storage 监听
         if (this.storageListener) {

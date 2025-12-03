@@ -579,11 +579,24 @@ class GlobalDropdownManager {
     /**
      * 全局滚动事件
      */
-    _handleScroll() {
-        if (this.state.isVisible) {
-            this._log('Scroll detected, hiding dropdown');
-            this.hide();
+    _handleScroll(e) {
+        if (!this.state.isVisible) return;
+        
+        // 忽略来自 dropdown 内部的滚动
+        if (this.dropdown && (e.target === this.dropdown || this.dropdown.contains(e.target))) {
+            return;
         }
+        
+        // 忽略来自子菜单的滚动
+        const isSubmenuScroll = this.state.activeSubmenus?.some(
+            s => s.element && (e.target === s.element || s.element.contains(e.target))
+        );
+        if (isSubmenuScroll) {
+            return;
+        }
+        
+        this._log('External scroll detected, hiding dropdown');
+            this.hide();
     }
     
     /**

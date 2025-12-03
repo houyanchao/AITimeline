@@ -69,10 +69,13 @@
     "message": "GitHub에서 스타"
   },
   "xpzmkv": {
-    "message": "공유 & 피드백"
+    "message": "환영합니다"
   },
   "pkmzvx": {
-    "message": "이동"
+    "message": "친구에게 공유"
+  },
+  "fbklink": {
+    "message": "피드백"
   },
   "mvxkpz": {
     "message": "LaTeX 수식 복사"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "프롬프트"
+    "message": "프롬프트 라이브러리"
   }
 ,
   "promptButtonDisplay": {

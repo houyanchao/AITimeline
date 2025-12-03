@@ -69,10 +69,13 @@
     "message": "Bintang di GitHub"
   },
   "xpzmkv": {
-    "message": "Bagikan & Umpan Balik"
+    "message": "Selamat datang"
   },
   "pkmzvx": {
-    "message": "Pergi ke"
+    "message": "Bagikan ke Teman"
+  },
+  "fbklink": {
+    "message": "Umpan Balik"
   },
   "mvxkpz": {
     "message": "Salin rumus LaTeX"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "Prompt"
+    "message": "Perpustakaan Prompt"
   }
 ,
   "promptButtonDisplay": {

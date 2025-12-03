@@ -69,10 +69,13 @@
     "message": "Star on GitHub"
   },
   "xpzmkv": {
-    "message": "分享 & 提意见"
+    "message": "欢迎"
   },
   "pkmzvx": {
-    "message": "前往"
+    "message": "分享朋友"
+  },
+  "fbklink": {
+    "message": "反馈"
   },
   "mvxkpz": {
     "message": "复制 LaTeX 公式"
@@ -201,7 +204,7 @@
     "message": "此功能默认开启，无法关闭"
   },
   "hosegod": {
-    "message": "提示词"
+    "message": "提示词库"
   },
   "hobsidbg": {
     "message": "开启后，在对话框左边显示提示词快捷按钮"

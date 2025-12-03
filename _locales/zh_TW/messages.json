@@ -69,10 +69,13 @@
     "message": "Star on GitHub"
   },
   "xpzmkv": {
-    "message": "分享 & 提意見"
+    "message": "歡迎"
   },
   "pkmzvx": {
-    "message": "前往"
+    "message": "分享朋友"
+  },
+  "fbklink": {
+    "message": "反饋"
   },
   "mvxkpz": {
     "message": "複製 LaTeX 公式"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "提示詞"
+    "message": "提示詞庫"
   }
 ,
   "promptButtonDisplay": {

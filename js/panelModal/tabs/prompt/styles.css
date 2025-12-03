@@ -78,6 +78,8 @@
     background: #f9fafb;
     border-radius: 8px;
     padding: 8px;
+    max-height: 350px;
+    overflow-y: auto;
 }
 
 /* 空状态 */
@@ -130,13 +132,11 @@
 }
 
 .prompt-item-text {
+    display: flex;
+    align-items: center;
     font-size: 14px;
     color: #1f2937;
     line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
     word-break: break-word;
 }
 
@@ -185,14 +185,32 @@
     color: #dc2626;
 }
 
+/* 内容文字 */
+.prompt-item-text-content {
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 平台 Logo */
+.prompt-platform-logo {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-right: 6px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
 /* 置顶徽章 */
 .prompt-pin-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    flex-shrink: 0;
     margin-right: 4px;
     color: #facc15;
-    position: relative;
-    top: 2px;
 }
 
 .prompt-pin-badge svg {
@@ -324,46 +342,247 @@
 
 /* ==================== 提示词下拉菜单样式 ==================== */
 
-/* 下拉菜单容器 - 最大高度和滚动 */
-.global-dropdown.prompt-dropdown {
-    max-height: min(400px, calc(100vh - 100px));
-    overflow-y: auto;
-    background: #f0f4f9;
+/* 遮罩层 */
+.prompt-dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9998;
 }
 
-/* 提示词下拉菜单样式 */
-.global-dropdown.prompt-dropdown .global-dropdown-item {
+/* 下拉菜单容器 */
+.prompt-dropdown-container {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 
+        0 0 0 1px rgba(0, 0, 0, 0.08),
+        0 4px 16px rgba(0, 0, 0, 0.12),
+        0 8px 32px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.prompt-dropdown-container.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Header 区域 */
+.prompt-dropdown-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+    padding: 0 16px 0 16px;
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* 标题包装器 */
+.prompt-dropdown-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 标题图标 */
+.prompt-dropdown-title-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(124, 58, 237, 0.1);
+    border-radius: 8px;
+    color: #7c3aed;
+    flex-shrink: 0;
+}
+
+.prompt-dropdown-title-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* 标题 */
+.prompt-dropdown-title {
+    font-size: 17px;
+    font-weight: 700;
+    font-family: "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #7c3aed;
+    letter-spacing: 0.5px;
+}
+
+/* 操作按钮组 */
+.prompt-dropdown-actions {
+    display: flex;
+    align-items: center;
     gap: 4px;
 }
 
-.global-dropdown.prompt-dropdown .global-dropdown-item-icon {
-    margin-left: -4px;
-    margin-right: -2px;
+/* 操作按钮 */
+.prompt-dropdown-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: #7c3aed;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.15s ease;
 }
 
-.global-dropdown.prompt-dropdown .global-dropdown-item:hover {
-    background: color-mix(in srgb, #1f1f1f 12%, transparent);
+.prompt-dropdown-action-btn:hover {
+    background: #6d28d9;
 }
 
-.global-dropdown.prompt-dropdown .global-dropdown-item-label {
-    font-weight: 500;
-    color: #1f1f1f;
+.prompt-dropdown-action-btn:active {
+    transform: scale(0.96);
 }
 
-/* 管理提示词按钮样式 */
-.global-dropdown .prompt-manage-item {
-    color: #6366f1;
-    padding-top: 6px;
-    padding-bottom: 6px;
+.prompt-dropdown-action-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke-width: 2.5 !important;
 }
 
-.global-dropdown .prompt-manage-item:hover {
-    background-color: #eef2ff;
+/* Body 区域 */
+.prompt-dropdown-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 6px;
 }
 
-.global-dropdown .prompt-manage-item .global-dropdown-item-icon svg {
-    color: #6366f1;
+/* 滚动条样式 */
+.prompt-dropdown-body::-webkit-scrollbar {
+    width: 6px;
 }
+
+.prompt-dropdown-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.prompt-dropdown-body::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 3px;
+}
+
+.prompt-dropdown-body::-webkit-scrollbar-thumb:hover {
+    background: #d0d0d0;
+}
+
+/* 列表项 */
+.prompt-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333333;
+    transition: background-color 0.1s ease;
+}
+
+.prompt-dropdown-item:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.prompt-dropdown-item:active {
+    background-color: #ebebeb;
+}
+
+.prompt-dropdown-item.disabled {
+    color: #999999;
+    cursor: default;
+    justify-content: center;
+    padding: 32px 12px;
+}
+
+.prompt-dropdown-item.disabled:hover {
+    background-color: transparent;
+}
+
+/* 置顶图标 */
+.prompt-dropdown-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #cccccc;
+}
+
+.prompt-dropdown-item-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.prompt-dropdown-item-icon.pinned-icon {
+    color: #f5a623;
+}
+
+/* 文本 */
+.prompt-dropdown-item-label {
+    flex: 1;
+    font-weight: 400;
+    color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 空状态 */
+.prompt-dropdown-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    flex: 1;
+    min-height: 150px;
+}
+
+.prompt-dropdown-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    color: #d1d5db;
+}
+
+.prompt-dropdown-empty-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.prompt-dropdown-empty-text {
+    font-size: 14px;
+    color: #9ca3af;
+}
+
 
 /* ==================== 滚动条样式 ==================== */
 
@@ -513,10 +732,12 @@
 }
 
 .prompt-modal-textarea {
-    resize: vertical;
-    min-height: 120px;
+    resize: none;
+    min-height: 60px;
+    max-height: 200px;
     font-family: inherit;
     line-height: 1.5;
+    overflow-y: auto;
 }
 
 /* 平台选择器 */

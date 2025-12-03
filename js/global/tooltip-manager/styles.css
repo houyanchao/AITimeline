@@ -78,7 +78,7 @@
 .timeline-tooltip[data-placement="top"]::after,
 .timeline-tooltip-base[data-placement="top"]::after {
     bottom: -4px;
-    left: 50%;
+    left: var(--arrow-offset, 50%);
     margin-left: -4px;
     border-top: none;
     border-left: none;
@@ -89,7 +89,7 @@
 .timeline-tooltip[data-placement="bottom"]::after,
 .timeline-tooltip-base[data-placement="bottom"]::after {
     top: -4px;
-    left: 50%;
+    left: var(--arrow-offset, 50%);
     margin-left: -4px;
     border-bottom: none;
     border-right: none;
@@ -100,7 +100,7 @@
 .timeline-tooltip[data-placement="left"]::after,
 .timeline-tooltip-base[data-placement="left"]::after {
     right: -5px;
-    top: 50%;
+    top: var(--arrow-offset, 50%);
     margin-top: -4px;
     border-left: none;
     border-bottom: none;
@@ -111,7 +111,7 @@
 .timeline-tooltip[data-placement="right"]::after,
 .timeline-tooltip-base[data-placement="right"]::after {
     left: -4px;
-    top: 50%;
+    top: var(--arrow-offset, 50%);
     margin-top: -4px;
     border-right: none;
     border-top: none;

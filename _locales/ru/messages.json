@@ -69,10 +69,13 @@
     "message": "Звезда на GitHub"
   },
   "xpzmkv": {
-    "message": "Поделиться & Отзыв"
+    "message": "Добро пожаловать"
   },
   "pkmzvx": {
-    "message": "Перейти"
+    "message": "Поделиться с друзьями"
+  },
+  "fbklink": {
+    "message": "Отзыв"
   },
   "mvxkpz": {
     "message": "Копировать формулу LaTeX"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "Промпты"
+    "message": "Библиотека промптов"
   }
 ,
   "promptButtonDisplay": {

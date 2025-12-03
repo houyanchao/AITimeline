@@ -142,7 +142,6 @@ class ChatGPTAdapter extends SiteAdapter {
      * @returns {boolean}
      */
     detectDarkMode() {
-        // 检查 html 元素的 color-scheme 样式
         const colorScheme = document.documentElement.style.colorScheme;
         return colorScheme === 'dark';
     }

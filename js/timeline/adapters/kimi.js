@@ -84,7 +84,6 @@ class KimiAdapter extends SiteAdapter {
      * @returns {boolean}
      */
     detectDarkMode() {
-        // 检查 html 的 class 中是否有 dark
         return document.documentElement.classList.contains('dark');
     }
 }

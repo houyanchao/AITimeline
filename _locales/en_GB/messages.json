@@ -69,10 +69,13 @@
     "message": "Star on GitHub"
   },
   "xpzmkv": {
-    "message": "Share & Feedback"
+    "message": "Welcome to"
   },
   "pkmzvx": {
-    "message": "Go to"
+    "message": "Share with Friends"
+  },
+  "fbklink": {
+    "message": "Feedback"
   },
   "mvxkpz": {
     "message": "Copy LaTeX Formula"
@@ -201,7 +204,7 @@
     "message": "This feature is always enabled and cannot be turned off"
   },
   "hosegod": {
-    "message": "Prompts"
+    "message": "Prompt Library"
   }
 ,
   "promptButtonDisplay": {

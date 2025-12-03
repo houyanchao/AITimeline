@@ -69,10 +69,13 @@
     "message": "GitHub पर स्टार"
   },
   "xpzmkv": {
-    "message": "साझा करें & प्रतिक्रिया"
+    "message": "स्वागत है"
   },
   "pkmzvx": {
-    "message": "पर जाएं"
+    "message": "दोस्तों के साथ साझा करें"
+  },
+  "fbklink": {
+    "message": "प्रतिक्रिया"
   },
   "mvxkpz": {
     "message": "LaTeX सूत्र कॉपी करें"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "प्रॉम्प्ट"
+    "message": "प्रॉम्प्ट लाइब्रेरी"
   }
 ,
   "promptButtonDisplay": {

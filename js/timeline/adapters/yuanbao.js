@@ -81,7 +81,6 @@ class YuanbaoAdapter extends SiteAdapter {
      * @returns {boolean}
      */
     detectDarkMode() {
-        // 检查 html 的 yb-theme-mode 属性
         const theme = document.documentElement.getAttribute('yb-theme-mode');
         return theme === 'dark';
     }

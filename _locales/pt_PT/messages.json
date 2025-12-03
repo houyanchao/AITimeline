@@ -69,10 +69,13 @@
     "message": "Estrela no GitHub"
   },
   "xpzmkv": {
-    "message": "Partilhar & Comentários"
+    "message": "Bem-vindo"
   },
   "pkmzvx": {
-    "message": "Ir para"
+    "message": "Partilhar com amigos"
+  },
+  "fbklink": {
+    "message": "Comentários"
   },
   "mvxkpz": {
     "message": "Copiar fórmula LaTeX"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "Prompts"
+    "message": "Biblioteca de prompts"
   }
 ,
   "promptButtonDisplay": {

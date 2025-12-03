@@ -154,6 +154,12 @@ class GlobalTooltipManager {
                 return;
             }
             
+            // ✅ 关键修复：清理所有之前的定时器，防止残留
+            // 清理之前的 showDebounce（防止多个 show 定时器同时存在）
+            this.timers.showDebounce = this._clearTimer(this.timers.showDebounce);
+            // 清理之前的 hideDelay（防止旧的 hide 定时器把新的 tooltip 隐藏）
+            this.timers.hideDelay = this._clearTimer(this.timers.hideDelay);
+            
             // 获取配置
             const typeConfig = { ...this.config.types[type], ...options };
             
@@ -175,6 +181,9 @@ class GlobalTooltipManager {
      */
     hide(immediate = false) {
         try {
+            // ✅ 关键修复：清理 showDebounce 定时器，防止 hide 后又被 show 出来
+            this.timers.showDebounce = this._clearTimer(this.timers.showDebounce);
+            
             // 如果鼠标在 tooltip 上（pinned），忽略
             if (this.state.isPinned && !immediate) {
                 this._log('Tooltip pinned, ignoring hide');
@@ -182,6 +191,8 @@ class GlobalTooltipManager {
             }
             
             if (immediate) {
+                // 立即隐藏时，也清理 hideDelay 定时器
+                this.timers.hideDelay = this._clearTimer(this.timers.hideDelay);
                 this._hideImmediate();
             } else {
                 // 延迟隐藏
@@ -318,6 +329,11 @@ class GlobalTooltipManager {
         // 应用位置（根据placement使用对应的定位属性）
         tooltip.setAttribute('data-placement', position.placement);
         
+        // ✅ 应用箭头偏移量（当 tooltip 被边界修正后，箭头指向目标元素）
+        if (position.arrowOffset) {
+            tooltip.style.setProperty('--arrow-offset', position.arrowOffset);
+        }
+        
         // ✅ 关键修复：根据箭头方向使用正确的定位属性
         const vw = window.innerWidth;
         const vh = window.innerHeight;
@@ -353,7 +369,8 @@ class GlobalTooltipManager {
         // ✅ 应用自定义颜色（根据当前主题模式）
         if (config.color) {
             // 检测当前是浅色还是深色模式
-            const isDarkMode = document.documentElement.classList.contains('dark');
+            // 使用全面的检测方法，兼容各平台的 dark 模式标记
+            const isDarkMode = this._detectDarkMode();
             const themeColors = isDarkMode ? config.color.dark : config.color.light;
             
             // ✅ 添加data属性标记tooltip主题（用于CSS选择器）
@@ -406,7 +423,10 @@ class GlobalTooltipManager {
         
         this._log('Hiding immediately');
         
-        const tooltip = this.instances.get(this.state.currentType);
+        // ✅ 修复：先保存 currentType，因为后面会重置状态
+        const currentType = this.state.currentType;
+        const tooltip = this.instances.get(currentType);
+        
         if (tooltip) {
             // 移除事件监听
             tooltip.removeEventListener('mouseenter', this._onTooltipEnter);
@@ -416,14 +436,17 @@ class GlobalTooltipManager {
             tooltip.classList.remove('visible');
             tooltip.setAttribute('aria-hidden', 'true');
             
+            // ✅ 清理之前的 cleanupAnimation 定时器
+            this.timers.cleanupAnimation = this._clearTimer(this.timers.cleanupAnimation);
+            
             // 等待动画完成后销毁DOM
             this.timers.cleanupAnimation = setTimeout(() => {
                 this.timers.cleanupAnimation = null;
                 if (tooltip && tooltip.parentNode) {
                     tooltip.parentNode.removeChild(tooltip);
                 }
-                // ✅ 从实例池中移除
-                this.instances.delete(this.state.currentType);
+                // ✅ 修复：使用保存的 currentType
+                this.instances.delete(currentType);
             }, 200);
         }
         
@@ -501,16 +524,57 @@ class GlobalTooltipManager {
         // 计算基础位置（传入配置）
         let position = this._computePositionForPlacement(targetRect, tooltipRect, placement, config);
         
+        // 保存原始位置（用于计算箭头偏移）
+        const originalPosition = { ...position };
+        
         // 边界修正
         position = this._clampToBounds(position, tooltipRect, viewport);
+        
+        // 计算箭头偏移量（当 tooltip 被边界修正后，箭头需要调整位置指向目标元素）
+        const arrowOffset = this._calculateArrowOffset(targetRect, tooltipRect, position, originalPosition, placement);
         
         return {
             left: position.left,
             top: position.top,
             placement: placement,
             width: tooltipRect.width,   // ✅ 返回tooltip尺寸
-            height: tooltipRect.height  // ✅ 返回tooltip尺寸
+            height: tooltipRect.height, // ✅ 返回tooltip尺寸
+            arrowOffset: arrowOffset    // ✅ 箭头偏移量
         };
+    }
+    
+    /**
+     * 计算箭头偏移量
+     * 当 tooltip 被边界修正移动后，箭头需要调整位置来指向目标元素
+     */
+    _calculateArrowOffset(targetRect, tooltipRect, position, originalPosition, placement) {
+        // 目标元素中心点
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+        
+        let arrowOffset = '50%';  // 默认居中
+        
+        if (placement === 'top' || placement === 'bottom') {
+            // 水平方向的箭头偏移
+            // 计算目标中心相对于 tooltip 左边缘的位置
+            const offsetPx = targetCenterX - position.left;
+            // 限制在 tooltip 范围内（留出边距）
+            const minOffset = 12;
+            const maxOffset = tooltipRect.width - 12;
+            const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offsetPx));
+            arrowOffset = `${clampedOffset}px`;
+        } else if (placement === 'left' || placement === 'right') {
+            // 垂直方向的箭头偏移
+            // 计算目标中心相对于 tooltip 顶部的位置
+            const offsetPx = targetCenterY - position.top;
+            // 限制在 tooltip 范围内（留出边距）
+            const minOffset = 12;
+            const maxOffset = tooltipRect.height - 12;
+            const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offsetPx));
+            arrowOffset = `${clampedOffset}px`;
+        }
+        
+        return arrowOffset;
     }
     
     /**
@@ -803,6 +867,59 @@ class GlobalTooltipManager {
     _log(...args) {
         if (this.config.debug) {
             console.log('[TooltipManager]', ...args);
+        }
+    }
+    
+    /**
+     * ✅ 检测当前是否为深色模式
+     * 兼容各 AI 平台的 dark 模式检测方式
+     */
+    _detectDarkMode() {
+        try {
+            // 1. 首先检查 html 元素的 dark 类（由 syncDarkModeClass 同步）
+            if (document.documentElement?.classList?.contains('dark')) {
+                return true;
+            }
+            
+            // 2. 检查 body 元素的 dark 类（DeepSeek、Grok 等）
+            if (document.body?.classList?.contains('dark')) {
+                return true;
+            }
+            
+            // 3. 检查 body 元素的 dark-theme 类（Gemini）
+            if (document.body?.classList?.contains('dark-theme')) {
+                return true;
+            }
+            
+            // 4. 检查 html 元素的 color-scheme 样式（ChatGPT）
+            try {
+                const colorScheme = document.documentElement?.style?.colorScheme || 
+                                   getComputedStyle(document.documentElement).colorScheme;
+                if (colorScheme && colorScheme.includes('dark')) {
+                    return true;
+                }
+            } catch (e) {
+                // getComputedStyle 可能失败，忽略
+            }
+            
+            // 5. 检查 html 元素的 data-theme 属性（通义等）
+            const dataTheme = document.documentElement?.getAttribute?.('data-theme');
+            if (dataTheme && dataTheme.includes('dark')) {
+                return true;
+            }
+            
+            // 6. 检查元宝的 yb-theme-mode 属性
+            const ybThemeMode = document.documentElement?.getAttribute?.('yb-theme-mode') ||
+                               document.body?.getAttribute?.('yb-theme-mode');
+            if (ybThemeMode && ybThemeMode.includes('dark')) {
+                return true;
+            }
+            
+            return false;
+        } catch (error) {
+            // 发生任何错误时，返回 false（默认浅色模式）
+            console.warn('[TooltipManager] _detectDarkMode error:', error);
+            return false;
         }
     }
     

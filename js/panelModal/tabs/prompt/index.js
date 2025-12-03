@@ -129,6 +129,14 @@ class PromptTab extends BaseTab {
     }
     
     /**
+     * 根据 platformId 获取平台信息
+     */
+    _getPlatformInfo(platformId) {
+        if (!platformId || typeof SITE_INFO === 'undefined') return null;
+        return SITE_INFO.find(site => site.id === platformId) || null;
+    }
+    
+    /**
      * 渲染提示词列表
      */
     renderbiwhckdj() {
@@ -141,7 +149,10 @@ class PromptTab extends BaseTab {
             container.innerHTML = `
                 <div class="prompt-empty">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
                     </svg>
                     <span>${chrome.i18n.getMessage('hsiwhwl')}</span>
                 </div>
@@ -159,10 +170,14 @@ class PromptTab extends BaseTab {
         const pinIcon = '<span class="prompt-pin-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="3" x2="19" y2="3"/><line x1="12" y1="7" x2="12" y2="21"/><polyline points="8 11 12 7 16 11"/></svg></span>';
         
         container.innerHTML = sortedPrompts.map((prompt) => {
+            // 获取平台 logo
+            const platform = this._getPlatformInfo(prompt.platformId);
+            const platformLogo = platform ? `<img class="prompt-platform-logo" src="${chrome.runtime.getURL(platform.logoPath)}" alt="${platform.name}" title="${platform.name}">` : '';
+            
             return `
             <div class="prompt-item ${prompt.pinned ? 'pinned' : ''}" data-id="${prompt.id}">
                 <div class="prompt-item-content">
-                    <div class="prompt-item-text">${prompt.pinned ? pinIcon : ''}${this._escapeHtml(prompt.content)}</div>
+                    <div class="prompt-item-text">${prompt.pinned ? pinIcon : ''}${platformLogo}<span class="prompt-item-text-content">${this._escapeHtml(prompt.content)}</span></div>
                 </div>
                 <div class="prompt-item-actions">
                     <button class="prompt-item-btn prompt-pin-btn ${prompt.pinned ? 'active' : ''}" data-id="${prompt.id}">
@@ -232,6 +247,51 @@ class PromptTab extends BaseTab {
             this.addEventListener(btn, 'click', (e) => {
                 const id = btn.getAttribute('data-id');
                 this.deletePrompt(id);
+            });
+        });
+        
+        // 提示词项 hover tooltip
+        const promptItems = document.querySelectorAll('.prompt-item');
+        const prompts = this.getState('prompts') || [];
+        promptItems.forEach(item => {
+            const id = item.getAttribute('data-id');
+            const prompt = prompts.find(p => p.id === id);
+            if (!prompt) return;
+            
+            this.addEventListener(item, 'mouseenter', () => {
+                if (window.globalTooltipManager) {
+                    const tooltipId = 'prompt-tab-' + id;
+                    window.globalTooltipManager.show(
+                        tooltipId,
+                        'button',
+                        item,
+                        prompt.content,
+                        {
+                            placement: 'right',
+                            maxWidth: 300,
+                            showDelay: 300,
+                            gap: 8,
+                            color: {
+                                light: {
+                                    backgroundColor: '#0d0d0d',
+                                    textColor: '#ffffff',
+                                    borderColor: '#0d0d0d'
+                                },
+                                dark: {
+                                    backgroundColor: '#ffffff',
+                                    textColor: '#1f2937',
+                                    borderColor: '#e5e7eb'
+                                }
+                            }
+                        }
+                    );
+                }
+            });
+            
+            this.addEventListener(item, 'mouseleave', () => {
+                if (window.globalTooltipManager) {
+                    window.globalTooltipManager.hide();
+                }
             });
         });
     }
@@ -312,7 +372,7 @@ class PromptTab extends BaseTab {
                 <div class="prompt-modal-field">
                     <textarea class="prompt-modal-textarea" id="prompt-content-input"
                         placeholder="${chrome.i18n.getMessage('uwkjwjw')}"
-                        rows="8" maxlength="1000">${this._escapeHtml(prompt?.content || '')}</textarea>
+                        rows="4" maxlength="1000">${this._escapeHtml(prompt?.content || '')}</textarea>
                     <div class="prompt-char-counter">
                         <div class="prompt-platform-select" id="prompt-platform-select">
                             <span class="prompt-platform-label">${chrome.i18n.getMessage('ptfmsl') || '适用于'}：</span>
@@ -346,10 +406,21 @@ class PromptTab extends BaseTab {
         // 当前选中的平台 ID
         let selectedPlatformId = currentPlatformId;
         
-        // 字符计数更新
+        // 自动调整高度函数
+        const autoResize = () => {
+            contentInput.style.height = 'auto';
+            const newHeight = Math.min(contentInput.scrollHeight, 200);
+            contentInput.style.height = newHeight + 'px';
+        };
+        
+        // 字符计数更新 + 自动调整高度
         contentInput.addEventListener('input', () => {
             charCount.textContent = contentInput.value.length;
+            autoResize();
         });
+        
+        // 初始化高度（编辑时内容可能已存在）
+        autoResize();
         
         // 平台选择器点击
         platformSelect.addEventListener('click', (e) => {

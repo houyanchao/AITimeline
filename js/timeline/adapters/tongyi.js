@@ -77,7 +77,6 @@ class TongyiAdapter extends SiteAdapter {
      * @returns {boolean}
      */
     detectDarkMode() {
-        // 检查 html 的 data-theme 属性
         const theme = document.documentElement.getAttribute('data-theme');
         return theme === 'dark';
     }

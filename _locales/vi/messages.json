@@ -69,10 +69,13 @@
     "message": "Gắn sao trên GitHub"
   },
   "xpzmkv": {
-    "message": "Chia sẻ & Phản hồi"
+    "message": "Chào mừng"
   },
   "pkmzvx": {
-    "message": "Đi tới"
+    "message": "Chia sẻ với bạn bè"
+  },
+  "fbklink": {
+    "message": "Phản hồi"
   },
   "mvxkpz": {
     "message": "Sao chép công thức LaTeX"
@@ -205,7 +208,7 @@
   }
 ,
   "hosegod": {
-    "message": "Prompts"
+    "message": "Thư viện prompt"
   }
 ,
   "promptButtonDisplay": {

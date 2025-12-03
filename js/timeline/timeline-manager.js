@@ -1388,6 +1388,9 @@ class TimelineManager {
         if (typeof registerTimelineTabs === 'function') {
             registerTimelineTabs(this);
         }
+        
+        // ✅ 挂载到 window 以便其他模块访问
+        window.timelineManager = this;
     }
     
     /**

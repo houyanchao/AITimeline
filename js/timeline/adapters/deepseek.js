@@ -111,7 +111,6 @@ class DeepSeekAdapter extends SiteAdapter {
      * @returns {boolean}
      */
     detectDarkMode() {
-        // 检查 body 的 class 中是否有 dark
         return document.body.classList.contains('dark');
     }
 }

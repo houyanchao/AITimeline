@@ -479,8 +479,8 @@ class SmartEnterManager {
             const result = await chrome.storage.local.get('smartEnterToastCount');
             const count = result.smartEnterToastCount || 0;
             
-            // 如果已提示超过5次，不再提示
-            if (count >= 5) {
+            // 如果已提示超过30次，不再提示
+            if (count >= 30) {
                 return;
             }
             
