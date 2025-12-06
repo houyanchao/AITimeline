@@ -16,6 +16,7 @@ class SiteAdapterRegistry {
             new KimiAdapter(),
             new YuanbaoAdapter(),
             new GrokAdapter(),
+            new PerplexityAdapter(),
             // Add more adapters here in the future
         ];
     }

@@ -3,7 +3,7 @@
   <h1>AI Chat Timeline</h1>
   <h4 align="center"><a href="./README.md">English</a> | <a href="./README.zh_CN.md">简体中文</a> | <strong>日本語</strong></h4>
   <p><strong>AIチャットの効率を2倍に！ChatGPT、Gemini、DeepSeekにインタラクティブなタイムラインを追加し、🚀任意の会話に簡単にジャンプ、📌重要な会話をマーク、⭐️大切なチャットをお気に入りに保存。</strong></p>
-  <img src="./images/demo_ja.png" alt="AI Chat Timeline デモ" width="800">
+  <img src="https://image.bushishier.com/demo_ja.png" alt="AI Chat Timeline デモ" width="800">
 </div>
 
 ## 🌟 機能

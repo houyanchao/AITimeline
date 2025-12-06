@@ -121,7 +121,7 @@ const SITE_INFO = [
         name: 'Perplexity',
         logoPath: 'images/logo/perplexity.webp',
         features: {
-            timeline: false,
+            timeline: true,
             smartInput: true
         }
     }
