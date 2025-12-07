@@ -64,6 +64,7 @@
         "js/timeline/adapters/yuanbao.js",
         "js/timeline/adapters/grok.js",
         "js/timeline/adapters/perplexity.js",
+        "js/timeline/adapters/claude.js",
         "js/timeline/adapters/registry.js",
         "js/timeline/common.js",
         "js/timeline/container-finder.js",

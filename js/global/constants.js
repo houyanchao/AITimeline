@@ -124,6 +124,16 @@ const SITE_INFO = [
             timeline: true,
             smartInput: true
         }
+    },
+    {
+        id: 'claude',
+        sites: ['claude.ai'],
+        name: 'Claude',
+        logoPath: 'images/logo/claude.webp',
+        features: {
+            timeline: true,
+            smartInput: false
+        }
     }
 ];
 

@@ -17,6 +17,7 @@ class SiteAdapterRegistry {
             new YuanbaoAdapter(),
             new GrokAdapter(),
             new PerplexityAdapter(),
+            new ClaudeAdapter(),
             // Add more adapters here in the future
         ];
     }
