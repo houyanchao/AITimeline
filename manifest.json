@@ -5,23 +5,27 @@
    "author": "yanchao hou",
    "content_scripts": [ {
       "css": [ "styles/variables.css", "js/global/tooltip-manager/styles.css", "js/global/toast-manager/styles.css", "js/global/input-modal/styles.css", "js/global/dropdown-manager/styles.css", "js/global/popconfirm-manager/styles.css", "js/panelModal/styles.css", "js/panelModal/tabs/starred/styles.css", "js/panelModal/tabs/timeline/styles.css", "js/panelModal/tabs/smartInputBox/styles.css", "js/panelModal/tabs/formula/styles.css", "js/timeline/star-input-modal/star-input-modal.css", "js/timeline/timeline.css", "js/formula/formula.css" ],
-      "js": [ "js/global/constants.js", "js/global/tooltip-manager/index.js", "js/global/toast-manager/index.js", "js/global/input-modal/index.js", "js/global/dropdown-manager/index.js", "js/global/popconfirm-manager/index.js", "js/formula/latex-extractor.js", "js/formula/formula-manager.js", "js/formula/index.js", "js/panelModal/base-tab.js", "js/panelModal/tabs/starred/folder-manager.js", "js/panelModal/tabs/starred/index.js", "js/panelModal/tabs/timeline/index.js", "js/panelModal/tabs/smartInputBox/index.js", "js/panelModal/tabs/formula/index.js", "js/panelModal/tab-registry.js", "js/panelModal/index.js", "js/smartInputBox/constants.js", "js/smartInputBox/adapters/base.js", "js/smartInputBox/adapters/chatgpt.js", "js/smartInputBox/adapters/gemini.js", "js/smartInputBox/adapters/deepseek.js", "js/smartInputBox/adapters/kimi.js", "js/smartInputBox/adapters/perplexity.js", "js/smartInputBox/adapters/tongyi.js", "js/smartInputBox/adapters/grok.js", "js/smartInputBox/adapters/registry.js", "js/smartInputBox/smart-enter-manager.js", "js/smartInputBox/index.js", "js/timeline/adapters/base.js", "js/timeline/adapters/chatgpt.js", "js/timeline/adapters/gemini.js", "js/timeline/adapters/doubao.js", "js/timeline/adapters/deepseek.js", "js/timeline/adapters/yiyan.js", "js/timeline/adapters/tongyi.js", "js/timeline/adapters/kimi.js", "js/timeline/adapters/yuanbao.js", "js/timeline/adapters/grok.js", "js/timeline/adapters/registry.js", "js/timeline/common.js", "js/timeline/container-finder.js", "js/timeline/star-input-modal/star-input-modal.js", "js/timeline/timeline-manager.js", "js/timeline/index.js" ],
+      "js": [ "js/global/browser-api.js", "js/global/constants.js", "js/global/tooltip-manager/index.js", "js/global/toast-manager/index.js", "js/global/input-modal/index.js", "js/global/dropdown-manager/index.js", "js/global/popconfirm-manager/index.js", "js/formula/latex-extractor.js", "js/formula/formula-manager.js", "js/formula/index.js", "js/panelModal/base-tab.js", "js/panelModal/tabs/starred/folder-manager.js", "js/panelModal/tabs/starred/index.js", "js/panelModal/tabs/timeline/index.js", "js/panelModal/tabs/smartInputBox/index.js", "js/panelModal/tabs/formula/index.js", "js/panelModal/tab-registry.js", "js/panelModal/index.js", "js/smartInputBox/constants.js", "js/smartInputBox/adapters/base.js", "js/smartInputBox/adapters/chatgpt.js", "js/smartInputBox/adapters/gemini.js", "js/smartInputBox/adapters/deepseek.js", "js/smartInputBox/adapters/kimi.js", "js/smartInputBox/adapters/perplexity.js", "js/smartInputBox/adapters/tongyi.js", "js/smartInputBox/adapters/grok.js", "js/smartInputBox/adapters/registry.js", "js/smartInputBox/smart-enter-manager.js", "js/smartInputBox/index.js", "js/timeline/adapters/base.js", "js/timeline/adapters/chatgpt.js", "js/timeline/adapters/gemini.js", "js/timeline/adapters/doubao.js", "js/timeline/adapters/deepseek.js", "js/timeline/adapters/yiyan.js", "js/timeline/adapters/tongyi.js", "js/timeline/adapters/kimi.js", "js/timeline/adapters/yuanbao.js", "js/timeline/adapters/grok.js", "js/timeline/adapters/registry.js", "js/timeline/common.js", "js/timeline/container-finder.js", "js/timeline/star-input-modal/star-input-modal.js", "js/timeline/timeline-manager.js", "js/timeline/index.js" ],
       "matches": [ "\u003Call_urls>" ],
       "run_at": "document_idle"
    } ],
    "default_locale": "en",
    "description": "__MSG_extDescription__",
+   "browser_specific_settings": {
+      "gecko": {
+         "id": "houyanchao@outlook.com",
+         "strict_min_version": "128.0"
+      }
+   },
    "icons": {
       "128": "icons/icon128.png",
       "16": "icons/icon16.png",
       "48": "icons/icon48.png"
    },
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwuYt45YLc/W650gxV4+g6M5P3jbwDhqFy1aGPnU1GoeyzWV9SY7DQueG4eK37c1YP1sxbLqNYg1RrFJepqo6oKgqrlToWzzJVteit8Bz/+LmGIG/ixk0fgnAhTX/jaRYy+/6LEkTxYBlGqS7jSYmBQXEHB0cS6Ibam3YBI/DB1u0NsMkAtwyYskJZUV8Qn825dmgW/tE1zV15qWOwg052up58YbgjvaD+I84QOCnMe9Z6cm9xXv+CkY+GJm1yrDvYXvQ11jdGJLtA3DEqyFdAAzpTgZfXsEuwqUJP+dnJQGuzWGy/qK3mY/pFkumTKf6uojNd82jvUeuOdFaHUKvswIDAQAB",
    "manifest_version": 3,
    "name": "__MSG_extName__",
    "permissions": [ "storage" ],
    "short_name": "AI Timeline",
-   "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "4.0.1",
    "web_accessible_resources": [ {
       "matches": [ "\u003Call_urls>" ],
