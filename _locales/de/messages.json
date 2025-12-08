@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Interaktive Zeitleiste für ChatGPT, Gemini, DeepSeek"
-  },
-  "extDescription": {
-    "message": "Verdoppeln Sie Ihre KI-Chat-Effizienz! Fügen Sie ChatGPT, Gemini, DeepSeek eine interaktive Zeitleiste hinzu, 🚀 springen Sie einfach zu jedem Gespräch, 📌 markieren Sie wichtige Gespräche, ⭐️ setzen Sie wichtige Chats als Favoriten."
-  },
-  "viewStarred": {
-    "message": "Favoriten anzeigen"
-  },
-  "starredList": {
-    "message": "Meine Favoriten"
-  },
-  "close": {
-    "message": "Schließen"
-  },
-  "clickToStar": {
-    "message": "Klicken zum Favorisieren"
-  },
-  "clickToUnstar": {
-    "message": "Klicken zum Entfernen"
-  },
-  "noStarredItems": {
-    "message": "Keine Favoriten"
-  },
-  "goTo": {
-    "message": "Gehe zu"
-  },
-  "goToTooltip": {
-    "message": "Zu Chat-Details gehen"
-  },
-  "copied": {
-    "message": "Kopiert"
-  },
-  "starChat": {
-    "message": "Chat markieren"
-  },
-  "unstarChat": {
-    "message": "Chat-Markierung entfernen"
-  },
-  "inputChatTheme": {
-    "message": "Titel des Favoriten eingeben:"
-  },
-  "themePlaceholder": {
-    "message": "Bitte eingeben"
-  },
-  "cancel": {
-    "message": "Abbrechen"
-  },
-  "confirm": {
-    "message": "Bestätigen"
-  },
-  "themeRequired": {
-    "message": "Thema darf nicht leer sein"
-  },
-  "unstar": {
-    "message": "Markierung entfernen"
-  },
-  "viewStarredList": {
-    "message": "Favoritenliste anzeigen"
-  },
-  "edit": {
-    "message": "Bearbeiten"
-  },
-  "editStarredContent": {
-    "message": "Favoriten-Titel bearbeiten"
-  },
-  "contentRequired": {
-    "message": "Inhalt darf nicht leer sein"
-  },
-  "dataStorageNote": {
-    "message": "Alle Daten werden nur lokal in Ihrem Browser gespeichert. Wir werden ohne Ihre Erlaubnis niemals Chat-Daten auf Server hochladen"
-  },
-  "projectOpenSource": {
-    "message": "Dieses Projekt ist Open Source, willkommen zu"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "Wenn es Ihnen hilft, empfehlen Sie es gerne Ihren Freunden weiter"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Speicherung aufheben"
+   },
+   "extDescription": {
+      "message": "LaTeX-Formeln kopieren, Gesprächs-Timeline, Enter für Zeilenumbruch, Prompt-Unterstützung. Verdoppeln Sie Ihre KI-Effizienz!"
+   },
+   "extName": {
+      "message": "AI Timeline: Der leistungsstärkste KI-Effizienz-Assistent: ChatGPT, Gemini"
+   },
+   "hkjvnr": {
+      "message": "Gespeicherte anzeigen"
+   },
+   "jwvnkp": {
+      "message": "Keine Daten"
+   },
+   "kmvxpz": {
+      "message": "Alle Daten werden lokal in Ihrem Browser gespeichert"
+   },
+   "kmxpvz": {
+      "message": "Ordnername erforderlich"
+   },
+   "kpvzmx": {
+      "message": "Ordnername existiert bereits"
+   },
+   "kpxvmz": {
+      "message": "Formel kopieren"
+   },
+   "kpzmvx": {
+      "message": "Kopieren fehlgeschlagen"
+   },
+   "kvpzmx": {
+      "message": "Ordner gelöscht"
+   },
+   "kvzmxp": {
+      "message": "Tastatur Enter-Taste für neue Zeile"
+   },
+   "kxpmzv": {
+      "message": "Erfolgreich gespeichert"
+   },
+   "kxvpmz": {
+      "message": "Neuer Ordner"
+   },
+   "kxzpmv": {
+      "message": "Speichern in"
+   },
+   "kzxvpm": {
+      "message": "Drücken Sie lange auf einen Gesprächsknoten in der Zeitleiste, um ihn als wichtig zu markieren."
+   },
+   "mkpxvz": {
+      "message": "Wenn aktiviert, drücken Sie im AI-Gesprächseingabefeld Enter-Taste einmal für eine neue Zeile, zweimal schnell um Nachricht zu senden."
+   },
+   "mkvxpz": {
+      "message": "Stern auf GitHub"
+   },
+   "mkvzpx": {
+      "message": "Unterstützte Plattformen"
+   },
+   "mvkxpz": {
+      "message": "Kopieren"
+   },
+   "mvkzpx": {
+      "message": "Gespeicherte durchsuchen..."
+   },
+   "mvxkpz": {
+      "message": "LaTeX-Formel kopieren"
+   },
+   "mvzxkp": {
+      "message": "Bitte neuen Namen eingeben"
+   },
+   "mxkvzp": {
+      "message": "Löschen fehlgeschlagen"
+   },
+   "mxpzvk": {
+      "message": "Wenn aktiviert, drücken Sie im AI-Gesprächseingabefeld Enter-Taste einmal für eine neue Zeile, zweimal schnell um Nachricht zu senden."
+   },
+   "mzkvxp": {
+      "message": "Wenn aktiviert, wird eine interaktive Zeitleiste auf der rechten Seite der AI-Gesprächsseite angezeigt."
+   },
+   "mzpxvk": {
+      "message": "Thema darf nicht leer sein"
+   },
+   "mzxvkp": {
+      "message": "Löschen"
+   },
+   "pkmvxz": {
+      "message": "Titel"
+   },
+   "pkmzvx": {
+      "message": "Gehe zu"
+   },
+   "pkxvmz": {
+      "message": "Standardordner"
+   },
+   "pxkmvz": {
+      "message": "Zeitleiste"
+   },
+   "pxmzkv": {
+      "message": "📌 Wichtige Gespräche markieren"
+   },
+   "pxmzvk": {
+      "message": "Ordner umbenennen"
+   },
+   "pxvkmz": {
+      "message": "Abbrechen"
+   },
+   "pzmkvx": {
+      "message": "Inhalt darf nicht leer sein"
+   },
+   "pzmvkx": {
+      "message": "Speicherung aufgehoben"
+   },
+   "pzvkmx": {
+      "message": "Erfolgreich verschoben"
+   },
+   "qoytxz": {
+      "message": "Diese Funktion ist immer aktiviert und kann nicht ausgeschaltet werden"
+   },
+   "qwxpzm": {
+      "message": "Speichern"
+   },
+   "qzmvkx": {
+      "message": "Sind Sie sicher, dass Sie den Ordner「{folderName}」löschen möchten?"
+   },
+   "vkmzpx": {
+      "message": "Bestätigen"
+   },
+   "vkpmzx": {
+      "message": "Pfeiltasten ↑ / ↓ um zwischen Gesprächsknoten zu navigieren"
+   },
+   "vkpxzm": {
+      "message": "Bearbeiten"
+   },
+   "vmkxpz": {
+      "message": "Erfolgreich aktualisiert"
+   },
+   "vmzpkx": {
+      "message": "Standardordner"
+   },
+   "vnkxpm": {
+      "message": "Gespeicherte Liste"
+   },
+   "vpmzkx": {
+      "message": "Neuer Unterordner"
+   },
+   "vxkpmz": {
+      "message": "Verschieben nach"
+   },
+   "vxkpzm": {
+      "message": "Wenn aktiviert, werden Formeln auf der Seite automatisch erkannt und können durch Klicken im LaTeX-Format kopiert werden."
+   },
+   "vxmkpz": {
+      "message": "Enter-Taste: Einmal für neue Zeile, doppelt zum Senden"
+   },
+   "vxpzmk": {
+      "message": "Open Source"
+   },
+   "vzkpmx": {
+      "message": "Bitte Ordnernamen eingeben"
+   },
+   "wjxnkp": {
+      "message": "Ordner「{folderName}」löschen?\n\nDieser Ordner und seine Unterordner enthalten {count} gespeicherte Elemente. Diese werden in den Standardordner verschoben."
+   },
+   "xmkvpz": {
+      "message": "Neuen Unterordner in「{folderName}」erstellen"
+   },
+   "xmvkpz": {
+      "message": "Gesprächseingabefeld"
+   },
+   "xpvmkz": {
+      "message": "Wenn aktiviert, verwenden Sie die Pfeiltasten ↑ / ↓, um schnell zwischen Gesprächsknoten zu springen."
+   },
+   "xpzmkv": {
+      "message": "Teilen & Feedback"
+   },
+   "xpzmvk": {
+      "message": "Kopiert"
+   },
+   "xvkpmz": {
+      "message": "Umbenennen"
+   },
+   "xvpmkz": {
+      "message": "Favoritenliste anzeigen"
+   },
+   "xzvkpm": {
+      "message": "Erfolgreich erstellt"
+   },
+   "zmkvpx": {
+      "message": "LaTeX-Formel kopieren"
+   },
+   "zmvkpx": {
+      "message": "Gespräch speichern"
+   },
+   "zmxvkp": {
+      "message": "Bitte eingeben"
+   },
+   "zpkmvx": {
+      "message": "Enter für neue Zeile"
+   },
+   "zpvmkx": {
+      "message": "Speichern fehlgeschlagen"
+   },
+   "zpxmkv": {
+      "message": "Ordner nicht gefunden"
+   }
 }

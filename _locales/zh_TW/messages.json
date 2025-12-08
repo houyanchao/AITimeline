@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - 為 AI 對話添加互動式時間軸，支援 ChatGPT、Gemini、DeepSeek 等平台"
-  },
-  "extDescription": {
-    "message": "讓你跟 AI 聊天的效率直接翻倍！給 ChatGPT、Gemini、DeepSeek 添加互動式時間軸，🚀輕鬆跳轉至任意對話，📌標記重點對話，⭐️收藏重要聊天。"
-  },
-  "viewStarred": {
-    "message": "檢視收藏"
-  },
-  "starredList": {
-    "message": "收藏清單"
-  },
-  "close": {
-    "message": "關閉"
-  },
-  "clickToStar": {
-    "message": "收藏提問"
-  },
-  "clickToUnstar": {
-    "message": "取消收藏提問"
-  },
-  "noStarredItems": {
-    "message": "暫無收藏"
-  },
-  "goTo": {
-    "message": "前往"
-  },
-  "goToTooltip": {
-    "message": "前往聊天詳情頁"
-  },
-  "copied": {
-    "message": "已複製"
-  },
-  "starChat": {
-    "message": "收藏聊天"
-  },
-  "unstarChat": {
-    "message": "取消收藏聊天"
-  },
-  "inputChatTheme": {
-    "message": "請輸入收藏標題："
-  },
-  "themePlaceholder": {
-    "message": "請輸入"
-  },
-  "cancel": {
-    "message": "取消"
-  },
-  "confirm": {
-    "message": "確定"
-  },
-  "themeRequired": {
-    "message": "主題不能為空"
-  },
-  "unstar": {
-    "message": "取消收藏"
-  },
-  "viewStarredList": {
-    "message": "檢視收藏清單"
-  },
-  "edit": {
-    "message": "編輯"
-  },
-  "editStarredContent": {
-    "message": "編輯收藏標題"
-  },
-  "contentRequired": {
-    "message": "內容不能為空"
-  },
-  "dataStorageNote": {
-    "message": "所有資料儲存在您的瀏覽器本機，不上傳伺服器"
-  },
-  "projectOpenSource": {
-    "message": "本項目已開源，歡迎"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "如果對您有幫助，歡迎推薦給朋友"
-  },
-  "chromeWebStore": {
-    "message": "Chrome 應用商店"
-  }
+   "bpxjkw": {
+      "message": "取消收藏"
+   },
+   "extDescription": {
+      "message": "複製LaTeX公式、可交互對話時間軸、Enter鍵換行、Prompt提示詞輔助，支援所有主流AI平台，助您使用AI的效率翻倍。"
+   },
+   "extName": {
+      "message": "AI Timeline：最強大的AI提效助手：ChatGPT、Gemini、DeepSeek"
+   },
+   "hkjvnr": {
+      "message": "查看收藏"
+   },
+   "jwvnkp": {
+      "message": "暫無資料"
+   },
+   "kmvxpz": {
+      "message": "所有資料存儲在您的瀏覽器本地"
+   },
+   "kmxpvz": {
+      "message": "資料夾名稱不能為空"
+   },
+   "kpvzmx": {
+      "message": "資料夾名稱已存在"
+   },
+   "kpxvmz": {
+      "message": "複製公式"
+   },
+   "kpzmvx": {
+      "message": "複製失敗"
+   },
+   "kvpzmx": {
+      "message": "資料夾已刪除"
+   },
+   "kvzmxp": {
+      "message": "使用鍵盤 Enter 鍵換行"
+   },
+   "kxpmzv": {
+      "message": "收藏成功"
+   },
+   "kxvpmz": {
+      "message": "新建資料夾"
+   },
+   "kxzpmv": {
+      "message": "收藏到"
+   },
+   "kzxvpm": {
+      "message": "長按時間軸上的對話節點，即可標記重點。"
+   },
+   "mkpxvz": {
+      "message": "啟用後，在 AI 對話輸入框中，單擊 Enter 鍵換行，快速雙擊 Enter 鍵發送訊息。"
+   },
+   "mkvxpz": {
+      "message": "Star on GitHub"
+   },
+   "mkvzpx": {
+      "message": "支援的平台"
+   },
+   "mvkxpz": {
+      "message": "複製"
+   },
+   "mvkzpx": {
+      "message": "搜尋收藏..."
+   },
+   "mvxkpz": {
+      "message": "複製 LaTeX 公式"
+   },
+   "mvzxkp": {
+      "message": "請輸入新名稱"
+   },
+   "mxkvzp": {
+      "message": "刪除失敗"
+   },
+   "mxpzvk": {
+      "message": "啟用後，在 AI 對話輸入框中，單擊 Enter 鍵換行，快速雙擊 Enter 鍵發送訊息。"
+   },
+   "mzkvxp": {
+      "message": "啟用後，在AI 對話頁面右側會顯示可互動時間軸。"
+   },
+   "mzpxvk": {
+      "message": "主題不能為空"
+   },
+   "mzxvkp": {
+      "message": "刪除"
+   },
+   "pkmvxz": {
+      "message": "標題"
+   },
+   "pkmzvx": {
+      "message": "前往"
+   },
+   "pkxvmz": {
+      "message": "預設資料夾"
+   },
+   "pxkmvz": {
+      "message": "時間軸"
+   },
+   "pxmzkv": {
+      "message": "📌 標記重點對話"
+   },
+   "pxmzvk": {
+      "message": "修改資料夾名稱"
+   },
+   "pxvkmz": {
+      "message": "取消"
+   },
+   "pzmkvx": {
+      "message": "內容不能為空"
+   },
+   "pzmvkx": {
+      "message": "已取消收藏"
+   },
+   "pzvkmx": {
+      "message": "移動成功"
+   },
+   "qoytxz": {
+      "message": "此功能預設開啟，無法關閉"
+   },
+   "qwxpzm": {
+      "message": "收藏"
+   },
+   "qzmvkx": {
+      "message": "確定要刪除資料夾「{folderName}」嗎？"
+   },
+   "vkmzpx": {
+      "message": "確定"
+   },
+   "vkpmzx": {
+      "message": "鍵盤 ↑ / ↓ 鍵跳轉對話節點"
+   },
+   "vkpxzm": {
+      "message": "編輯"
+   },
+   "vmkxpz": {
+      "message": "更新成功"
+   },
+   "vmzpkx": {
+      "message": "預設資料夾"
+   },
+   "vnkxpm": {
+      "message": "收藏列表"
+   },
+   "vpmzkx": {
+      "message": "新建子資料夾"
+   },
+   "vxkpmz": {
+      "message": "移動到"
+   },
+   "vxkpzm": {
+      "message": "啟用後，自動識別頁面上的公式，點擊即可複製為 LaTeX 格式。"
+   },
+   "vxmkpz": {
+      "message": "Enter鍵：單擊換行，雙擊發送訊息"
+   },
+   "vxpzmk": {
+      "message": "已開源"
+   },
+   "vzkpmx": {
+      "message": "請輸入資料夾名稱"
+   },
+   "wjxnkp": {
+      "message": "刪除資料夾「{folderName}」？\n\n該資料夾及其子資料夾中有 {count} 個收藏項，刪除後這些收藏項將移至預設資料夾。"
+   },
+   "xmkvpz": {
+      "message": "在「{folderName}」下新建子資料夾"
+   },
+   "xmvkpz": {
+      "message": "對話輸入框"
+   },
+   "xpvmkz": {
+      "message": "啟用後，使用鍵盤 ↑ / ↓ 鍵，在對話節點間快速跳轉。"
+   },
+   "xpzmkv": {
+      "message": "分享 & 提意見"
+   },
+   "xpzmvk": {
+      "message": "複製成功"
+   },
+   "xvkpmz": {
+      "message": "重新命名"
+   },
+   "xvpmkz": {
+      "message": "查看收藏列表"
+   },
+   "xzvkpm": {
+      "message": "建立成功"
+   },
+   "zmkvpx": {
+      "message": "複製LaTeX公式"
+   },
+   "zmvkpx": {
+      "message": "收藏對話"
+   },
+   "zmxvkp": {
+      "message": "請輸入"
+   },
+   "zpkmvx": {
+      "message": "單擊Enter鍵換行"
+   },
+   "zpvmkx": {
+      "message": "儲存失敗"
+   },
+   "zpxmkv": {
+      "message": "資料夾不存在"
+   }
 }

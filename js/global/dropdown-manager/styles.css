@@ -1,0 +1,321 @@
+/**
+ * Global Dropdown Manager Styles
+ * 全局下拉菜单样式
+ */
+
+/* 遮罩层（透明，阻止点击其他元素） */
+.global-dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2147483646;  /* 高于 modal，但低于主菜单 */
+    background: transparent;
+    cursor: default;
+    /* 阻止点击下层元素，但主菜单和子菜单的 z-index 更高，不受影响 */
+}
+
+/* 下拉菜单容器 */
+.global-dropdown {
+    position: fixed;
+    z-index: 2147483647;  /* 高于 modal 和遮罩层 */
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 6px 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* 深色模式 */
+html.dark .global-dropdown {
+    background: #262626;
+    border-color: #404040;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 显示动画 */
+.global-dropdown.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 下拉菜单选项 */
+.global-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin: 0 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #1f2937;
+    transition: background-color 0.1s ease;
+    user-select: none;
+}
+
+html.dark .global-dropdown-item {
+    color: #f5f5f5;
+}
+
+/* 悬停效果 */
+.global-dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+html.dark .global-dropdown-item:hover {
+    background-color: #333333;
+}
+
+/* 活动状态 */
+.global-dropdown-item:active {
+    background-color: #e5e7eb;
+}
+
+html.dark .global-dropdown-item:active {
+    background-color: #3a3a3a;
+}
+
+/* 禁用状态 */
+.global-dropdown-item.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* 危险操作（如删除） */
+.global-dropdown-item.danger {
+    color: #ef4444;
+}
+
+html.dark .global-dropdown-item.danger {
+    color: #f87171;
+}
+
+.global-dropdown-item.danger:hover {
+    background-color: #fee2e2;
+}
+
+html.dark .global-dropdown-item.danger:hover {
+    background-color: #450a0a;
+}
+
+/* 图标 */
+.global-dropdown-item-icon {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
+/* SVG 图标样式 */
+.global-dropdown-item-icon svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+html.dark .global-dropdown-item-icon svg {
+    color: #9ca3af;
+}
+
+/* 悬停时图标颜色 */
+.global-dropdown-item:hover .global-dropdown-item-icon svg {
+    color: #374151;
+}
+
+html.dark .global-dropdown-item:hover .global-dropdown-item-icon svg {
+    color: #d1d5db;
+}
+
+/* 危险操作的图标颜色 */
+.global-dropdown-item.danger .global-dropdown-item-icon svg {
+    color: #ef4444;
+}
+
+html.dark .global-dropdown-item.danger .global-dropdown-item-icon svg {
+    color: #f87171;
+}
+
+/* 文本 */
+.global-dropdown-item-label {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+/* 分割线 */
+.global-dropdown-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 6px 0;
+}
+
+html.dark .global-dropdown-divider {
+    background-color: #404040;
+}
+
+/* 滚动条样式（WebKit 浏览器） */
+.global-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.global-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.global-dropdown::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+.global-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+html.dark .global-dropdown::-webkit-scrollbar-thumb {
+    background: #404040;
+}
+
+html.dark .global-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #525252;
+}
+
+/* 位置变体（用于箭头方向，如果需要） */
+.global-dropdown[data-placement^="top"] {
+    transform-origin: bottom center;
+}
+
+.global-dropdown[data-placement^="bottom"] {
+    transform-origin: top center;
+}
+
+/* 响应式：小屏幕 */
+@media (max-width: 640px) {
+    .global-dropdown {
+        max-width: calc(100vw - 32px);
+    }
+}
+
+/* ==================== 子菜单功能 ==================== */
+
+/* 子菜单箭头指示器 */
+.global-dropdown-item-arrow {
+    margin-left: auto;
+    padding-left: 12px;
+    color: #9ca3af;
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.15s ease;
+}
+
+html.dark .global-dropdown-item-arrow {
+    color: #6b7280;
+}
+
+/* 有子菜单的项 hover 时箭头颜色 */
+.global-dropdown-item.has-submenu:hover .global-dropdown-item-arrow {
+    color: #6b7280;
+}
+
+html.dark .global-dropdown-item.has-submenu:hover .global-dropdown-item-arrow {
+    color: #9ca3af;
+}
+
+/* 子菜单容器 */
+.global-dropdown-submenu {
+    z-index: 2147483647 !important;  /* 与主菜单同级，高于 modal */
+}
+
+/* 二级子菜单 */
+.global-dropdown-submenu[data-level="1"] {
+    z-index: 2147483647 !important;
+}
+
+/* 三级子菜单（更高的 z-index） */
+.global-dropdown-submenu[data-level="2"] {
+    z-index: 2147483647 !important;
+}
+
+/* 子菜单中的选项（确保继承所有样式） */
+.global-dropdown-submenu .global-dropdown-item {
+    /* 继承主菜单选项的所有样式 */
+}
+
+/* 子菜单项 hover 效果（确保优先级足够） */
+.global-dropdown-submenu .global-dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+html.dark .global-dropdown-submenu .global-dropdown-item:hover {
+    background-color: #333333;
+}
+
+/* 子菜单项 active 效果 */
+.global-dropdown-submenu .global-dropdown-item:active {
+    background-color: #e5e7eb;
+}
+
+html.dark .global-dropdown-submenu .global-dropdown-item:active {
+    background-color: #3a3a3a;
+}
+
+/* 子菜单中的危险操作 hover 效果 */
+.global-dropdown-submenu .global-dropdown-item.danger:hover {
+    background-color: #fee2e2;
+}
+
+html.dark .global-dropdown-submenu .global-dropdown-item.danger:hover {
+    background-color: #450a0a;
+}
+
+/* 子菜单项图标 hover 效果 */
+.global-dropdown-submenu .global-dropdown-item:hover .global-dropdown-item-icon svg {
+    color: #374151;
+}
+
+html.dark .global-dropdown-submenu .global-dropdown-item:hover .global-dropdown-item-icon svg {
+    color: #d1d5db;
+}
+
+/* 子菜单中危险操作的图标颜色 */
+.global-dropdown-submenu .global-dropdown-item.danger .global-dropdown-item-icon svg {
+    color: #ef4444;
+}
+
+html.dark .global-dropdown-submenu .global-dropdown-item.danger .global-dropdown-item-icon svg {
+    color: #f87171;
+}
+
+/* 有子菜单的项保持高亮状态（当子菜单打开时） */
+.global-dropdown-item.has-submenu.submenu-active {
+    background-color: #f3f4f6;
+}
+
+html.dark .global-dropdown-item.has-submenu.submenu-active {
+    background-color: #374151;
+}
+
+/* 确保父项高亮时不影响 hover */
+.global-dropdown-item.has-submenu.submenu-active:hover {
+    background-color: #e5e7eb;
+}
+
+html.dark .global-dropdown-item.has-submenu.submenu-active:hover {
+    background-color: #3a3a3a;
+}
+

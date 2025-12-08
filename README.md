@@ -37,6 +37,16 @@ The English installation guide is as follows:
 5. **Load Extension** - Click "Load unpacked" and select the extracted folder
 6. **Start Using** - After installation, open any AI platform and start a conversation
 
+### Firefox (Latest Stable) - Temporary Install
+
+1. Open `about:debugging#/runtime/this-firefox`
+2. Click **Load Temporary Add-on** and choose this folder's `manifest.json`
+3. Confirm the extension appears and open any AI platform to use it
+
+Notes:
+- Tested on Firefox 128+ with Manifest V3 enabled
+- For local dev, you can also run `web-ext run --source-dir .` (requires `npm i -g web-ext`)
+
 ## 🚧 Planned Features
 
 - ✅ Support quick jump to any message
@@ -48,7 +58,7 @@ The English installation guide is as follows:
 - ✅ Support adding notes after starring
 - [ ] Add support for Claude and Copilot
 - [ ] Support starring AI responses
-- [ ] Support Firefox, Edge, and other browsers
+- [ ] Broader store distribution (Edge/Firefox AMO)
 
 ## 🚀 Supported Platforms
 

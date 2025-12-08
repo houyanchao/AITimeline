@@ -1,0 +1,54 @@
+/**
+ * Base Smart Enter Adapter
+ * 
+ * 所有平台适配器的基类
+ * 定义适配器必须实现的接口
+ */
+
+class BaseSmartEnterAdapter {
+    /**
+     * 检测是否匹配当前页面
+     * @returns {boolean}
+     */
+    matches() {
+        throw new Error('BaseSmartEnterAdapter.matches() must be implemented');
+    }
+    
+    /**
+     * 获取输入框的 CSS 选择器
+     * @returns {string}
+     */
+    getInputSelector() {
+        throw new Error('BaseSmartEnterAdapter.getInputSelector() must be implemented');
+    }
+    
+    /**
+     * 判断是否可以发送消息（输入框是否有内容）
+     * @param {HTMLElement} inputElement - 输入框元素
+     * @returns {boolean}
+     */
+    canSend(inputElement) {
+        if (!inputElement) return false;
+        
+        // 默认实现：检查是否有非空文本
+        const isContentEditable = inputElement.contentEditable === 'true';
+        let text = '';
+        
+        if (isContentEditable) {
+            text = inputElement.textContent || inputElement.innerText || '';
+        } else {
+            text = inputElement.value || '';
+        }
+        
+        return text.trim().length > 0;
+    }
+    
+    /**
+     * 获取平台名称（用于日志）
+     * @returns {string}
+     */
+    getName() {
+        return this.constructor.name.replace('SmartEnterAdapter', '');
+    }
+}
+

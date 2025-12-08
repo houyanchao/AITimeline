@@ -1,0 +1,200 @@
+/**
+ * Timeline Settings Tab Styles
+ * 时间轴设置样式
+ */
+
+/* 设置容器 */
+.timeline-settings {
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 分隔线 */
+.timeline-settings .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
+/* 设置区块 */
+.setting-section {
+    margin-bottom: 0;
+}
+
+/* 设置项 */
+.setting-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.setting-item:hover {
+    background: #f3f4f6;
+}
+
+/* 设置信息 */
+.setting-info {
+    flex: 1;
+}
+
+.setting-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.setting-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d1d5db;
+    border-radius: 26px;
+    transition: background-color 0.3s;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: #000000;
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+}
+
+.toggle-switch input:focus + .toggle-slider {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== 平台列表样式 ==================== */
+
+/* 平台列表外层容器 */
+.platform-list {
+    padding: 0;
+}
+
+/* 平台列表标题 */
+.platform-list-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+    padding: 0;
+}
+
+/* 平台列表提示文字 */
+.platform-list-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    padding: 0;
+}
+
+/* 平台列表容器（统一背景框） */
+.platform-list-container {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* 平台项 */
+.platform-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 8px;
+    background: transparent;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    transition: background 0.2s;
+}
+
+.platform-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.platform-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 平台信息（左侧） */
+.platform-info-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 平台 Logo */
+.platform-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* 平台 Logo 占位符（无图片时显示首字母） */
+.platform-logo-placeholder {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* 平台名称 */
+.platform-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+}
+

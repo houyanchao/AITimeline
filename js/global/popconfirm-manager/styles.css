@@ -1,0 +1,135 @@
+/**
+ * Global Popconfirm Manager Styles
+ * 全局确认弹窗样式
+ */
+
+/* 遮罩层 */
+.global-popconfirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.global-popconfirm-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 弹窗容器 */
+.global-popconfirm {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    max-width: 90vw;
+    transform: scale(0.9) translateY(-20px);
+    transition: transform 0.2s ease;
+}
+
+.global-popconfirm-overlay.visible .global-popconfirm {
+    transform: scale(1) translateY(0);
+}
+
+/* 内容区域 */
+.popconfirm-content {
+    padding: 24px;
+}
+
+/* 标题 */
+.popconfirm-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+/* 内容文本 */
+.popconfirm-text {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 按钮组 */
+.popconfirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.popconfirm-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.popconfirm-btn:hover {
+    transform: translateY(-1px);
+}
+
+.popconfirm-btn:active {
+    transform: translateY(0);
+}
+
+/* 取消按钮 */
+.popconfirm-btn-cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.popconfirm-btn-cancel:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* 确认按钮 */
+.popconfirm-btn-confirm {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.popconfirm-btn-confirm:hover {
+    background: #dc2626;
+}
+
+/* 响应式 */
+@media (max-width: 640px) {
+    .global-popconfirm {
+        width: 320px;
+    }
+    
+    .popconfirm-content {
+        padding: 20px;
+    }
+    
+    .popconfirm-title {
+        font-size: 16px;
+    }
+    
+    .popconfirm-text {
+        font-size: 13px;
+    }
+    
+    .popconfirm-btn {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+}
+

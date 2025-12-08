@@ -1,0 +1,552 @@
+/**
+ * Starred Tab Styles
+ * 收藏列表样式 - 从 timeline.css 完整迁移
+ */
+
+/* ============================================
+   容器布局
+   ============================================ */
+
+.starred-tab-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================
+   工具栏
+   ============================================ */
+
+.starred-toolbar {
+    padding: 0 6px 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.starred-toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.starred-toolbar-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.starred-toolbar-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+
+/* 搜索输入框 */
+.starred-toolbar-search {
+    flex: 1;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.starred-toolbar-search::placeholder {
+    color: #9ca3af;
+}
+
+.starred-toolbar-search:focus {
+    border-color: #7450ff;
+    box-shadow: 0 0 0 2px rgba(116, 80, 255, 0.1);
+}
+
+
+
+
+/* 列表区域 - 可滚动（树状结构） */
+.starred-list-tree {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 保留原有的 timeline-starred-list 类名（向后兼容） */
+.timeline-starred-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+/* ============================================
+   收藏列表项样式（从 timeline.css 迁移）
+   ============================================ */
+
+/* 空状态 */
+.timeline-starred-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* 收藏项 - 优化后的布局 */
+.timeline-starred-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 12px;
+    margin-bottom: 2px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.timeline-starred-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+
+/* Logo 容器 */
+.timeline-starred-item-logo {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.timeline-starred-item-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Logo 首字母（备用方案）*/
+.timeline-starred-item-initial {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+
+/* 名称文本 */
+.timeline-starred-item-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #374151;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+
+.timeline-starred-item-name:hover {
+    color: #1f2937;
+}
+
+
+/* 操作按钮容器 - 收藏icon和前往按钮的容器 */
+.timeline-starred-item-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 编辑按钮 - 与星标按钮尺寸一致 */
+.timeline-starred-item-edit {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-edit svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-edit:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-edit:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-edit:active {
+    transform: scale(0.95);
+}
+
+/* 五角星按钮 - 固定尺寸 */
+.timeline-starred-item-star {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-star svg {
+    width: 16px;
+    height: 16px;
+}
+
+.timeline-starred-item-star:hover {
+    background-color: rgba(255, 125, 3, 0.1);
+    transform: scale(1.1);
+}
+
+.timeline-starred-item-star:active {
+    transform: scale(0.95);
+}
+
+/* 复制按钮 - 与编辑按钮尺寸一致 */
+.timeline-starred-item-copy {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-copy svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-copy:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-copy:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-copy:active {
+    transform: scale(0.95);
+}
+
+/* 复制链接按钮 - 与其他按钮尺寸一致 */
+.timeline-starred-item-link {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-link svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-link:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-link:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   文件夹样式
+   ============================================ */
+
+/* 文件夹项 */
+/* 注：二级文件夹不需要额外的 margin-left，因为 folder-content 已经有 padding-left: 24px */
+/* 这样二级文件夹会与同级收藏项对齐 */
+
+/* 文件夹头部 */
+.folder-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+/* 第一个文件夹头部（默认文件夹）增加上下间距 */
+.starred-list-tree > .folder-item:first-child .folder-header {
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+.folder-header:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+
+/* 展开/折叠图标 - SVG 箭头 */
+.folder-toggle {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    color: #9ca3af;
+}
+
+.folder-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+    color: currentColor;
+}
+
+.folder-toggle.expanded svg {
+    transform: rotate(90deg);
+}
+
+.folder-toggle:hover {
+    color: #6b7280;
+}
+
+
+
+/* 文件夹信息 */
+.folder-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.folder-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder-icon svg {
+    width: 100%;
+    height: 100%;
+    color: #FFA726;
+}
+
+.folder-name {
+    font-weight: 500;
+    color: #374151;
+}
+
+.folder-count {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* 文件夹操作按钮 */
+.folder-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.folder-action-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.folder-action-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.folder-action-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.folder-action-btn:hover svg {
+    color: #374151;
+}
+
+
+.folder-action-btn:active {
+    transform: scale(0.95);
+}
+
+/* 文件夹内容 */
+.folder-content {
+    display: none;
+    padding-left: 24px;
+}
+
+.folder-content.expanded {
+    display: block;
+}
+
+/* 默认文件夹（虚拟） */
+.default-folder .folder-actions {
+    opacity: 0 !important; /* 默认文件夹不显示操作按钮，但保留空间 */
+    visibility: hidden !important;
+    pointer-events: none; /* 禁用交互 */
+}
+
+/* 移动按钮 */
+.timeline-starred-item-move {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-move svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-move:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-move:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-move:active {
+    transform: scale(0.95);
+}
+
+/* 更多按钮（三个点）*/
+.timeline-starred-item-more {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.timeline-starred-item-more svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+}
+
+
+.timeline-starred-item-more:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+.timeline-starred-item-more:hover svg {
+    color: #374151;
+}
+
+
+.timeline-starred-item-more:active {
+    transform: scale(0.95);
+}
