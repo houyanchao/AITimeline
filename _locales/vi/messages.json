@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Dòng thời gian tương tác cho ChatGPT, Gemini, DeepSeek"
-  },
-  "extDescription": {
-    "message": "Tăng gấp đôi hiệu quả trò chuyện AI của bạn! Thêm dòng thời gian tương tác vào ChatGPT, Gemini, DeepSeek, 🚀 chuyển đến bất kỳ cuộc trò chuyện nào một cách dễ dàng, 📌 đánh dấu các cuộc trò chuyện chính, ⭐️ yêu thích các cuộc trò chuyện quan trọng."
-  },
-  "viewStarred": {
-    "message": "Xem yêu thích"
-  },
-  "starredList": {
-    "message": "Danh Sách Yêu Thích"
-  },
-  "close": {
-    "message": "Đóng"
-  },
-  "clickToStar": {
-    "message": "Nhấp để thêm vào yêu thích"
-  },
-  "clickToUnstar": {
-    "message": "Nhấp để xóa khỏi yêu thích"
-  },
-  "noStarredItems": {
-    "message": "Không có mục yêu thích"
-  },
-  "goTo": {
-    "message": "Đi tới"
-  },
-  "goToTooltip": {
-    "message": "Đi tới chi tiết trò chuyện"
-  },
-  "copied": {
-    "message": "Đã sao chép"
-  },
-  "starChat": {
-    "message": "Lưu cuộc trò chuyện"
-  },
-  "unstarChat": {
-    "message": "Bỏ lưu cuộc trò chuyện"
-  },
-  "inputChatTheme": {
-    "message": "Nhập tiêu đề yêu thích:"
-  },
-  "themePlaceholder": {
-    "message": "Nhập"
-  },
-  "cancel": {
-    "message": "Hủy"
-  },
-  "confirm": {
-    "message": "Xác nhận"
-  },
-  "themeRequired": {
-    "message": "Chủ đề không được để trống"
-  },
-  "unstar": {
-    "message": "Bỏ lưu"
-  },
-  "viewStarredList": {
-    "message": "Xem danh sách yêu thích"
-  },
-  "edit": {
-    "message": "Chỉnh sửa"
-  },
-  "editStarredContent": {
-    "message": "Chỉnh sửa tiêu đề yêu thích"
-  },
-  "contentRequired": {
-    "message": "Nội dung không được để trống"
-  },
-  "dataStorageNote": {
-    "message": "Tất cả dữ liệu chỉ được lưu trữ cục bộ trong trình duyệt của bạn. Chúng tôi sẽ không bao giờ tải bất kỳ dữ liệu trò chuyện nào lên máy chủ mà không có sự cho phép của bạn"
-  },
-  "projectOpenSource": {
-    "message": "Dự án này là mã nguồn mở, chào mừng đến"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "Nếu nó giúp ích cho bạn, hãy giới thiệu nó cho bạn bè của bạn"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Bỏ lưu"
+   },
+   "extDescription": {
+      "message": "Tính năng: Sao chép LaTeX, dòng thời gian, Enter xuống dòng, hỗ trợ Prompt. Tăng gấp đôi hiệu suất AI của bạn!"
+   },
+   "extName": {
+      "message": "AI Timeline: Trợ lý hiệu suất AI mạnh mẽ nhất: ChatGPT, Gemini, DeepSeek"
+   },
+   "hkjvnr": {
+      "message": "Xem đã lưu"
+   },
+   "jwvnkp": {
+      "message": "Không có dữ liệu"
+   },
+   "kmvxpz": {
+      "message": "Tất cả dữ liệu được lưu trữ cục bộ trong trình duyệt của bạn"
+   },
+   "kmxpvz": {
+      "message": "Tên thư mục là bắt buộc"
+   },
+   "kpvzmx": {
+      "message": "Tên thư mục đã tồn tại"
+   },
+   "kpxvmz": {
+      "message": "Sao chép công thức"
+   },
+   "kpzmvx": {
+      "message": "Sao chép thất bại"
+   },
+   "kvpzmx": {
+      "message": "Đã xóa thư mục"
+   },
+   "kvzmxp": {
+      "message": "Sử dụng phím Enter trên bàn phím để xuống dòng"
+   },
+   "kxpmzv": {
+      "message": "Lưu thành công"
+   },
+   "kxvpmz": {
+      "message": "Thư mục mới"
+   },
+   "kxzpmv": {
+      "message": "Lưu vào"
+   },
+   "kzxvpm": {
+      "message": "Nhấn giữ vào nút hội thoại trên dòng thời gian để đánh dấu là quan trọng."
+   },
+   "mkpxvz": {
+      "message": "Khi bật, trong hộp nhập cuộc trò chuyện AI, nhấn phím Enter một lần để xuống dòng, hai lần nhanh để gửi tin nhắn."
+   },
+   "mkvxpz": {
+      "message": "Gắn sao trên GitHub"
+   },
+   "mkvzpx": {
+      "message": "Nền tảng được hỗ trợ"
+   },
+   "mvkxpz": {
+      "message": "Sao chép"
+   },
+   "mvkzpx": {
+      "message": "Tìm kiếm đã lưu..."
+   },
+   "mvxkpz": {
+      "message": "Sao chép công thức LaTeX"
+   },
+   "mvzxkp": {
+      "message": "Vui lòng nhập tên mới"
+   },
+   "mxkvzp": {
+      "message": "Xóa thất bại"
+   },
+   "mxpzvk": {
+      "message": "Khi bật, trong hộp nhập cuộc trò chuyện AI, nhấn phím Enter một lần để xuống dòng, hai lần nhanh để gửi tin nhắn."
+   },
+   "mzkvxp": {
+      "message": "Khi bật, dòng thời gian tương tác sẽ xuất hiện ở phía bên phải của trang hội thoại AI."
+   },
+   "mzpxvk": {
+      "message": "Chủ đề không được để trống"
+   },
+   "mzxvkp": {
+      "message": "Xóa"
+   },
+   "pkmvxz": {
+      "message": "Tiêu đề"
+   },
+   "pkmzvx": {
+      "message": "Đi tới"
+   },
+   "pkxvmz": {
+      "message": "Thư mục mặc định"
+   },
+   "pxkmvz": {
+      "message": "Dòng thời gian"
+   },
+   "pxmzkv": {
+      "message": "📌 Đánh dấu cuộc trò chuyện quan trọng"
+   },
+   "pxmzvk": {
+      "message": "Đổi tên thư mục"
+   },
+   "pxvkmz": {
+      "message": "Hủy"
+   },
+   "pzmkvx": {
+      "message": "Nội dung không được để trống"
+   },
+   "pzmvkx": {
+      "message": "Đã bỏ lưu"
+   },
+   "pzvkmx": {
+      "message": "Di chuyển thành công"
+   },
+   "qoytxz": {
+      "message": "Tính năng này luôn được bật và không thể tắt"
+   },
+   "qwxpzm": {
+      "message": "Lưu"
+   },
+   "qzmvkx": {
+      "message": "Bạn có chắc chắn muốn xóa thư mục「{folderName}」?"
+   },
+   "vkmzpx": {
+      "message": "Xác nhận"
+   },
+   "vkpmzx": {
+      "message": "Phím ↑ / ↓ trên bàn phím để điều hướng giữa các nút hội thoại"
+   },
+   "vkpxzm": {
+      "message": "Chỉnh sửa"
+   },
+   "vmkxpz": {
+      "message": "Cập nhật thành công"
+   },
+   "vmzpkx": {
+      "message": "Thư mục mặc định"
+   },
+   "vnkxpm": {
+      "message": "Danh sách đã lưu"
+   },
+   "vpmzkx": {
+      "message": "Thư mục con mới"
+   },
+   "vxkpmz": {
+      "message": "Di chuyển đến"
+   },
+   "vxkpzm": {
+      "message": "Khi bật, tự động nhận dạng công thức trên trang và nhấp để sao chép sang định dạng LaTeX."
+   },
+   "vxmkpz": {
+      "message": "Phím Enter: Nhấn một lần để xuống dòng, hai lần để gửi"
+   },
+   "vxpzmk": {
+      "message": "Mã nguồn mở"
+   },
+   "vzkpmx": {
+      "message": "Vui lòng nhập tên thư mục"
+   },
+   "wjxnkp": {
+      "message": "Xóa thư mục「{folderName}」?\n\nThư mục này và các thư mục con chứa {count} mục đã lưu. Chúng sẽ được chuyển đến thư mục mặc định."
+   },
+   "xmkvpz": {
+      "message": "Tạo thư mục con trong「{folderName}」"
+   },
+   "xmvkpz": {
+      "message": "Hộp nhập cuộc trò chuyện"
+   },
+   "xpvmkz": {
+      "message": "Khi được bật, sử dụng phím ↑ / ↓ trên bàn phím để chuyển nhanh giữa các nút hội thoại."
+   },
+   "xpzmkv": {
+      "message": "Chia sẻ & Phản hồi"
+   },
+   "xpzmvk": {
+      "message": "Đã sao chép"
+   },
+   "xvkpmz": {
+      "message": "Đổi tên"
+   },
+   "xvpmkz": {
+      "message": "Xem Danh Sách Yêu Thích"
+   },
+   "xzvkpm": {
+      "message": "Tạo thành công"
+   },
+   "zmkvpx": {
+      "message": "Sao chép công thức LaTeX"
+   },
+   "zmvkpx": {
+      "message": "Lưu cuộc trò chuyện"
+   },
+   "zmxvkp": {
+      "message": "Vui lòng nhập"
+   },
+   "zpkmvx": {
+      "message": "Enter để xuống dòng"
+   },
+   "zpvmkx": {
+      "message": "Lưu thất bại"
+   },
+   "zpxmkv": {
+      "message": "Không tìm thấy thư mục"
+   }
 }

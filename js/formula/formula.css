@@ -1,0 +1,70 @@
+/**
+ * Formula Styles - 公式交互样式
+ * 
+ * 包含内容：
+ * - 公式 hover 和点击效果
+ * - 公式 tooltip
+ * - 复制反馈样式
+ * 
+ * 支持的公式渲染器：
+ * - KaTeX
+ * - MathJax
+ * - MediaWiki Math
+ * 
+ * @requires variables.css
+ */
+
+/* ============================================
+   公式交互样式（FormulaManager）
+   ============================================ */
+
+/* 公式基础交互样式（统一识别 .katex、.mwe-math-element 和 MathJax 元素）*/
+.katex.formula-interactive,
+.mwe-math-element.formula-interactive,
+.MathJax_SVG.formula-interactive,
+.MathJax.formula-interactive {
+    position: relative;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    border-radius: 6px;
+}
+
+/* 公式 hover 效果 */
+.katex.formula-interactive.formula-hover,
+.mwe-math-element.formula-interactive.formula-hover,
+.MathJax_SVG.formula-interactive.formula-hover,
+.MathJax.formula-interactive.formula-hover {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    cursor: pointer;
+}
+
+html.dark .katex.formula-interactive.formula-hover,
+html.dark .mwe-math-element.formula-interactive.formula-hover,
+html.dark .MathJax_SVG.formula-interactive.formula-hover,
+html.dark .MathJax.formula-interactive.formula-hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 公式点击效果 */
+.katex.formula-interactive:active,
+.mwe-math-element.formula-interactive:active,
+.MathJax_SVG.formula-interactive:active,
+.MathJax.formula-interactive:active {
+    transform: scale(0.998);
+}
+
+/* 公式 tooltip（继承通用 tooltip 样式）*/
+.formula-tooltip {
+    /* 基础样式已在 .timeline-tooltip-base 中定义 */
+    font-size: 13px;
+    padding: 8px 14px;
+    white-space: nowrap;
+}
+
+/* 公式复制反馈样式优化 */
+.timeline-copy-feedback {
+    /* 基础样式已定义，这里添加公式特定的优化 */
+    min-width: 80px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+

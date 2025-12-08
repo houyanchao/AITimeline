@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Línea de tiempo interactiva para ChatGPT, Gemini"
-  },
-  "extDescription": {
-    "message": "¡Duplica tu eficiencia de chat con IA! Añade línea de tiempo interactiva a ChatGPT, Gemini, DeepSeek, 🚀 salta fácilmente a cualquier conversación, 📌 marca conversaciones clave, ⭐️ favoritos de chats importantes."
-  },
-  "viewStarred": {
-    "message": "Ver favoritos"
-  },
-  "starredList": {
-    "message": "Mis Favoritos"
-  },
-  "close": {
-    "message": "Cerrar"
-  },
-  "clickToStar": {
-    "message": "Clic para añadir a favoritos"
-  },
-  "clickToUnstar": {
-    "message": "Quitar pregunta de favoritos"
-  },
-  "noStarredItems": {
-    "message": "Sin favoritos"
-  },
-  "goTo": {
-    "message": "Ir a"
-  },
-  "goToTooltip": {
-    "message": "Ir a detalles del chat"
-  },
-  "copied": {
-    "message": "Copiado"
-  },
-  "starChat": {
-    "message": "Marcar chat como favorito"
-  },
-  "unstarChat": {
-    "message": "Quitar chat de favoritos"
-  },
-  "inputChatTheme": {
-    "message": "Ingrese el título del favorito:"
-  },
-  "themePlaceholder": {
-    "message": "Por favor ingrese"
-  },
-  "cancel": {
-    "message": "Cancelar"
-  },
-  "confirm": {
-    "message": "Confirmar"
-  },
-  "themeRequired": {
-    "message": "El tema no puede estar vacío"
-  },
-  "unstar": {
-    "message": "Quitar de favoritos"
-  },
-  "viewStarredList": {
-    "message": "Ver lista de favoritos"
-  },
-  "edit": {
-    "message": "Editar"
-  },
-  "editStarredContent": {
-    "message": "Editar título favorito"
-  },
-  "contentRequired": {
-    "message": "El contenido no puede estar vacío"
-  },
-  "dataStorageNote": {
-    "message": "Todos los datos se almacenan únicamente en su navegador localmente. Nunca subiremos ningún dato de chat a servidores sin su permiso"
-  },
-  "projectOpenSource": {
-    "message": "Este proyecto es de código abierto, bienvenido a"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "Si te ayuda, no dudes en recomendarlo a tus amigos"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Quitar de guardados"
+   },
+   "extDescription": {
+      "message": "Copiar fórmulas LaTeX, línea de tiempo, Enter para nueva línea, asistencia Prompt. ¡Duplica tu eficiencia con IA!"
+   },
+   "extName": {
+      "message": "AI Timeline: El asistente de eficiencia de IA más potente: ChatGPT, Gemini"
+   },
+   "hkjvnr": {
+      "message": "Ver guardados"
+   },
+   "jwvnkp": {
+      "message": "Sin datos"
+   },
+   "kmvxpz": {
+      "message": "Todos los datos se almacenan localmente en tu navegador"
+   },
+   "kmxpvz": {
+      "message": "Se requiere el nombre de la carpeta"
+   },
+   "kpvzmx": {
+      "message": "El nombre de la carpeta ya existe"
+   },
+   "kpxvmz": {
+      "message": "Copiar fórmula"
+   },
+   "kpzmvx": {
+      "message": "Error al copiar"
+   },
+   "kvpzmx": {
+      "message": "Carpeta eliminada"
+   },
+   "kvzmxp": {
+      "message": "Usar tecla Enter del teclado para nueva línea"
+   },
+   "kxpmzv": {
+      "message": "Guardado con éxito"
+   },
+   "kxvpmz": {
+      "message": "Nueva carpeta"
+   },
+   "kxzpmv": {
+      "message": "Guardar en"
+   },
+   "kzxvpm": {
+      "message": "Mantenga presionado un nodo de conversación en la línea de tiempo para marcarlo como importante."
+   },
+   "mkpxvz": {
+      "message": "Cuando esté activado, en el cuadro de entrada de conversación de IA, presione tecla Enter una vez para nueva línea, dos veces rápidamente para enviar mensaje."
+   },
+   "mkvxpz": {
+      "message": "Estrella en GitHub"
+   },
+   "mkvzpx": {
+      "message": "Plataformas compatibles"
+   },
+   "mvkxpz": {
+      "message": "Copiar"
+   },
+   "mvkzpx": {
+      "message": "Buscar en guardados..."
+   },
+   "mvxkpz": {
+      "message": "Copiar fórmula LaTeX"
+   },
+   "mvzxkp": {
+      "message": "Por favor ingrese un nuevo nombre"
+   },
+   "mxkvzp": {
+      "message": "Error al eliminar"
+   },
+   "mxpzvk": {
+      "message": "Cuando esté activado, en el cuadro de entrada de conversación de IA, presione tecla Enter una vez para nueva línea, dos veces rápidamente para enviar mensaje."
+   },
+   "mzkvxp": {
+      "message": "Cuando esté activado, aparecerá una línea de tiempo interactiva en el lado derecho de la página de conversación de IA."
+   },
+   "mzpxvk": {
+      "message": "El tema no puede estar vacío"
+   },
+   "mzxvkp": {
+      "message": "Eliminar"
+   },
+   "pkmvxz": {
+      "message": "Título"
+   },
+   "pkmzvx": {
+      "message": "Ir a"
+   },
+   "pkxvmz": {
+      "message": "Carpeta predeterminada"
+   },
+   "pxkmvz": {
+      "message": "Línea de tiempo"
+   },
+   "pxmzkv": {
+      "message": "📌 Marcar conversaciones clave"
+   },
+   "pxmzvk": {
+      "message": "Renombrar carpeta"
+   },
+   "pxvkmz": {
+      "message": "Cancelar"
+   },
+   "pzmkvx": {
+      "message": "El contenido no puede estar vacío"
+   },
+   "pzmvkx": {
+      "message": "Eliminado de guardados"
+   },
+   "pzvkmx": {
+      "message": "Movido con éxito"
+   },
+   "qoytxz": {
+      "message": "Esta función está siempre activada y no se puede desactivar"
+   },
+   "qwxpzm": {
+      "message": "Guardar"
+   },
+   "qzmvkx": {
+      "message": "¿Está seguro de que desea eliminar la carpeta「{folderName}」?"
+   },
+   "vkmzpx": {
+      "message": "Confirmar"
+   },
+   "vkpmzx": {
+      "message": "Teclas ↑ / ↓ del teclado para navegar entre nodos de conversación"
+   },
+   "vkpxzm": {
+      "message": "Editar"
+   },
+   "vmkxpz": {
+      "message": "Actualizado con éxito"
+   },
+   "vmzpkx": {
+      "message": "Carpeta predeterminada"
+   },
+   "vnkxpm": {
+      "message": "Lista de guardados"
+   },
+   "vpmzkx": {
+      "message": "Nueva subcarpeta"
+   },
+   "vxkpmz": {
+      "message": "Mover a"
+   },
+   "vxkpzm": {
+      "message": "Cuando esté activado, identificar automáticamente fórmulas en la página y hacer clic para copiar en formato LaTeX."
+   },
+   "vxmkpz": {
+      "message": "Tecla Enter: Una vez para nueva línea, doble para enviar"
+   },
+   "vxpzmk": {
+      "message": "Código abierto"
+   },
+   "vzkpmx": {
+      "message": "Por favor ingrese el nombre de la carpeta"
+   },
+   "wjxnkp": {
+      "message": "¿Eliminar carpeta「{folderName}」?\n\nEsta carpeta y sus subcarpetas contienen {count} elementos guardados. Se moverán a la carpeta predeterminada."
+   },
+   "xmkvpz": {
+      "message": "Crear subcarpeta en「{folderName}」"
+   },
+   "xmvkpz": {
+      "message": "Cuadro de entrada de conversación"
+   },
+   "xpvmkz": {
+      "message": "Cuando esté habilitado, usa las teclas ↑ / ↓ del teclado para saltar rápidamente entre nodos de conversación."
+   },
+   "xpzmkv": {
+      "message": "Compartir & Comentarios"
+   },
+   "xpzmvk": {
+      "message": "Copiado"
+   },
+   "xvkpmz": {
+      "message": "Renombrar"
+   },
+   "xvpmkz": {
+      "message": "Ver lista de favoritos"
+   },
+   "xzvkpm": {
+      "message": "Creado con éxito"
+   },
+   "zmkvpx": {
+      "message": "Copiar fórmula LaTeX"
+   },
+   "zmvkpx": {
+      "message": "Guardar conversación"
+   },
+   "zmxvkp": {
+      "message": "Por favor ingrese"
+   },
+   "zpkmvx": {
+      "message": "Enter para nueva línea"
+   },
+   "zpvmkx": {
+      "message": "Error al guardar"
+   },
+   "zpxmkv": {
+      "message": "Carpeta no encontrada"
+   }
 }

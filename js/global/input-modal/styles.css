@@ -1,0 +1,245 @@
+/**
+ * Global Input Modal Styles
+ * 
+ * 通用输入对话框组件样式
+ * 
+ * 对应 JS: ./index.js
+ * 
+ * 包含内容：
+ * - 遮罩层样式
+ * - 对话框样式（头部、主体、底部）
+ * - 输入框样式
+ * - 按钮样式
+ * - 显示/隐藏动画
+ * - 深色模式适配
+ * 
+ * @requires ../../../styles/variables.css
+ */
+
+/* ============================================
+   遮罩层样式
+   ============================================ */
+
+/* 对话框遮罩 */
+.global-input-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2147483648; /* 高于其他元素 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.global-input-modal-overlay.visible {
+    opacity: 1;
+}
+
+/* ============================================
+   对话框样式
+   ============================================ */
+
+/* 对话框主体 */
+.global-input-modal {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    animation: inputModalSlideIn 0.3s ease;
+}
+
+html.dark .global-input-modal {
+    background: #2a2a2a;
+}
+
+@keyframes inputModalSlideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(-20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* ============================================
+   对话框头部
+   ============================================ */
+
+.global-input-modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+html.dark .global-input-modal-header {
+    border-bottom-color: #404040;
+}
+
+.global-input-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+html.dark .global-input-modal-header h3 {
+    color: #f3f4f6;
+}
+
+/* ============================================
+   对话框主体（输入区域）
+   ============================================ */
+
+.global-input-modal-body {
+    padding: 20px 24px;
+}
+
+/* 输入框 */
+.global-input-modal-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+}
+
+html.dark .global-input-modal-input {
+    background: #1a1a1a;
+    border-color: #404040;
+    color: #f3f4f6;
+}
+
+.global-input-modal-input:hover {
+    border-color: #9ca3af;
+}
+
+html.dark .global-input-modal-input:hover {
+    border-color: #6b7280;
+}
+
+.global-input-modal-input:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .global-input-modal-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.global-input-modal-input::placeholder {
+    color: #9ca3af;
+}
+
+html.dark .global-input-modal-input::placeholder {
+    color: #6b7280;
+}
+
+/* ============================================
+   对话框底部（按钮区域）
+   ============================================ */
+
+.global-input-modal-footer {
+    padding: 16px 24px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+html.dark .global-input-modal-footer {
+    border-top-color: #404040;
+}
+
+/* ============================================
+   按钮样式
+   ============================================ */
+
+/* 按钮通用样式 */
+.global-input-modal-cancel,
+.global-input-modal-confirm {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 取消按钮 */
+.global-input-modal-cancel {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+html.dark .global-input-modal-cancel {
+    background: #404040;
+    color: #d1d5db;
+}
+
+.global-input-modal-cancel:hover {
+    background: #e5e7eb;
+}
+
+html.dark .global-input-modal-cancel:hover {
+    background: #4b5563;
+}
+
+/* 确定按钮 */
+.global-input-modal-confirm {
+    background: #000000;
+    color: #ffffff;
+}
+
+html.dark .global-input-modal-confirm {
+    background: #ffffff;
+    color: #000000;
+}
+
+.global-input-modal-confirm:hover {
+    background: #1f1f1f;
+}
+
+html.dark .global-input-modal-confirm:hover {
+    background: #e5e7eb;
+}
+
+.global-input-modal-confirm:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+
+@media (max-width: 480px) {
+    .global-input-modal {
+        width: 95%;
+        max-width: none;
+    }
+    
+    .global-input-modal-header,
+    .global-input-modal-body,
+    .global-input-modal-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+

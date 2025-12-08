@@ -1,86 +1,203 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Interactive timeline for ChatGPT, Gemini, DeepSeek, etc."
-  },
-  "extDescription": {
-    "message": "Double your AI chat efficiency! Add interactive timeline to ChatGPT, Gemini, DeepSeek, 🚀 jump to any conversation easily, 📌 mark key conversations, ⭐️ favorite important chats."
-  },
-  "viewStarred": {
-    "message": "View favorites"
-  },
-  "starredList": {
-    "message": "My Favorites"
-  },
-  "close": {
-    "message": "Close"
-  },
-  "clickToStar": {
-    "message": "Click to favorite"
-  },
-  "clickToUnstar": {
-    "message": "Click to unfavorite"
-  },
-  "noStarredItems": {
-    "message": "No favorites"
-  },
-  "goTo": {
-    "message": "Go to"
-  },
-  "goToTooltip": {
-    "message": "Go to chat details"
-  },
-  "copied": {
-    "message": "Copied"
-  },
-  "starChat": {
-    "message": "Star chat"
-  },
-  "unstarChat": {
-    "message": "Unstar chat"
-  },
-  "inputChatTheme": {
-    "message": "Enter starred title:"
-  },
-  "themePlaceholder": {
-    "message": "Please enter"
-  },
-  "cancel": {
-    "message": "Cancel"
-  },
-  "confirm": {
-    "message": "Confirm"
-  },
-  "themeRequired": {
-    "message": "Theme cannot be empty"
-  },
-  "unstar": {
-    "message": "Unstar"
-  },
-  "viewStarredList": {
-    "message": "View starred list"
-  },
-  "edit": {
-    "message": "Edit"
-  },
-  "editStarredContent": {
-    "message": "Edit starred title"
-  },
-  "contentRequired": {
-    "message": "Content cannot be empty"
-  },
-  "dataStorageNote": {
-    "message": "All data is stored locally in your browser, not uploaded to servers"
-  },
-  "projectOpenSource": {
-    "message": "This project is open source, welcome to"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "If it helps you, feel free to recommend it to your friends"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Unstar"
+   },
+   "extDescription": {
+      "message": "Copy LaTeX formulas, conversation timeline, Enter key for newline, Prompt assistance. Double your AI efficiency!"
+   },
+   "extName": {
+      "message": "AI Timeline: The Most Powerful AI Efficiency Assistant: ChatGPT, Gemini"
+   },
+   "hkjvnr": {
+      "message": "View Starred"
+   },
+   "jwvnkp": {
+      "message": "No data"
+   },
+   "kmvxpz": {
+      "message": "All data stored locally in your browser"
+   },
+   "kmxpvz": {
+      "message": "Folder name required"
+   },
+   "kpvzmx": {
+      "message": "Folder name exists"
+   },
+   "kpxvmz": {
+      "message": "Copy Formula"
+   },
+   "kpzmvx": {
+      "message": "Copy failed"
+   },
+   "kvpzmx": {
+      "message": "Folder deleted"
+   },
+   "kvzmxp": {
+      "message": "Use Keyboard Enter Key for New Line"
+   },
+   "kxpmzv": {
+      "message": "Starred"
+   },
+   "kxvpmz": {
+      "message": "New Folder"
+   },
+   "kxzpmv": {
+      "message": "Save to"
+   },
+   "kzxvpm": {
+      "message": "Long press on a conversation node in the timeline to mark it as important."
+   },
+   "mkpxvz": {
+      "message": "When enabled, in the AI conversation input box, press Enter key once for new line, double-press Enter key quickly to send message."
+   },
+   "mkvxpz": {
+      "message": "Star on GitHub"
+   },
+   "mkvzpx": {
+      "message": "Supported Platforms"
+   },
+   "mvkxpz": {
+      "message": "Copy"
+   },
+   "mvkzpx": {
+      "message": "Search starred..."
+   },
+   "mvxkpz": {
+      "message": "Copy LaTeX Formula"
+   },
+   "mvzxkp": {
+      "message": "Enter new name"
+   },
+   "mxkvzp": {
+      "message": "Delete failed"
+   },
+   "mxpzvk": {
+      "message": "When enabled, in the AI conversation input box, press Enter key once for new line, double-press Enter key quickly to send message."
+   },
+   "mzkvxp": {
+      "message": "When enabled, an interactive timeline will appear on the right side of the AI conversation page."
+   },
+   "mzpxvk": {
+      "message": "Theme cannot be empty"
+   },
+   "mzxvkp": {
+      "message": "Delete"
+   },
+   "pkmvxz": {
+      "message": "Title"
+   },
+   "pkmzvx": {
+      "message": "Go to"
+   },
+   "pkxvmz": {
+      "message": "Default Folder"
+   },
+   "pxkmvz": {
+      "message": "Timeline"
+   },
+   "pxmzkv": {
+      "message": "📌 Mark Key Conversations"
+   },
+   "pxmzvk": {
+      "message": "Rename Folder"
+   },
+   "pxvkmz": {
+      "message": "Cancel"
+   },
+   "pzmkvx": {
+      "message": "Content cannot be empty"
+   },
+   "pzmvkx": {
+      "message": "Unstarred"
+   },
+   "pzvkmx": {
+      "message": "Moved"
+   },
+   "qoytxz": {
+      "message": "This feature is always enabled and cannot be turned off"
+   },
+   "qwxpzm": {
+      "message": "Star"
+   },
+   "qzmvkx": {
+      "message": "Delete folder「{folderName}」?"
+   },
+   "vkmzpx": {
+      "message": "Confirm"
+   },
+   "vkpmzx": {
+      "message": "Keyboard ↑ / ↓ Keys to Navigate Conversation Nodes"
+   },
+   "vkpxzm": {
+      "message": "Edit"
+   },
+   "vmkxpz": {
+      "message": "Updated"
+   },
+   "vmzpkx": {
+      "message": "Default Folder"
+   },
+   "vnkxpm": {
+      "message": "My Starred"
+   },
+   "vpmzkx": {
+      "message": "New Subfolder"
+   },
+   "vxkpmz": {
+      "message": "Move to"
+   },
+   "vxkpzm": {
+      "message": "When enabled, automatically identify formulas on the page and click to copy as LaTeX format."
+   },
+   "vxmkpz": {
+      "message": "Enter key: Press once for new line, double-press to send"
+   },
+   "vxpzmk": {
+      "message": "Open source"
+   },
+   "vzkpmx": {
+      "message": "Enter folder name"
+   },
+   "wjxnkp": {
+      "message": "Delete folder「{folderName}」?\n\nThis folder and its subfolders contain {count} starred items. These items will be moved to the default folder."
+   },
+   "xmkvpz": {
+      "message": "New subfolder in「{folderName}」"
+   },
+   "xmvkpz": {
+      "message": "Conversation Input Box"
+   },
+   "xpvmkz": {
+      "message": "When enabled, use keyboard ↑ / ↓ keys to quickly jump between conversation nodes."
+   },
+   "xpzmkv": {
+      "message": "Share & Feedback"
+   },
+   "xpzmvk": {
+      "message": "Copied"
+   },
+   "xvkpmz": {
+      "message": "Rename"
+   },
+   "xvpmkz": {
+      "message": "View Starred List"
+   },
+   "xzvkpm": {
+      "message": "Created"
+   },
+   "zmkvpx": {
+      "message": "Copy LaTeX Formula"
+   },
+   "zmvkpx": {
+      "message": "Star Conversation"
+   },
+   "zmxvkp": {
+      "message": "Enter"
+   },
+   "zpkmvx": {
+      "message": "Press Enter for New Line"
+   },
+   "zpxmkv": {
+      "message": "Folder not found"
+   }
 }

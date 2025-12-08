@@ -1,0 +1,438 @@
+/**
+ * Timeline Styles - 时间轴样式
+ * 
+ * 包含内容：
+ * - 时间轴容器和节点
+ * - 收藏按钮和面板
+ * - Tooltip 样式
+ * - 滑块和主题对话框
+ * 
+ * @requires variables.css
+ */
+
+/* ============================================
+   时间轴核心样式
+   ============================================ */
+
+/* ✅ 时间轴包装容器（包含时间轴和收藏按钮） */
+.chat-timeline-wrapper {
+    position: fixed;
+    /* Position values (top, right) are set by JavaScript based on site adapter */
+    top: 60px; /* Default fallback */
+    right: 17px; /* Default fallback */
+    z-index: 30; /* ensure above site chrome */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* 时间轴和收藏按钮之间的间距 */
+}
+
+.chat-timeline-bar {
+    position: relative; /* 相对于包装容器定位 */
+    width: 28px;
+    height: calc(100vh - 100px); /* Default fallback */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    background-color: var(--timeline-bar-bg);
+    backdrop-filter: blur(8px); /* ✅ 增强模糊效果：4px → 8px，深色主题下更有质感 */
+    -webkit-backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease;
+    overflow: visible;
+    /* ✅ 修改：移除 paint containment，允许图钉显示在时间轴外 */
+    contain: layout;
+}
+
+/* ✅ 深色主题下添加微妙边框和光晕，增强时间轴的立体感 */
+html.dark .chat-timeline-bar {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4), 
+                0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollable track to host all dots (long canvas) */
+.timeline-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible; /* ✅ 改为 visible，允许图钉显示在外部 */
+}
+
+/* Inner content whose height reflects conversation length */
+.timeline-track-content {
+    position: relative;
+    width: 100%;
+    height: 100%; /* updated by JS when needed */
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    /* Use normalized position `--n` mapped to track with padding */
+    top: calc(
+      var(--timeline-track-padding)
+      + (100% - 2 * var(--timeline-track-padding)) * var(--n, 0)
+    );
+    transform: translate(-50%, -50%);
+    width: var(--timeline-hit-size);   /* enlarged hit area */
+    height: var(--timeline-hit-size);  /* enlarged hit area */
+    background: transparent;           /* visible dot drawn via ::after */
+    border: none;
+    outline: none;  /* ✅ 移除浏览器默认的 focus/active 边框 */
+    cursor: pointer;
+    padding: 0;
+}
+
+.timeline-dot::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--timeline-dot-size);
+    height: var(--timeline-dot-size);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: var(--timeline-dot-color);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+/* Enhance visibility and interaction feedback on hover */
+.timeline-dot:hover::after { 
+    transform: translate(-50%, -50%) scale(1.15);
+}
+/* 仅未选中且未被收藏的节点 hover 时颜色变深 */
+.timeline-dot:not(.active):not(.starred):hover::after {
+    background-color: #999999; /* 明亮模式：深灰色 */
+}
+html.dark .timeline-dot:not(.active):not(.starred):hover::after {
+    background-color: #C0C0C0; /* ✅✅ 暗黑模式：更亮的灰色 #A3A3A3 → #C0C0C0，hover时非常明显 */
+}
+/* Style for the currently active dot */
+.timeline-dot.active::after {
+    box-shadow: 0 0 0 var(--timeline-active-ring) var(--timeline-dot-active-color);
+}
+
+/* ✅✅ 深色主题下激活节点 */
+html.dark .timeline-dot.active::after {
+    box-shadow: 0 0 0 var(--timeline-active-ring) var(--timeline-dot-active-color);
+}
+
+/* ✅ 已收藏的标记点：橙色五角星（使用 clip-path 裁剪）*/
+.timeline-dot.starred::after {
+    background-color: var(--timeline-star-color);
+    border-radius: 0; /* 移除圆形 */
+    /* 放大盒子尺寸，让视觉大小与圆形一致 */
+    width: var(--timeline-star-size);
+    height: var(--timeline-star-size);
+    /* 五角星 clip-path（与收藏按钮 SVG 路径完全一致）*/
+    clip-path: polygon(
+        50% 8.33%, 
+        62.875% 34.42%, 
+        91.67% 38.63%, 
+        70.83% 58.92%, 
+        75.75% 87.58%, 
+        50% 74.04%, 
+        24.25% 87.58%, 
+        29.17% 58.92%, 
+        8.33% 38.63%, 
+        37.125% 34.42%
+    );
+}
+
+/* ✅ 已收藏且激活状态：使用 ::before 绘制五角星边框 */
+.timeline-dot.starred.active::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* 边框层：比五角星主体大 10px (两侧各 5px) */
+    width: calc(var(--timeline-star-size) + 2 * var(--timeline-star-ring));
+    height: calc(var(--timeline-star-size) + 2 * var(--timeline-star-ring));
+    transform: translate(-50%, -50%);
+    background-color: var(--timeline-dot-active-color); /* 紫色边框 */
+    /* 五角星形状（与收藏按钮 SVG 路径完全一致）*/
+    clip-path: polygon(
+        50% 8.33%, 
+        62.875% 34.42%, 
+        91.67% 38.63%, 
+        70.83% 58.92%, 
+        75.75% 87.58%, 
+        50% 74.04%, 
+        24.25% 87.58%, 
+        29.17% 58.92%, 
+        8.33% 38.63%, 
+        37.125% 34.42%
+    );
+    z-index: -1; /* 在 ::after 下方 */
+    /* 添加缩放过渡效果 */
+    transition: transform 0.15s ease;
+}
+
+/* ✅ hover 缩放效果：让边框层也跟着缩放 */
+.timeline-dot.starred.active:hover::before {
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* ============================================
+   ✅ 标记（Pin）功能样式 - JS 添加图钉元素
+   ============================================ */
+
+/* 图钉图标（独立渲染到 .chat-timeline-bar，使用和节点相同的定位方式） */
+.timeline-pin-marker {
+    position: absolute !important;
+    left: -18px !important; /* 时间轴容器左侧18px，避开右侧滚动条 */
+    /* 使用和节点相同的 --n 变量定位 */
+    top: calc(16px + (100% - 32px) * var(--n, 0)) !important;
+    transform: translateY(-50%) !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2)) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Floating tooltip element */
+.timeline-tooltip {
+    position: fixed;
+    /* ✅ 需求1：max-width 在 JS 中动态设置，这里只设置默认值 */
+    max-width: var(--timeline-tooltip-max);
+    /* ✅ 需求1：允许宽度自动适应内容（文字少时自动收缩）*/
+    width: auto;
+    min-width: 80px; /* 设置最小宽度，避免太窄 */
+    
+    /* ✅ 修改：使用 flexbox 水平布局，垂直居中 */
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 内容和星标之间的间距 */
+    
+    background-color: var(--timeline-tooltip-bg);
+    color: var(--timeline-tooltip-text);
+    /* ✅ 修改：进一步增加 padding，让内容区域更宽松 */
+    padding: 14px 18px;
+    border-radius: var(--timeline-tooltip-radius);
+    border: var(--timeline-tooltip-border-w) solid var(--timeline-tooltip-border);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    box-shadow: var(--timeline-tooltip-shadow);
+    /* ✅ 需求2：允许鼠标悬停在 tooltip 上（可以选择/复制文字）*/
+    pointer-events: auto;
+    cursor: text; /* 提示用户可以选择文字 */
+    z-index: 2147483648;  /* 高于收藏面板 */
+    /* ✅ 修复箭头显示：使用 overflow: visible 让箭头可见 */
+    overflow: visible;
+    /* Animation base */
+    opacity: 0;
+    will-change: opacity, transform;
+    transition: opacity var(--timeline-tooltip-anim-in);
+}
+
+/* ✅ 修改：删除了 header 和 index 相关样式，因为新设计中不再需要 */
+
+/* ✅ 星标图标样式（使用 SVG 绘制五角星） */
+.timeline-tooltip-star {
+    width: 18px; /* 星标宽度 */
+    height: 18px; /* 星标高度 */
+    flex-shrink: 0; /* 不允许收缩，保持固定大小 */
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* 未收藏状态 - 空心五角星（浅色tooltip主题：白色边框） */
+.timeline-tooltip-star.not-starred {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="none" stroke="%23ffffff" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+}
+
+/* 未收藏状态 - 深色tooltip主题（白色背景）：深灰色边框 */
+[data-tooltip-theme="dark"] .timeline-tooltip-star.not-starred {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="none" stroke="%231f2937" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+}
+
+/* 收藏状态 - 实心五角星（橙色填充 rgb(255, 125, 3)） */
+.timeline-tooltip-star:not(.not-starred) {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
+}
+
+/* ✅ 重新设计：Tooltip 内容区域（简化，不依赖 -webkit-line-clamp） */
+.timeline-tooltip-content {
+    flex: 0 1 auto; /* 自适应内容宽度，不占据剩余空间 */
+    line-height: var(--timeline-tooltip-lh);
+    
+    /* ✅ 关键：JS 已经精确截断了文本，这里只需要隐藏溢出即可 */
+    overflow: hidden;
+    word-break: break-word;
+    white-space: pre-wrap; /* 保留换行和空格 */
+    
+    /* ✅ 点击复制功能 */
+    cursor: pointer; /* 鼠标变成手状 */
+    user-select: none; /* 禁止选中文字（因为点击是复制） */
+    transition: opacity 0.15s ease;
+    position: relative;
+}
+
+.timeline-tooltip-content:hover {
+    opacity: 0.8; /* hover时略微变淡，提示可点击 */
+}
+
+.timeline-tooltip-content:active {
+    opacity: 0.6; /* 点击时更明显的反馈 */
+}
+
+/* Visible state toggled by JS */
+.timeline-tooltip.visible {
+    opacity: 1;
+    animation: timeline-tooltip-in var(--timeline-tooltip-anim-in);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-tooltip,
+  .timeline-tooltip.visible {
+    transition: opacity 120ms linear;
+    transform: none !important;
+  }
+}
+
+/* Placement-aware transform origin for subtle scale */
+.timeline-tooltip[data-placement="left"] { transform-origin: right center; }
+.timeline-tooltip[data-placement="right"] { transform-origin: left center; }
+
+@keyframes timeline-tooltip-in {
+  from { transform: scale(0.96); }
+  to { transform: scale(1); }
+}
+
+
+/* Hide native scrollbar of the track */
+.timeline-track::-webkit-scrollbar { width: 0; height: 0; }
+.timeline-track { scrollbar-width: none; }
+
+/* ✅ 菜单按钮（三横线图标，在时间轴下方） */
+.timeline-starred-btn {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    transition: background-color 0.2s ease;
+    border-radius: 6px;
+    flex-shrink: 0;
+    color: #6b6b6b;
+}
+
+.timeline-starred-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.timeline-starred-btn:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.timeline-starred-btn:active {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+/* 深色模式 */
+html.dark .timeline-starred-btn {
+    color: #9a9a9a;
+}
+
+html.dark .timeline-starred-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .timeline-starred-btn:active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   ✅ 紧凑模式（横线样式）- 节点密度过高时自动切换
+   ============================================ */
+
+/* 紧凑模式：隐藏时间轴背景框 */
+.chat-timeline-bar.compact-mode {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+}
+
+html.dark .chat-timeline-bar.compact-mode {
+    box-shadow: none;
+}
+
+/* 紧凑模式：节点变为横线 */
+.compact-mode .timeline-dot::after {
+    border-radius: 0;
+    width: var(--timeline-compact-line-width-long);
+    height: var(--timeline-compact-line-height);
+    /* 右对齐 */
+    left: auto;
+    right: 4px;
+    transform: translateY(-50%);
+}
+
+/* 紧凑模式：奇数索引节点用短横线（长短交替） */
+.compact-mode .timeline-dot.line-odd::after {
+    width: var(--timeline-compact-line-width-short);
+}
+
+/* 紧凑模式：hover 效果 */
+.compact-mode .timeline-dot:hover::after {
+    width: 24px;
+    height: 3px;
+}
+
+/* 紧凑模式：收藏节点 - 橙色横线 */
+.compact-mode .timeline-dot.starred::after {
+    background-color: var(--timeline-star-color);
+    border-radius: 0;
+    clip-path: none;
+    width: var(--timeline-compact-line-width-long);
+    height: var(--timeline-compact-line-height);
+}
+
+.compact-mode .timeline-dot.starred.line-odd::after {
+    width: var(--timeline-compact-line-width-short);
+}
+
+.compact-mode .timeline-dot.starred:hover::after {
+    width: 24px;
+    height: 3px;
+}
+
+/* 紧凑模式：激活节点 - 紫色边框 */
+.compact-mode .timeline-dot.active::after {
+    box-shadow: 0 0 0 2px var(--timeline-dot-active-color);
+}
+
+html.dark .compact-mode .timeline-dot.active::after {
+    box-shadow: 0 0 0 2px var(--timeline-dot-active-color);
+}
+
+/* 紧凑模式：收藏+激活 - 橙色横线+紫色边框 */
+.compact-mode .timeline-dot.starred.active::after {
+    background-color: var(--timeline-star-color);
+    box-shadow: 0 0 0 2px var(--timeline-dot-active-color);
+}
+
+/* 紧凑模式：隐藏收藏+激活的 ::before 伪元素（五角星边框） */
+.compact-mode .timeline-dot.starred.active::before {
+    display: none;
+}
+

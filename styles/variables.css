@@ -1,0 +1,61 @@
+/*
+  chat Timeline Stylesheet
+  This CSS is designed to be resilient and adapt to chat's light/dark themes.
+*/
+
+/* Use CSS variables for easy theme management. We sample chat's own colors. */
+:root {
+    --timeline-dot-color: #D1D5DB; /* Light mode gray */
+    --timeline-dot-active-color: #6128FF; /* 紫色 rgb(97, 40, 255) */
+    --timeline-star-color: #FF7D03; /* 收藏橙色 rgb(255, 125, 3) */
+
+    /* AI Studio-like tooltip tokens (light) */
+    --timeline-tooltip-bg: #0d0d0d;
+    --timeline-tooltip-text: #FFFFFF;
+    --timeline-tooltip-border: #0d0d0d;
+    --timeline-tooltip-radius: 12px;
+    --timeline-tooltip-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
+    /* geometry */
+    --timeline-tooltip-lh: 18px;
+    --timeline-tooltip-pad-y: 10px;
+    --timeline-tooltip-pad-x: 12px;
+    --timeline-tooltip-border-w: 1px;
+    --timeline-tooltip-arrow-size: 12px; /* ✅ 需求1：箭头放大 1.5 倍 (8px → 12px) */
+    --timeline-tooltip-arrow-outside: 6px; /* ✅ 需求1：同步调整突出距离 (4px → 6px) */
+    --timeline-tooltip-anim-in: 120ms cubic-bezier(0, 0, 0.2, 1);
+    --timeline-tooltip-anim-out: 100ms linear;
+
+    --timeline-bar-bg: rgba(246, 246, 248, 0.8);
+    --timeline-dot-size: 14px;
+    --timeline-star-size: 17px; /* 五角星盒子尺寸（增加1px） */
+    --timeline-active-ring: 3px;
+    --timeline-star-ring: 5px; /* 五角星边框环宽度（增加1px，使边框更明显） */
+    --timeline-track-padding: 16px;
+    --timeline-tooltip-max: 288px;
+    --timeline-min-gap: 25px;
+    /* enlarged hit area for easier clicking */
+    --timeline-hit-size: 30px;
+    /* spacing model */
+    --timeline-tooltip-gap-visual: 4px;   /* ✅ 需求1：减少间距，让 tooltip 靠近圆点 (8px → 4px) */
+    --timeline-tooltip-gap-box: 2px;      /* ✅ 需求1：同步减少 box gap (4px → 2px) */
+    /* ✅ 移除：--timeline-hold-ms 已删除，长按功能已移除 */
+    
+    /* ✅ 紧凑模式（横线样式）变量 */
+    --timeline-compact-gap: 30px;              /* 紧凑模式默认间距 */
+    --timeline-compact-line-width-long: 20px;  /* 长横线宽度 */
+    --timeline-compact-line-width-short: 14px; /* 短横线宽度 */
+    --timeline-compact-line-height: 2px;       /* 横线高度 */
+}
+
+/* Override variables when chat's dark mode is active */
+html.dark {
+    --timeline-dot-color: #A0A0A0; /* ✅✅ 进一步提升亮度：#888 → #A0A0A0，深色主题下更清晰 */
+    --timeline-dot-active-color: #8B5CF6; /* ✅✅ 更明亮的紫色：#7C3AED → #8B5CF6 (violet-500)，对比度更强 */
+    --timeline-star-color: #FB923C; /* 橙色保持不变，已经很好 */
+    --timeline-active-ring: 4px; /* ✅✅ 加粗激活环：3px → 4px，深色主题下更醒目 */
+    /* Dark tooltip palette */
+    --timeline-tooltip-bg: #262626; /* ✅✅ 再提亮一点：#1f1f1f → #262626 */
+    --timeline-tooltip-text: #F5F5F5;
+    --timeline-tooltip-border: #404040; /* ✅✅ 更明显的边框：#2a2a2a → #404040 */
+    --timeline-bar-bg: rgba(45, 45, 48, 0.95); /* ✅✅ 更高不透明度：0.92 → 0.95，背景更扎实 */
+}

@@ -1,0 +1,309 @@
+/**
+ * Star Input Modal Styles
+ * 
+ * 收藏输入对话框样式（带文件夹选择器）
+ * 
+ * 对应 JS: ./star-input-modal.js
+ */
+
+/* ============================================
+   遮罩层样式
+   ============================================ */
+
+.star-input-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2147483648;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.star-input-modal-overlay.visible {
+    opacity: 1;
+}
+
+/* ============================================
+   对话框样式
+   ============================================ */
+
+.star-input-modal {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 420px;
+    animation: starInputModalSlideIn 0.3s ease;
+}
+
+html.dark .star-input-modal {
+    background: #2a2a2a;
+}
+
+@keyframes starInputModalSlideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(-20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* ============================================
+   对话框头部
+   ============================================ */
+
+.star-input-modal-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+html.dark .star-input-modal-header {
+    border-bottom-color: #404040;
+}
+
+.star-input-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+html.dark .star-input-modal-header h3 {
+    color: #f3f4f6;
+}
+
+/* ============================================
+   对话框主体
+   ============================================ */
+
+.star-input-modal-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 左右两栏行 */
+.star-input-modal-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+/* 左侧标签 */
+.star-input-modal-label {
+    flex-shrink: 0;
+    width: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    text-align: right;
+    padding-top: 10px;
+}
+
+html.dark .star-input-modal-label {
+    color: #d1d5db;
+}
+
+/* 文件夹选择器（简化版：文字 + 箭头） */
+.star-input-modal-folder-selector {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1f2937;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html.dark .star-input-modal-folder-selector {
+    background: #1a1a1a;
+    border-color: #404040;
+    color: #f3f4f6;
+}
+
+.star-input-modal-folder-selector:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
+}
+
+html.dark .star-input-modal-folder-selector:hover {
+    border-color: #6b7280;
+    background: #262626;
+}
+
+.star-input-modal-folder-text {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.star-input-modal-folder-arrow {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* 输入框（textarea） */
+.star-input-modal-input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+html.dark .star-input-modal-input {
+    background: #1a1a1a;
+    border-color: #404040;
+    color: #f3f4f6;
+}
+
+.star-input-modal-input:hover {
+    border-color: #9ca3af;
+}
+
+html.dark .star-input-modal-input:hover {
+    border-color: #6b7280;
+}
+
+.star-input-modal-input:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .star-input-modal-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.star-input-modal-input::placeholder {
+    color: #9ca3af;
+}
+
+html.dark .star-input-modal-input::placeholder {
+    color: #6b7280;
+}
+
+/* ============================================
+   对话框底部
+   ============================================ */
+
+.star-input-modal-footer {
+    padding: 16px 24px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+html.dark .star-input-modal-footer {
+    border-top-color: #404040;
+}
+
+/* ============================================
+   按钮样式
+   ============================================ */
+
+.star-input-modal-cancel,
+.star-input-modal-confirm {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 取消按钮 */
+.star-input-modal-cancel {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+html.dark .star-input-modal-cancel {
+    background: #404040;
+    color: #d1d5db;
+}
+
+.star-input-modal-cancel:hover {
+    background: #e5e7eb;
+}
+
+html.dark .star-input-modal-cancel:hover {
+    background: #4b5563;
+}
+
+/* 确定按钮 */
+.star-input-modal-confirm {
+    background: #000000;
+    color: #ffffff;
+}
+
+html.dark .star-input-modal-confirm {
+    background: #ffffff;
+    color: #000000;
+}
+
+.star-input-modal-confirm:hover {
+    background: #1f1f1f;
+}
+
+html.dark .star-input-modal-confirm:hover {
+    background: #e5e7eb;
+}
+
+.star-input-modal-confirm:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+
+@media (max-width: 480px) {
+    .star-input-modal {
+        width: 95%;
+        max-width: none;
+    }
+    
+    .star-input-modal-header,
+    .star-input-modal-body,
+    .star-input-modal-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+

@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Timeline interactive pour ChatGPT, Gemini, DeepSeek etc."
-  },
-  "extDescription": {
-    "message": "Doublez votre efficacité de chat IA ! Ajoutez une timeline interactive à ChatGPT, Gemini, DeepSeek, 🚀 sautez facilement vers n'importe quelle conversation, 📌 marquez les conversations clés, ⭐️ mettez en favoris les chats importants."
-  },
-  "viewStarred": {
-    "message": "Voir les favoris"
-  },
-  "starredList": {
-    "message": "Mes Favoris"
-  },
-  "close": {
-    "message": "Fermer"
-  },
-  "clickToStar": {
-    "message": "Marquer la question"
-  },
-  "clickToUnstar": {
-    "message": "Retirer la question des favoris"
-  },
-  "noStarredItems": {
-    "message": "Aucun favori"
-  },
-  "goTo": {
-    "message": "Aller à"
-  },
-  "goToTooltip": {
-    "message": "Aller aux détails du chat"
-  },
-  "copied": {
-    "message": "Copié"
-  },
-  "starChat": {
-    "message": "Marquer le chat"
-  },
-  "unstarChat": {
-    "message": "Retirer le chat des favoris"
-  },
-  "inputChatTheme": {
-    "message": "Entrez le titre du favori:"
-  },
-  "themePlaceholder": {
-    "message": "Veuillez saisir"
-  },
-  "cancel": {
-    "message": "Annuler"
-  },
-  "confirm": {
-    "message": "Confirmer"
-  },
-  "themeRequired": {
-    "message": "Le thème ne peut pas être vide"
-  },
-  "unstar": {
-    "message": "Retirer des favoris"
-  },
-  "viewStarredList": {
-    "message": "Voir la liste des favoris"
-  },
-  "edit": {
-    "message": "Modifier"
-  },
-  "editStarredContent": {
-    "message": "Modifier le titre du favori"
-  },
-  "contentRequired": {
-    "message": "Le contenu ne peut pas être vide"
-  },
-  "dataStorageNote": {
-    "message": "Toutes les données sont stockées uniquement en local dans votre navigateur. Nous ne téléchargerons jamais de données de chat sur des serveurs sans votre permission"
-  },
-  "projectOpenSource": {
-    "message": "Ce projet est open source, bienvenue à"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "Si cela vous aide, n'hésitez pas à le recommander à vos amis"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Retirer des enregistrements"
+   },
+   "extDescription": {
+      "message": "Copier des formules LaTeX, chronologie, touche Entrée pour nouvelle ligne, assistance Prompt. Doublez votre efficacité IA !"
+   },
+   "extName": {
+      "message": "AI Timeline : Assistant IA ultime : ChatGPT, Gemini, DeepSeek"
+   },
+   "hkjvnr": {
+      "message": "Voir les enregistrements"
+   },
+   "jwvnkp": {
+      "message": "Aucune donnée"
+   },
+   "kmvxpz": {
+      "message": "Toutes les données sont stockées localement dans votre navigateur"
+   },
+   "kmxpvz": {
+      "message": "Le nom du dossier est requis"
+   },
+   "kpvzmx": {
+      "message": "Le nom du dossier existe déjà"
+   },
+   "kpxvmz": {
+      "message": "Copier formule"
+   },
+   "kpzmvx": {
+      "message": "Échec de la copie"
+   },
+   "kvpzmx": {
+      "message": "Dossier supprimé"
+   },
+   "kvzmxp": {
+      "message": "Utiliser la touche Entrée du clavier pour nouvelle ligne"
+   },
+   "kxpmzv": {
+      "message": "Enregistré avec succès"
+   },
+   "kxvpmz": {
+      "message": "Nouveau dossier"
+   },
+   "kxzpmv": {
+      "message": "Enregistrer dans"
+   },
+   "kzxvpm": {
+      "message": "Appuyez longuement sur un nœud de conversation dans la chronologie pour le marquer comme important."
+   },
+   "mkpxvz": {
+      "message": "Lorsqu'activé, dans la zone de saisie de conversation IA, appuyez touche Entrée une fois pour une nouvelle ligne, deux fois rapidement pour envoyer le message."
+   },
+   "mkvxpz": {
+      "message": "Étoile sur GitHub"
+   },
+   "mkvzpx": {
+      "message": "Plateformes prises en charge"
+   },
+   "mvkxpz": {
+      "message": "Copier"
+   },
+   "mvkzpx": {
+      "message": "Rechercher dans les enregistrements..."
+   },
+   "mvxkpz": {
+      "message": "Copier la formule LaTeX"
+   },
+   "mvzxkp": {
+      "message": "Veuillez saisir un nouveau nom"
+   },
+   "mxkvzp": {
+      "message": "Échec de la suppression"
+   },
+   "mxpzvk": {
+      "message": "Lorsqu'activé, dans la zone de saisie de conversation IA, appuyez touche Entrée une fois pour une nouvelle ligne, deux fois rapidement pour envoyer le message."
+   },
+   "mzkvxp": {
+      "message": "Lorsqu'activé, une chronologie interactive apparaîtra sur le côté droit de la page de conversation IA."
+   },
+   "mzpxvk": {
+      "message": "Le thème ne peut pas être vide"
+   },
+   "mzxvkp": {
+      "message": "Supprimer"
+   },
+   "pkmvxz": {
+      "message": "Titre"
+   },
+   "pkmzvx": {
+      "message": "Aller à"
+   },
+   "pkxvmz": {
+      "message": "Dossier par défaut"
+   },
+   "pxkmvz": {
+      "message": "Chronologie"
+   },
+   "pxmzkv": {
+      "message": "📌 Marquer les conversations clés"
+   },
+   "pxmzvk": {
+      "message": "Renommer le dossier"
+   },
+   "pxvkmz": {
+      "message": "Annuler"
+   },
+   "pzmkvx": {
+      "message": "Le contenu ne peut pas être vide"
+   },
+   "pzmvkx": {
+      "message": "Retiré des enregistrements"
+   },
+   "pzvkmx": {
+      "message": "Déplacé avec succès"
+   },
+   "qoytxz": {
+      "message": "Cette fonctionnalité est toujours activée et ne peut pas être désactivée"
+   },
+   "qwxpzm": {
+      "message": "Enregistrer"
+   },
+   "qzmvkx": {
+      "message": "Êtes-vous sûr de vouloir supprimer le dossier「{folderName}」?"
+   },
+   "vkmzpx": {
+      "message": "Confirmer"
+   },
+   "vkpmzx": {
+      "message": "Touches ↑ / ↓ du clavier pour naviguer entre les nœuds de conversation"
+   },
+   "vkpxzm": {
+      "message": "Modifier"
+   },
+   "vmkxpz": {
+      "message": "Mis à jour avec succès"
+   },
+   "vmzpkx": {
+      "message": "Dossier par défaut"
+   },
+   "vnkxpm": {
+      "message": "Liste des enregistrements"
+   },
+   "vpmzkx": {
+      "message": "Nouveau sous-dossier"
+   },
+   "vxkpmz": {
+      "message": "Déplacer vers"
+   },
+   "vxkpzm": {
+      "message": "Lorsqu'activé, identifier automatiquement les formules sur la page et cliquer pour copier au format LaTeX."
+   },
+   "vxmkpz": {
+      "message": "Touche Entrée : Une fois pour nouvelle ligne, double pour envoyer"
+   },
+   "vxpzmk": {
+      "message": "Open source"
+   },
+   "vzkpmx": {
+      "message": "Veuillez saisir le nom du dossier"
+   },
+   "wjxnkp": {
+      "message": "Supprimer le dossier「{folderName}」?\n\nCe dossier et ses sous-dossiers contiennent {count} éléments enregistrés. Ils seront déplacés vers le dossier par défaut."
+   },
+   "xmkvpz": {
+      "message": "Créer un sous-dossier dans「{folderName}」"
+   },
+   "xmvkpz": {
+      "message": "Zone de saisie de conversation"
+   },
+   "xpvmkz": {
+      "message": "Lorsque activé, utilisez les touches ↑ / ↓ du clavier pour sauter rapidement entre les nœuds de conversation."
+   },
+   "xpzmkv": {
+      "message": "Partager & Commentaires"
+   },
+   "xpzmvk": {
+      "message": "Copié"
+   },
+   "xvkpmz": {
+      "message": "Renommer"
+   },
+   "xvpmkz": {
+      "message": "Afficher la liste des favoris"
+   },
+   "xzvkpm": {
+      "message": "Créé avec succès"
+   },
+   "zmkvpx": {
+      "message": "Copier formule LaTeX"
+   },
+   "zmvkpx": {
+      "message": "Enregistrer la conversation"
+   },
+   "zmxvkp": {
+      "message": "Veuillez saisir"
+   },
+   "zpkmvx": {
+      "message": "Entrée pour nouvelle ligne"
+   },
+   "zpvmkx": {
+      "message": "Échec de l'enregistrement"
+   },
+   "zpxmkv": {
+      "message": "Dossier introuvable"
+   }
 }

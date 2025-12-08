@@ -1,86 +1,206 @@
 {
-  "extName": {
-    "message": "AI Chat Timeline - Timeline interattiva per ChatGPT, Gemini, DeepSeek ecc."
-  },
-  "extDescription": {
-    "message": "Raddoppia la tua efficienza di chat AI! Aggiungi timeline interattiva a ChatGPT, Gemini, DeepSeek, 🚀 salta facilmente a qualsiasi conversazione, 📌 segna conversazioni chiave, ⭐️ preferiti per chat importanti."
-  },
-  "viewStarred": {
-    "message": "Visualizza preferiti"
-  },
-  "starredList": {
-    "message": "I Miei Preferiti"
-  },
-  "close": {
-    "message": "Chiudi"
-  },
-  "clickToStar": {
-    "message": "Aggiungi domanda ai preferiti"
-  },
-  "clickToUnstar": {
-    "message": "Rimuovi domanda dai preferiti"
-  },
-  "noStarredItems": {
-    "message": "Nessun preferito"
-  },
-  "goTo": {
-    "message": "Vai a"
-  },
-  "goToTooltip": {
-    "message": "Vai ai dettagli della chat"
-  },
-  "copied": {
-    "message": "Copiato"
-  },
-  "starChat": {
-    "message": "Aggiungi chat ai preferiti"
-  },
-  "unstarChat": {
-    "message": "Rimuovi chat dai preferiti"
-  },
-  "inputChatTheme": {
-    "message": "Inserisci il titolo del preferito:"
-  },
-  "themePlaceholder": {
-    "message": "Inserisci"
-  },
-  "cancel": {
-    "message": "Annulla"
-  },
-  "confirm": {
-    "message": "Conferma"
-  },
-  "themeRequired": {
-    "message": "Il tema non può essere vuoto"
-  },
-  "unstar": {
-    "message": "Rimuovi dai preferiti"
-  },
-  "viewStarredList": {
-    "message": "Visualizza elenco preferiti"
-  },
-  "edit": {
-    "message": "Modifica"
-  },
-  "editStarredContent": {
-    "message": "Modifica titolo preferito"
-  },
-  "contentRequired": {
-    "message": "Il contenuto non può essere vuoto"
-  },
-  "dataStorageNote": {
-    "message": "Tutti i dati vengono archiviati solo localmente nel tuo browser. Non caricheremo mai alcun dato di chat sui server senza il tuo permesso"
-  },
-  "projectOpenSource": {
-    "message": "Questo progetto è open source, benvenuto a"
-  },
-  "starOnGitHub": {
-    "message": "Star on GitHub"
-  },
-  "shareIfUseful": {
-    "message": "Se ti aiuta, sentiti libero di consigliarlo ai tuoi amici"
-  },
-  "chromeWebStore": {
-    "message": "Chrome Web Store"
-  }
+   "bpxjkw": {
+      "message": "Rimuovi dai salvati"
+   },
+   "extDescription": {
+      "message": "Copia formule LaTeX, timeline, tasto Invio per nuova riga, assistenza Prompt. Raddoppia la tua efficienza IA!"
+   },
+   "extName": {
+      "message": "AI Timeline: L'assistente di efficienza IA più potente: ChatGPT, Gemini"
+   },
+   "hkjvnr": {
+      "message": "Visualizza salvati"
+   },
+   "jwvnkp": {
+      "message": "Nessun dato"
+   },
+   "kmvxpz": {
+      "message": "Tutti i dati sono memorizzati localmente nel tuo browser"
+   },
+   "kmxpvz": {
+      "message": "Il nome della cartella è obbligatorio"
+   },
+   "kpvzmx": {
+      "message": "Il nome della cartella esiste già"
+   },
+   "kpxvmz": {
+      "message": "Copia formula"
+   },
+   "kpzmvx": {
+      "message": "Copia fallita"
+   },
+   "kvpzmx": {
+      "message": "Cartella eliminata"
+   },
+   "kvzmxp": {
+      "message": "Usa il tasto Invio della tastiera per nuova riga"
+   },
+   "kxpmzv": {
+      "message": "Salvato con successo"
+   },
+   "kxvpmz": {
+      "message": "Nuova cartella"
+   },
+   "kxzpmv": {
+      "message": "Salva in"
+   },
+   "kzxvpm": {
+      "message": "Premi a lungo su un nodo di conversazione nella timeline per contrassegnarlo come importante."
+   },
+   "mkpxvz": {
+      "message": "Quando attivato, nella casella di input conversazione AI, premi tasto Invio una volta per una nuova riga, due volte rapidamente per inviare il messaggio."
+   },
+   "mkvxpz": {
+      "message": "Stella su GitHub"
+   },
+   "mkvzpx": {
+      "message": "Piattaforme supportate"
+   },
+   "mvkxpz": {
+      "message": "Copia"
+   },
+   "mvkzpx": {
+      "message": "Cerca nei salvati..."
+   },
+   "mvxkpz": {
+      "message": "Copia formula LaTeX"
+   },
+   "mvzxkp": {
+      "message": "Inserisci un nuovo nome"
+   },
+   "mxkvzp": {
+      "message": "Eliminazione fallita"
+   },
+   "mxpzvk": {
+      "message": "Quando attivato, nella casella di input conversazione AI, premi tasto Invio una volta per una nuova riga, due volte rapidamente per inviare il messaggio."
+   },
+   "mzkvxp": {
+      "message": "Quando attivato, apparirà una timeline interattiva sul lato destro della pagina di conversazione AI."
+   },
+   "mzpxvk": {
+      "message": "Il tema non può essere vuoto"
+   },
+   "mzxvkp": {
+      "message": "Elimina"
+   },
+   "pkmvxz": {
+      "message": "Titolo"
+   },
+   "pkmzvx": {
+      "message": "Vai a"
+   },
+   "pkxvmz": {
+      "message": "Cartella predefinita"
+   },
+   "pxkmvz": {
+      "message": "Timeline"
+   },
+   "pxmzkv": {
+      "message": "📌 Contrassegna conversazioni chiave"
+   },
+   "pxmzvk": {
+      "message": "Rinomina cartella"
+   },
+   "pxvkmz": {
+      "message": "Annulla"
+   },
+   "pzmkvx": {
+      "message": "Il contenuto non può essere vuoto"
+   },
+   "pzmvkx": {
+      "message": "Rimosso dai salvati"
+   },
+   "pzvkmx": {
+      "message": "Spostata con successo"
+   },
+   "qoytxz": {
+      "message": "Questa funzione è sempre abilitata e non può essere disattivata"
+   },
+   "qwxpzm": {
+      "message": "Salva"
+   },
+   "qzmvkx": {
+      "message": "Sei sicuro di voler eliminare la cartella「{folderName}」?"
+   },
+   "vkmzpx": {
+      "message": "Conferma"
+   },
+   "vkpmzx": {
+      "message": "Tasti ↑ / ↓ della tastiera per navigare tra i nodi di conversazione"
+   },
+   "vkpxzm": {
+      "message": "Modifica"
+   },
+   "vmkxpz": {
+      "message": "Aggiornata con successo"
+   },
+   "vmzpkx": {
+      "message": "Cartella predefinita"
+   },
+   "vnkxpm": {
+      "message": "Elenco salvati"
+   },
+   "vpmzkx": {
+      "message": "Nuova sottocartella"
+   },
+   "vxkpmz": {
+      "message": "Sposta in"
+   },
+   "vxkpzm": {
+      "message": "Quando attivato, identifica automaticamente le formule sulla pagina e fai clic per copiare in formato LaTeX."
+   },
+   "vxmkpz": {
+      "message": "Tasto Invio: Una volta per nuova riga, doppio per inviare"
+   },
+   "vxpzmk": {
+      "message": "Open source"
+   },
+   "vzkpmx": {
+      "message": "Inserisci il nome della cartella"
+   },
+   "wjxnkp": {
+      "message": "Eliminare la cartella「{folderName}」?\n\nQuesta cartella e le sue sottocartelle contengono {count} elementi salvati. Verranno spostati nella cartella predefinita."
+   },
+   "xmkvpz": {
+      "message": "Crea sottocartella in「{folderName}」"
+   },
+   "xmvkpz": {
+      "message": "Casella di input conversazione"
+   },
+   "xpvmkz": {
+      "message": "Quando abilitato, usa i tasti ↑ / ↓ della tastiera per saltare rapidamente tra i nodi di conversazione."
+   },
+   "xpzmkv": {
+      "message": "Condividi & Feedback"
+   },
+   "xpzmvk": {
+      "message": "Copiato"
+   },
+   "xvkpmz": {
+      "message": "Rinomina"
+   },
+   "xvpmkz": {
+      "message": "Visualizza Elenco Preferiti"
+   },
+   "xzvkpm": {
+      "message": "Creata con successo"
+   },
+   "zmkvpx": {
+      "message": "Copia formula LaTeX"
+   },
+   "zmvkpx": {
+      "message": "Salva conversazione"
+   },
+   "zmxvkp": {
+      "message": "Inserisci"
+   },
+   "zpkmvx": {
+      "message": "Invio per nuova riga"
+   },
+   "zpvmkx": {
+      "message": "Salvataggio fallito"
+   },
+   "zpxmkv": {
+      "message": "Cartella non trovata"
+   }
 }
