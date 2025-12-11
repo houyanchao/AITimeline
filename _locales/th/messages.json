@@ -198,10 +198,10 @@
     "message": "คุณสมบัตินี้เปิดใช้งานตามค่าเริ่มต้นและไม่สามารถปิดได้"
   },
   "hosegod": {
-    "message": "คลัง Prompt"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "เมื่อเปิดใช้งาน จะแสดงปุ่มทางลัด Prompt ทางด้านซ้ายของกล่องแชท"
+    "message": "เมื่อเปิดใช้งาน จะแสดงปุ่ม Prompt ทางด้านซ้ายของกล่องข้อความ"
   },
   "biwhckdj": {
     "message": "รายการ Prompt"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "คุณแน่ใจหรือไม่ว่าต้องการลบ Prompt นี้?"
-  },
-  "pbtdsq": {
-    "message": "ปุ่ม Prompt"
   },
   "svkbtn": {
     "message": "บันทึก"

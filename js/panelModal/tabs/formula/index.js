@@ -33,9 +33,9 @@ class FormulaTab extends BaseTab {
                             ${chrome.i18n.getMessage('vxkpzm')}
                         </div>
                     </div>
-                    <label class="toggle-switch">
+                    <label class="ait-toggle-switch">
                         <input type="checkbox" id="formula-toggle">
-                        <span class="toggle-slider"></span>
+                        <span class="ait-toggle-slider"></span>
                     </label>
                 </div>
             </div>

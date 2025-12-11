@@ -63,7 +63,7 @@ class PromptTab extends BaseTab {
             
             <!-- 平台开关模块 -->
             <div class="platform-list">
-                <div class="platform-list-title">${chrome.i18n.getMessage('pbtdsq')}</div>
+                <div class="platform-list-title">${chrome.i18n.getMessage('mkvzpx')}</div>
                 <div class="platform-list-hint">${chrome.i18n.getMessage('hobsidbg')}</div>
                 <div class="platform-list-container">
                     ${smartInputPlatforms.map(platform => `
@@ -71,9 +71,9 @@ class PromptTab extends BaseTab {
                             <div class="platform-info-left">
                                 <span class="platform-name">${platform.name}</span>
                             </div>
-                            <label class="toggle-switch">
+                            <label class="ait-toggle-switch">
                                 <input type="checkbox" class="prompt-button-toggle" data-platform-id="${platform.id}">
-                                <span class="toggle-slider"></span>
+                                <span class="ait-toggle-slider"></span>
                             </label>
                         </div>
                     `).join('')}

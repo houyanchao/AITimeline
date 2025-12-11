@@ -40,9 +40,9 @@ class SmartInputBoxTab extends BaseTab {
                             <div class="platform-info-left">
                                 <span class="platform-name">${platform.name}</span>
                             </div>
-                            <label class="toggle-switch">
+                            <label class="ait-toggle-switch">
                                 <input type="checkbox" class="platform-toggle" data-platform-id="${platform.id}">
-                                <span class="toggle-slider"></span>
+                                <span class="ait-toggle-slider"></span>
                             </label>
                         </div>
                     `).join('')}

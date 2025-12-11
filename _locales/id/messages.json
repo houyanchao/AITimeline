@@ -198,10 +198,10 @@
     "message": "Fitur ini diaktifkan secara default dan tidak dapat dimatikan"
   },
   "hosegod": {
-    "message": "Perpustakaan Prompt"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Saat diaktifkan, menampilkan tombol pintasan prompt di sisi kiri kotak chat"
+    "message": "Saat diaktifkan, tombol prompt akan ditampilkan di sisi kiri kotak input"
   },
   "biwhckdj": {
     "message": "Daftar Prompt"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Yakin ingin menghapus prompt ini?"
-  },
-  "pbtdsq": {
-    "message": "Tombol Prompt"
   },
   "svkbtn": {
     "message": "Simpan"

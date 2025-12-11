@@ -44,9 +44,9 @@ class TimelineSettingsTab extends BaseTab {
                         ${logoHtml}
                         <span class="platform-name">${platform.name}</span>
                     </div>
-                    <label class="toggle-switch">
+                    <label class="ait-toggle-switch">
                         <input type="checkbox" class="platform-toggle" data-platform-id="${platform.id}">
-                        <span class="toggle-slider"></span>
+                        <span class="ait-toggle-slider"></span>
                     </label>
                 </div>
             `;
@@ -75,9 +75,9 @@ class TimelineSettingsTab extends BaseTab {
                             ${chrome.i18n.getMessage('kzxvpm')}
                         </div>
                     </div>
-                    <label class="toggle-switch">
+                    <label class="ait-toggle-switch">
                         <input type="checkbox" id="long-press-mark-toggle">
-                        <span class="toggle-slider"></span>
+                        <span class="ait-toggle-slider"></span>
                     </label>
                 </div>
             </div>
@@ -93,9 +93,9 @@ class TimelineSettingsTab extends BaseTab {
                             ${chrome.i18n.getMessage('xpvmkz')}
                         </div>
                     </div>
-                    <label class="toggle-switch">
+                    <label class="ait-toggle-switch">
                         <input type="checkbox" id="arrow-keys-nav-toggle">
-                        <span class="toggle-slider"></span>
+                        <span class="ait-toggle-slider"></span>
                     </label>
                 </div>
             </div>

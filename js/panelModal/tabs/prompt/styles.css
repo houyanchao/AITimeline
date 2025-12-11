@@ -251,7 +251,7 @@
 
 /* ==================== Toggle Switch ==================== */
 
-.prompt-settings .toggle-switch {
+.prompt-settings .ait-toggle-switch {
     position: relative;
     display: inline-block;
     width: 48px;
@@ -259,13 +259,13 @@
     flex-shrink: 0;
 }
 
-.prompt-settings .toggle-switch input {
+.prompt-settings .ait-toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.prompt-settings .toggle-slider {
+.prompt-settings .ait-toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -277,7 +277,7 @@
     transition: background-color 0.3s;
 }
 
-.prompt-settings .toggle-slider:before {
+.prompt-settings .ait-toggle-slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -289,15 +289,15 @@
     transition: transform 0.3s;
 }
 
-.prompt-settings .toggle-switch input:checked + .toggle-slider {
+.prompt-settings .ait-toggle-switch input:checked + .ait-toggle-slider {
     background-color: #000000;
 }
 
-.prompt-settings .toggle-switch input:checked + .toggle-slider:before {
+.prompt-settings .ait-toggle-switch input:checked + .ait-toggle-slider:before {
     transform: translateX(22px);
 }
 
-.prompt-settings .toggle-switch input:focus + .toggle-slider {
+.prompt-settings .ait-toggle-switch input:focus + .ait-toggle-slider {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 

@@ -198,10 +198,10 @@
     "message": "This feature is enabled by default and cannot be turned off"
   },
   "hosegod": {
-    "message": "Prompt Library"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "When enabled, a prompt shortcut button will be displayed on the left side of the chat box"
+    "message": "When enabled, a prompt button will be displayed on the left side of the input box"
   },
   "biwhckdj": {
     "message": "Prompt List"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Are you sure you want to delete this prompt?"
-  },
-  "pbtdsq": {
-    "message": "Prompt Button"
   },
   "svkbtn": {
     "message": "Save"

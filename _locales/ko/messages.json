@@ -198,10 +198,10 @@
     "message": "이 기능은 기본 활성화되어 있으며 끌 수 없습니다"
   },
   "hosegod": {
-    "message": "프롬프트 라이브러리"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "활성화하면 채팅 상자 왼쪽에 프롬프트 바로가기 버튼이 표시됩니다"
+    "message": "활성화하면 입력 상자 왼쪽에 프롬프트 버튼이 표시됩니다"
   },
   "biwhckdj": {
     "message": "프롬프트 목록"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "이 프롬프트를 삭제하시겠습니까?"
-  },
-  "pbtdsq": {
-    "message": "프롬프트 버튼"
   },
   "svkbtn": {
     "message": "저장"

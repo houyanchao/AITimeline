@@ -19,7 +19,7 @@
 }
 
 /* Toggle Switch */
-.toggle-switch {
+.ait-toggle-switch {
     position: relative;
     display: inline-block;
     width: 48px;
@@ -27,13 +27,13 @@
     flex-shrink: 0;
 }
 
-.toggle-switch input {
+.ait-toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.toggle-slider {
+.ait-toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -45,7 +45,7 @@
     transition: background-color 0.3s;
 }
 
-.toggle-slider:before {
+.ait-toggle-slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -57,15 +57,15 @@
     transition: transform 0.3s;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.ait-toggle-switch input:checked + .ait-toggle-slider {
     background-color: #000000;
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
+.ait-toggle-switch input:checked + .ait-toggle-slider:before {
     transform: translateX(22px);
 }
 
-.toggle-switch input:focus + .toggle-slider {
+.ait-toggle-switch input:focus + .ait-toggle-slider {
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 

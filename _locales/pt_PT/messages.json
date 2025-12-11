@@ -198,10 +198,10 @@
     "message": "Esta funcionalidade está ativada por predefinição e não pode ser desativada"
   },
   "hosegod": {
-    "message": "Biblioteca de prompts"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Quando ativado, mostra o botão de acesso rápido aos prompts no lado esquerdo da caixa de chat"
+    "message": "Quando ativado, um botão de prompt será exibido no lado esquerdo da caixa de entrada"
   },
   "biwhckdj": {
     "message": "Lista de prompts"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Tem a certeza de que pretende eliminar este prompt?"
-  },
-  "pbtdsq": {
-    "message": "Botão de prompt"
   },
   "svkbtn": {
     "message": "Guardar"

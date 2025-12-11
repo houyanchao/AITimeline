@@ -198,10 +198,10 @@
     "message": "Questa funzione è attivata per impostazione predefinita e non può essere disattivata"
   },
   "hosegod": {
-    "message": "Libreria di prompt"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Quando attivato, mostra il pulsante di accesso rapido ai prompt sul lato sinistro della casella di chat"
+    "message": "Quando attivato, verrà visualizzato un pulsante prompt sul lato sinistro della casella di input"
   },
   "biwhckdj": {
     "message": "Lista prompt"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Sei sicuro di voler eliminare questo prompt?"
-  },
-  "pbtdsq": {
-    "message": "Pulsante prompt"
   },
   "svkbtn": {
     "message": "Salva"

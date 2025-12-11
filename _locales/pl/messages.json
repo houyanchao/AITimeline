@@ -198,10 +198,10 @@
     "message": "Ta funkcja jest domyślnie włączona i nie może być wyłączona"
   },
   "hosegod": {
-    "message": "Biblioteka promptów"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Po włączeniu, wyświetla przycisk szybkiego dostępu do promptów po lewej stronie pola czatu"
+    "message": "Po włączeniu, przycisk promptu zostanie wyświetlony po lewej stronie pola wprowadzania"
   },
   "biwhckdj": {
     "message": "Lista promptów"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Czy na pewno chcesz usunąć ten prompt?"
-  },
-  "pbtdsq": {
-    "message": "Przycisk promptu"
   },
   "svkbtn": {
     "message": "Zapisz"

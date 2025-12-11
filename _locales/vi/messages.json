@@ -198,10 +198,10 @@
     "message": "Tính năng này được bật theo mặc định và không thể tắt"
   },
   "hosegod": {
-    "message": "Thư viện Prompt"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Khi bật, hiển thị nút truy cập nhanh prompt ở bên trái hộp chat"
+    "message": "Khi bật, một nút prompt sẽ được hiển thị ở bên trái hộp nhập liệu"
   },
   "biwhckdj": {
     "message": "Danh sách Prompt"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Bạn có chắc muốn xóa prompt này?"
-  },
-  "pbtdsq": {
-    "message": "Nút Prompt"
   },
   "svkbtn": {
     "message": "Lưu"

@@ -198,10 +198,10 @@
     "message": "Cette fonctionnalité est activée par défaut et ne peut pas être désactivée"
   },
   "hosegod": {
-    "message": "Bibliothèque de prompts"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Lorsque activé, affiche le bouton d'accès rapide aux prompts sur le côté gauche de la zone de chat"
+    "message": "Lorsqu'il est activé, un bouton de prompt s'affiche sur le côté gauche de la zone de saisie"
   },
   "biwhckdj": {
     "message": "Liste des prompts"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Êtes-vous sûr de vouloir supprimer ce prompt ?"
-  },
-  "pbtdsq": {
-    "message": "Bouton de prompt"
   },
   "svkbtn": {
     "message": "Enregistrer"

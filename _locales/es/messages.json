@@ -198,10 +198,10 @@
     "message": "Esta función está habilitada de forma predeterminada y no se puede desactivar"
   },
   "hosegod": {
-    "message": "Biblioteca de prompts"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Cuando está habilitado, muestra el botón de acceso rápido a prompts en el lado izquierdo del cuadro de chat"
+    "message": "Cuando está habilitado, se mostrará un botón de prompt en el lado izquierdo del cuadro de entrada"
   },
   "biwhckdj": {
     "message": "Lista de prompts"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "¿Está seguro de que desea eliminar este prompt?"
-  },
-  "pbtdsq": {
-    "message": "Botón de prompt"
   },
   "svkbtn": {
     "message": "Guardar"

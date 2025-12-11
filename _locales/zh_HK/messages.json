@@ -198,10 +198,10 @@
     "message": "此功能預設開啟，無法關閉"
   },
   "hosegod": {
-    "message": "提示詞庫"
+    "message": "提示詞"
   },
   "hobsidbg": {
-    "message": "開啟後，在對話框左邊顯示提示詞快捷按鈕"
+    "message": "啟用後，在輸入框左側顯示提示詞按鈕"
   },
   "biwhckdj": {
     "message": "提示詞列表"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "確定刪除這個提示詞嗎？"
-  },
-  "pbtdsq": {
-    "message": "提示詞按鈕"
   },
   "svkbtn": {
     "message": "儲存"

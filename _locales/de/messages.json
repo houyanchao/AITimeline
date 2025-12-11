@@ -198,10 +198,10 @@
     "message": "Diese Funktion ist standardmäßig aktiviert und kann nicht deaktiviert werden"
   },
   "hosegod": {
-    "message": "Prompt-Bibliothek"
+    "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Wenn aktiviert, wird links neben der Chat-Box eine Prompt-Schnellzugriffstaste angezeigt"
+    "message": "Wenn aktiviert, wird links neben dem Eingabefeld eine Prompt-Taste angezeigt"
   },
   "biwhckdj": {
     "message": "Prompt-Liste"
@@ -238,9 +238,6 @@
   },
   "dcnfmq": {
     "message": "Möchten Sie diesen Prompt wirklich löschen?"
-  },
-  "pbtdsq": {
-    "message": "Prompt-Schaltfläche"
   },
   "svkbtn": {
     "message": "Speichern"
