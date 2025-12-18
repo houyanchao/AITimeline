@@ -38,6 +38,7 @@
         "js/panelModal/tabs/prompt/index.js",
         "js/panelModal/tabs/smartInputBox/index.js",
         "js/panelModal/tabs/formula/index.js",
+        "js/panelModal/tabs/settings/index.js",
         "js/panelModal/tab-registry.js",
         "js/panelModal/index.js",
         "js/smartInputBox/constants.js",
@@ -70,7 +71,8 @@
         "js/timeline/container-finder.js",
         "js/timeline/star-input-modal/star-input-modal.js",
         "js/timeline/timeline-manager.js",
-        "js/timeline/index.js"
+        "js/timeline/index.js",
+        "js/url-button/index.js"
       ],
       "css": [
         "styles/variables.css",
@@ -85,10 +87,12 @@
         "js/panelModal/tabs/prompt/styles.css",
         "js/panelModal/tabs/smartInputBox/styles.css",
         "js/panelModal/tabs/formula/styles.css",
+        "js/panelModal/tabs/settings/styles.css",
         "js/timeline/star-input-modal/star-input-modal.css",
         "js/timeline/timeline.css",
         "js/formula/formula.css",
-        "js/smartInputBox/prompt-button.css"
+        "js/smartInputBox/prompt-button.css",
+        "js/url-button/styles.css"
       ],
       "run_at": "document_idle"
     }

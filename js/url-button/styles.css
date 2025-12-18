@@ -1,0 +1,89 @@
+/**
+ * URL Button Styles - URL 快捷跳转按钮样式
+ * 
+ * 对应 JS: ./index.js
+ */
+
+/* URL 包装器 */
+.url-btn-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+}
+
+/* URL 文本 - 保持原样 */
+.url-btn-text {
+    word-break: break-all;
+}
+
+/* 前往按钮 - 极简图标风格（大号版） */
+.url-btn-goto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 放大点击热区 */
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin-left: 2px;
+    
+    /* 默认样式：低调灰色，无边框背景 */
+    color: #9ca3af; /* gray-400: 视觉上不打扰 */
+    background: transparent;
+    border: none;
+    border-radius: 50%; /* 圆形，为 focus 状态准备 */
+    
+    cursor: pointer;
+    transition: color 0.15s ease; /* 只过渡颜色 */
+    
+    /* 视觉对齐微调：大号图标通常需要稍微多一点偏移 */
+    position: relative;
+    top: 2px;
+    
+    -webkit-appearance: none;
+    appearance: none;
+    box-shadow: none;
+}
+
+/* 图标（放大） */
+.url-btn-goto::before {
+    content: '';
+    display: block;
+    width: 16px; /* 图标尺寸 14px -> 16px */
+    height: 16px;
+    background-color: currentColor;
+    /* external-link icon */
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20fill%3D%27%23000%27%20d%3D%27M14%203h7v7h-2V6.41l-9.29%209.3-1.42-1.42%209.3-9.29H14V3ZM5%205h6v2H7v10h10v-4h2v6H5V5Z%27/%3E%3C/svg%3E") no-repeat center / contain;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20fill%3D%27%23000%27%20d%3D%27M14%203h7v7h-2V6.41l-9.29%209.3-1.42-1.42%209.3-9.29H14V3ZM5%205h6v2H7v10h10v-4h2v6H5V5Z%27/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* Hover 状态：只变色，无位移缩放 */
+.url-btn-goto:hover {
+    color: #2563eb; /* blue-600 */
+}
+
+.url-btn-goto:active {
+    color: #1d4ed8; /* blue-700 */
+}
+
+/* 键盘可访问性：只在键盘聚焦时显示光环 */
+.url-btn-goto:focus-visible {
+    outline: none;
+    background-color: rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
+/* 深色主题适配 */
+html[data-timeline-theme="dark"] .url-btn-goto {
+    color: #6b7280; /* gray-500: 深色模式下的低调灰 */
+}
+
+html[data-timeline-theme="dark"] .url-btn-goto:hover {
+    color: #60a5fa; /* blue-400: 高亮色 */
+}
+
+html[data-timeline-theme="dark"] .url-btn-goto:focus-visible {
+    background-color: rgba(96, 165, 250, 0.15);
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+}

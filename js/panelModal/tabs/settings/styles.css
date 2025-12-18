@@ -1,0 +1,84 @@
+/**
+ * Settings Tab Styles
+ * 其他配置样式
+ */
+
+/* 设置容器 */
+.settings-tab {
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 分隔线 */
+.settings-tab .divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
+
+/* 复用 timeline-settings 的样式 */
+/* 如果 timeline/styles.css 已经定义了这些样式，这里可以省略 */
+/* 但为了独立性，这里也定义一份 */
+
+/* 设置区块 */
+.settings-tab .setting-section {
+    margin-bottom: 0;
+}
+
+/* 设置项 */
+.settings-tab .setting-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.settings-tab .setting-item:hover {
+    background: #f3f4f6;
+}
+
+/* 设置信息 */
+.settings-tab .setting-info {
+    flex: 1;
+}
+
+.settings-tab .setting-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.settings-tab .setting-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* 深色主题适配 */
+html[data-timeline-theme="dark"] .settings-tab .setting-item {
+    background: #2d2d30;
+}
+
+html[data-timeline-theme="dark"] .settings-tab .setting-item:hover {
+    background: #3d3d40;
+}
+
+html[data-timeline-theme="dark"] .settings-tab .setting-label {
+    color: #f5f5f5;
+}
+
+html[data-timeline-theme="dark"] .settings-tab .setting-hint {
+    color: #9ca3af;
+}
+
+html[data-timeline-theme="dark"] .settings-tab .divider {
+    background: #404040;
+}
+

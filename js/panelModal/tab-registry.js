@@ -14,6 +14,7 @@ function getTabClass(name) {
         case 'PromptTab': return typeof PromptTab !== 'undefined' ? PromptTab : null;
         case 'SmartInputBoxTab': return typeof SmartInputBoxTab !== 'undefined' ? SmartInputBoxTab : null;
         case 'FormulaTab': return typeof FormulaTab !== 'undefined' ? FormulaTab : null;
+        case 'SettingsTab': return typeof SettingsTab !== 'undefined' ? SettingsTab : null;
         // case 'CopyTab': return typeof CopyTab !== 'undefined' ? CopyTab : null;  // 暂时关闭
         default: return null;
     }
@@ -29,7 +30,8 @@ const TAB_CONFIG = [
     { id: 'timeline-settings', className: 'TimelineSettingsTab' },
     { id: 'prompt', className: 'PromptTab' },
     { id: 'smart-input-box', className: 'SmartInputBoxTab' },
-    { id: 'formula', className: 'FormulaTab' }
+    { id: 'formula', className: 'FormulaTab' },
+    { id: 'settings', className: 'SettingsTab' }
     // { id: 'copy', className: 'CopyTab' }  // 暂时关闭
 ];
 
