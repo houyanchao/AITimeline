@@ -148,6 +148,30 @@ class FolderManager {
         // 使用原有方式获取所有收藏项（chatTimelineStar: 格式）
         const starredItems = await this.storage.getAllByPrefix('chatTimelineStar:');
         
+        // ✅ 辅助函数：解析 nodeKey（支持字符串和数字）
+        const parseNodeKey = (keyPart) => {
+            if (keyPart === undefined || keyPart === '') return null;
+            const parsed = parseInt(keyPart, 10);
+            // 如果是纯数字字符串，返回数字；否则返回原字符串（如 Gemini nodeId）
+            return (String(parsed) === keyPart) ? parsed : keyPart;
+        };
+        
+        // ✅ 辅助函数：从 key 中提取 item 信息
+        const extractItemInfo = (key, item) => {
+            const parts = key.split(':');
+            const urlWithoutProtocol = parts.slice(1, -1).join(':');
+            // 优先使用存储的 nodeId，其次 index，最后从 key 解析
+            let nodeKey;
+            if (item.nodeId !== undefined) {
+                nodeKey = item.nodeId;
+            } else if (item.index !== undefined) {
+                nodeKey = item.index;
+            } else {
+                nodeKey = parseNodeKey(parts[parts.length - 1]);
+            }
+            const turnId = `${urlWithoutProtocol}:${nodeKey}`;
+            return { urlWithoutProtocol, nodeKey, turnId };
+        };
         
         // 构建树状结构
         const tree = {
@@ -185,12 +209,7 @@ class FolderManager {
                 // 添加子文件夹的收藏项
                 for (const key in starredItems) {
                     const item = starredItems[key];
-                    
-                    // 从 key 中提取 turnId: chatTimelineStar:url:index -> url:index
-                    const parts = key.split(':');
-                    const urlWithoutProtocol = parts.slice(1, -1).join(':');
-                    const index = parseInt(parts[parts.length - 1], 10);
-                    const turnId = `${urlWithoutProtocol}:${index}`;
+                    const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
                     
                     // 检查是否属于该子文件夹
                     if (item.folderId === childFolder.id) {
@@ -198,7 +217,8 @@ class FolderManager {
                             turnId,
                             url: item.url || `https://${urlWithoutProtocol}`,
                             urlWithoutProtocol,
-                            index,
+                            index: nodeKey,   // 兼容旧代码
+                            nodeId: nodeKey,  // 新字段
                             theme: item.question || '整个对话',
                             timestamp: item.timestamp || 0,
                             folderId: item.folderId
@@ -216,12 +236,7 @@ class FolderManager {
             // 添加根文件夹的收藏项
             for (const key in starredItems) {
                 const item = starredItems[key];
-                
-                // 从 key 中提取 turnId
-                const parts = key.split(':');
-                const urlWithoutProtocol = parts.slice(1, -1).join(':');
-                const index = parseInt(parts[parts.length - 1], 10);
-                const turnId = `${urlWithoutProtocol}:${index}`;
+                const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
                 
                 // 检查是否属于该根文件夹
                 if (item.folderId === rootFolder.id) {
@@ -229,7 +244,8 @@ class FolderManager {
                         turnId,
                         url: item.url || `https://${urlWithoutProtocol}`,
                         urlWithoutProtocol,
-                        index,
+                        index: nodeKey,   // 兼容旧代码
+                        nodeId: nodeKey,  // 新字段
                         theme: item.question || '整个对话',
                         timestamp: item.timestamp || 0,
                         folderId: item.folderId
@@ -248,13 +264,7 @@ class FolderManager {
         
         for (const key in starredItems) {
             const item = starredItems[key];
-            
-            // 从 key 中提取 turnId
-            const parts = key.split(':');
-            const urlWithoutProtocol = parts.slice(1, -1).join(':');
-            const index = parseInt(parts[parts.length - 1], 10);
-            const turnId = `${urlWithoutProtocol}:${index}`;
-            
+            const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
             
             // 如果该收藏项还没有被分配到任何文件夹，则归为未分类（默认文件夹）
             // 这包括：folderId 为 null/undefined 或 folderId 指向已删除的文件夹
@@ -263,7 +273,8 @@ class FolderManager {
                     turnId,
                     url: item.url || `https://${urlWithoutProtocol}`,
                     urlWithoutProtocol,
-                    index,
+                    index: nodeKey,   // 兼容旧代码
+                    nodeId: nodeKey,  // 新字段
                     theme: item.question || '整个对话',
                     timestamp: item.timestamp || 0,
                     folderId: item.folderId

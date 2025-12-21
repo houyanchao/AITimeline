@@ -21,8 +21,86 @@ class GeminiAdapter extends SiteAdapter {
         return 'user-query';
     }
 
+    /**
+     * 从 DOM 元素中提取稳定的 nodeId
+     * Gemini 的虚拟滚动会隐藏/重建节点，导致数组索引不可靠
+     * 使用 user-query 父元素的 id 作为稳定标识
+     * @param {Element} element - user-query 元素
+     * @returns {string|null} - 父元素的 id，失败返回 null
+     */
+    _extractNodeIdFromDom(element) {
+        if (!element) return null;
+        
+        // 获取 user-query 父元素的 id
+        const parent = element.parentElement;
+        if (parent && parent.id) {
+            return parent.id;
+        }
+        return null;
+    }
+    
+    /**
+     * 生成节点的唯一标识 turnId
+     * 优先使用父元素 id（稳定），回退到数组索引（兼容）
+     */
     generateTurnId(element, index) {
+        // 优先使用父元素的 id（稳定标识）
+        const nodeId = this._extractNodeIdFromDom(element);
+        if (nodeId) {
+            return `gemini-${nodeId}`;
+        }
+        // 回退到数组索引（兼容旧逻辑）
         return `gemini-${index}`;
+    }
+    
+    /**
+     * 从存储的 nodeId 生成 turnId（用于收藏跳转）
+     * @param {string|number} identifier - nodeId（字符串）或 index（数字）
+     * @returns {string}
+     */
+    generateTurnIdFromIndex(identifier) {
+        return `gemini-${identifier}`;
+    }
+    
+    /**
+     * 从 turnId 中提取 nodeId/index
+     * @param {string} turnId - 格式为 gemini-{nodeId} 或 gemini-{index}
+     * @returns {string|number|null} - nodeId（字符串）或 index（数字）
+     */
+    extractIndexFromTurnId(turnId) {
+        if (!turnId) return null;
+        if (turnId.startsWith('gemini-')) {
+            const part = turnId.substring(7); // 'gemini-'.length = 7
+            // 尝试解析为数字（旧数据兼容）
+            const parsed = parseInt(part, 10);
+            // 如果是纯数字字符串，返回数字；否则返回字符串
+            return (String(parsed) === part) ? parsed : part;
+        }
+        return null;
+    }
+    
+    /**
+     * 根据存储的 nodeId/index 查找 marker
+     * 支持新数据（nodeId 字符串）和旧数据（index 数字）
+     * @param {string|number} storedKey - 存储的 nodeId 或 index
+     * @param {Array} markers - markers 数组
+     * @param {Map} markerMap - markerMap
+     * @returns {Object|null}
+     */
+    findMarkerByStoredIndex(storedKey, markers, markerMap) {
+        if (storedKey === null || storedKey === undefined) return null;
+        
+        // 1. 先尝试用 nodeId/index 构建 turnId 查找
+        const turnId = `gemini-${storedKey}`;
+        const marker = markerMap.get(turnId);
+        if (marker) return marker;
+        
+        // 2. Fallback：如果是数字，尝试用数组索引（兼容旧数据）
+        if (typeof storedKey === 'number' && storedKey >= 0 && storedKey < markers.length) {
+            return markers[storedKey];
+        }
+        
+        return null;
     }
 
     extractText(element) {

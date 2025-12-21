@@ -519,10 +519,31 @@ class StarredTab extends BaseTab {
             // 判断是否是当前网站
             const isSameSite = this.isSameSite(item.url);
             
-            // ✅ 获取收藏项的 index（用于滚动到具体节点）
-            // index === -1 表示整个对话的收藏，不需要滚动
-            const targetIndex = item.index;
-            const needsScroll = targetIndex !== undefined && targetIndex !== -1;
+            // ✅ 获取收藏项的 nodeId/index（用于滚动到具体节点）
+            // nodeId === -1 或 index === -1 表示整个对话的收藏，不需要滚动
+            // nodeId 优先于 index（兼容新旧数据）
+            const nodeKey = item.nodeId !== undefined ? item.nodeId : item.index;
+            const needsScroll = nodeKey !== undefined && nodeKey !== -1;
+            
+            // ✅ 辅助函数：根据 nodeKey 查找 marker（支持 nodeId 和 index fallback）
+            const findMarkerByNodeKey = (tm, nodeKey) => {
+                if (nodeKey === null || nodeKey === undefined) return null;
+                // 优先使用 adapter 的查找方法
+                if (tm.adapter?.findMarkerByStoredIndex) {
+                    return tm.adapter.findMarkerByStoredIndex(nodeKey, tm.markers, tm.markerMap);
+                }
+                // 默认逻辑：尝试用 generateTurnIdFromIndex 构建 turnId
+                if (tm.adapter?.generateTurnIdFromIndex) {
+                    const turnId = tm.adapter.generateTurnIdFromIndex(nodeKey);
+                    const marker = tm.markerMap?.get(turnId);
+                    if (marker) return marker;
+                }
+                // Fallback：数字索引
+                if (typeof nodeKey === 'number' && nodeKey >= 0 && nodeKey < tm.markers.length) {
+                    return tm.markers[nodeKey];
+                }
+                return null;
+            };
             
             if (isSameSite) {
                 // 同网站：在当前标签页跳转
@@ -534,9 +555,8 @@ class StarredTab extends BaseTab {
                 if (isSamePage) {
                     // ✅ 当前页面
                     const tm = window.timelineManager;
-                    if (needsScroll && tm && tm.markers[targetIndex]) {
-                        // 需要滚动：直接滚动到目标节点，不刷新页面
-                        const marker = tm.markers[targetIndex];
+                    if (needsScroll && tm) {
+                        const marker = findMarkerByNodeKey(tm, nodeKey);
                         if (marker && marker.element) {
                             tm.smoothScrollTo(marker.element);
                         }
@@ -549,7 +569,7 @@ class StarredTab extends BaseTab {
                     // ✅ 同网站不同页面：设置导航数据后跳转
                     const tm2 = window.timelineManager;
                     if (needsScroll && tm2) {
-                        await tm2.setNavigateDataForUrl(item.url, targetIndex);
+                        await tm2.setNavigateDataForUrl(item.url, nodeKey);
                     }
                     location.href = item.url;
                     if (window.panelModal) {
@@ -560,7 +580,7 @@ class StarredTab extends BaseTab {
                 // ✅ 不同网站：设置跨站导航数据后，新标签页打开
                 const tm3 = window.timelineManager;
                 if (needsScroll && tm3) {
-                    await tm3.setNavigateDataForUrl(item.url, targetIndex);
+                    await tm3.setNavigateDataForUrl(item.url, nodeKey);
                 }
                 window.open(item.url, '_blank');
             }

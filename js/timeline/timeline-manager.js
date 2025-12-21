@@ -315,7 +315,7 @@ class TimelineManager {
         if (!starredBtn) {
             starredBtn = document.createElement('button');
             starredBtn.className = 'timeline-starred-btn';
-            starredBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+            starredBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
             starredBtn.setAttribute('aria-label', chrome.i18n.getMessage('hkjvnr'));
             // ✅ 初始状态：隐藏，等时间轴渲染完成后再显示
             starredBtn.style.display = 'none';
@@ -842,8 +842,25 @@ class TimelineManager {
         });
         
         // ✅ 应用收藏状态：根据 starredIndexes 设置 starred 和填充 this.starred
-        this.starredIndexes.forEach(index => {
-            const marker = this.markers[index];
+        // 支持 nodeId（字符串）和 index（数字），并有 fallback 逻辑
+        this.starredIndexes.forEach(nodeKey => {
+            let marker = null;
+            
+            // 1. 先尝试用 adapter 的 findMarkerByStoredIndex（支持 nodeId 和 fallback）
+            if (this.adapter.findMarkerByStoredIndex) {
+                marker = this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
+            } else {
+                // 默认逻辑：尝试用 generateTurnIdFromIndex 构建 turnId
+                if (this.adapter.generateTurnIdFromIndex) {
+                    const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
+                    marker = this.markerMap.get(turnId);
+                }
+                // Fallback：如果是数字，用数组索引
+                if (!marker && typeof nodeKey === 'number' && nodeKey >= 0 && nodeKey < this.markers.length) {
+                    marker = this.markers[nodeKey];
+                }
+            }
+            
             if (marker && marker.id) {
                 marker.starred = true;
                 this.starred.add(marker.id);
@@ -851,8 +868,22 @@ class TimelineManager {
         });
         
         // ✅ 应用标记状态：根据 pinnedIndexes 设置 pinned 和填充 this.pinned
-        this.pinnedIndexes.forEach(index => {
-            const marker = this.markers[index];
+        // 与收藏状态相同的逻辑
+        this.pinnedIndexes.forEach(nodeKey => {
+            let marker = null;
+            
+            if (this.adapter.findMarkerByStoredIndex) {
+                marker = this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
+            } else {
+                if (this.adapter.generateTurnIdFromIndex) {
+                    const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
+                    marker = this.markerMap.get(turnId);
+                }
+                if (!marker && typeof nodeKey === 'number' && nodeKey >= 0 && nodeKey < this.markers.length) {
+                    marker = this.markers[nodeKey];
+                }
+            }
+            
             if (marker && marker.id) {
                 marker.pinned = true;
                 this.pinned.add(marker.id);
@@ -875,26 +906,41 @@ class TimelineManager {
         // Ensure active class is applied after dots are created
         this.updateActiveDotUI();
         this.scheduleScrollSync();
+        // ✅ 辅助函数：根据 nodeKey 查找 marker（支持 nodeId 和 index fallback）
+        const findMarkerByNodeKey = (nodeKey) => {
+            if (nodeKey === null || nodeKey === undefined) return null;
+            if (this.adapter.findMarkerByStoredIndex) {
+                return this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
+            }
+            // 默认逻辑
+            if (this.adapter.generateTurnIdFromIndex) {
+                const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
+                const marker = this.markerMap.get(turnId);
+                if (marker) return marker;
+            }
+            // Fallback：数字索引
+            if (typeof nodeKey === 'number' && nodeKey >= 0 && nodeKey < this.markers.length) {
+                return this.markers[nodeKey];
+            }
+            return null;
+        };
+        
         // ✅ 检查是否有跨页面导航任务
-        this.getNavigateData('targetIndex').then(targetIndex => {
-            if (targetIndex !== null && this.markers[targetIndex]) {
+        this.getNavigateData('targetIndex').then(nodeKey => {
+            const marker = findMarkerByNodeKey(nodeKey);
+            if (marker && marker.element) {
                 requestAnimationFrame(() => {
-                    const marker = this.markers[targetIndex];
-                    if (marker && marker.element) {
-                        this.smoothScrollTo(marker.element);
-                    }
+                    this.smoothScrollTo(marker.element);
                 });
             }
         }).catch(() => {});
         
         // ✅ 检查是否有跨网站导航任务
-        this.checkCrossSiteNavigate().then(targetIndex => {
-            if (targetIndex !== null && this.markers[targetIndex]) {
+        this.checkCrossSiteNavigate().then(nodeKey => {
+            const marker = findMarkerByNodeKey(nodeKey);
+            if (marker && marker.element) {
                 requestAnimationFrame(() => {
-                    const marker = this.markers[targetIndex];
-                    if (marker && marker.element) {
-                        this.smoothScrollTo(marker.element);
-                    }
+                    this.smoothScrollTo(marker.element);
                 });
             }
         }).catch(() => {});
@@ -1395,15 +1441,40 @@ class TimelineManager {
                 const starPrefix = `chatTimelineStar:${url}:`;
                 const pinPrefix = `chatTimelinePin:${url}:`;
                 
+                // ✅ 辅助函数：解析 key 中的 nodeKey（支持字符串和数字）
+                const parseNodeKey = (keyPart) => {
+                    const parsed = parseInt(keyPart, 10);
+                    // 如果是纯数字字符串，返回数字；否则返回原字符串
+                    return (String(parsed) === keyPart) ? parsed : keyPart;
+                };
+                
+                // ✅ 辅助函数：根据 nodeKey 查找 marker（支持 nodeId 和 index fallback）
+                const findMarkerByNodeKey = (nodeKey) => {
+                    if (this.adapter.findMarkerByStoredIndex) {
+                        return this.adapter.findMarkerByStoredIndex(nodeKey, this.markers, this.markerMap);
+                    }
+                    // 默认逻辑
+                    if (this.adapter.generateTurnIdFromIndex) {
+                        const turnId = this.adapter.generateTurnIdFromIndex(nodeKey);
+                        const marker = this.markerMap.get(turnId);
+                        if (marker) return marker;
+                    }
+                    // Fallback：数字索引
+                    if (typeof nodeKey === 'number' && nodeKey >= 0 && nodeKey < this.markers.length) {
+                        return this.markers[nodeKey];
+                    }
+                    return null;
+                };
+                
                 // 检查变化的key中是否有当前页面的收藏或标记数据
                 Object.keys(changes).forEach(key => {
                     // 处理收藏变化
                     if (key.startsWith(starPrefix)) {
-                        const indexStr = key.substring(starPrefix.length);
-                        const index = parseInt(indexStr, 10);
-                        if (isNaN(index)) return;
+                        const keyPart = key.substring(starPrefix.length);
+                        const nodeKey = parseNodeKey(keyPart);
+                        if (nodeKey === '' || Number.isNaN(nodeKey)) return;
                         
-                        const marker = this.markers[index];
+                        const marker = findMarkerByNodeKey(nodeKey);
                         if (!marker) return;
                         
                         const change = changes[key];
@@ -1412,12 +1483,12 @@ class TimelineManager {
                         if (change.newValue) {
                             // 添加收藏
                             this.starred.add(marker.id);
-                            this.starredIndexes.add(index);
+                            this.starredIndexes.add(nodeKey);
                             if (marker) marker.starred = true;
                         } else {
                             // 删除收藏
                             this.starred.delete(marker.id);
-                            this.starredIndexes.delete(index);
+                            this.starredIndexes.delete(nodeKey);
                             if (marker) marker.starred = false;
                         }
                         
@@ -1433,11 +1504,11 @@ class TimelineManager {
                     
                     // ✅ 处理标记变化
                     if (key.startsWith(pinPrefix)) {
-                        const indexStr = key.substring(pinPrefix.length);
-                        const index = parseInt(indexStr, 10);
-                        if (isNaN(index)) return;
+                        const keyPart = key.substring(pinPrefix.length);
+                        const nodeKey = parseNodeKey(keyPart);
+                        if (nodeKey === '' || Number.isNaN(nodeKey)) return;
                         
-                        const marker = this.markers[index];
+                        const marker = findMarkerByNodeKey(nodeKey);
                         if (!marker) return;
                         
                         const change = changes[key];
@@ -1446,12 +1517,12 @@ class TimelineManager {
                         if (change.newValue) {
                             // 添加标记
                             this.pinned.add(marker.id);
-                            this.pinnedIndexes.add(index);
+                            this.pinnedIndexes.add(nodeKey);
                             marker.pinned = true;
                         } else {
                             // 删除标记
                             this.pinned.delete(marker.id);
-                            this.pinnedIndexes.delete(index);
+                            this.pinnedIndexes.delete(nodeKey);
                             marker.pinned = false;
                         }
                         
@@ -2677,12 +2748,15 @@ class TimelineManager {
             // 使用 StorageAdapter 获取所有匹配的收藏
             const items = await StorageAdapter.getAllByPrefix(prefix);
             
-            // 提取 index
+            // ✅ 提取 nodeId/index（支持字符串和数字）
             Object.keys(items).forEach(key => {
-                const indexStr = key.substring(prefix.length);
-                const index = parseInt(indexStr, 10);
-                if (!isNaN(index)) {
-                    this.starredIndexes.add(index);
+                const keyPart = key.substring(prefix.length);
+                // 尝试解析为数字
+                const parsed = parseInt(keyPart, 10);
+                // 如果是纯数字字符串，使用数字；否则保持字符串（如 Gemini 的 nodeId）
+                const nodeKey = (String(parsed) === keyPart) ? parsed : keyPart;
+                if (nodeKey !== '' && !Number.isNaN(nodeKey)) {
+                    this.starredIndexes.add(nodeKey);
                 }
             });
         } catch (e) {
@@ -2702,11 +2776,13 @@ class TimelineManager {
             
             const items = await StorageAdapter.getAllByPrefix(prefix);
             
+            // ✅ 提取 nodeId/index（支持字符串和数字，与 loadStars 保持一致）
             Object.keys(items).forEach(key => {
-                const indexStr = key.substring(prefix.length);
-                const index = parseInt(indexStr, 10);
-                if (!isNaN(index)) {
-                    this.pinnedIndexes.add(index);
+                const keyPart = key.substring(prefix.length);
+                const parsed = parseInt(keyPart, 10);
+                const nodeKey = (String(parsed) === keyPart) ? parsed : keyPart;
+                if (nodeKey !== '' && !Number.isNaN(nodeKey)) {
+                    this.pinnedIndexes.add(nodeKey);
                 }
             });
         } catch (e) {
@@ -2809,17 +2885,23 @@ class TimelineManager {
     
     /**
      * ✅ 保存收藏项（带文件夹）
+     * @param {string|number} nodeKey - nodeId（字符串，如 Gemini）或 index（数字）
+     * @param {string} question - 收藏的问题文本
+     * @param {string|null} folderId - 文件夹 ID
      */
-    async saveStarItemWithFolder(index, question, folderId = null) {
+    async saveStarItemWithFolder(nodeKey, question, folderId = null) {
         try {
             const urlWithoutProtocol = location.href.replace(/^https?:\/\//, '');
-            const key = `chatTimelineStar:${urlWithoutProtocol}:${index}`;
+            const key = `chatTimelineStar:${urlWithoutProtocol}:${nodeKey}`;
             // ✅ 限制收藏文字长度为前100个字符
             const truncatedQuestion = this.truncateText(question, 100);
             const value = { 
                 url: location.href,
                 urlWithoutProtocol: urlWithoutProtocol,
-                index: index,
+                // ✅ 根据 nodeKey 类型决定存储字段
+                // 字符串：使用 nodeId 字段（Gemini 等）
+                // 数字：使用 index 字段（其他网站，兼容旧数据）
+                ...(typeof nodeKey === 'string' ? { nodeId: nodeKey } : { index: nodeKey }),
                 question: truncatedQuestion,
                 timestamp: Date.now(),
                 folderId: folderId || null
@@ -2868,10 +2950,10 @@ class TimelineManager {
         return this.getSiteInfoFromUrl(url).name;
     }
     
-    async removeStarItem(index) {
+    async removeStarItem(nodeKey) {
         try {
             const url = location.href.replace(/^https?:\/\//, '');
-            const key = `chatTimelineStar:${url}:${index}`;
+            const key = `chatTimelineStar:${url}:${nodeKey}`;
             await StorageAdapter.remove(key);
         } catch (e) {
             // Silently fail
@@ -2885,15 +2967,38 @@ class TimelineManager {
         const m = this.markerMap.get(id);
         if (!m) return { success: false, action: null };
         
-        const index = this.markers.indexOf(m);
-        if (index === -1) return { success: false, action: null };
+        // ✅ 使用 adapter 提取稳定的 nodeId（可能是字符串或数字）
+        // Gemini: 父元素 id（字符串如 'r_abc123'）
+        // 其他网站: 数组索引（数字如 0, 1, 2）
+        const nodeId = this.adapter.extractIndexFromTurnId?.(id);
+        if (nodeId === null || nodeId === undefined) {
+            // Fallback: 使用数组索引
+            const index = this.markers.indexOf(m);
+            if (index === -1) return { success: false, action: null };
+        }
+        
+        // 最终使用的存储 key（nodeId 或 fallback 到数组索引）
+        const storageKey = (nodeId !== null && nodeId !== undefined) 
+            ? nodeId 
+            : this.markers.indexOf(m);
         
         // 切换收藏状态
         if (this.starred.has(id)) {
             // 取消收藏
             this.starred.delete(id);
-            this.starredIndexes.delete(index);
-            this.removeStarItem(index);
+            this.starredIndexes.delete(storageKey);
+            this.removeStarItem(storageKey);
+            
+            // ✅ 兼容性修复：如果 storageKey 是字符串（nodeId），
+            // 还需要尝试清理可能存在的旧数据（数字索引）
+            // 防止旧数据导致状态复活
+            if (typeof storageKey !== 'number') {
+                const index = this.markers.indexOf(m);
+                if (index !== -1) {
+                    this.starredIndexes.delete(index);
+                    this.removeStarItem(index);
+                }
+            }
             
             m.starred = false;
             
@@ -2928,9 +3033,9 @@ class TimelineManager {
             }
             
             this.starred.add(id);
-            this.starredIndexes.add(index);
-            // 使用用户输入的主题和选择的文件夹保存
-            this.saveStarItemWithFolder(index, result.value, result.folderId);
+            this.starredIndexes.add(storageKey);
+            // ✅ 使用 nodeId 或数组索引保存
+            this.saveStarItemWithFolder(storageKey, result.value, result.folderId);
             
             m.starred = true;
             
@@ -2955,24 +3060,42 @@ class TimelineManager {
             // 注意：这里不过滤当前网站，获取所有以 'chatTimelineStar:' 开头的条目
             const items = await StorageAdapter.getAllByPrefix('chatTimelineStar:');
             
+            // ✅ 辅助函数：解析 nodeKey（支持字符串和数字）
+            const parseNodeKey = (keyPart) => {
+                if (keyPart === undefined || keyPart === '') return null;
+                const parsed = parseInt(keyPart, 10);
+                // 如果是纯数字字符串，返回数字；否则返回原字符串（如 Gemini nodeId）
+                return (String(parsed) === keyPart) ? parsed : keyPart;
+            };
+            
             Object.keys(items).forEach(key => {
                 try {
                     const data = items[key];
                     
                     // 优先使用存储的字段，如果没有则从 key 中解析（兼容旧数据）
-                    // 从 key 中提取 url 和 index（用于兼容旧数据）
+                    // 从 key 中提取 url 和 nodeKey
                     const parts = key.split(':');
                     
                     const urlWithoutProtocol = data.urlWithoutProtocol || parts.slice(1, -1).join(':');
-                    const index = data.index !== undefined ? data.index : parseInt(parts[parts.length - 1], 10);
+                    // ✅ 支持 nodeId（字符串）和 index（数字）
+                    // 优先使用存储的 nodeId，其次 index，最后从 key 解析
+                    let nodeKey;
+                    if (data.nodeId !== undefined) {
+                        nodeKey = data.nodeId;
+                    } else if (data.index !== undefined) {
+                        nodeKey = data.index;
+                    } else {
+                        nodeKey = parseNodeKey(parts[parts.length - 1]);
+                    }
                     const fullUrl = data.url || `https://${urlWithoutProtocol}`;
                     
-                    // ✅ 处理整个聊天收藏（index = -1）和普通问题收藏
-                    if (index === -1) {
+                    // ✅ 处理整个聊天收藏（nodeKey = -1）和普通问题收藏
+                    if (nodeKey === -1) {
                         // 整个聊天的收藏
                         const siteInfo = this.getSiteInfoFromUrl(fullUrl);
                         starredMessages.push({
                             index: -1,
+                            nodeId: -1,
                             question: data.question || '整个对话',
                             url: fullUrl,
                             urlWithoutProtocol: urlWithoutProtocol,
@@ -2981,11 +3104,12 @@ class TimelineManager {
                             isCurrentPage: urlWithoutProtocol === location.href.replace(/^https?:\/\//, ''),
                             isFullChat: true  // 标识这是整个聊天
                         });
-                    } else if (!isNaN(index) && index >= 0) {
-                        // 普通问题的收藏
+                    } else if (nodeKey !== null && (typeof nodeKey === 'string' || (typeof nodeKey === 'number' && nodeKey >= 0))) {
+                        // 普通问题的收藏（nodeKey 可以是字符串或非负数字）
                         const siteInfo = this.getSiteInfoFromUrl(fullUrl);
                         starredMessages.push({
-                            index: index,
+                            index: nodeKey,  // 兼容旧代码
+                            nodeId: nodeKey, // 新字段
                             question: data.question || '',
                             url: fullUrl,
                             urlWithoutProtocol: urlWithoutProtocol,
@@ -3160,24 +3284,40 @@ class TimelineManager {
             return false;
         }
         
-        // ✅ 修复：通过 indexOf 获取 index（与 toggleStar 一致）
-        const index = this.markers.indexOf(marker);
-        if (index === -1) {
+        // ✅ 使用 adapter 提取稳定的 nodeId（与 toggleStar 一致）
+        const nodeId = this.adapter.extractIndexFromTurnId?.(id);
+        // 最终使用的存储 key（nodeId 或 fallback 到数组索引）
+        const nodeKey = (nodeId !== null && nodeId !== undefined) 
+            ? nodeId 
+            : this.markers.indexOf(marker);
+        
+        if (nodeKey === -1) {
             return false;
         }
         
         try {
             // ✅ 修复：动态计算 urlWithoutProtocol
             const urlWithoutProtocol = location.href.replace(/^https?:\/\//, '');
-            const key = `chatTimelinePin:${urlWithoutProtocol}:${index}`;
+            const key = `chatTimelinePin:${urlWithoutProtocol}:${nodeKey}`;
             const isPinned = await StorageAdapter.get(key);
             
             if (isPinned) {
                 // 取消标记
                 await StorageAdapter.remove(key);
+                
+                // ✅ 兼容性修复：清理可能存在的旧数据（数字索引）
+                if (typeof nodeKey !== 'number') {
+                    const index = this.markers.indexOf(marker);
+                    if (index !== -1) {
+                        const oldKey = `chatTimelinePin:${urlWithoutProtocol}:${index}`;
+                        await StorageAdapter.remove(oldKey);
+                        this.pinnedIndexes.delete(index);
+                    }
+                }
+                
                 marker.pinned = false;
                 this.pinned.delete(id);
-                this.pinnedIndexes.delete(index);
+                this.pinnedIndexes.delete(nodeKey);
             } else {
                 // 添加标记
                 // ✅ 限制标记文字长度为前100个字符
@@ -3185,7 +3325,8 @@ class TimelineManager {
                 const pinData = {
                     url: location.href,
                     urlWithoutProtocol: urlWithoutProtocol,
-                    index: index,
+                    // ✅ 根据 nodeKey 类型决定存储字段（与 saveStarItemWithFolder 一致）
+                    ...(typeof nodeKey === 'string' ? { nodeId: nodeKey } : { index: nodeKey }),
                     question: truncatedSummary,
                     siteName: this.getSiteNameFromUrl(location.href),
                     timestamp: Date.now(),
@@ -3194,7 +3335,7 @@ class TimelineManager {
                 await StorageAdapter.set(key, pinData);
                 marker.pinned = true;
                 this.pinned.add(id);
-                this.pinnedIndexes.add(index);
+                this.pinnedIndexes.add(nodeKey);
             }
             
             // 更新节点UI
