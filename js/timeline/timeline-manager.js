@@ -657,11 +657,13 @@ class TimelineManager {
             currentNodeIds.add(id);
         });
         
-        // 判断节点是否变化：数量变化 或 ID 集合变化
+        // 判断节点是否变化：数量变化 或 ID 集合变化 或 DOM 引用失效
         const nodeCountChanged = userTurnElements.length !== this.lastNodeCount;
         const nodeIdsChanged = currentNodeIds.size !== this.lastNodeIds.size || 
                                ![...currentNodeIds].every(id => this.lastNodeIds.has(id));
-        const needsRecalculation = nodeCountChanged || nodeIdsChanged;
+        // ✅ 新增：检查是否有 DOM 引用失效（处理虚拟滚动导致的 DOM 回收）
+        const hasInvalidDom = this.markers.some(m => !m.element?.isConnected);
+        const needsRecalculation = nodeCountChanged || nodeIdsChanged || hasInvalidDom;
         
         // 如果节点没有变化，只更新渲染，不重新计算位置
         if (!needsRecalculation && this.markers.length > 0) {
@@ -671,7 +673,6 @@ class TimelineManager {
             this.updateActiveDotUI();
             this.scheduleScrollSync();
             this.perfEnd('recalc');
-            // console.log('⚡ [优化] 节点未变化，跳过位置重新计算');
             return;
         }
         
@@ -704,87 +705,137 @@ class TimelineManager {
          * @param {HTMLElement} container - 容器元素
          * @returns {number} 元素距离容器顶部的像素距离
          */
+        /**
+         * ✅ 使用 getBoundingClientRect 计算元素相对于容器内容区域顶部的距离
+         * 
+         * 公式：elemRect.top - contRect.top + container.scrollTop
+         * 
+         * 解释：
+         * - elemRect.top - contRect.top = 元素相对于容器可见区域顶部的距离
+         * - + scrollTop = 加上已滚动的距离
+         * - 结果 = 元素相对于容器内容区域顶部的绝对距离
+         */
         const getOffsetTop = (element, container) => {
-            let offset = 0;
-            let current = element;
-            
-            // 向上遍历，累加 offsetTop，直到到达 container
-            while (current && current !== container && container.contains(current)) {
-                offset += current.offsetTop || 0;
-                current = current.offsetParent;
-                
-                // 如果 offsetParent 跳到了 container 外面，需要修正
-                // 这种情况通常发生在有 position:fixed 等特殊定位的元素
-                if (current && !container.contains(current)) {
-                    // 使用 getBoundingClientRect 作为后备方案
                     const elemRect = element.getBoundingClientRect();
                     const contRect = container.getBoundingClientRect();
                     const contScrollTop = container.scrollTop || 0;
                     return elemRect.top - contRect.top + contScrollTop;
-                }
-            }
-            
-            return offset;
         };
         
-        // 计算第一个和最后一个节点距离容器顶部的距离
-        const firstOffsetTop = getOffsetTop(userTurnElements[0], this.conversationContainer);
-        const lastOffsetTop = getOffsetTop(userTurnElements[userTurnElements.length - 1], this.conversationContainer);
+        /**
+         * ✅ 新设计：基于滚动进度的 n 值计算
+         * 
+         * 核心思想：
+         * - 节点N 的 n 值 = 节点(N+1) 顶部位置 / maxScrollTop
+         * - 最后一个节点的 n 值 = 1
+         * - 激活判断：找第一个 n > scrollProgress 的节点
+         * 
+         * 这样 n 值代表"当滚动进度超过这个值时，应该激活下一个节点"
+         * 即 n 是当前节点的"有效范围上限"
+         * 
+         * 示例：
+         * ┌─────────────────────────┐
+         * │ 节点1 (n=0.4)           │ ← n 值来自节点2的位置
+         * │ 节点2 (n=0.7)           │ ← n 值来自节点3的位置  
+         * │ 节点3 (n=1.0)           │ ← 最后一个，固定为1
+         * └─────────────────────────┘
+         * 
+         * 当 scrollProgress = 0.5 时，第一个 n > 0.5 的是节点2，激活节点2
+         */
         
-        const firstTurnOffset = 0; // 使用第一个元素作为基准
+        // 获取滚动容器的尺寸信息
+        const scrollHeight = this.scrollContainer.scrollHeight;
+        const clientHeight = this.scrollContainer.clientHeight;
+        const maxScrollTop = scrollHeight - clientHeight;
+        
+        // 缓存用于后续计算
+        this.maxScrollTop = maxScrollTop > 0 ? maxScrollTop : 1;
+        
+        // ✅ 统一使用 scrollContainer 计算所有位置
+        const nodeOffsets = Array.from(userTurnElements).map(el => getOffsetTop(el, this.scrollContainer));
+        
+        // 用于时间轴圆点定位（也使用 scrollContainer，保持一致）
+        const firstOffsetTop = nodeOffsets[0];
+        const lastOffsetTop = nodeOffsets[nodeOffsets.length - 1];
         let contentSpan = lastOffsetTop - firstOffsetTop;
-        
         if (userTurnElements.length < 2 || contentSpan <= 0) {
             contentSpan = 1;
         }
-
-        // Cache for scroll mapping
-        this.firstUserTurnOffset = firstTurnOffset;
         this.contentSpanPx = contentSpan;
 
         // Build markers with normalized position along conversation
         this.markerMap.clear();
         
-        this.markers = Array.from(userTurnElements).map((el, index) => {
             /**
-             * ✅ 计算节点的归一化位置（0 到 1）
+         * ✅ 计算 activateAt 的基准值
              * 
-             * 重要：节点位置不是均匀分布，而是按对话内容在页面上的实际位置比例映射
+         * 逻辑：
+         * - 如果最后一个节点底部距离滚动区域底部的距离 > 滚动窗口高度
+         *   - 用最后一个节点的 offsetTop
+         * - 否则
+         *   - 用 maxScrollTop (scrollHeight - clientHeight)
+         */
+        const distanceFromLastNodeToBottom = scrollHeight - lastOffsetTop;
+        let activateBase;
+        if (distanceFromLastNodeToBottom > clientHeight) {
+            // 最后一个节点后面内容很多，用最后一个节点的 offsetTop
+            activateBase = lastOffsetTop;
+        } else {
+            // 用 maxScrollTop
+            activateBase = maxScrollTop;
+        }
+        
+        this.markers = Array.from(userTurnElements).map((el, index, arr) => {
+            /**
+             * ✅ 节点位置信息：
              * 
-             * 计算原理：
-             * 1. 测量每个节点在页面上的实际位置（offsetTop）
-             * 2. 计算相对于第一个节点的距离：offsetFromStart = elOffsetTop - firstOffsetTop
-             * 3. 归一化到 [0, 1] 区间：n = offsetFromStart / contentSpan
+             * - offsetTop: 节点顶部距离滚动区域顶部的距离（像素）
+             * - offsetBottom: 节点结束位置 = offsetTop + 节点高度（像素）
+             * - visualN: 用于时间轴圆点定位（0~1）
+             * - activateAt: 激活阈值（像素）= activateBase * visualN
              * 
-             * 示例场景：
-             * - 如果第2条对话很长（占300px），第3条对话很短（占50px）
-             * - 那么节点2和节点3在时间轴上的距离也会反映这个比例（约6:1）
-             * - 这样用户可以直观看到对话内容的疏密分布
-             * 
-             * 结果：
-             * - 第一个节点：offsetFromStart = 0, n = 0 → 时间轴顶部（留 pad 边距）
-             * - 最后一个节点：offsetFromStart = contentSpan, n = 1 → 时间轴底部（留 pad 边距）
-             * - 中间节点：n 按对话实际位置比例分布（不是均匀分布）
-             * 
-             * 这个 n 值会在 updateTimelineGeometry() 中转换为时间轴上的实际像素位置：
-             * y = pad + n * (contentHeight - 2*pad)
+             * 激活逻辑：找最后一个 activateAt <= scrollTop 的节点
              */
-            const elOffsetTop = getOffsetTop(el, this.conversationContainer);
-            const offsetFromStart = elOffsetTop - firstOffsetTop;
             
-            let n = offsetFromStart / contentSpan;
-            n = Math.max(0, Math.min(1, n)); // 限制在 [0, 1] 范围内
+            // 节点顶部距离滚动区域的距离（像素）
+            const offsetTop = nodeOffsets[index];
+            
+            // offsetBottom: 节点结束位置 = offsetTop + 节点高度（像素）
+            const nodeHeight = el.offsetHeight || 0;
+            const offsetBottom = offsetTop + nodeHeight;
+            
+            // visualN: 用于时间轴圆点定位（0~1，保留6位小数）
+            const offsetFromStart = offsetTop - firstOffsetTop;
+            let visualN = offsetFromStart / contentSpan;
+            visualN = Math.round(Math.max(0, Math.min(1, visualN)) * 1000000) / 1000000;
+            
+            /**
+             * ✅ activateAt: 激活阈值（像素）
+             * 
+             * 计算公式：activateAt = activateBase * visualN
+             * 
+             * activateBase 的选择：
+             * - 如果最后一个节点后内容 > 滚动窗口：用 lastOffsetTop
+             * - 否则：用 maxScrollTop
+             * 
+             * 当 scrollTop >= activateAt 时，激活该节点
+             */
+            const activateAt = activateBase * visualN;
+            
             const id = this.adapter.generateTurnId(el, index);
             
             const m = {
                 id: id,
                 element: el,
                 summary: this.adapter.extractText(el),
-                n,
-                baseN: n,
+                offsetTop,      // 节点顶部距离（像素）
+                offsetBottom,   // 节点结束位置（像素）
+                visualN,        // 原始位置比例（0~1，用于激活判断）
+                dotN: visualN,  // 圆点定位值（0~1，经过 minGap 调整，用于视觉渲染）
+                activateAt,     // 激活阈值（像素）= activateBase * visualN
                 dotElement: null,
                 starred: false,
-                pinned: false,  // ✅ 标记状态
+                pinned: false,
             };
             this.markerMap.set(m.id, m);
             return m;
@@ -1560,9 +1611,11 @@ class TimelineManager {
     smoothScrollTo(targetElement, duration = 600) {
         if (!targetElement || !this.scrollContainer) return;
         
+        const SCROLL_OFFSET = 50; // 滚动偏移量，滚动到 offsetTop - 50 的位置
+        
         const containerRect = this.scrollContainer.getBoundingClientRect();
         const targetRect = targetElement.getBoundingClientRect();
-        const targetPosition = targetRect.top - containerRect.top + this.scrollContainer.scrollTop;
+        const targetPosition = targetRect.top - containerRect.top + this.scrollContainer.scrollTop - SCROLL_OFFSET;
         const startPosition = this.scrollContainer.scrollTop;
         const distance = targetPosition - startPosition;
         let startTime = null;
@@ -1739,16 +1792,18 @@ class TimelineManager {
         const maxTop = trackPadding + usable;
         
         // Use cached normalized positions (default 0)
+        // ✅ 使用 visualN（圆点定位）而不是 n（激活判断）
         const desired = this.markers.map(m => {
-            const n = Math.max(0, Math.min(1, (m.baseN ?? m.n ?? 0)));
-            return minTop + n * usable;
+            const vn = Math.max(0, Math.min(1, (m.visualN ?? 0)));
+            return minTop + vn * usable;
         });
         const adjusted = this.applyMinGap(desired, minTop, maxTop, minGap);
         for (let i = 0; i < this.markers.length; i++) {
             const top = adjusted[i];
-            const n = (top - minTop) / Math.max(1, usable);
-            this.markers[i].n = Math.max(0, Math.min(1, n));
-            try { this.markers[i].dotElement?.style.setProperty('--n', String(this.markers[i].n)); } catch {}
+            const vn = (top - minTop) / Math.max(1, usable);
+            // ✅ 存储到 dotN（用于圆点 CSS 定位）
+            this.markers[i].dotN = Math.max(0, Math.min(1, vn));
+            try { this.markers[i].dotElement?.style.setProperty('--n', String(this.markers[i].dotN)); } catch {}
         }
         this.perfEnd('minGapIdle');
     }
@@ -2024,20 +2079,21 @@ class TimelineManager {
             try { this.ui.trackContent.style.height = `${this.contentHeight}px`; } catch {}
 
             const usableC = Math.max(1, this.contentHeight - 2 * pad);
-            const desiredY = this.markers.map(m => pad + Math.max(0, Math.min(1, (m.baseN ?? m.n ?? 0))) * usableC);
+            const desiredY = this.markers.map(m => pad + Math.max(0, Math.min(1, (m.visualN ?? 0))) * usableC);
             adjusted = this.applyMinGap(desiredY, pad, pad + usableC, minGap);
         }
         
         this.yPositions = adjusted;
         
-        // Update normalized n for CSS positioning
+        // ✅ 更新 dotN（经过 minGap 调整的圆点定位值）
         const usableForN = Math.max(1, this.contentHeight - 2 * pad);
         for (let i = 0; i < N; i++) {
             const top = adjusted[i];
-            const n = (top - pad) / usableForN;
-            this.markers[i].n = Math.max(0, Math.min(1, n));
+            const dn = (top - pad) / usableForN;
+            // dotN: 用于圆点 CSS 定位（经过 minGap 调整）
+            this.markers[i].dotN = Math.max(0, Math.min(1, dn));
             if (this.markers[i].dotElement && !this.usePixelTop) {
-                try { this.markers[i].dotElement.style.setProperty('--n', String(this.markers[i].n)); } catch {}
+                try { this.markers[i].dotElement.style.setProperty('--n', String(this.markers[i].dotN)); } catch {}
             }
         }
         if (this._cssVarTopSupported === null) {
@@ -2125,7 +2181,7 @@ class TimelineManager {
                 dot.setAttribute('aria-label', marker.summary);
                 dot.setAttribute('tabindex', '0');
                 try { dot.setAttribute('aria-describedby', 'chat-timeline-tooltip'); } catch {}
-                try { dot.style.setProperty('--n', String(marker.n || 0)); } catch {}
+                try { dot.style.setProperty('--n', String(marker.dotN || 0)); } catch {}
                 if (this.usePixelTop) {
                     dot.style.top = `${Math.round(this.yPositions[i])}px`;
                 }
@@ -2142,7 +2198,7 @@ class TimelineManager {
                 marker.dotElement = dot;
                 frag.appendChild(dot);
             } else {
-                try { marker.dotElement.style.setProperty('--n', String(marker.n || 0)); } catch {}
+                try { marker.dotElement.style.setProperty('--n', String(marker.dotN || 0)); } catch {}
                 if (this.usePixelTop) {
                     marker.dotElement.style.top = `${Math.round(this.yPositions[i])}px`;
                 }
@@ -2317,6 +2373,11 @@ class TimelineManager {
         if (this.scrollRafId !== null) return;
         this.scrollRafId = requestAnimationFrame(() => {
             this.scrollRafId = null;
+            
+            // ✅ 每次滚动时都重新计算节点位置
+            // 解决页面元素动态展开导致高度计算不准确的问题
+            this._recalcMarkerPositions();
+            
             // Sync long-canvas scroll and virtualized dots before computing active
             this.syncTimelineTrackToMain();
             this.updateVirtualRangeAndRender();
@@ -2324,144 +2385,150 @@ class TimelineManager {
         });
     }
 
+    /**
+     * ✅ 仅重新计算已有节点的位置（offsetTop, visualN, activateAt）
+     * 不重建节点，保留收藏、标记等状态
+     */
+    _recalcMarkerPositions() {
+        if (!this.scrollContainer || this.markers.length === 0) return;
+        
+        // ✅ 检查是否有 DOM 引用失效的节点
+        const hasInvalidElement = this.markers.some(m => !m.element?.isConnected);
+        if (hasInvalidElement) {
+            // DOM 引用失效，需要完整重新计算
+            // 使用标记避免重复触发
+            if (!this._pendingDomRefresh) {
+                this._pendingDomRefresh = true;
+                // 使用 requestAnimationFrame 立即执行，避免防抖导致的延迟
+                requestAnimationFrame(() => {
+                    this._pendingDomRefresh = false;
+                    this.recalculateAndRenderMarkers();
+                });
+            }
+            return;
+        }
+        
+        // 获取节点位置计算工具函数
+        const getOffsetTop = (element, container) => {
+            const elemRect = element.getBoundingClientRect();
+            const contRect = container.getBoundingClientRect();
+            const contScrollTop = container.scrollTop || 0;
+            return elemRect.top - contRect.top + contScrollTop;
+        };
+        
+        // 计算滚动区域信息
+        const scrollHeight = this.scrollContainer.scrollHeight;
+        const clientHeight = this.scrollContainer.clientHeight;
+        
+        // 收集所有节点的 offsetTop
+        const nodeOffsets = this.markers.map(m => getOffsetTop(m.element, this.scrollContainer));
+        
+        // 计算内容跨度
+        const firstOffsetTop = nodeOffsets[0];
+        const lastOffsetTop = nodeOffsets[nodeOffsets.length - 1];
+        const contentSpan = lastOffsetTop - firstOffsetTop || 1;
+        const maxScrollTop = Math.max(scrollHeight - clientHeight, 1);
+        
+        /**
+         * ✅ 计算 activateAt 的基准值
+         * 
+         * 逻辑：
+         * - 如果最后一个节点底部距离滚动区域底部的距离 > 滚动窗口高度
+         *   - 用最后一个节点的 offsetTop
+         * - 否则
+         *   - 用 maxScrollTop (scrollHeight - clientHeight)
+         */
+        const distanceFromLastNodeToBottom = scrollHeight - lastOffsetTop;
+        let activateBase;
+        if (distanceFromLastNodeToBottom > clientHeight) {
+            activateBase = lastOffsetTop;
+        } else {
+            activateBase = maxScrollTop;
+        }
+        
+        // 更新每个节点的位置信息
+        let visualNChanged = false;
+        this.markers.forEach((m, index) => {
+            m.offsetTop = nodeOffsets[index];
+            
+            // offsetBottom: 节点结束位置 = offsetTop + 节点高度
+            const nodeHeight = m.element.offsetHeight || 0;
+            m.offsetBottom = m.offsetTop + nodeHeight;
+            
+            // visualN: 原始位置比例（0~1，基于页面实际位置）
+            const offsetFromStart = m.offsetTop - firstOffsetTop;
+            const newVisualN = Math.max(0, Math.min(1, offsetFromStart / contentSpan));
+            
+            // 检测 visualN 是否有显著变化（阈值 0.001）
+            if (Math.abs(newVisualN - (m.visualN || 0)) > 0.001) {
+                visualNChanged = true;
+            }
+            m.visualN = newVisualN;
+            
+            // activateAt = activateBase * visualN（用于激活判断）
+            m.activateAt = activateBase * m.visualN;
+        });
+        
+        // ✅ 只有 visualN 有变化时才更新 dotN（减少不必要的计算）
+        if (visualNChanged) {
+            this.updateTimelineGeometry();
+        }
+    }
+
     computeActiveByScroll() {
         if (!this.scrollContainer || this.markers.length === 0) return;
         
-        const scrollTop = this.scrollContainer.scrollTop;
-        const scrollHeight = this.scrollContainer.scrollHeight;
-        const clientHeight = this.scrollContainer.clientHeight;
-        const containerRect = this.scrollContainer.getBoundingClientRect();
+        /**
+         * ✅ 基于 activateAt 的激活判断（提前激活）
+         * 
+         * 核心逻辑：
+         * 1. 获取当前 scrollTop（像素值）
+         * 2. 每个节点有 activateAt = activateBase * visualN
+         * 3. 激活最后一个 (activateAt - 提前量) <= scrollTop 的节点
+         * 
+         * 示例：
+         * - scrollHeight = 4988
+         * - 节点0: visualN=0, activateAt=0
+         * - 节点1: visualN=0.64, activateAt=3192
+         * - 节点2: visualN=0.84, activateAt=4190
+         * 
+         * 当 scrollTop = 3150px，提前量 = 50px 时：
+         * - 节点1 的 activateAt - 50 = 3142 <= 3150 ✓
+         * - 激活节点1 ✓
+         */
         
-        // ========== 优先检测：是否在顶部或底部 ==========
+        const ACTIVATE_AHEAD = 50; // 提前激活距离（像素）
+        
+        let scrollTop = this.scrollContainer.scrollTop;
+        
         // ✅ 检测平台是否使用反向滚动（如豆包）
         const isReverseScroll = typeof this.adapter.isReverseScroll === 'function' && this.adapter.isReverseScroll();
         
-        let isAtTop, isAtBottom;
-        
         if (isReverseScroll) {
-            // 反向滚动：scrollTop = 0 在底部，负数越大越接近顶部
-            const absScrollTop = Math.abs(scrollTop);
-            isAtTop = absScrollTop + clientHeight >= scrollHeight - 10;
-            isAtBottom = absScrollTop < 10;
-        } else {
-            // 正常滚动：scrollTop = 0 在顶部（默认逻辑）
-            isAtTop = scrollTop < 10;
-            isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+            // 反向滚动：scrollTop 是负数，取绝对值
+            scrollTop = Math.abs(scrollTop);
         }
         
-        // 如果滚动到顶部（距离顶部 < 10px），强制激活第一个节点
-        if (isAtTop) {
-            const firstId = this.markers[0].id;
-            if (this.activeTurnId !== firstId) {
-                this.activeTurnId = firstId;
-                this.updateActiveDotUI();
-                this.lastActiveChangeTime = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
-            }
-            return;
-        }
+        // ✅ 使用 activateAt 字段判断激活（提前激活）
+        // 当 scrollTop >= (activateAt - 提前量) 时激活该节点
+        let activeId = this.markers[0].id;  // 默认激活第一个
         
-        // 如果滚动到底部（距离底部 < 10px），强制激活最后一个节点
-        if (isAtBottom) {
-            const lastId = this.markers[this.markers.length - 1].id;
-            if (this.activeTurnId !== lastId) {
-                this.activeTurnId = lastId;
-                this.updateActiveDotUI();
-                this.lastActiveChangeTime = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
-            }
-            return;
-        }
-        
-        // ========== 常规情况：使用参考点计算 ==========
-        /**
-         * 参考点策略：容器顶部向下 45% 的位置
-         * 
-         * 逻辑分支：
-         * 
-         * 【情况1】0-45%区域内有节点：
-         *   → 激活第一个在0-45%区域内的节点
-         * 
-         * 【情况2】0-45%区域内没有节点：
-         *   → 情况2.1：上方存在节点 → 激活距离最近的上方节点（最后一个在视口上方的）
-         *   → 情况2.2：上方没有节点 → 激活节点1（默认第一个节点）
-         * 
-         * 示例1（情况1：有节点在0-45%区域内）：
-         * ┌─────────────┐
-         * │ 视口顶部     │ 0%
-         * │ 节点1 ●     │ 20%  ✅ 激活（第一个在0-45%内）
-         * │ 节点2 ●     │ 40%  ← 不激活
-         * │ ─────── ←─  │ 45%  ← 参考点
-         * │ 节点3 ●     │ 55%
-         * └─────────────┘
-         * 
-         * 示例2（情况2.1：0-45%内没有节点，上方有节点）：
-         * │ 节点1 ●     │ -200px (在视口上方)
-         * │ 节点2 ●     │ -100px (在视口上方) ✅ 激活（距离最近的上方节点）
-         * ┌─────────────┐
-         * │ 视口顶部     │ 0%
-         * │ ─────── ←─  │ 45%  ← 参考点
-         * │ 节点3 ●     │ 50%
-         * └─────────────┘
-         * 
-         * 示例3（情况2.2：0-45%内没有节点，上方也没有节点）：
-         * ┌─────────────┐
-         * │ 视口顶部     │ 0%
-         * │ ─────── ←─  │ 45%  ← 参考点
-         * │ 节点1 ●     │ 50%  ✅ 激活（默认第一个节点）
-         * │ 节点2 ●     │ 60%
-         * └─────────────┘
-         */
-        const referencePoint = containerRect.top + clientHeight * 0.45;
-        const viewportTop = containerRect.top;
-        const viewportBottom = containerRect.bottom;
-        
-        // 默认激活第一个节点（用于情况2.2）
-        let activeId = this.markers[0].id;
-        let foundInRange = false;
-        
-        // 第一步：从前往后遍历，找第一个在【视口内】且在【0-45%区域】的节点
         for (let i = 0; i < this.markers.length; i++) {
             const m = this.markers[i];
-            const elRect = m.element.getBoundingClientRect();
-            const elTop = elRect.top;
-            const elBottom = elRect.bottom;
-            
-            // 【情况1】找到第一个部分可见且在0-45%区域的节点
-            // 判断元素是否部分可见：上边缘或下边缘在视口内，或完全覆盖视口
-            const isTopInViewport = elTop >= viewportTop && elTop <= viewportBottom;
-            const isBottomInViewport = elBottom >= viewportTop && elBottom <= viewportBottom;
-            const coversViewport = elTop < viewportTop && elBottom > viewportBottom;
-            const isPartiallyVisible = isTopInViewport || isBottomInViewport || coversViewport;
-            
-            // 条件：元素部分可见 && 元素顶部在45%参考线之上
-            if (isPartiallyVisible && elTop <= referencePoint) {
-                activeId = m.id;
-                foundInRange = true;
-                break;  // 找到第一个满足条件的，立即停止
+            // 当 scrollTop >= (activateAt - 提前量) 时激活该节点
+            if ((m.activateAt - ACTIVATE_AHEAD) <= scrollTop) {
+                activeId = m.id;  // 不断更新，最终得到最后一个满足条件的
+            } else {
+                break;  // 后面的节点 activateAt 只会更大，可以提前退出
             }
         }
         
-        // 第二步：【情况2】0-45%区域内没有节点，找"视口上方"最近的节点
-        if (!foundInRange) {
-            for (let i = 0; i < this.markers.length; i++) {
-                const m = this.markers[i];
-                const elRect = m.element.getBoundingClientRect();
-                const elTop = elRect.top;
-                
-                // 【情况2.1】找最后一个在视口上方的节点（距离最近的）
-                if (elTop < viewportTop) {
-                    activeId = m.id;  // 不断更新，最终得到最后一个
-                } else {
-                    break;  // 遇到第一个在视口内或之下的节点，停止
-                }
-            }
-            // 【情况2.2】如果循环结束后 activeId 仍是默认值，说明上方没有节点，保持为节点1
-        }
-        
+        // 更新激活状态（带防抖）
         if (this.activeTurnId !== activeId) {
             const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
             const since = now - this.lastActiveChangeTime;
             if (since < TIMELINE_CONFIG.MIN_ACTIVE_CHANGE_INTERVAL) {
-                // Coalesce rapid changes during fast scrolling/layout shifts
+                // 快速滚动时合并更新
                 this.pendingActiveId = activeId;
                 if (!this.activeChangeTimer) {
                     const delay = Math.max(TIMELINE_CONFIG.MIN_ACTIVE_CHANGE_INTERVAL - since, 0);
@@ -3167,8 +3234,8 @@ class TimelineManager {
                 pinMarker.textContent = '📌';
                 pinMarker.dataset.markerId = marker.id;
                 
-                // 使用节点的 --n 变量来定位图钉
-                const n = marker.n || 0;
+                // 使用节点的 dotN 来定位图钉（与圆点位置一致）
+                const n = marker.dotN || 0;
                 pinMarker.style.setProperty('--n', String(n));
                 
                 // 添加到 timelineBar
