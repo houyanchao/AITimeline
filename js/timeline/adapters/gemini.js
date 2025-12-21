@@ -11,6 +11,15 @@
 class GeminiAdapter extends SiteAdapter {
     constructor() {
         super();
+        /**
+         * ✅ 性能优化：使用 WeakMap 缓存 nodeId
+         * 
+         * 为什么使用 WeakMap：
+         * - 元素作为 key，元素被 GC 时缓存自动清理
+         * - 避免内存泄漏
+         * - Gemini 虚拟滚动销毁元素后，缓存自动失效
+         */
+        this._nodeIdCache = new WeakMap();
     }
 
     matches(url) {
@@ -25,18 +34,29 @@ class GeminiAdapter extends SiteAdapter {
      * 从 DOM 元素中提取稳定的 nodeId
      * Gemini 的虚拟滚动会隐藏/重建节点，导致数组索引不可靠
      * 使用 user-query 父元素的 id 作为稳定标识
+     * 
+     * ✅ 性能优化：使用 WeakMap 缓存结果
      * @param {Element} element - user-query 元素
      * @returns {string|null} - 父元素的 id，失败返回 null
      */
     _extractNodeIdFromDom(element) {
         if (!element) return null;
         
+        // ✅ 缓存命中检查
+        if (this._nodeIdCache.has(element)) {
+            return this._nodeIdCache.get(element);
+        }
+        
         // 获取 user-query 父元素的 id
         const parent = element.parentElement;
-        if (parent && parent.id) {
-            return parent.id;
+        const nodeId = (parent && parent.id) ? parent.id : null;
+        
+        // ✅ 存入缓存（只缓存有效的 nodeId）
+        if (nodeId) {
+            this._nodeIdCache.set(element, nodeId);
         }
-        return null;
+        
+        return nodeId;
     }
     
     /**

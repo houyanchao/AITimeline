@@ -625,13 +625,22 @@ class TimelineManager {
         }
         this.zeroTurnsTimer = TimelineUtils.clearTimerSafe(this.zeroTurnsTimer);
 
-        // ✅ 按照元素在页面上的实际位置（从上往下）排序
-        // 确保节点顺序和视觉顺序完全一致，适用于所有网站
-        userTurnElements = Array.from(userTurnElements).sort((a, b) => {
-            const rectA = a.getBoundingClientRect();
-            const rectB = b.getBoundingClientRect();
-            return rectA.top - rectB.top;
-        });
+        /**
+         * ✅ 按照元素在页面上的实际位置（从上往下）排序
+         * 确保节点顺序和视觉顺序完全一致，适用于所有网站
+         * 
+         * ✅ 性能优化：批量读取所有 rect 后再排序
+         * 原因：getBoundingClientRect() 会触发浏览器重排
+         * 批量读取可以让浏览器合并重排操作，减少布局抖动
+         */
+        const elementsArray = Array.from(userTurnElements);
+        // 一次性批量读取所有 rect（利用浏览器批量优化）
+        const rectsMap = new Map();
+        elementsArray.forEach(el => rectsMap.set(el, el.getBoundingClientRect()));
+        // 使用缓存的 rect 进行排序
+        userTurnElements = elementsArray.sort((a, b) => 
+            rectsMap.get(a).top - rectsMap.get(b).top
+        );
         
         /**
          * ✅ 性能优化：只在节点真正变化时重新计算位置
@@ -950,6 +959,23 @@ class TimelineManager {
     
     setupObservers() {
         this.mutationObserver = new MutationObserver((mutations) => {
+            /**
+             * ✅ 防御性检查：确保有实际的节点增删变化
+             * 
+             * 理论上，由于只配置了 childList: true，所有 mutation 都应该
+             * 包含 addedNodes 或 removedNodes。但作为防御性编程，
+             * 我们仍然检查以处理可能的边缘情况。
+             * 
+             * 真正的性能优化在 recalculateAndRenderMarkers() 中：
+             * 通过比较 turnId 集合来判断是否需要重建 markers。
+             */
+            const hasRelevantChange = mutations.some(m => 
+                m.type === 'childList' && 
+                (m.addedNodes.length > 0 || m.removedNodes.length > 0)
+            );
+            
+            if (!hasRelevantChange) return;
+            
             try { this.ensureContainersUpToDate(); } catch {}
             this.debouncedRecalculateAndRender();
             this.updateIntersectionObserverTargets();
