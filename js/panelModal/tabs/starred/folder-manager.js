@@ -157,19 +157,28 @@ class FolderManager {
         };
         
         // ✅ 辅助函数：从 key 中提取 item 信息
+        // ⚠️ 重要：turnId 必须完全从 Storage Key 中解析，确保 handleUnstar 时能正确删除
         const extractItemInfo = (key, item) => {
-            const parts = key.split(':');
-            const urlWithoutProtocol = parts.slice(1, -1).join(':');
-            // 优先使用存储的 nodeId，其次 index，最后从 key 解析
-            let nodeKey;
-            if (item.nodeId !== undefined) {
-                nodeKey = item.nodeId;
-            } else if (item.index !== undefined) {
-                nodeKey = item.index;
+            // key 格式：chatTimelineStar:{urlWithoutProtocol}:{nodeKey}
+            // 必须从 Key 中解析 nodeKey，不能用 item 中的字段，否则可能因类型差异导致 key 不匹配
+            const keyWithoutPrefix = key.replace('chatTimelineStar:', '');
+            const lastColonIndex = keyWithoutPrefix.lastIndexOf(':');
+            
+            let urlWithoutProtocol, nodeKeyStr;
+            if (lastColonIndex === -1) {
+                // 异常情况：没有冒号分隔
+                urlWithoutProtocol = keyWithoutPrefix;
+                nodeKeyStr = '';
             } else {
-                nodeKey = parseNodeKey(parts[parts.length - 1]);
+                urlWithoutProtocol = keyWithoutPrefix.substring(0, lastColonIndex);
+                nodeKeyStr = keyWithoutPrefix.substring(lastColonIndex + 1);
             }
-            const turnId = `${urlWithoutProtocol}:${nodeKey}`;
+            
+            // 解析 nodeKey 类型（数字或字符串）
+            const nodeKey = parseNodeKey(nodeKeyStr);
+            
+            // ⚠️ turnId 必须用 nodeKeyStr（原始字符串），确保和 Storage Key 完全一致
+            const turnId = `${urlWithoutProtocol}:${nodeKeyStr}`;
             return { urlWithoutProtocol, nodeKey, turnId };
         };
         

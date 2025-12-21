@@ -1074,14 +1074,15 @@ class StarredTab extends BaseTab {
      */
     async handleUnstar(turnId, url) {
         try {
-            // turnId 格式：url:index
+            // turnId 格式：urlWithoutProtocol:nodeKey（由 extractItemInfo 从 Storage Key 解析）
             const key = `chatTimelineStar:${turnId}`;
             await StorageAdapter.remove(key);
             
             // 显示成功提示
             window.globalToastManager.success(chrome.i18n.getMessage('pzmvkx'), null, { color: this.toastColor });
             
-            // 自动刷新列表（通过 storage listener）
+            // 手动刷新列表（确保立即更新，不依赖 storage listener）
+            await this.updateList();
         } catch (error) {
             console.error('[StarredTab] Unstar failed:', error);
         }
