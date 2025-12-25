@@ -2511,66 +2511,64 @@ class TimelineManager {
          * 
          * isAIGenerating 返回值：
          * - null: 未实现（平台未提供检测方法），不添加 padding
-         * - true: AI 正在生成，不添加 padding
-         * - false: AI 停止生成，可以添加 padding
+         * - true: AI 正在生成，保持 padding 高度不变
+         * - false: AI 停止生成，更新 padding 高度
          */
         const aiGeneratingState = this.adapter?.isAIGenerating?.();
         
-        // ✅ 以下情况移除 padding：
+        // ✅ 确保 padding 元素存在且始终在滚动区域最底部
+        const containerStyle = window.getComputedStyle(this.conversationContainer);
+        const isReversed = containerStyle.flexDirection === 'column-reverse';
+        
+        if (!paddingEl) {
+            // 初始化：创建高度为 0 的 padding 元素，带 CSS 过渡动画
+            paddingEl = document.createElement('div');
+            paddingEl.className = 'ait-scroll-padding';
+            paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; height: 0; transition: height 0.3s ease-out; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;';
+            this._currentPadding = 0;
+        }
+        
+        // 确保 padding 始终在最底部（或反向布局时在最顶部）
+        if (isReversed) {
+            if (paddingEl !== this.conversationContainer.firstElementChild) {
+                this.conversationContainer.prepend(paddingEl);
+            }
+        } else {
+            if (paddingEl !== this.conversationContainer.lastElementChild) {
+                this.conversationContainer.appendChild(paddingEl);
+            }
+        }
+        
+        // ✅ 以下情况设置高度为 0（不移除元素）：
         // 1. 只有1个节点
         // 2. isAIGenerating 返回 null（未实现）
-        // 3. isAIGenerating 返回 true（AI 正在生成）
-        const shouldRemovePadding = this.markers.length <= 1 || 
-                                    aiGeneratingState === null || 
-                                    aiGeneratingState === true;
+        const shouldSetZeroHeight = this.markers.length <= 1 || aiGeneratingState === null;
         
-        if (shouldRemovePadding) {
-            if (paddingEl) {
-                paddingEl.remove();
+        if (shouldSetZeroHeight) {
+            if (this._currentPadding !== 0) {
+                paddingEl.style.height = '0px';
+                paddingEl.textContent = '0px';
+                this._currentPadding = 0;
             }
-            this._currentPadding = 0;
             return;
         }
         
-        // 计算需要的空白高度（基于干净的 maxScrollTop）
-        // 目标：使新的 maxScrollTop >= lastOffsetTop（确保能滚动到最后一个节点）
-        // 注：ACTIVATE_AHEAD = 120px 的提前激活量已足够保证激活
-        const paddingNeeded = Math.max(0, lastOffsetTop - cleanMaxScrollTop);
+        // ✅ AI 正在生成时：保持 padding 高度不变，只确保位置正确
+        if (aiGeneratingState === true) {
+            return;
+        }
         
-        if (paddingNeeded > 0) {
-            // 需要添加/更新空白元素
-            if (!paddingEl) {
-                paddingEl = document.createElement('div');
-                paddingEl.className = 'ait-scroll-padding';
-                // 灰色背景便于识别
-                paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; background: rgba(128, 128, 128, 0.1);';
-            }
-            
-            // 检测容器是否使用反向布局（如 flex-direction: column-reverse）
-            const containerStyle = window.getComputedStyle(this.conversationContainer);
-            const isReversed = containerStyle.flexDirection === 'column-reverse';
-            
-            if (isReversed) {
-                // 反向布局：padding 需要插入到容器开头
-                if (paddingEl.parentElement !== this.conversationContainer || 
-                    paddingEl !== this.conversationContainer.firstElementChild) {
-                    this.conversationContainer.prepend(paddingEl);
-                }
-            } else {
-                // 正常布局：padding 插入到容器末尾
-                if (paddingEl.parentElement !== this.conversationContainer || 
-                    paddingEl !== this.conversationContainer.lastElementChild) {
-                    this.conversationContainer.appendChild(paddingEl);
-                }
-            }
+        // ✅ AI 生成结束：计算并更新 padding 高度
+        // 公式：lastOffsetTop - ACTIVATE_AHEAD + 20 - cleanMaxScrollTop
+        // 确保最后节点能在 ACTIVATE_AHEAD 提前量下被激活，额外 20px 余量避免压线
+        // 取整避免小数点波动导致的频繁更新
+        const paddingNeeded = Math.round(Math.max(0, lastOffsetTop - this.ACTIVATE_AHEAD + 20 - cleanMaxScrollTop));
+        
+        // 只有高度变化时才更新（触发 CSS 过渡动画）
+        if (this._currentPadding !== paddingNeeded) {
             paddingEl.style.height = paddingNeeded + 'px';
+            paddingEl.textContent = paddingNeeded + 'px';
             this._currentPadding = paddingNeeded;
-        } else {
-            // 不需要空白元素，移除
-            if (paddingEl) {
-                paddingEl.remove();
-            }
-            this._currentPadding = 0;
         }
     }
     
@@ -2585,8 +2583,10 @@ class TimelineManager {
         
         const clientHeight = this.scrollContainer.clientHeight;
         // scrollHeight 包含了我们添加的空白元素高度，需要减掉
-        const currentPadding = this._currentPadding || 0;
-        const cleanScrollHeight = this.scrollContainer.scrollHeight - currentPadding;
+        // 使用 padding 元素的实际高度（考虑 CSS transition 渐变过程）
+        const paddingEl = this.conversationContainer?.querySelector('.ait-scroll-padding');
+        const actualPadding = paddingEl ? paddingEl.offsetHeight : 0;
+        const cleanScrollHeight = this.scrollContainer.scrollHeight - actualPadding;
         const cleanMaxScrollTop = Math.max(cleanScrollHeight - clientHeight, 0);
         
         return { scrollHeight: cleanScrollHeight, clientHeight, maxScrollTop: cleanMaxScrollTop };
