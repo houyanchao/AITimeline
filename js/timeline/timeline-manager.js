@@ -2524,18 +2524,47 @@ class TimelineManager {
             // 初始化：创建高度为 0 的 padding 元素，带 CSS 过渡动画
             paddingEl = document.createElement('div');
             paddingEl.className = 'ait-scroll-padding';
-            paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; height: 0; transition: height 0.3s ease-out; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;';
+            // 通用：使用 order 保证在 flex 容器里视觉上始终位于底部（即使 DOM 不是 lastChild）
+            paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; order: 9999; height: 0; transition: height 0.3s ease-out; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;';
             this._currentPadding = 0;
         }
         
         // 确保 padding 始终在最底部（或反向布局时在最顶部）
+        // 通用处理：
+        // 一些平台的“自动滚动/自动跟随到底部”依赖其尾部哨兵节点（通常要求它保持为 lastChild）。
+        // 若我们把 padding 作为 lastChild，可能会打断平台自身逻辑，出现“新增提问不自动滚动”。
+        // 解决：在非反向布局下，若容器为 flex，则让 padding 处于 DOM 的倒数第二（tail 之前），同时用 order:9999 保证视觉仍在底部。
         if (isReversed) {
             if (paddingEl !== this.conversationContainer.firstElementChild) {
                 this.conversationContainer.prepend(paddingEl);
             }
         } else {
-            if (paddingEl !== this.conversationContainer.lastElementChild) {
-                this.conversationContainer.appendChild(paddingEl);
+            const isFlexContainer = /flex/.test(containerStyle.display || '');
+            if (isFlexContainer) {
+                const tailEl = this.conversationContainer.lastElementChild;
+                // 目标：让 padding 尽量不要成为 lastChild，给平台尾部逻辑留出空间
+                if (!tailEl) {
+                    this.conversationContainer.appendChild(paddingEl);
+                } else if (tailEl === paddingEl) {
+                    // padding 已经是 lastChild：把它往前挪一位，让“原本的前一个元素”成为 lastChild
+                    let anchor = paddingEl.previousElementSibling;
+                    while (anchor && anchor.classList?.contains('ait-scroll-padding')) {
+                        anchor = anchor.previousElementSibling;
+                    }
+                    if (anchor) {
+                        this.conversationContainer.insertBefore(paddingEl, anchor);
+                    }
+                } else {
+                    // 正常情况：把 padding 放到 tailEl 之前（保持 tailEl 仍为 lastChild）
+                    if (paddingEl.parentElement !== this.conversationContainer || paddingEl.nextElementSibling !== tailEl) {
+                        this.conversationContainer.insertBefore(paddingEl, tailEl);
+                    }
+                }
+            } else {
+                // 非 flex：order 不生效，维持 padding 作为 lastChild，保证视觉上始终在底部
+                if (paddingEl !== this.conversationContainer.lastElementChild) {
+                    this.conversationContainer.appendChild(paddingEl);
+                }
             }
         }
         
