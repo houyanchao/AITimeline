@@ -26,8 +26,8 @@ class SmartInputBoxTab extends BaseTab {
         const container = document.createElement('div');
         container.className = 'smart-input-box-settings';
         
-        // 平台列表
-        const smartInputPlatforms = getPlatformsByFeature('smartInput');
+        // 平台列表（过滤掉 Claude，因其 Enter 键行为无法被拦截）
+        const smartInputPlatforms = getPlatformsByFeature('smartInput').filter(p => p.id !== 'claude');
         
         // ==================== Enter 换行控制模块 ====================
         const enterKeySection = `

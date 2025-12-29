@@ -52,7 +52,7 @@ const SITE_INFO = [
         logoPath: 'images/logo/doubao.webp',
         features: {
             timeline: true,
-            smartInput: false
+            smartInput: true
         }
     },
     {
@@ -102,7 +102,7 @@ const SITE_INFO = [
         logoPath: 'images/logo/yuanbao.webp',
         features: {
             timeline: true,
-            smartInput: false
+            smartInput: true
         }
     },
     {
@@ -132,7 +132,7 @@ const SITE_INFO = [
         logoPath: 'images/logo/claude.webp',
         features: {
             timeline: true,
-            smartInput: false
+            smartInput: true
         }
     }
 ];

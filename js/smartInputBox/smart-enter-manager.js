@@ -118,6 +118,11 @@ class SmartEnterManager {
                 return false; // 平台不支持该功能
             }
             
+            // ✅ Claude 平台硬编码禁用（其 Enter 键行为无法被拦截）
+            if (platform.id === 'claude') {
+                return false;
+            }
+            
             // 从缓存中检查（默认关闭）
             return this.platformSettings[platform.id] === true;
         } catch (e) {
@@ -480,14 +485,14 @@ class SmartEnterManager {
             const count = result.smartEnterToastCount || 0;
             
             // 如果已提示超过30次，不再提示
-            if (count >= 30) {
-                return;
-            }
+            // if (count >= 30) {
+            //     return;
+            // }
             
             // 显示Toast
             const message = chrome.i18n.getMessage('vxmkpz');
             window.globalToastManager.info(message, inputElement, {
-                duration: 2200,
+                duration: 2500,
                 icon: '',  // 不显示图标
                 color: {
                     light: {

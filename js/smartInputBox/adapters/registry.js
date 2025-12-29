@@ -49,10 +49,20 @@ class SmartEnterAdapterRegistry {
             this.adapters.push(new GrokSmartEnterAdapter());
         }
         
-        // 未来添加其他平台：
-        // if (typeof ClaudeSmartEnterAdapter !== 'undefined') {
-        //     this.adapters.push(new ClaudeSmartEnterAdapter());
-        // }
+        // 注册豆包适配器
+        if (typeof DoubaoSmartEnterAdapter !== 'undefined') {
+            this.adapters.push(new DoubaoSmartEnterAdapter());
+        }
+        
+        // 注册 Claude 适配器
+        if (typeof ClaudeSmartEnterAdapter !== 'undefined') {
+            this.adapters.push(new ClaudeSmartEnterAdapter());
+        }
+        
+        // 注册元宝适配器
+        if (typeof YuanbaoSmartEnterAdapter !== 'undefined') {
+            this.adapters.push(new YuanbaoSmartEnterAdapter());
+        }
     }
     
     /**
