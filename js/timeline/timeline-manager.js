@@ -2936,12 +2936,7 @@ class TimelineManager {
      * ✅ 截断文本到指定长度，超出添加 "..."
      * 
      * 用途：
-     * 用于收藏和标记功能，限制保存的文本长度，避免超出存储配额。
-     * 
-     * Chrome Storage API 限制：
-     * - chrome.storage.sync.QUOTA_BYTES_PER_ITEM = 8KB (每个条目)
-     * - 包含 LaTeX 公式或长代码的消息可能超出此限制
-     * - 截断后可避免 "kQuotaBytesPerItem quota exceeded" 错误
+     * 用于收藏和标记功能，限制保存的文本长度，保持 UI 整洁。
      * 
      * @param {string} text - 原始文本
      * @param {number} maxLength - 最大长度（默认100字符）

@@ -174,16 +174,61 @@ const TimelineUtils = {
 /**
  * Storage Adapter - 跨网站存储
  * 
- * 优先使用 chrome.storage.sync（跨网站、跨设备同步）
- * 降级到 chrome.storage.local（跨网站、本地存储）
- * 最后降级到 localStorage（仅当前网站）
+ * 使用 chrome.storage.local（跨网站、本地存储，5MB 容量）
+ * 降级到 localStorage（仅当前网站）
+ * 
+ * 注意：v4.1.0 之前使用 chrome.storage.sync，已迁移至 local
  */
 const StorageAdapter = {
     /**
      * 检查是否支持 chrome.storage
      */
     isChromeStorageAvailable() {
-        return typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync;
+        return typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
+    },
+
+    /**
+     * 从 chrome.storage.sync 迁移数据到 chrome.storage.local
+     * 迁移完成后清空 sync，下次检查时 sync 为空则跳过
+     * @returns {Promise<void>}
+     */
+    async migrateFromSyncToLocal() {
+        try {
+            // 检查 chrome.storage 是否可用
+            if (!this.isChromeStorageAvailable()) return;
+            
+            // 检查 sync 是否可用（用于读取旧数据）
+            if (!chrome.storage.sync) return;
+            
+            // 从 sync 读取所有数据
+            const syncData = await new Promise((resolve) => {
+                chrome.storage.sync.get(null, (items) => {
+                    resolve(items || {});
+                });
+            });
+            
+            // 如果 sync 中没有数据，跳过
+            const syncKeys = Object.keys(syncData);
+            if (syncKeys.length === 0) return;
+            
+            // 复制到 local
+            await new Promise((resolve) => {
+                chrome.storage.local.set(syncData, () => {
+                    resolve();
+                });
+            });
+            
+            // 清空 sync（迁移完成标志）
+            await new Promise((resolve) => {
+                chrome.storage.sync.clear(() => {
+                    resolve();
+                });
+            });
+            
+            console.log('[StorageAdapter] Migrated', syncKeys.length, 'keys from sync to local:', syncKeys);
+        } catch (e) {
+            console.error('[StorageAdapter] Migration failed:', e);
+        }
     },
 
     /**
@@ -194,9 +239,9 @@ const StorageAdapter = {
     async get(key) {
         try {
             if (this.isChromeStorageAvailable()) {
-                // 使用 chrome.storage.sync（跨网站、跨设备）
+                // 使用 chrome.storage.local（跨网站、本地存储）
                 return new Promise((resolve) => {
-                    chrome.storage.sync.get([key], (result) => {
+                    chrome.storage.local.get([key], (result) => {
                         resolve(result[key]);
                     });
                 });
@@ -219,9 +264,9 @@ const StorageAdapter = {
     async set(key, value) {
         try {
             if (this.isChromeStorageAvailable()) {
-                // 使用 chrome.storage.sync（跨网站、跨设备）
+                // 使用 chrome.storage.local（跨网站、本地存储）
                 return new Promise((resolve) => {
-                    chrome.storage.sync.set({ [key]: value }, () => {
+                    chrome.storage.local.set({ [key]: value }, () => {
                         resolve();
                     });
                 });
@@ -242,9 +287,9 @@ const StorageAdapter = {
     async remove(key) {
         try {
             if (this.isChromeStorageAvailable()) {
-                // 使用 chrome.storage.sync（跨网站、跨设备）
+                // 使用 chrome.storage.local（跨网站、本地存储）
                 return new Promise((resolve) => {
-                    chrome.storage.sync.remove([key], () => {
+                    chrome.storage.local.remove([key], () => {
                         resolve();
                     });
                 });
@@ -265,9 +310,9 @@ const StorageAdapter = {
     async getAllByPrefix(prefix) {
         try {
             if (this.isChromeStorageAvailable()) {
-                // 使用 chrome.storage.sync（跨网站、跨设备）
+                // 使用 chrome.storage.local（跨网站、本地存储）
                 return new Promise((resolve) => {
-                    chrome.storage.sync.get(null, (items) => {
+                    chrome.storage.local.get(null, (items) => {
                         const result = {};
                         Object.keys(items).forEach(key => {
                             if (key.startsWith(prefix)) {
@@ -351,4 +396,8 @@ const StorageAdapter = {
         }
     }
 };
+
+// ==================== 执行迁移 ====================
+// 在脚本加载时立即执行迁移检查（异步，不阻塞）
+StorageAdapter.migrateFromSyncToLocal();
 
