@@ -60,25 +60,3 @@
     color: #6b7280;
     line-height: 1.6;
 }
-
-/* 深色主题适配 */
-html[data-timeline-theme="dark"] .settings-tab .setting-item {
-    background: #2d2d30;
-}
-
-html[data-timeline-theme="dark"] .settings-tab .setting-item:hover {
-    background: #3d3d40;
-}
-
-html[data-timeline-theme="dark"] .settings-tab .setting-label {
-    color: #f5f5f5;
-}
-
-html[data-timeline-theme="dark"] .settings-tab .setting-hint {
-    color: #9ca3af;
-}
-
-html[data-timeline-theme="dark"] .settings-tab .divider {
-    background: #404040;
-}
-
