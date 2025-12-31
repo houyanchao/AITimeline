@@ -231,7 +231,8 @@ class ChatGPTAdapter extends SiteAdapter {
      */
     isAIGenerating() {
         const submitButton = document.getElementById('composer-submit-button');
-        return submitButton && submitButton.getAttribute('data-testid') === 'stop-button';
+        // ✅ 必须返回 boolean，找不到按钮视为 false（未生成），而不是 null（未实现）
+        return !!(submitButton && submitButton.getAttribute('data-testid') === 'stop-button');
     }
 }
 

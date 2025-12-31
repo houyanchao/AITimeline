@@ -87,7 +87,8 @@ class KimiAdapter extends SiteAdapter {
      */
     isAIGenerating() {
         const sendButtonContainer = document.querySelector('.send-button-container');
-        return sendButtonContainer && sendButtonContainer.classList.contains('stop');
+        // ✅ 必须返回 boolean
+        return !!(sendButtonContainer && sendButtonContainer.classList.contains('stop'));
     }
 }
 

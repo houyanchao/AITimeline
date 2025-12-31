@@ -104,15 +104,16 @@ class FolderManager {
         
         // 3. 处理该文件夹及子文件夹中的收藏项（移到目标文件夹或默认文件夹）
         const allDeletedFolderIds = [folderId, ...childFolderIds];
-        const starredItems = await this.storage.getAllByPrefix('chatTimelineStar:');
         
-        for (const key in starredItems) {
-            const item = starredItems[key];
-            if (allDeletedFolderIds.includes(item.folderId)) {
-                item.folderId = moveToFolderId;
-                await this.storage.set(key, item);
-            }
-        }
+        // 使用 StarStorageManager 批量更新
+        await StarStorageManager.batchUpdate(items => {
+            return items.map(item => {
+                if (allDeletedFolderIds.includes(item.folderId)) {
+                    return { ...item, folderId: moveToFolderId };
+                }
+                return item;
+            });
+        });
         
         console.log('[FolderManager] Deleted folder:', folderId, 'and', childFolderIds.length, 'children');
     }
@@ -125,15 +126,14 @@ class FolderManager {
     async moveStarredToFolder(turnId, targetFolderId) {
         // 构建原始的 storage key: chatTimelineStar:url:index
         const key = `chatTimelineStar:${turnId}`;
-        const item = await this.storage.get(key);
+        const item = await StarStorageManager.findByKey(key);
         
         if (!item) {
             throw new Error('收藏项不存在');
         }
         
         // 更新 folderId 字段
-        item.folderId = targetFolderId;
-        await this.storage.set(key, item);
+        await StarStorageManager.update(key, { folderId: targetFolderId });
         
         console.log('[FolderManager] Moved starred:', turnId, 'to folder:', targetFolderId);
     }
@@ -145,22 +145,14 @@ class FolderManager {
     async getStarredByFolder() {
         const folders = await this.getFolders();
         
-        // 使用原有方式获取所有收藏项（chatTimelineStar: 格式）
-        const starredItems = await this.storage.getAllByPrefix('chatTimelineStar:');
+        // 使用 StarStorageManager 获取所有收藏项
+        const starredItemsArray = await StarStorageManager.getAll();
         
-        // ✅ 辅助函数：解析 nodeKey（支持字符串和数字）
-        const parseNodeKey = (keyPart) => {
-            if (keyPart === undefined || keyPart === '') return null;
-            const parsed = parseInt(keyPart, 10);
-            // 如果是纯数字字符串，返回数字；否则返回原字符串（如 Gemini nodeId）
-            return (String(parsed) === keyPart) ? parsed : keyPart;
-        };
-        
-        // ✅ 辅助函数：从 key 中提取 item 信息
-        // ⚠️ 重要：turnId 必须完全从 Storage Key 中解析，确保 handleUnstar 时能正确删除
-        const extractItemInfo = (key, item) => {
+        // ✅ 辅助函数：从 item 中提取信息
+        // ⚠️ 重要：turnId 必须从 item.key 中解析，确保 handleUnstar 时能正确删除
+        const extractItemInfo = (item) => {
+            const key = item.key || '';
             // key 格式：chatTimelineStar:{urlWithoutProtocol}:{nodeKey}
-            // 必须从 Key 中解析 nodeKey，不能用 item 中的字段，否则可能因类型差异导致 key 不匹配
             const keyWithoutPrefix = key.replace('chatTimelineStar:', '');
             const lastColonIndex = keyWithoutPrefix.lastIndexOf(':');
             
@@ -174,8 +166,8 @@ class FolderManager {
                 nodeKeyStr = keyWithoutPrefix.substring(lastColonIndex + 1);
             }
             
-            // 解析 nodeKey 类型（数字或字符串）
-            const nodeKey = parseNodeKey(nodeKeyStr);
+            // 优先使用 item 中的 nodeId/index
+            const nodeKey = item.nodeId !== undefined ? item.nodeId : item.index;
             
             // ⚠️ turnId 必须用 nodeKeyStr（原始字符串），确保和 Storage Key 完全一致
             const turnId = `${urlWithoutProtocol}:${nodeKeyStr}`;
@@ -216,9 +208,8 @@ class FolderManager {
                 };
                 
                 // 添加子文件夹的收藏项
-                for (const key in starredItems) {
-                    const item = starredItems[key];
-                    const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
+                for (const item of starredItemsArray) {
+                    const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(item);
                     
                     // 检查是否属于该子文件夹
                     if (item.folderId === childFolder.id) {
@@ -243,9 +234,8 @@ class FolderManager {
             }
             
             // 添加根文件夹的收藏项
-            for (const key in starredItems) {
-                const item = starredItems[key];
-                const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
+            for (const item of starredItemsArray) {
+                const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(item);
                 
                 // 检查是否属于该根文件夹
                 if (item.folderId === rootFolder.id) {
@@ -271,9 +261,8 @@ class FolderManager {
         
         // 3. 添加未分类收藏项（没有 folderId 或 folderId 指向已删除文件夹的收藏项）
         
-        for (const key in starredItems) {
-            const item = starredItems[key];
-            const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(key, item);
+        for (const item of starredItemsArray) {
+            const { urlWithoutProtocol, nodeKey, turnId } = extractItemInfo(item);
             
             // 如果该收藏项还没有被分配到任何文件夹，则归为未分类（默认文件夹）
             // 这包括：folderId 为 null/undefined 或 folderId 指向已删除的文件夹

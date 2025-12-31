@@ -1024,12 +1024,11 @@ class StarredTab extends BaseTab {
             
             // turnId 格式：url:index
             const key = `chatTimelineStar:${turnId}`;
-            const item = await StorageAdapter.get(key);
+            const item = await StarStorageManager.findByKey(key);
             
             if (item) {
                 // 更新 question 字段（原有字段名）
-                item.question = newTheme.trim();
-                await StorageAdapter.set(key, item);
+                await StarStorageManager.update(key, { question: newTheme.trim() });
                 
                 window.globalToastManager.success(chrome.i18n.getMessage('vmkxpz'), null, { color: this.toastColor });
                 
@@ -1076,7 +1075,7 @@ class StarredTab extends BaseTab {
         try {
             // turnId 格式：urlWithoutProtocol:nodeKey（由 extractItemInfo 从 Storage Key 解析）
             const key = `chatTimelineStar:${turnId}`;
-            await StorageAdapter.remove(key);
+            await StarStorageManager.remove(key);
             
             // 显示成功提示
             window.globalToastManager.success(chrome.i18n.getMessage('pzmvkx'), null, { color: this.toastColor });

@@ -189,6 +189,10 @@ const StorageAdapter = {
 
     /**
      * 从 chrome.storage.sync 迁移数据到 chrome.storage.local
+     * 迁移过程中同时将 Star/Pin 数据转换为数组格式：
+     * - chatTimelineStar:xxx → chatTimelineStars 数组
+     * - chatTimelinePin:xxx → chatTimelinePins 数组
+     * - 其他数据原封不动迁移
      * 迁移完成后清空 sync，下次检查时 sync 为空则跳过
      * @returns {Promise<void>}
      */
@@ -211,9 +215,42 @@ const StorageAdapter = {
             const syncKeys = Object.keys(syncData);
             if (syncKeys.length === 0) return;
             
-            // 复制到 local
+            // ✅ 分离 Star/Pin 数据，直接转换成数组格式
+            const starItems = [];
+            const pinItems = [];
+            const otherData = {};
+            
+            syncKeys.forEach(key => {
+                const value = syncData[key];
+                
+                if (key.startsWith('chatTimelineStar:')) {
+                    // 收藏数据：加上 key 字段，放入数组
+                    if (value && typeof value === 'object') {
+                        starItems.push({ key, ...value });
+                    }
+                } else if (key.startsWith('chatTimelinePin:')) {
+                    // Pin 数据：加上 key 字段，放入数组
+                    if (value && typeof value === 'object') {
+                        pinItems.push({ key, ...value });
+                    }
+                } else {
+                    // 其他数据：原封不动保留
+                    otherData[key] = value;
+                }
+            });
+            
+            // ✅ 构建新的 local 数据
+            const newLocalData = { ...otherData };
+            if (starItems.length > 0) {
+                newLocalData.chatTimelineStars = starItems;
+            }
+            if (pinItems.length > 0) {
+                newLocalData.chatTimelinePins = pinItems;
+            }
+            
+            // 保存到 local
             await new Promise((resolve) => {
-                chrome.storage.local.set(syncData, () => {
+                chrome.storage.local.set(newLocalData, () => {
                     resolve();
                 });
             });
@@ -225,7 +262,12 @@ const StorageAdapter = {
                 });
             });
             
-            console.log('[StorageAdapter] Migrated', syncKeys.length, 'keys from sync to local:', syncKeys);
+            console.log('[StorageAdapter] Migrated from sync to local:', {
+                total: syncKeys.length,
+                stars: starItems.length,
+                pins: pinItems.length,
+                others: Object.keys(otherData).length
+            });
         } catch (e) {
             console.error('[StorageAdapter] Migration failed:', e);
         }
@@ -394,6 +436,188 @@ const StorageAdapter = {
         } catch (e) {
             // Silently fail
         }
+    }
+};
+
+// ==================== Star Storage Manager ====================
+
+/**
+ * Star Storage Manager - 收藏数据管理
+ * 使用数组结构存储：chatTimelineStars = [{ key, url, urlWithoutProtocol, nodeId/index, question, timestamp, folderId }, ...]
+ */
+const StarStorageManager = {
+    STORAGE_KEY: 'chatTimelineStars',
+
+    /**
+     * 获取所有收藏
+     * @returns {Promise<Array>}
+     */
+    async getAll() {
+        const data = await StorageAdapter.get(this.STORAGE_KEY);
+        return Array.isArray(data) ? data : [];
+    },
+
+    /**
+     * 按 URL 筛选收藏（用于当前页面）
+     * @param {string} urlWithoutProtocol - 不含协议的 URL
+     * @returns {Promise<Array>}
+     */
+    async getByUrl(urlWithoutProtocol) {
+        const items = await this.getAll();
+        return items.filter(item => item.urlWithoutProtocol === urlWithoutProtocol);
+    },
+
+    /**
+     * 添加或更新收藏
+     * @param {Object} item - 收藏项（必须包含 key 字段）
+     */
+    async add(item) {
+        if (!item || !item.key) return;
+        const items = await this.getAll();
+        const existingIndex = items.findIndex(i => i.key === item.key);
+        if (existingIndex >= 0) {
+            items[existingIndex] = item;
+        } else {
+            items.push(item);
+        }
+        await StorageAdapter.set(this.STORAGE_KEY, items);
+    },
+
+    /**
+     * 移除收藏
+     * @param {string} key - 收藏项的 key
+     */
+    async remove(key) {
+        if (!key) return;
+        const items = await this.getAll();
+        const filtered = items.filter(item => item.key !== key);
+        await StorageAdapter.set(this.STORAGE_KEY, filtered);
+    },
+
+    /**
+     * 更新收藏项的部分字段
+     * @param {string} key - 收藏项的 key
+     * @param {Object} updates - 要更新的字段
+     */
+    async update(key, updates) {
+        if (!key || !updates) return;
+        const items = await this.getAll();
+        const index = items.findIndex(item => item.key === key);
+        if (index >= 0) {
+            items[index] = { ...items[index], ...updates };
+            await StorageAdapter.set(this.STORAGE_KEY, items);
+        }
+    },
+
+    /**
+     * 根据 key 查找收藏项
+     * @param {string} key - 收藏项的 key
+     * @returns {Promise<Object|undefined>}
+     */
+    async findByKey(key) {
+        if (!key) return undefined;
+        const items = await this.getAll();
+        return items.find(item => item.key === key);
+    },
+
+    /**
+     * 检查是否存在
+     * @param {string} key - 收藏项的 key
+     * @returns {Promise<boolean>}
+     */
+    async exists(key) {
+        const item = await this.findByKey(key);
+        return !!item;
+    },
+
+    /**
+     * 批量更新（用于文件夹删除等场景）
+     * @param {Function} updateFn - 更新函数，接收 items 数组，返回更新后的数组
+     */
+    async batchUpdate(updateFn) {
+        if (typeof updateFn !== 'function') return;
+        const items = await this.getAll();
+        const updatedItems = updateFn(items);
+        if (Array.isArray(updatedItems)) {
+            await StorageAdapter.set(this.STORAGE_KEY, updatedItems);
+        }
+    }
+};
+
+// ==================== Pin Storage Manager ====================
+
+/**
+ * Pin Storage Manager - Pin 数据管理
+ * 使用数组结构存储：chatTimelinePins = [{ key, url, urlWithoutProtocol, nodeId/index, question, siteName, timestamp }, ...]
+ */
+const PinStorageManager = {
+    STORAGE_KEY: 'chatTimelinePins',
+
+    /**
+     * 获取所有 Pin
+     * @returns {Promise<Array>}
+     */
+    async getAll() {
+        const data = await StorageAdapter.get(this.STORAGE_KEY);
+        return Array.isArray(data) ? data : [];
+    },
+
+    /**
+     * 按 URL 筛选 Pin（用于当前页面）
+     * @param {string} urlWithoutProtocol - 不含协议的 URL
+     * @returns {Promise<Array>}
+     */
+    async getByUrl(urlWithoutProtocol) {
+        const items = await this.getAll();
+        return items.filter(item => item.urlWithoutProtocol === urlWithoutProtocol);
+    },
+
+    /**
+     * 添加或更新 Pin
+     * @param {Object} item - Pin 项（必须包含 key 字段）
+     */
+    async add(item) {
+        if (!item || !item.key) return;
+        const items = await this.getAll();
+        const existingIndex = items.findIndex(i => i.key === item.key);
+        if (existingIndex >= 0) {
+            items[existingIndex] = item;
+        } else {
+            items.push(item);
+        }
+        await StorageAdapter.set(this.STORAGE_KEY, items);
+    },
+
+    /**
+     * 移除 Pin
+     * @param {string} key - Pin 项的 key
+     */
+    async remove(key) {
+        if (!key) return;
+        const items = await this.getAll();
+        const filtered = items.filter(item => item.key !== key);
+        await StorageAdapter.set(this.STORAGE_KEY, filtered);
+    },
+
+    /**
+     * 根据 key 查找 Pin 项
+     * @param {string} key - Pin 项的 key
+     * @returns {Promise<Object|undefined>}
+     */
+    async findByKey(key) {
+        if (!key) return undefined;
+        const items = await this.getAll();
+        return items.find(item => item.key === key);
+    },
+
+    /**
+     * 检查是否存在
+     * @param {string} key - Pin 项的 key
+     * @returns {Promise<boolean>}
+     */
+    async exists(key) {
+        const item = await this.findByKey(key);
+        return !!item;
     }
 };
 

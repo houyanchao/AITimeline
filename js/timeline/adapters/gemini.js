@@ -216,7 +216,8 @@ class GeminiAdapter extends SiteAdapter {
      */
     isAIGenerating() {
         const sendButton = document.querySelector('.send-button');
-        return sendButton && sendButton.classList.contains('stop');
+        // ✅ 必须返回 boolean，找不到按钮视为 false（未生成），而不是 null（未实现）
+        return !!(sendButton && sendButton.classList.contains('stop'));
     }
 }
 
