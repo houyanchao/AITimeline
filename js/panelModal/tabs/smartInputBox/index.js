@@ -12,10 +12,8 @@ class SmartInputBoxTab extends BaseTab {
         this.id = 'smartInputBox';
         this.name = chrome.i18n.getMessage('xmvkpz');
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-            <line x1="9" y1="9" x2="15" y2="9"/>
-            <line x1="9" y1="13" x2="15" y2="13"/>
-            <line x1="9" y1="17" x2="15" y2="17"/>
+            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="9" x2="8" y2="15"/>
         </svg>`;
     }
     

@@ -12,9 +12,8 @@ class TimelineSettingsTab extends BaseTab {
         super();
         this.id = 'timeline';
         this.name = chrome.i18n.getMessage('pxkmvz');
-        this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
+        this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="9"/>
         </svg>`;
     }
     

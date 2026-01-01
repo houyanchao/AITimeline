@@ -12,8 +12,8 @@ class FormulaTab extends BaseTab {
         this.id = 'formula';
         this.name = chrome.i18n.getMessage('kpxvmz');
         this.icon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7h16M4 12h16M4 17h10"/>
-            <path d="M14 17l3 3 5-5"/>
+            <path d="M14 3H4l5 8-5 8h10"/>
+            <path d="M14 15l3 3 5-6"/>
         </svg>`;
     }
     
