@@ -88,8 +88,21 @@ class UrlAutoLinkManager {
         const prev = index > 0 ? text[index - 1] : '';
         const next = index + rawUrl.length < text.length ? text[index + rawUrl.length] : '';
 
-        // 邮箱：a@b.com（b.com 会被正则命中）——直接排除
-        if (prev === '@') return false;
+        // 邮箱：检查前面是否有 @ 符号，且 @ 和域名之间只能是邮箱用户名字符
+        // 例如：houyanchao@outlook.com，需要检测 outlook.com 前面的 @
+        const checkStart = Math.max(0, index - 64); // 往前看64个字符，覆盖最长的邮箱用户名
+        const beforeText = text.slice(checkStart, index);
+        
+        // 如果前面有 @，检查 @ 和域名之间是否只包含邮箱用户名允许的字符
+        const atIndex = beforeText.lastIndexOf('@');
+        if (atIndex !== -1) {
+            // 提取 @ 到域名之间的部分
+            const betweenAtAndDomain = beforeText.slice(atIndex + 1);
+            // 如果 @ 和域名之间只有邮箱用户名字符（字母数字._%-），则认为是邮箱
+            if (/^[a-zA-Z0-9._%-]*$/.test(betweenAtAndDomain)) {
+                return false; // 是邮箱的一部分，不转换为链接
+            }
+        }
 
         // 避免在单词/标识符内部命中（例如 abcgoogle.comdef）
         if (prev && /[a-z0-9_\-\.]/i.test(prev)) return false;
