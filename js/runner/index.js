@@ -12,8 +12,6 @@
     // ===== 配置区域 =====
     
     const CONFIG = {
-        // JavaScript 关键词检测（包含这些关键词的代码块才显示运行按钮）
-        jsKeywords: ['let ', 'var ', 'const ', 'console.'],
         // DOM 稳定延迟（500ms 内无 DOM 变化视为稳定，执行扫描）
         stableDelay: 500,
         // 已处理标记
@@ -78,14 +76,16 @@
     }
 
     /**
-     * 检查代码是否包含 JavaScript 关键词
+     * 检测代码语言类型（使用 Highlight.js）
      * @param {string} code - 代码文本
-     * @returns {boolean}
+     * @returns {string|null} 'javascript' | 'python' | null
      */
-    function isJavaScriptCode(code) {
-        if (!code || typeof code !== 'string') return false;
-        const normalizedCode = code.replace(/\u00A0/g, ' ');
-        return CONFIG.jsKeywords.some(keyword => normalizedCode.includes(keyword));
+    function detectLanguage(code) {
+        if (!window.LanguageDetector) {
+            console.warn('[Runner] LanguageDetector not loaded');
+            return null;
+        }
+        return window.LanguageDetector.detect(code);
     }
 
     /**
@@ -128,9 +128,10 @@
      * 创建运行按钮
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
+     * @param {string} language - 语言类型 'javascript' | 'python'
      * @returns {HTMLElement}
      */
-    function createRunButton(codeElement, layoutContainer) {
+    function createRunButton(codeElement, layoutContainer, language = 'javascript') {
         const button = document.createElement('button');
         button.className = 'runner-code-run-btn';
         button.innerHTML = `
@@ -140,6 +141,7 @@
             <span>Run</span>
         `;
         button.setAttribute('title', '运行代码');
+        button.setAttribute('data-language', language);
         
         // 动态计算 z-index，确保在其他同级元素之上
         const maxZ = getMaxChildZIndex(layoutContainer);
@@ -148,7 +150,7 @@
         button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            handleRunClick(codeElement, layoutContainer, button);
+            handleRunClick(codeElement, layoutContainer, button, language);
         });
         
         return button;
@@ -309,7 +311,8 @@
 
         resultHeader.querySelector('.runner-action-run').addEventListener('click', () => {
             const code = cmEditor ? cmEditor.getValue() : '';
-            executeCode(code, resultContent, runButton);
+            const language = container._language || 'javascript';
+            executeCode(code, resultContent, runButton, language);
         });
 
         return { container, cmEditor, contentEl: resultContent };
@@ -322,8 +325,9 @@
      * @param {string} code - 代码
      * @param {HTMLElement} contentEl - 输出容器
      * @param {HTMLElement} runButton - 运行按钮
+     * @param {string} language - 语言类型 'javascript' | 'python'
      */
-    async function executeCode(code, contentEl, runButton) {
+    async function executeCode(code, contentEl, runButton, language = 'javascript') {
         if (!code.trim()) {
             contentEl.innerHTML = '<div class="runner-output-empty">（无代码）</div>';
             return;
@@ -337,11 +341,13 @@
             const manager = getRunnerManager();
             const outputs = [];
 
-            await manager.run(code, 'javascript', {
+            await manager.run(code, language, {
                 onOutput: (output) => {
                     // 转换格式：{ level, data } -> { type, content }
                     const content = Array.isArray(output.data) ? output.data.join(' ') : output.data;
                     outputs.push({ type: output.level || 'log', content: content });
+                    // 实时渲染输出（对于 Python 加载提示很有用）
+                    renderOutput(contentEl, outputs);
                 },
                 onError: (error) => {
                     outputs.push({ type: 'error', content: error.message || error });
@@ -363,8 +369,9 @@
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {HTMLElement} runButton - 运行按钮
+     * @param {string} language - 语言类型 'javascript' | 'python'
      */
-    async function handleRunClick(codeElement, layoutContainer, runButton) {
+    async function handleRunClick(codeElement, layoutContainer, runButton, language = 'javascript') {
         // 确保布局容器有 position: relative
         if (getComputedStyle(layoutContainer).position === 'static') {
             layoutContainer.style.position = 'relative';
@@ -410,11 +417,14 @@
         // 直接使用 textContent 获取代码
         const code = getCodeText(codeElement);
 
+        // 存储语言类型到容器上，供内部 Run 按钮使用
+        container._language = language;
+
         if (cmEditor) {
             cmEditor.setValue(code);
             setTimeout(() => cmEditor.refresh(), 10);
         }
-        await executeCode(code, contentEl, runButton);
+        await executeCode(code, contentEl, runButton, language);
     }
 
     // ===== 输出渲染 =====
@@ -463,8 +473,9 @@
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {Object} config - 配置对象
+     * @param {Object} enabledLanguages - 已启用的语言 { javascript: boolean, python: boolean }
      */
-    function initializeCodeBlock(codeElement, layoutContainer, config) {
+    function initializeCodeBlock(codeElement, layoutContainer, config, enabledLanguages) {
         // 跳过已处理的（已添加 Run 按钮的）
         if (codeElement.hasAttribute(CONFIG.processedAttr)) return;
         
@@ -474,11 +485,17 @@
             return;
         }
 
-        // 检查是否是 JavaScript 代码（仅通过关键词检测）
+        // 检测代码语言
         const code = getCodeText(codeElement);
-        if (!isJavaScriptCode(code)) return;  // 没检测到 JS，不标记，下次继续检测
+        const language = detectLanguage(code);
         
-        // 检测到 JS 代码，标记为已处理
+        // 没检测到支持的语言，不标记，下次继续检测
+        if (!language) return;
+        
+        // 检查该语言是否启用
+        if (!enabledLanguages[language]) return;
+        
+        // 检测到支持的代码，标记为已处理
         codeElement.setAttribute(CONFIG.processedAttr, 'true');
 
         // 确保 layoutContainer 有定位上下文（用于 absolute 定位按钮）
@@ -488,7 +505,7 @@
         }
 
         // 创建运行按钮（absolute 定位在 layoutContainer 内）
-        const runButton = createRunButton(codeElement, layoutContainer);
+        const runButton = createRunButton(codeElement, layoutContainer, language);
         
         // 插入按钮到 layoutContainer 内部
         layoutContainer.appendChild(runButton);
@@ -510,14 +527,50 @@
     }
 
     /**
+     * 检查 Python Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isPythonRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerPythonEnabled');
+            // 默认值为 true（开启）
+            return result.runnerPythonEnabled !== false;
+        } catch (e) {
+            console.error('[Runner] Failed to check Python enabled state:', e);
+            return true; // 默认开启
+        }
+    }
+
+    /**
+     * 检查指定语言是否启用
+     * @param {string} language - 语言类型
+     * @returns {Promise<boolean>}
+     */
+    async function isLanguageEnabled(language) {
+        if (language === 'javascript') return isJavaScriptRunnerEnabled();
+        if (language === 'python') return isPythonRunnerEnabled();
+        return false;
+    }
+
+    /**
      * 扫描并处理所有代码块
      */
     async function scanCodeBlocks() {
-        // 检查是否启用了 JavaScript Runner
-        const enabled = await isJavaScriptRunnerEnabled();
-        if (!enabled) {
+        // 检查各语言是否启用
+        const [jsEnabled, pyEnabled] = await Promise.all([
+            isJavaScriptRunnerEnabled(),
+            isPythonRunnerEnabled()
+        ]);
+        
+        // 如果所有语言都禁用，不扫描
+        if (!jsEnabled && !pyEnabled) {
             return;
         }
+        
+        const enabledLanguages = {
+            javascript: jsEnabled,
+            python: pyEnabled
+        };
         
         // 遍历配置，按优先级匹配代码块
         for (const config of CODE_BLOCK_CONFIGS) {
@@ -529,7 +582,7 @@
                 // 获取布局容器
                 const layoutContainer = codeElement.closest(config.layoutSelector);
                 if (layoutContainer) {
-                    initializeCodeBlock(codeElement, layoutContainer, config);
+                    initializeCodeBlock(codeElement, layoutContainer, config, enabledLanguages);
                 }
             });
         }
@@ -539,10 +592,14 @@
      * 初始化 Runner 模块
      */
     async function initialize() {
-        // 检查是否启用了 JavaScript Runner
-        const enabled = await isJavaScriptRunnerEnabled();
-        if (!enabled) {
-            console.log('[Runner] JavaScript Runner is disabled, skipping initialization');
+        // 检查是否有任何语言启用
+        const [jsEnabled, pyEnabled] = await Promise.all([
+            isJavaScriptRunnerEnabled(),
+            isPythonRunnerEnabled()
+        ]);
+        
+        if (!jsEnabled && !pyEnabled) {
+            console.log('[Runner] All runners are disabled, skipping initialization');
             return;
         }
         

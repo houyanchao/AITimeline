@@ -21,13 +21,12 @@ class RunnerTab extends BaseTab {
                 id: 'javascript',
                 name: 'JavaScript',
                 storageKey: 'runnerJsEnabled'
+            },
+            {
+                id: 'python',
+                name: 'Python',
+                storageKey: 'runnerPythonEnabled'
             }
-            // 后续可添加更多语言
-            // {
-            //     id: 'python',
-            //     name: 'Python',
-            //     storageKey: 'runnerPythonEnabled'
-            // }
         ];
     }
     
@@ -102,6 +101,8 @@ class RunnerTab extends BaseTab {
             
             if (lang.id === 'javascript') {
                 this._handleJavaScriptToggle(enabled);
+            } else if (lang.id === 'python') {
+                this._handlePythonToggle(enabled);
             }
             
             console.log(`[RunnerTab] ${lang.id} runner enabled:`, enabled);
@@ -123,9 +124,61 @@ class RunnerTab extends BaseTab {
                 window.Runner.scan();
             }
         } else {
-            // 关闭功能：移除所有 Run 按钮和 Runner 容器
-            this._removeAllRunButtons();
+            // 关闭功能：移除 JavaScript 的 Run 按钮
+            this._removeRunButtonsByLanguage('javascript');
         }
+    }
+    
+    /**
+     * 处理 Python 运行器开关
+     */
+    _handlePythonToggle(enabled) {
+        if (enabled) {
+            // 开启功能
+            if (window.Runner) {
+                // 重新扫描页面，添加 Run 按钮
+                window.Runner.scan();
+            }
+        } else {
+            // 关闭功能：移除 Python 的 Run 按钮
+            this._removeRunButtonsByLanguage('python');
+        }
+    }
+    
+    /**
+     * 移除指定语言的 Run 按钮
+     * @param {string} language - 语言类型
+     */
+    _removeRunButtonsByLanguage(language) {
+        // 移除指定语言的 Run 按钮
+        const runButtons = document.querySelectorAll(`.runner-code-run-btn[data-language="${language}"]`);
+        runButtons.forEach(btn => btn.remove());
+        
+        // 移除对应的 Runner 容器
+        const runnerContainers = document.querySelectorAll('.runner-container');
+        runnerContainers.forEach(container => {
+            if (container._language === language) {
+                // 恢复 layoutContainer 的原始样式
+                const layoutContainer = container.parentElement;
+                if (layoutContainer && layoutContainer.dataset.originalHeight) {
+                    layoutContainer.style.removeProperty('display');
+                    layoutContainer.style.removeProperty('min-height');
+                    layoutContainer.style.removeProperty('height');
+                    layoutContainer.style.removeProperty('max-height');
+                    layoutContainer.style.removeProperty('overflow');
+                    delete layoutContainer.dataset.originalHeight;
+                }
+                // 显示 Run 按钮（如果有）
+                if (container._runButton) {
+                    container._runButton.style.display = '';
+                }
+                container.remove();
+            }
+        });
+        
+        // 移除已处理标记（让下次开启时可以重新扫描）
+        // 注意：这里不能简单移除所有标记，需要让代码重新检测
+        console.log(`[RunnerTab] Removed ${language} Run buttons`);
     }
     
     /**

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Python Sandbox</title>
+</head>
+<body>
+    <script>
+        // 动态加载 Pyodide
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+        script.onload = function() {
+            // Pyodide 加载完成后，加载 sandbox-script.js
+            const sandboxScript = document.createElement('script');
+            sandboxScript.src = 'sandbox-script.js';
+            document.body.appendChild(sandboxScript);
+        };
+        script.onerror = function() {
+            // CDN 加载失败时通知父窗口
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'PYTHON_ERROR',
+                    data: { message: '无法加载 Pyodide CDN，请检查网络连接' }
+                }, '*');
+            }
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
+

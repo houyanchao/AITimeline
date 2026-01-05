@@ -41,9 +41,15 @@
         "js/panelModal/tabs/formula/index.js",
         "js/runner/codemirror/codemirror.min.js",
         "js/runner/codemirror/javascript.min.js",
+        "js/runner/highlight/highlight.core.min.js",
+        "js/runner/highlight/javascript.min.js",
+        "js/runner/highlight/python.min.js",
+        "js/runner/highlight/language-detector.js",
         "js/runner/core/base-runner.js",
         "js/runner/languages/javascript/sandbox-manager.js",
         "js/runner/languages/javascript/index.js",
+        "js/runner/languages/python/sandbox-manager.js",
+        "js/runner/languages/python/index.js",
         "js/runner/languages/registry.js",
         "js/runner/runner-manager.js",
         "js/runner/index.js",
@@ -119,7 +125,9 @@
       "resources": [
         "images/logo/*.webp",
         "js/runner/languages/javascript/sandbox.html",
-        "js/runner/languages/javascript/sandbox-script.js"
+        "js/runner/languages/javascript/sandbox-script.js",
+        "js/runner/languages/python/sandbox.html",
+        "js/runner/languages/python/sandbox-script.js"
       ],
       "matches": [
         "<all_urls>"
@@ -133,7 +141,12 @@
   
   "sandbox": {
     "pages": [
-      "js/runner/languages/javascript/sandbox.html"
+      "js/runner/languages/javascript/sandbox.html",
+      "js/runner/languages/python/sandbox.html"
     ]
+  },
+  
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; child-src 'self';"
   }
 }

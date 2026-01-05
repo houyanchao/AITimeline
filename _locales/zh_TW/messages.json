@@ -259,5 +259,14 @@
   },
   "febhyejd": {
     "message": "線上提交反饋"
+  },
+  "runnerTabName": {
+    "message": "程式碼執行"
+  },
+  "runnerSettingsTitle": {
+    "message": "支援的程式語言"
+  },
+  "runnerSettingsHint": {
+    "message": "開啟後，程式碼區塊右上角將顯示 Run 按鈕，點擊可直接執行程式碼"
   }
 }

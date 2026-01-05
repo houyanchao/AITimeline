@@ -14,8 +14,14 @@ class LanguageRegistry {
                 enabled: true,
                 icon: '🟨',
                 runnerClass: 'JavaScriptRunner'
+            },
+            {
+                id: 'python',
+                name: 'Python',
+                enabled: true,
+                icon: '🐍',
+                runnerClass: 'PythonRunner'
             }
-            // 未来可在此添加更多语言支持
         ];
         this.initialize();
     }
@@ -29,9 +35,10 @@ class LanguageRegistry {
             this.register('javascript', new window.JavaScriptRunner());
         }
         
-        // Python 暂时禁用
-        // 原因：Manifest V3 扩展页面不允许加载外部 CDN 脚本（如 Pyodide）
-        // 未来方案：使用 Offscreen Document API 或打包 Pyodide
+        // 注册 Python
+        if (window.PythonRunner) {
+            this.register('python', new window.PythonRunner());
+        }
     }
 
     /**

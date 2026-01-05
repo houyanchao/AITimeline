@@ -259,5 +259,14 @@
   },
   "febhyejd": {
     "message": "Submit Feedback Online"
+  },
+  "runnerTabName": {
+    "message": "Code Runner"
+  },
+  "runnerSettingsTitle": {
+    "message": "Supported Languages"
+  },
+  "runnerSettingsHint": {
+    "message": "When enabled, a Run button will appear on code blocks to execute code directly"
   }
 }

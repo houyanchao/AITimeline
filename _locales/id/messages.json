@@ -259,5 +259,14 @@
   },
   "febhyejd": {
     "message": "Kirim umpan balik online"
+  },
+  "runnerTabName": {
+    "message": "Penjalankan kode"
+  },
+  "runnerSettingsTitle": {
+    "message": "Bahasa yang didukung"
+  },
+  "runnerSettingsHint": {
+    "message": "Saat diaktifkan, tombol Run akan muncul di blok kode untuk menjalankan kode secara langsung"
   }
 }
