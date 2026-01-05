@@ -9,6 +9,16 @@
 (function() {
     'use strict';
 
+    // ===== 安全的 i18n 调用 =====
+    function safeI18n(key, fallback = '') {
+        try {
+            return chrome.i18n.getMessage(key) || fallback;
+        } catch (e) {
+            // 扩展上下文失效时返回默认值
+            return fallback;
+        }
+    }
+
     // ===== 配置区域 =====
     
     const CONFIG = {
@@ -160,7 +170,8 @@
     const LANGUAGE_DISPLAY_NAMES = {
         'javascript': 'JavaScript',
         'python': 'Python',
-        'typescript': 'TypeScript'
+        'typescript': 'TypeScript',
+        'sql': 'SQL'
     };
 
     /**
@@ -190,7 +201,7 @@
         const editorHeader = document.createElement('div');
         editorHeader.className = 'runner-section-header';
         editorHeader.style.height = CONFIG.headerHeight + 'px';
-        editorHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>${langDisplayName}</span></span><div class="runner-section-actions"><button class="runner-action-settings" title="${chrome.i18n.getMessage('vkmzpx') || '设置'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button><button class="runner-action-copy" title="${chrome.i18n.getMessage('mvkxpz') || '复制'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="runner-action-close" title="${chrome.i18n.getMessage('pxvkmz') || '关闭'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>`;
+        editorHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>${langDisplayName}</span></span><div class="runner-section-actions"><button class="runner-action-settings" title="${safeI18n('vkmzpx', '设置')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button><button class="runner-action-copy" title="${safeI18n('mvkxpz', '复制')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="runner-action-close" title="${safeI18n('pxvkmz', '关闭')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>`;
 
         // 创建 CodeMirror 容器
         const editorWrapper = document.createElement('div');
@@ -294,7 +305,7 @@
             const code = cmEditor ? cmEditor.getValue() : '';
             navigator.clipboard.writeText(code).then(() => {
                 if (window.globalToastManager) {
-                    window.globalToastManager.success(chrome.i18n.getMessage('xpzmvk'), copyBtn);
+                    window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), copyBtn);
                 }
             });
         });
@@ -354,10 +365,19 @@
 
             await manager.run(code, language, {
                 onOutput: (output) => {
-                    // 转换格式：{ level, data } -> { type, content }
-                    const content = Array.isArray(output.data) ? output.data.join(' ') : output.data;
-                    outputs.push({ type: output.level || 'log', content: content });
-                    // 实时渲染输出（对于 Python 加载提示很有用）
+                    // 特殊处理 SQL 表格输出
+                    if (output.level === 'table') {
+                        outputs.push({ 
+                            type: 'table', 
+                            columns: output.data.columns, 
+                            values: output.data.values 
+                        });
+                    } else {
+                        // 转换格式：{ level, data } -> { type, content }
+                        const content = Array.isArray(output.data) ? output.data.join(' ') : output.data;
+                        outputs.push({ type: output.level || 'log', content: content });
+                    }
+                    // 实时渲染输出（对于 Python/SQL 加载提示很有用）
                     renderOutput(contentEl, outputs);
                 },
                 onError: (error) => {
@@ -454,10 +474,45 @@
         }
 
         container.innerHTML = outputs.map(output => {
+            // SQL 表格特殊渲染
+            if (output.type === 'table') {
+                return renderSQLTable(output.columns, output.values);
+            }
             const typeClass = `runner-output-${output.type || 'log'}`;
             const content = formatOutputContent(output.content);
             return `<div class="${typeClass}">${content}</div>`;
         }).join('');
+    }
+
+    /**
+     * 渲染 SQL 表格
+     * @param {Array<string>} columns - 列名
+     * @param {Array<Array>} values - 数据行
+     * @returns {string} HTML 字符串
+     */
+    function renderSQLTable(columns, values) {
+        if (!columns || columns.length === 0) {
+            return '<div class="runner-output-info">查询成功，无返回数据</div>';
+        }
+
+        const headerCells = columns.map(col => `<th>${escapeHtml(col)}</th>`).join('');
+        const rows = (values || []).map(row => {
+            const cells = row.map(cell => {
+                const cellValue = cell === null ? '<span class="runner-null">NULL</span>' : escapeHtml(String(cell));
+                return `<td>${cellValue}</td>`;
+            }).join('');
+            return `<tr>${cells}</tr>`;
+        }).join('');
+
+        return `
+            <div class="runner-sql-table-wrapper">
+                <table class="runner-sql-table">
+                    <thead><tr>${headerCells}</tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                <div class="runner-sql-table-info">${values ? values.length : 0} 行</div>
+            </div>
+        `;
     }
 
     /**
@@ -570,6 +625,21 @@
     }
 
     /**
+     * 检查 SQL Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isSQLRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerSQLEnabled');
+            // 默认值为 true（开启）
+            return result.runnerSQLEnabled !== false;
+        } catch (e) {
+            console.error('[Runner] Failed to check SQL enabled state:', e);
+            return true; // 默认开启
+        }
+    }
+
+    /**
      * 检查指定语言是否启用
      * @param {string} language - 语言类型
      * @returns {Promise<boolean>}
@@ -578,6 +648,7 @@
         if (language === 'javascript') return isJavaScriptRunnerEnabled();
         if (language === 'python') return isPythonRunnerEnabled();
         if (language === 'typescript') return isTypeScriptRunnerEnabled();
+        if (language === 'sql') return isSQLRunnerEnabled();
         return false;
     }
 
@@ -586,21 +657,23 @@
      */
     async function scanCodeBlocks() {
         // 检查各语言是否启用
-        const [jsEnabled, pyEnabled, tsEnabled] = await Promise.all([
+        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled] = await Promise.all([
             isJavaScriptRunnerEnabled(),
             isPythonRunnerEnabled(),
-            isTypeScriptRunnerEnabled()
+            isTypeScriptRunnerEnabled(),
+            isSQLRunnerEnabled()
         ]);
         
         // 如果所有语言都禁用，不扫描
-        if (!jsEnabled && !pyEnabled && !tsEnabled) {
+        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled) {
             return;
         }
         
         const enabledLanguages = {
             javascript: jsEnabled,
             python: pyEnabled,
-            typescript: tsEnabled
+            typescript: tsEnabled,
+            sql: sqlEnabled
         };
         
         // 遍历配置，按优先级匹配代码块
@@ -624,13 +697,14 @@
      */
     async function initialize() {
         // 检查是否有任何语言启用
-        const [jsEnabled, pyEnabled, tsEnabled] = await Promise.all([
+        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled] = await Promise.all([
             isJavaScriptRunnerEnabled(),
             isPythonRunnerEnabled(),
-            isTypeScriptRunnerEnabled()
+            isTypeScriptRunnerEnabled(),
+            isSQLRunnerEnabled()
         ]);
         
-        if (!jsEnabled && !pyEnabled && !tsEnabled) {
+        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled) {
             console.log('[Runner] All runners are disabled, skipping initialization');
             return;
         }

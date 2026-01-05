@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Sandbox</title>
+</head>
+<body>
+    <script>
+        // 动态加载 sql.js
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js';
+        script.onload = function() {
+            // sql.js 加载完成后，加载 sandbox-script.js
+            const sandboxScript = document.createElement('script');
+            sandboxScript.src = 'sandbox-script.js';
+            document.body.appendChild(sandboxScript);
+        };
+        script.onerror = function() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'SQL_ERROR',
+                    data: { message: '无法加载 sql.js，请检查网络连接' }
+                }, '*');
+                // 发送完成消息，避免超时等待
+                window.parent.postMessage({
+                    type: 'SQL_COMPLETE',
+                    data: { success: false, duration: 0, error: '无法加载 sql.js' }
+                }, '*');
+            }
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
+

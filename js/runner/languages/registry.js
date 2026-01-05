@@ -28,6 +28,13 @@ class LanguageRegistry {
                 enabled: true,
                 icon: '🔷',
                 runnerClass: 'TypeScriptRunner'
+            },
+            {
+                id: 'sql',
+                name: 'SQL',
+                enabled: true,
+                icon: '🗃️',
+                runnerClass: 'SQLRunner'
             }
         ];
         this.initialize();
@@ -50,6 +57,11 @@ class LanguageRegistry {
         // 注册 TypeScript
         if (window.TypeScriptRunner) {
             this.register('typescript', new window.TypeScriptRunner());
+        }
+        
+        // 注册 SQL
+        if (window.SQLRunner) {
+            this.register('sql', new window.SQLRunner());
         }
     }
 

@@ -534,3 +534,73 @@
 .runner-result-content::-webkit-scrollbar-thumb:hover {
     background: var(--runner-text-secondary);
 }
+
+/* ===== SQL 表格样式 ===== */
+.runner-sql-table-wrapper {
+    margin: 8px 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--runner-border);
+    background: var(--runner-bg) !important;
+}
+
+.runner-sql-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-family: ui-monospace, 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+    background: var(--runner-bg) !important;
+}
+
+.runner-sql-table th,
+.runner-sql-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--runner-border);
+    white-space: nowrap;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--runner-text) !important;
+    background: transparent !important;
+}
+
+.runner-sql-table th {
+    background: #1a2028 !important;
+    font-weight: 600;
+    color: var(--runner-accent) !important;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid var(--runner-accent);
+}
+
+.runner-sql-table tbody tr {
+    background: var(--runner-bg) !important;
+    transition: background 0.15s ease;
+}
+
+.runner-sql-table tbody tr:nth-child(even) {
+    background: var(--runner-bg-secondary) !important;
+}
+
+.runner-sql-table tbody tr:hover {
+    background: rgba(34, 197, 94, 0.15) !important;
+}
+
+.runner-sql-table td .runner-null {
+    color: var(--runner-text-secondary) !important;
+    font-style: italic;
+}
+
+.runner-sql-table-info {
+    margin-top: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--runner-text-secondary);
+    text-align: right;
+    background: var(--runner-bg-secondary);
+    border-radius: 4px;
+}

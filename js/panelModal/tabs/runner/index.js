@@ -31,6 +31,11 @@ class RunnerTab extends BaseTab {
                 id: 'python',
                 name: 'Python',
                 storageKey: 'runnerPythonEnabled'
+            },
+            {
+                id: 'sql',
+                name: 'SQL',
+                storageKey: 'runnerSQLEnabled'
             }
         ];
     }
@@ -110,6 +115,8 @@ class RunnerTab extends BaseTab {
                 this._handlePythonToggle(enabled);
             } else if (lang.id === 'typescript') {
                 this._handleTypeScriptToggle(enabled);
+            } else if (lang.id === 'sql') {
+                this._handleSQLToggle(enabled);
             }
             
             console.log(`[RunnerTab] ${lang.id} runner enabled:`, enabled);
@@ -165,6 +172,22 @@ class RunnerTab extends BaseTab {
         } else {
             // 关闭功能：移除 TypeScript 的 Run 按钮
             this._removeRunButtonsByLanguage('typescript');
+        }
+    }
+    
+    /**
+     * 处理 SQL 运行器开关
+     */
+    _handleSQLToggle(enabled) {
+        if (enabled) {
+            // 开启功能
+            if (window.Runner) {
+                // 重新扫描页面，添加 Run 按钮
+                window.Runner.scan();
+            }
+        } else {
+            // 关闭功能：移除 SQL 的 Run 按钮
+            this._removeRunButtonsByLanguage('sql');
         }
     }
     
