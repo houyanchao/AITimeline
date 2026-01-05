@@ -18,12 +18,10 @@ class FormulaManager {
         this.currentHoverElement = null;
         this.tooltipTimer = null;
         this.feedbackTimer = null;
-        this.mutationObserver = null;
-        this.debounceTimer = null;
         this.isEnabled = false;
         
-        // 最后扫描时间
-        this._lastScanTime = 0;
+        // DOMObserverManager 取消订阅函数
+        this._unsubscribeObserver = null;
         
         // ✅ URL 变化监听（组件自治）
         this._currentUrl = location.href;
@@ -436,55 +434,27 @@ class FormulaManager {
     }
 
     /**
-     * 监听新增的公式元素 - 防抖 + 时间检查机制
-     * - 每次 DOM 变化时立即检查距上次扫描时间，超过 2 秒就扫描
-     * - 同时设置 2 秒防抖，作为输出结束后的兜底
+     * 监听新增的公式元素
+     * 使用 DOMObserverManager 的 节流+防抖 策略：
+     * - 节流：持续变化时每 2 秒扫描一次（实时渲染）
+     * - 防抖：变化结束后 2 秒兜底扫描（确保不遗漏）
      */
     observeNewFormulas() {
-        if (this.mutationObserver) return;
+        if (this._unsubscribeObserver) return;
 
-        this._lastScanTime = Date.now();
-
-        this.mutationObserver = new MutationObserver((mutations) => {
-            // 快速过滤：如果没有添加节点，直接跳过
-            const hasAddedNodes = mutations.some(m => m.addedNodes.length > 0);
-            if (!hasAddedNodes) return;
-            
-            // 立即检查距离上次扫描时间
-            const now = Date.now();
-            const timeSinceLastScan = now - this._lastScanTime;
-            
-            if (timeSinceLastScan >= 2000) {
-                // 距上次扫描 >= 2秒，立即扫描
-                if (this.isEnabled) {
-                    this.scanAndAttachFormulas();
-                    this._lastScanTime = now;
-                }
-            }
-            
-            // 防抖：输出结束后 2 秒兜底扫描
-            if (this.debounceTimer) {
-                clearTimeout(this.debounceTimer);
-            }
-            
-            this.debounceTimer = setTimeout(() => {
-                if (!this.isEnabled) return;
-                
-                // ✅ 杜绝无限扫描：检查距上次扫描时间，确保不超过每 2 秒一次
-                const timeSinceLastScan = Date.now() - this._lastScanTime;
-                if (timeSinceLastScan >= 2000) {
-                    this.scanAndAttachFormulas();
-                    this._lastScanTime = Date.now();
-                }
-                // 如果 < 2秒，说明刚扫描过（立即扫描已执行），跳过
-            }, 2000);
-        });
-
-        // 监听整个文档的变化
-        this.mutationObserver.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        // 使用 DOMObserverManager 统一管理
+        if (window.DOMObserverManager) {
+            this._unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('formula-manager', {
+                callback: () => {
+                    if (this.isEnabled) {
+                        this.scanAndAttachFormulas();
+                    }
+                },
+                filter: { hasAddedNodes: true },
+                throttle: 2000,  // 持续变化时每 2 秒执行一次
+                debounce: 2000   // 变化结束后 2 秒兜底执行
+            });
+        }
     }
 
     /**
@@ -537,16 +507,10 @@ class FormulaManager {
         // ✅ 移除 Storage 监听器
         this.detachStorageListener();
 
-        // 断开 MutationObserver
-        if (this.mutationObserver) {
-            this.mutationObserver.disconnect();
-            this.mutationObserver = null;
-        }
-
-        // 清除防抖定时器
-        if (this.debounceTimer) {
-            clearTimeout(this.debounceTimer);
-            this.debounceTimer = null;
+        // 取消 DOMObserverManager 订阅
+        if (this._unsubscribeObserver) {
+            this._unsubscribeObserver();
+            this._unsubscribeObserver = null;
         }
 
         // 清除所有其他定时器
@@ -579,7 +543,6 @@ class FormulaManager {
 
         // 重置状态变量
         this.currentHoverElement = null;
-        this._lastScanTime = 0;
     }
     
     // ==================== URL 变化监听（组件自治）====================

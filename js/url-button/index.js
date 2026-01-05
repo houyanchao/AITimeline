@@ -19,8 +19,7 @@ class UrlAutoLinkManager {
         this.urlRegex =
             /(?:https?:\/\/|www\.)[^\s<>"']+|(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:[a-z]{2,24})(?::\d{2,5})?(?:\/[^\s<>"']*)?/gi;
         
-        this.observer = null;
-        this.processingDebounceTimer = null;
+        this._unsubscribeObserver = null;  // DOMObserverManager 取消订阅函数
         this._pendingRoots = new Set();
         
         this._init();
@@ -300,61 +299,60 @@ class UrlAutoLinkManager {
     
     /**
      * 监听 DOM 变化
+     * 使用 DOMObserverManager 统一管理
      */
     _setupObserver() {
-        this.observer = new MutationObserver((mutations) => {
-            const rootsToProcess = new Set();
-            
-            mutations.forEach(mutation => {
-                if (mutation.type === 'childList') {
-                    mutation.addedNodes.forEach(node => {
-                        if (node.nodeType !== Node.ELEMENT_NODE) return;
-                        if (node.dataset?.urlProcessed === 'true') return;
-                        if (node.classList?.contains('url-auto-link')) return;
-                        rootsToProcess.add(node);
-                    });
-                } else if (mutation.type === 'characterData') {
-                    // 文本内容变化（很多站点是这种更新方式）
-                    const p = mutation.target?.parentElement;
-                    if (p) rootsToProcess.add(p);
-                }
-            });
-            
-            if (rootsToProcess.size > 0) {
-                rootsToProcess.forEach(r => this._pendingRoots.add(r));
-
-                clearTimeout(this.processingDebounceTimer);
-                this.processingDebounceTimer = setTimeout(() => {
-                    const roots = Array.from(this._pendingRoots);
-                    this._pendingRoots.clear();
-                    this._log('Processing', roots.length, 'mutation roots');
-                    roots.forEach(node => {
-                        if (document.body.contains(node)) {
-                            this._processNode(node);
-                        }
-                    });
-                }, 120);
-            }
-        });
+        if (this._unsubscribeObserver) return;
         
-        this.observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            characterData: true
-        });
+        if (window.DOMObserverManager) {
+            this._unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('url-auto-link', {
+                callback: (data) => {
+                    // 收集需要处理的根节点
+                    const rootsToProcess = new Set();
+                    
+                    // 处理新增的节点
+                    if (data.addedNodes) {
+                        data.addedNodes.forEach(node => {
+                            if (node.nodeType !== Node.ELEMENT_NODE) return;
+                            if (node.dataset?.urlProcessed === 'true') return;
+                            if (node.classList?.contains('url-auto-link')) return;
+                            rootsToProcess.add(node);
+                        });
+                    }
+                    
+                    // 处理文本变化的父节点
+                    if (data.characterDataNodes) {
+                        data.characterDataNodes.forEach(p => {
+                            if (p) rootsToProcess.add(p);
+                        });
+                    }
+                    
+                    // 处理收集到的节点
+                    if (rootsToProcess.size > 0) {
+                        rootsToProcess.forEach(r => this._pendingRoots.add(r));
+                        
+                        // 批量处理
+                        const roots = Array.from(this._pendingRoots);
+                        this._pendingRoots.clear();
+                        this._log('Processing', roots.length, 'mutation roots');
+                        roots.forEach(node => {
+                            if (document.body.contains(node)) {
+                                this._processNode(node);
+                            }
+                        });
+                    }
+                },
+                debounce: 500,       // 500ms 防抖，等输出稳定后处理
+                characterData: true  // 需要监听文本变化
+            });
+        }
     }
     
     destroy() {
-        // 清理 debounce timer
-        if (this.processingDebounceTimer) {
-            clearTimeout(this.processingDebounceTimer);
-            this.processingDebounceTimer = null;
-        }
-        
-        // 清理 observer
-        if (this.observer) {
-            this.observer.disconnect();
-            this.observer = null;
+        // 取消 DOMObserverManager 订阅
+        if (this._unsubscribeObserver) {
+            this._unsubscribeObserver();
+            this._unsubscribeObserver = null;
         }
         
         // 清理待处理列表

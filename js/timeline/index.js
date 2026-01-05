@@ -14,7 +14,7 @@
 let timelineManagerInstance = null;
 let currentUrl = location.href;
 let initVersion = 0; // Version number for initialization, increments on URL change
-let pageObserver = null;
+let unsubscribePageObserver = null;  // DOMObserverManager 取消订阅函数
 let routeCheckIntervalId = null;
 let routeListenersAttached = false;
 let adapterRegistry = new SiteAdapterRegistry();
@@ -146,8 +146,11 @@ function detachRouteListeners() {
 }
 
 function cleanupGlobalObservers() {
-    TimelineUtils.disconnectObserverSafe(pageObserver);
-    pageObserver = null;
+    // 取消 DOMObserverManager 订阅
+    if (unsubscribePageObserver) {
+        unsubscribePageObserver();
+        unsubscribePageObserver = null;
+    }
 }
 
 function initializeTimeline() {
@@ -277,9 +280,14 @@ if (!adapterRegistry.isSupportedSite()) {
                 initWithRetry(currentVersion, TIMELINE_CONFIG.INIT_RETRY_DELAYS);
             }
             
-            // Create a single managed pageObserver
-            pageObserver = new MutationObserver(handleUrlChange);
-            try { pageObserver.observe(document.body, { childList: true, subtree: true }); } catch {}
+            // 使用 DOMObserverManager 创建 pageObserver
+            if (window.DOMObserverManager && !unsubscribePageObserver) {
+                unsubscribePageObserver = window.DOMObserverManager.getInstance().subscribeBody('timeline-page', {
+                    callback: handleUrlChange,
+                    filter: { hasAddedNodes: true, hasRemovedNodes: true }, // 只关心节点增删
+                    debounce: 200  // 200ms 防抖，路由检测不需要太敏感
+                });
+            }
             attachRouteListenersOnce();
             
             return true; // 已初始化
@@ -298,14 +306,22 @@ if (!adapterRegistry.isSupportedSite()) {
         if (checkAndInit()) {
             // 已经初始化成功，不需要observer
         } else {
-            // 还没有用户消息，设置observer等待
-            const initialObserver = new MutationObserver(() => {
-                if (checkAndInit()) {
-                    // 初始化成功，断开observer
-                    TimelineUtils.disconnectObserverSafe(initialObserver);
-                }
-            });
-            try { initialObserver.observe(document.body, { childList: true, subtree: true }); } catch {}
+            // 还没有用户消息，使用 DOMObserverManager 等待
+            let unsubscribeInitial = null;
+            if (window.DOMObserverManager) {
+                unsubscribeInitial = window.DOMObserverManager.getInstance().subscribeBody('timeline-initial', {
+                    callback: () => {
+                        if (checkAndInit()) {
+                            // 初始化成功，取消订阅
+                            if (unsubscribeInitial) {
+                                unsubscribeInitial();
+                                unsubscribeInitial = null;
+                            }
+                        }
+                    },
+                    debounce: 150  // 150ms 防抖
+                });
+            }
         }
     })();
 }

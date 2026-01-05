@@ -33,8 +33,11 @@ class TimelineManager {
         this.mutationObserver = null;
         this.resizeObserver = null;
         this.intersectionObserver = null;
-        this.hideStateObserver = null; // ✅ 监听需要隐藏时间轴的元素
         this.visibleUserTurns = new Set();
+        
+        // DOMObserverManager 取消订阅函数
+        this._unsubscribeDomCheck = null;  // 合并 hideState + conflicting
+        this._unsubscribeTheme = null;
         
         // Event handlers
         this.onTimelineBarClick = null;
@@ -166,9 +169,6 @@ class TimelineManager {
         this.injectTimelineUI();
         this.setupEventListeners();
         this.setupObservers();
-        
-        // ✅ 监听并隐藏冲突的其他时间轴插件（避免样式冲突）
-        this.setupConflictingTimelineObserver();
         
         // Load persisted star markers for current conversation
         this.conversationId = this.adapter.extractConversationId(location.pathname);
@@ -1015,78 +1015,47 @@ class TimelineManager {
 
         this.updateIntersectionObserverTargets();
         
-        // ✅ 设置隐藏状态监听（监听特定元素出现/消失）
-        this.setupHideStateObserver();
+        // ✅ 设置 DOM 检查监听（隐藏状态 + 冲突插件检测）
+        this.setupDomCheckObserver();
     }
 
     /**
-     * ✅ 设置隐藏状态监听器
-     * 监听DOM变化，调用adapter的检测方法判断是否应该隐藏时间轴
-     */
-    setupHideStateObserver() {
-        // 检查并更新时间轴可见性
-        const checkAndUpdateTimelineVisibility = () => {
-            // 调用adapter的检测方法
-            const shouldHide = this.adapter.shouldHideTimeline();
-            
-            // 设置时间轴可见性
-            if (this.ui.wrapper) {
-                this.ui.wrapper.style.display = shouldHide ? 'none' : 'flex';
-            }
-        };
-        
-        // 立即检查一次
-        checkAndUpdateTimelineVisibility();
-        
-        // 监听DOM变化
-        this.hideStateObserver = new MutationObserver(() => {
-            checkAndUpdateTimelineVisibility();
-        });
-        
-        // 监听整个body的变化（因为这些元素可能在任何地方出现）
-        try {
-            this.hideStateObserver.observe(document.body, { 
-                childList: true, 
-                subtree: true 
-            });
-        } catch (e) {
-            console.warn('[Timeline] Failed to setup hide state observer:', e);
-        }
-    }
-
-    /**
-     * ✅ 监听并隐藏与本插件冲突的其他时间轴插件元素
+     * ✅ 设置 DOM 检查监听器（合并：隐藏状态 + 冲突插件检测）
      * 
-     * 背景：市面上存在其他类似的时间轴插件，如果用户同时安装了多个插件，
-     * 可能会出现样式冲突或功能重复的问题。
+     * 功能1：监听 DOM 变化，调用 adapter 的检测方法判断是否应该隐藏时间轴
+     * 功能2：检测并隐藏冲突的第三方时间轴插件元素
      * 
-     * 解决方案：使用 MutationObserver 持续监听 DOM 变化，
-     * 一旦检测到冲突插件的元素被添加到页面中，立即将其隐藏。
+     * 使用 DOMObserverManager 统一管理，减少订阅数量
      */
-    setupConflictingTimelineObserver() {
+    setupDomCheckObserver() {
         // 已知的冲突插件时间轴选择器
-        // 如果发现新的冲突插件，可以在这里添加对应的选择器
         const conflictingSelectors = [
             '.gemini-timeline-bar',      // Gemini 时间轴插件
             '.chatgpt-timeline-bar',     // ChatGPT 时间轴插件
         ];
         
-        // 初始化时先检查一次已存在的冲突元素
+        // 检查并更新时间轴可见性
+        const checkAndUpdateTimelineVisibility = () => {
+            const shouldHide = this.adapter.shouldHideTimeline();
+            if (this.ui.wrapper) {
+                this.ui.wrapper.style.display = shouldHide ? 'none' : 'flex';
+            }
+        };
+        
+        // 立即执行一次检查
+        checkAndUpdateTimelineVisibility();
         this.hideConflictingElements(conflictingSelectors);
         
-        // 使用 MutationObserver 持续监听 DOM 变化
-        // 无论对方插件何时加载，都能及时检测并隐藏
-        this.conflictingTimelineObserver = new MutationObserver(() => {
-            this.hideConflictingElements(conflictingSelectors);
-        });
-        
-        try {
-            this.conflictingTimelineObserver.observe(document.body, {
-                childList: true,
-                subtree: true
+        // 使用 DOMObserverManager 监听 DOM 变化（合并为 1 个订阅）
+        if (window.DOMObserverManager) {
+            this._unsubscribeDomCheck = window.DOMObserverManager.getInstance().subscribeBody('timeline-dom-check', {
+                callback: () => {
+                    checkAndUpdateTimelineVisibility();
+                    this.hideConflictingElements(conflictingSelectors);
+                },
+                filter: { hasAddedNodes: true, hasRemovedNodes: true },
+                debounce: 300  // 300ms 防抖，降低执行频率
             });
-        } catch (e) {
-            console.warn('[Timeline] Failed to setup conflicting timeline observer:', e);
         }
     }
 
@@ -1601,54 +1570,14 @@ class TimelineManager {
     /**
      * ✅ 优化：设置主题变化监听器
      * 当主题切换时，重新缓存 CSS 变量并清空截断缓存
+     * 使用 DOMObserverManager 统一管理
      */
     setupThemeChangeListener() {
-        // 监听 html 元素的 class、data-theme、style 和 yb-theme-mode 属性变化
-        // style 用于 ChatGPT (color-scheme)
-        // data-theme 用于通义
-        // yb-theme-mode 用于元宝
-        const htmlObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && 
-                    (mutation.attributeName === 'class' || 
-                     mutation.attributeName === 'data-theme' ||
-                     mutation.attributeName === 'style' ||
-                     mutation.attributeName === 'yb-theme-mode')) {
-                    this.onThemeChange();
-                }
+        // 使用 DOMObserverManager 监听主题变化
+        if (window.DOMObserverManager) {
+            this._unsubscribeTheme = window.DOMObserverManager.getInstance().subscribeTheme('timeline', () => {
+                this.onThemeChange();
             });
-        });
-        
-        try {
-            htmlObserver.observe(document.documentElement, {
-                attributes: true,
-                attributeFilter: ['class', 'data-theme', 'style', 'yb-theme-mode']
-            });
-            
-            // 保存引用以便在 destroy 时清理
-            this.htmlObserver = htmlObserver;
-        } catch (e) {
-        }
-        
-        // 监听 body 元素的 class 和 yb-theme-mode 属性变化（Gemini、DeepSeek、元宝等网站在 body 上切换主题）
-        const bodyObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && 
-                    (mutation.attributeName === 'class' || mutation.attributeName === 'yb-theme-mode')) {
-                    this.onThemeChange();
-                }
-            });
-        });
-        
-        try {
-            bodyObserver.observe(document.body, {
-                attributes: true,
-                attributeFilter: ['class', 'yb-theme-mode']
-            });
-            
-            // 保存引用以便在 destroy 时清理
-            this.bodyObserver = bodyObserver;
-        } catch (e) {
         }
         
         // 监听系统主题变化（prefers-color-scheme）
@@ -2723,9 +2652,16 @@ class TimelineManager {
         TimelineUtils.disconnectObserverSafe(this.mutationObserver);
         TimelineUtils.disconnectObserverSafe(this.resizeObserver);
         TimelineUtils.disconnectObserverSafe(this.intersectionObserver);
-        TimelineUtils.disconnectObserverSafe(this.hideStateObserver); // ✅ 清理隐藏状态监听器
-        TimelineUtils.disconnectObserverSafe(this.themeObserver); // ✅ 优化：清理主题监听器
-        TimelineUtils.disconnectObserverSafe(this.conflictingTimelineObserver); // ✅ 清理冲突插件监听器
+        
+        // 取消 DOMObserverManager 订阅
+        if (this._unsubscribeDomCheck) {
+            this._unsubscribeDomCheck();
+            this._unsubscribeDomCheck = null;
+        }
+        if (this._unsubscribeTheme) {
+            this._unsubscribeTheme();
+            this._unsubscribeTheme = null;
+        }
         
         // ✅ 清理健康检查定时器
         if (this.healthCheckInterval) {

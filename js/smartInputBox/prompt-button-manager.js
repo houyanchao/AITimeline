@@ -23,8 +23,7 @@ class PromptButtonManager {
         this.isDestroyed = false;
         this.platformSettings = {};
         this.storageListener = null;
-        this.mutationObserver = null;
-        this._mutationDebounceTimer = null;  // MutationObserver 防抖定时器
+        this._unsubscribeObserver = null;  // DOMObserverManager 取消订阅函数
         
         // 提示词列表
         this.prompts = [];
@@ -225,57 +224,43 @@ class PromptButtonManager {
     }
     
     /**
-     * 启动输入框检测（MutationObserver）
+     * 启动输入框检测
+     * 使用 DOMObserverManager 统一管理
      */
     _startInputDetection() {
-        if (this.mutationObserver) return;
+        if (this._unsubscribeObserver) return;
         
-        this.mutationObserver = new MutationObserver(() => {
-            // 防抖处理（DOM 变化可能很频繁）
-            if (this._mutationDebounceTimer) {
-                clearTimeout(this._mutationDebounceTimer);
-            }
-            
-            this._mutationDebounceTimer = setTimeout(() => {
-                this._mutationDebounceTimer = null;
-                
-                // ✅ 再次检查状态（防止禁用后仍执行）
-                if (!this.isEnabled || this.isDestroyed) return;
-                
-                if (!this.inputElement) {
-                    // 还没找到输入框，尝试查找
-                    this._findInputAndShow();
-                } else if (!document.body.contains(this.inputElement)) {
-                    // 输入框被移除，重新查找
-                    this.inputElement = null;
-                    this._hideButton();
-                    this._findInputAndShow();
-                } else {
-                    // ✅ 输入框存在，更新位置（处理位置变化的情况）
-                    this._updatePosition();
-                }
-            }, 100);  // 100ms 防抖
-        });
-        
-        this.mutationObserver.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        if (window.DOMObserverManager) {
+            this._unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('prompt-button', {
+                callback: () => {
+                    // 再次检查状态（防止禁用后仍执行）
+                    if (!this.isEnabled || this.isDestroyed) return;
+                    
+                    if (!this.inputElement) {
+                        // 还没找到输入框，尝试查找
+                        this._findInputAndShow();
+                    } else if (!document.body.contains(this.inputElement)) {
+                        // 输入框被移除，重新查找
+                        this.inputElement = null;
+                        this._hideButton();
+                        this._findInputAndShow();
+                    } else {
+                        // 输入框存在，更新位置（处理位置变化的情况）
+                        this._updatePosition();
+                    }
+                },
+                debounce: 300  // 300ms 防抖，减少执行频率
+            });
+        }
     }
     
     /**
      * 停止输入框检测
      */
     _stopInputDetection() {
-        // ✅ 清除待执行的防抖定时器
-        if (this._mutationDebounceTimer) {
-            clearTimeout(this._mutationDebounceTimer);
-            this._mutationDebounceTimer = null;
-        }
-        
-        if (this.mutationObserver) {
-            this.mutationObserver.disconnect();
-            this.mutationObserver = null;
+        if (this._unsubscribeObserver) {
+            this._unsubscribeObserver();
+            this._unsubscribeObserver = null;
         }
     }
     

@@ -32,8 +32,8 @@ class SmartEnterManager {
         this.newlineTimer = null;
         this.debounceTimer = null;  // 防抖定时器
         
-        // 观察器
-        this.mutationObserver = null;
+        // DOMObserverManager 取消订阅函数
+        this._unsubscribeObserver = null;
         
         // Storage 监听器
         this.storageListener = null;
@@ -193,20 +193,18 @@ class SmartEnterManager {
     
     /**
      * 启动 DOM 监听
+     * 使用 DOMObserverManager 统一管理
      */
     _startObserving() {
+        if (this._unsubscribeObserver) return;
+        
         try {
-            // 避免重复创建
-            if (this.mutationObserver) {
-                return;
+            if (window.DOMObserverManager) {
+                this._unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('smart-enter', {
+                    callback: () => this._debouncedAttach(),
+                    debounce: SMART_ENTER_CONFIG.DEBOUNCE_DELAY  // 200ms 防抖
+                });
             }
-            
-            this.mutationObserver = new MutationObserver(() => {
-                // 使用防抖，避免频繁触发
-                this._debouncedAttach();
-            });
-            
-            this.mutationObserver.observe(document.body, SMART_ENTER_CONFIG.OBSERVER_CONFIG);
         } catch (e) {
             console.error('[SmartInputBox] Failed to start observer:', e);
         }
@@ -216,9 +214,9 @@ class SmartEnterManager {
      * 停止 DOM 监听
      */
     _stopObserving() {
-        if (this.mutationObserver) {
-            this.mutationObserver.disconnect();
-            this.mutationObserver = null;
+        if (this._unsubscribeObserver) {
+            this._unsubscribeObserver();
+            this._unsubscribeObserver = null;
         }
     }
     

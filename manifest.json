@@ -23,6 +23,7 @@
       ],
       "js": [
         "js/global/constants.js",
+        "js/global/dom-observer-manager/index.js",
         "js/global/tooltip-manager/index.js",
         "js/global/toast-manager/index.js",
         "js/global/input-modal/index.js",

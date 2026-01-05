@@ -63,8 +63,7 @@
     // ===== 状态变量 =====
     
     let runnerManagerInstance = null;
-    let observer = null;
-    let stableTimer = null;
+    let unsubscribeObserver = null;  // DOMObserverManager 取消订阅函数
 
     // ===== 工具函数 =====
 
@@ -498,65 +497,29 @@
     }
 
     /**
-     * DOM 稳定后扫描
-     * 每次 DOM 变化重置计时器，1秒无变化后执行扫描
-     */
-    function scheduleStableScan() {
-        if (stableTimer) {
-            clearTimeout(stableTimer);
-        }
-        stableTimer = setTimeout(() => {
-            scanCodeBlocks();
-        }, CONFIG.stableDelay);
-    }
-
-    /**
-     * 初始化 MutationObserver
-     */
-    function initObserver() {
-        if (observer) return;
-
-        observer = new MutationObserver((mutations) => {
-            let hasNewNodes = false;
-            for (const mutation of mutations) {
-                if (mutation.addedNodes.length > 0) {
-                    hasNewNodes = true;
-                    break;
-                }
-            }
-            if (hasNewNodes) {
-                scheduleStableScan();
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    }
-
-    /**
      * 初始化 Runner 模块
      */
     function initialize() {
         // 初始扫描
         scanCodeBlocks();
         
-        // 开始监听 DOM 变化
-        initObserver();
+        // 使用 DOMObserverManager 监听 DOM 变化
+        // 防抖 1 秒：等代码块输出完整后再添加 Run 按钮
+        unsubscribeObserver = window.DOMObserverManager.getInstance().subscribeBody('runner', {
+            callback: () => scanCodeBlocks(),
+            filter: { hasAddedNodes: true },
+            debounce: CONFIG.stableDelay  // 1秒防抖
+        });
     }
 
     /**
      * 清理资源
      */
     function cleanup() {
-        if (observer) {
-            observer.disconnect();
-            observer = null;
-        }
-        if (stableTimer) {
-            clearTimeout(stableTimer);
-            stableTimer = null;
+        // 取消 DOMObserverManager 订阅
+        if (unsubscribeObserver) {
+            unsubscribeObserver();
+            unsubscribeObserver = null;
         }
         if (runnerManagerInstance) {
             runnerManagerInstance.cleanup();
