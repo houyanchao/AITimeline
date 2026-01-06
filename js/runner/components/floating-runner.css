@@ -1,0 +1,133 @@
+/**
+ * FloatingRunnerContainer 悬浮容器样式
+ * 
+ * 职责：悬浮窗口的定位、拖动、调整大小
+ * 配色策略：
+ *   - 页面浅色主题 → Runner 深色背景（VSCode Dark+）
+ *   - 页面深色主题 → Runner 浅色背景（VSCode Light+）
+ */
+
+/* ===== 默认：GitHub Dark 风格（用于浅色页面）===== */
+.floating-runner-container {
+    --floating-bg: #0d1117;
+    --floating-border: #30363d;
+    --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 深色页面：VSCode Light+ 风格 ===== */
+html.dark .floating-runner-container,
+body.dark .floating-runner-container,
+body.dark-theme .floating-runner-container,
+html[data-theme*="dark"] .floating-runner-container,
+html[style*="color-scheme: dark"] .floating-runner-container {
+    --floating-bg: #ffffff;
+    --floating-border: #e7e7e7;
+    --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== 容器 ===== */
+.floating-runner-container {
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    flex-direction: column;
+    background: var(--floating-bg);
+    border: 1px solid var(--floating-border);
+    border-radius: 8px;
+    box-shadow: var(--floating-shadow);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.floating-runner-container.visible {
+    display: flex;
+}
+
+/* ===== 内容区域 ===== */
+.floating-runner-body {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 内部 RunnerPanel 填满 body */
+.floating-runner-body .runner-panel {
+    border: none;
+    border-radius: 0;
+}
+
+/* 悬浮模式下第一个 header 可拖动 */
+.floating-runner-container .runner-panel-header:first-of-type {
+    cursor: move;
+}
+
+/* ===== 调整大小手柄 ===== */
+.floating-runner-resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+/* 角落手柄 */
+.floating-runner-resize-handle[data-direction="se"] {
+    right: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+}
+
+.floating-runner-resize-handle[data-direction="sw"] {
+    left: 0;
+    bottom: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nesw-resize;
+}
+
+.floating-runner-resize-handle[data-direction="ne"] {
+    right: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nesw-resize;
+}
+
+.floating-runner-resize-handle[data-direction="nw"] {
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+}
+
+/* 边缘手柄 */
+.floating-runner-resize-handle[data-direction="e"] {
+    right: 0;
+    top: 16px;
+    bottom: 16px;
+    width: 6px;
+    cursor: ew-resize;
+}
+
+.floating-runner-resize-handle[data-direction="w"] {
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+    width: 6px;
+    cursor: ew-resize;
+}
+
+.floating-runner-resize-handle[data-direction="n"] {
+    top: 0;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+    cursor: ns-resize;
+}
+
+.floating-runner-resize-handle[data-direction="s"] {
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 6px;
+    cursor: ns-resize;
+}

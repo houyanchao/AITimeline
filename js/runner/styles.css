@@ -2,17 +2,19 @@
  * Runner Styles - 代码块运行器样式
  */
 
-/* ===== 颜色变量 ===== */
+/* ===== 颜色变量 - GitHub Dark ===== */
 :root {
     --runner-bg: #0d1117;
     --runner-bg-secondary: #161b22;
     --runner-border: #30363d;
     --runner-text: #e6edf3;
     --runner-text-secondary: #8b949e;
-    --runner-accent: #22c55e;
+    --runner-accent: #7c3aed;
+    --runner-accent-hover: #6d28d9;
     --runner-error: #f85149;
     --runner-warn: #d29922;
     --runner-info: #58a6ff;
+    --runner-success: #3fb950;
 }
 
 /* ===== 运行按钮（absolute 定位） ===== */
@@ -114,10 +116,11 @@
     gap: 6px;
 }
 
-/* Icon 按钮（设置、复制、关闭、清空） */
+/* Icon 按钮（设置、复制、弹出、关闭、清空） */
 .runner-action-settings,
 .runner-action-copy,
 .runner-output-copy,
+.runner-action-popout,
 .runner-action-close,
 .runner-action-clear {
     display: flex;
@@ -147,6 +150,12 @@
     color: var(--runner-info);
 }
 
+.runner-action-popout:hover {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: var(--runner-accent);
+    color: var(--runner-accent);
+}
+
 .runner-action-close:hover {
     background: rgba(248, 81, 73, 0.1);
     border-color: var(--runner-error);
@@ -162,10 +171,51 @@
 .runner-action-settings svg,
 .runner-action-copy svg,
 .runner-output-copy svg,
+.runner-action-popout svg,
 .runner-action-close svg,
 .runner-action-clear svg {
     width: 14px;
     height: 14px;
+}
+
+/* 语言选择器 */
+.runner-lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--runner-text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.runner-lang-selector:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--runner-text);
+}
+
+.runner-lang-selector .lang-icon {
+    font-size: 12px;
+}
+
+.runner-lang-selector .lang-name {
+    color: inherit;
+}
+
+.runner-lang-selector svg {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
+}
+
+.runner-lang-selector:hover svg {
+    opacity: 1;
 }
 
 /* Run 按钮 */
@@ -188,7 +238,7 @@
 }
 
 .runner-action-run:hover {
-    background: #1ea54b;
+    background: var(--runner-accent-hover);
 }
 
 .runner-action-run:active {
@@ -240,208 +290,6 @@
 .runner-resizer:active {
     background: var(--runner-accent);
     height: 2px; /* 微微变粗反馈 */
-}
-
-.runner-code-editor {
-    flex: 1;
-    display: block;
-    width: 100%;
-    min-height: 0;
-    overflow: hidden;
-    background: var(--runner-bg);
-}
-
-/* CodeMirror 核心样式（防止外部 CSS 未加载） */
-.runner-code-editor .CodeMirror {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    font-family: ui-monospace, 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
-    font-size: 13px;
-    line-height: 1.5;
-    background: var(--runner-bg);
-    color: var(--runner-text);
-    direction: ltr;
-}
-
-.runner-code-editor .CodeMirror-scroll {
-    overflow: scroll !important;
-    margin-bottom: -30px;
-    margin-right: -30px;
-    padding-bottom: 30px;
-    height: 100%;
-    outline: none;
-    position: relative;
-}
-
-.runner-code-editor .CodeMirror-sizer {
-    position: relative;
-    border-right: 30px solid transparent;
-}
-
-.runner-code-editor .CodeMirror-lines {
-    padding: 4px 0;
-    cursor: text;
-    min-height: 1px;
-}
-
-.runner-code-editor .CodeMirror pre.CodeMirror-line,
-.runner-code-editor .CodeMirror pre.CodeMirror-line-like {
-    padding: 0 4px;
-    border-radius: 0;
-    border-width: 0;
-    background: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    margin: 0;
-    white-space: pre;
-    word-wrap: normal;
-    line-height: inherit;
-    color: inherit;
-    z-index: 2;
-    position: relative;
-    overflow: visible;
-}
-
-.runner-code-editor .CodeMirror-wrap pre.CodeMirror-line,
-.runner-code-editor .CodeMirror-wrap pre.CodeMirror-line-like {
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    word-break: normal;
-}
-
-.runner-code-editor .CodeMirror-code {
-    outline: none;
-}
-
-.runner-code-editor .CodeMirror-gutters {
-    position: absolute;
-    left: 0;
-    top: 0;
-    min-height: 100%;
-    z-index: 3;
-    background: var(--runner-bg-secondary);
-    border-right: 1px solid var(--runner-border);
-    white-space: nowrap;
-}
-
-.runner-code-editor .CodeMirror-linenumber {
-    padding: 0 10px 0 5px;
-    min-width: 20px;
-    text-align: right;
-    color: var(--runner-text-secondary);
-    white-space: nowrap;
-}
-
-.runner-code-editor .CodeMirror-gutter-wrapper {
-    position: absolute;
-    z-index: 4;
-    background: none !important;
-    border: none !important;
-    left: 0 !important;
-}
-
-.runner-code-editor .CodeMirror-gutter-elt {
-    position: absolute;
-    cursor: default;
-    z-index: 4;
-}
-
-/* 确保行号区域正确显示 */
-.runner-code-editor .CodeMirror-gutter {
-    white-space: normal;
-    height: 100%;
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: -30px;
-}
-
-.runner-code-editor .CodeMirror-gutter-background {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 4;
-}
-
-/* 修复 lineWrapping 模式下的行号对齐 */
-.runner-code-editor .CodeMirror-wrap .CodeMirror-gutter-wrapper {
-    left: -40px !important;
-}
-
-.runner-code-editor .CodeMirror-wrap .CodeMirror-linewidget {
-    overflow: visible;
-}
-
-/* 确保代码区域正确偏移 */
-.runner-code-editor .CodeMirror-measure {
-    position: absolute;
-    width: 100%;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-}
-
-.runner-code-editor .CodeMirror-measure pre {
-    position: static;
-}
-
-.runner-code-editor .CodeMirror-cursor {
-    border-left: 2px solid var(--runner-accent);
-}
-
-.runner-code-editor .CodeMirror-selected {
-    background: rgba(88, 166, 255, 0.2) !important;
-}
-
-.runner-code-editor .CodeMirror-focused .CodeMirror-selected {
-    background: rgba(88, 166, 255, 0.3) !important;
-}
-
-.runner-code-editor .CodeMirror-matchingbracket {
-    color: var(--runner-success) !important;
-    font-weight: bold;
-}
-
-/* JavaScript 语法高亮 */
-.runner-code-editor .cm-keyword { color: #ff7b72; }
-.runner-code-editor .cm-def { color: #d2a8ff; }
-.runner-code-editor .cm-variable { color: #c9d1d9; }
-.runner-code-editor .cm-variable-2 { color: #79c0ff; }
-.runner-code-editor .cm-variable-3 { color: #7ee787; }
-.runner-code-editor .cm-property { color: #79c0ff; }
-.runner-code-editor .cm-operator { color: #ff7b72; }
-.runner-code-editor .cm-number { color: #79c0ff; }
-.runner-code-editor .cm-string { color: #a5d6ff; }
-.runner-code-editor .cm-string-2 { color: #a5d6ff; }
-.runner-code-editor .cm-comment { color: #8b949e; font-style: italic; }
-.runner-code-editor .cm-atom { color: #79c0ff; }
-.runner-code-editor .cm-meta { color: #8b949e; }
-.runner-code-editor .cm-tag { color: #7ee787; }
-.runner-code-editor .cm-attribute { color: #79c0ff; }
-.runner-code-editor .cm-builtin { color: #ffa657; }
-.runner-code-editor .cm-qualifier { color: #d2a8ff; }
-
-/* CodeMirror 滚动条 */
-.runner-code-editor .CodeMirror-vscrollbar::-webkit-scrollbar,
-.runner-code-editor .CodeMirror-hscrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-.runner-code-editor .CodeMirror-vscrollbar::-webkit-scrollbar-track,
-.runner-code-editor .CodeMirror-hscrollbar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.runner-code-editor .CodeMirror-vscrollbar::-webkit-scrollbar-thumb,
-.runner-code-editor .CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
-    background: var(--runner-border);
-    border-radius: 4px;
-}
-
-.runner-code-editor .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover,
-.runner-code-editor .CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--runner-text-secondary);
 }
 
 /* ===== 结果区域 ===== */

@@ -28,23 +28,13 @@
         processedAttr: 'data-runner-initialized',
         
         // ===== 高度配置 =====
-        headerHeight: 50,           // 区域 header 高度
+        headerHeight: 36,              // header 高度
+        resizerHeight: 4,              // 分隔条高度
+        outputContentHeight: 150,      // output 内容区默认高度
         
-        // Code 区域
-        codeMinHeight: 150,         // Code 内容区最小高度
-        
-        // Output 区域
-        outputMinHeight: 100,       // Output 内容区最小高度
-        outputMaxHeight: 300,       // Output 内容区最大高度
-        outputDefaultHeight: 100,   // Output 内容区默认高度
-        
-        // 拖动限制（Output 整体高度 = header + 内容）
-        outputDragMin: 120,         // 拖动最小高度（header 50 + 内容 100）
-        outputDragMax: 350,         // 拖动最大高度（header 50 + 内容 300）
-        
-        // Runner 容器最小高度（用于撑开 layoutContainer）
-        // 计算：header*2(100) + codeMin(150) + outputDefault(100) + resizer(1) = 351，留余量
-        minContainerHeight: 360
+        // 调整限制
+        outputContentMinHeight: 50,    // output 内容区最小高度
+        codeMinHeight: 100             // 代码区最小高度
     };
 
     // 代码块配置（按优先级排序，特殊规则在前，通用规则在后）
@@ -166,28 +156,24 @@
         return button;
     }
 
-    // 语言显示名称映射
-    const LANGUAGE_DISPLAY_NAMES = {
-        'javascript': 'JavaScript',
-        'python': 'Python',
-        'typescript': 'TypeScript',
-        'sql': 'SQL',
-        'html': 'HTML',
-        'json': 'JSON',
-        'markdown': 'Markdown',
-        'lua': 'Lua',
-        'ruby': 'Ruby'
-    };
+    // 使用全局语言配置（来自 constants.js）
+    const LANGUAGE_CONFIGS = RUNNER_LANGUAGES;
+
+    // 语言显示名称映射（兼容）
+    const LANGUAGE_DISPLAY_NAMES = {};
+    LANGUAGE_CONFIGS.forEach(lang => {
+        LANGUAGE_DISPLAY_NAMES[lang.id] = lang.name;
+    });
 
     /**
-     * 创建 Runner 容器（包含 CodeMirror 编辑器和结果面板）
+     * 创建 Runner 容器（使用 RunnerPanel 核心组件）
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {HTMLElement} runButton - 运行按钮
      * @param {string} language - 语言类型
-     * @returns {Object} { container, cmEditor, contentEl }
+     * @returns {Object} { container, panel }
      */
     function createRunnerContainer(layoutContainer, runButton, language = 'javascript') {
-        // 创建容器
+        // 创建嵌入式容器
         const container = document.createElement('div');
         container.className = 'runner-container';
         
@@ -195,165 +181,41 @@
         const maxZ = getMaxChildZIndex(layoutContainer);
         container.style.zIndex = maxZ + 1;
 
-        // 获取语言显示名称
-        const langDisplayName = LANGUAGE_DISPLAY_NAMES[language] || language;
-
-        // 创建编辑器区域
-        const editorSection = document.createElement('div');
-        editorSection.className = 'runner-editor-section';
-        editorSection.style.minHeight = (CONFIG.headerHeight + CONFIG.codeMinHeight) + 'px';
-
-        const editorHeader = document.createElement('div');
-        editorHeader.className = 'runner-section-header';
-        editorHeader.style.height = CONFIG.headerHeight + 'px';
-        editorHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg><span>${langDisplayName}</span></span><div class="runner-section-actions"><button class="runner-action-settings" title="${safeI18n('vkmzpx', '设置')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button><button class="runner-action-copy" title="${safeI18n('mvkxpz', '复制')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="runner-action-close" title="${safeI18n('pxvkmz', '关闭')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>`;
-
-        // 创建 CodeMirror 容器
-        const editorWrapper = document.createElement('div');
-        editorWrapper.className = 'runner-code-editor';
-
-        editorSection.appendChild(editorHeader);
-        editorSection.appendChild(editorWrapper);
-
-        // 创建结果区域
-        const resultSection = document.createElement('div');
-        resultSection.className = 'runner-result-section';
-        const defaultOutputHeight = CONFIG.headerHeight + CONFIG.outputDefaultHeight;
-        resultSection.style.height = defaultOutputHeight + 'px';
-        resultSection.style.minHeight = (CONFIG.headerHeight + CONFIG.outputMinHeight) + 'px';
-        resultSection.style.maxHeight = (CONFIG.headerHeight + CONFIG.outputMaxHeight) + 'px';
-
-        const resultHeader = document.createElement('div');
-        resultHeader.className = 'runner-section-header';
-        resultHeader.style.height = CONFIG.headerHeight + 'px';
-        resultHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg><span>Output</span></span><div class="runner-section-actions"><button class="runner-action-clear" title="清空输出"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button><button class="runner-output-copy" title="${safeI18n('mvkxpz', '复制')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="runner-action-run" title="运行代码"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Run</span></button></div>`;
-
-        const resultContent = document.createElement('div');
-        resultContent.className = 'runner-result-content';
-
-        resultSection.appendChild(resultHeader);
-        resultSection.appendChild(resultContent);
-
-        // 创建分隔条（可拖动调整 Output 高度）
-        const resizer = document.createElement('div');
-        resizer.className = 'runner-resizer';
-
-        // 组装容器
-        container.appendChild(editorSection);
-        container.appendChild(resizer);
-        container.appendChild(resultSection);
-
-        // 分隔条拖动逻辑
-        let isResizing = false;
-        let startY = 0;
-        let startHeight = 0;
-
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            startY = e.clientY;
-            startHeight = resultSection.offsetHeight;
-            document.body.style.cursor = 'row-resize';
-            document.body.style.userSelect = 'none';
-            e.preventDefault();
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            const deltaY = startY - e.clientY;
-            // 使用 CONFIG 配置的拖动限制
-            const newHeight = Math.max(CONFIG.outputDragMin, Math.min(CONFIG.outputDragMax, startHeight + deltaY));
-            resultSection.style.height = newHeight + 'px';
-            resultSection.style.minHeight = newHeight + 'px';
-            resultSection.style.maxHeight = newHeight + 'px';
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.style.cursor = '';
-                document.body.style.userSelect = '';
-            }
-        });
-
-        // 初始化 CodeMirror
-        let cmEditor = null;
-        if (typeof CodeMirror !== 'undefined') {
-            cmEditor = CodeMirror(editorWrapper, {
-                mode: 'javascript',
-                theme: 'default',
-                lineNumbers: true,
-                lineWrapping: true,
-                tabSize: 2,
-                indentWithTabs: false,
-                matchBrackets: true
-            });
-            // 设置高度自适应
-            cmEditor.setSize('100%', '100%');
-            // 延迟刷新确保正确渲染
-            setTimeout(() => cmEditor.refresh(), 50);
-        }
-
-        // 存储 CodeMirror 实例到容器
-        container._cmEditor = cmEditor;
-
-        // 绑定事件
-        const settingsBtn = editorHeader.querySelector('.runner-action-settings');
-        settingsBtn.addEventListener('click', () => {
-            // 打开 panelModal 并切换到 runner tab
-            if (window.panelModal) {
-                window.panelModal.show('runner');
-            }
-        });
-
-        const copyBtn = editorHeader.querySelector('.runner-action-copy');
-        copyBtn.addEventListener('click', () => {
-            const code = cmEditor ? cmEditor.getValue() : '';
-            navigator.clipboard.writeText(code).then(() => {
-                if (window.globalToastManager) {
-                    window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), copyBtn);
+        // 创建 RunnerPanel 核心组件
+        const panel = new window.RunnerPanel(container, {
+            language: language,
+            showClose: true,
+            showPopout: true,
+            onClose: () => {
+                // 还原布局容器的原始样式
+                if (layoutContainer.dataset.originalHeight) {
+                    layoutContainer.style.removeProperty('display');
+                    layoutContainer.style.removeProperty('min-height');
+                    layoutContainer.style.removeProperty('height');
+                    layoutContainer.style.removeProperty('max-height');
+                    layoutContainer.style.removeProperty('overflow');
+                    delete layoutContainer.dataset.originalHeight;
                 }
-            });
-        });
-
-        editorHeader.querySelector('.runner-action-close').addEventListener('click', () => {
-            // 还原布局容器的原始样式（使用 removeProperty 移除 important 样式）
-            if (layoutContainer.dataset.originalHeight) {
-                layoutContainer.style.removeProperty('display');
-                layoutContainer.style.removeProperty('min-height');
-                layoutContainer.style.removeProperty('height');
-                layoutContainer.style.removeProperty('max-height');
-                layoutContainer.style.removeProperty('overflow');
-                delete layoutContainer.dataset.originalHeight;
-            }
-            // 显示 Run 按钮
-            if (container._runButton) {
-                container._runButton.style.display = '';
-            }
-            container.remove();
-        });
-
-        resultHeader.querySelector('.runner-action-clear').addEventListener('click', () => {
-            resultContent.innerHTML = '<div class="runner-output-empty">（无输出）</div>';
-        });
-
-        const copyOutputBtn = resultHeader.querySelector('.runner-output-copy');
-        copyOutputBtn.addEventListener('click', () => {
-            // 获取输出内容的纯文本
-            const outputText = resultContent.innerText || resultContent.textContent || '';
-            navigator.clipboard.writeText(outputText).then(() => {
-                if (window.globalToastManager) {
-                    window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), copyOutputBtn);
+                // 显示 Run 按钮
+                if (container._runButton) {
+                    container._runButton.style.display = '';
                 }
-            });
+                panel.destroy();
+                container.remove();
+            },
+            onPopout: ({ code, language }) => {
+                // 打开悬浮面板
+                if (window.FloatingRunnerPanel) {
+                    const floatingPanel = window.FloatingRunnerPanel.getInstance();
+                    floatingPanel.show({ code, language });
+                }
+            }
         });
 
-        resultHeader.querySelector('.runner-action-run').addEventListener('click', () => {
-            const code = cmEditor ? cmEditor.getValue() : '';
-            const language = container._language || 'javascript';
-            executeCode(code, resultContent, runButton, language);
-        });
+        // 存储 panel 实例到容器
+        container._panel = panel;
 
-        return { container, cmEditor, contentEl: resultContent };
+        return { container, panel };
     }
 
     // ===== 执行逻辑 =====
@@ -434,40 +296,40 @@
             layoutContainer.style.position = 'relative';
         }
 
-        // 检查并调整布局容器高度（只有高度不足时才调整）
-        const currentHeight = layoutContainer.offsetHeight;
-        if (currentHeight < CONFIG.minContainerHeight) {
-            // 保存原始高度
-            if (!layoutContainer.dataset.originalHeight) {
-                layoutContainer.dataset.originalHeight = currentHeight;
-            }
-            // 使用 setProperty 加 important 强制覆盖外部样式
-            // display: inline 会阻止 height 生效，需要改为 block
-            layoutContainer.style.setProperty('display', 'block', 'important');
-            layoutContainer.style.setProperty('min-height', CONFIG.minContainerHeight + 'px', 'important');
-            layoutContainer.style.setProperty('height', CONFIG.minContainerHeight + 'px', 'important');
-            layoutContainer.style.setProperty('max-height', 'none', 'important');
-            layoutContainer.style.setProperty('overflow', 'visible', 'important');
+        // 计算 runner-container 高度：<code>元素高度 + 标题栏header + 分隔条 + output_header + output_content
+        const codeHeight = codeElement.offsetHeight;
+        const calculatedHeight = codeHeight + 
+            CONFIG.headerHeight +          // 标题栏 header
+            CONFIG.resizerHeight +         // 分隔条
+            CONFIG.headerHeight +          // output header
+            CONFIG.outputContentHeight;    // output 内容区
+        
+        // 保存原始高度（用于关闭时恢复）
+        if (!layoutContainer.dataset.originalHeight) {
+            layoutContainer.dataset.originalHeight = layoutContainer.offsetHeight;
         }
+        
+        // layoutContainer 需要足够高来容纳 runner-container（因为 absolute 不会撑开父元素）
+        layoutContainer.style.setProperty('display', 'block', 'important');
+        layoutContainer.style.setProperty('height', calculatedHeight + 'px', 'important');
+        layoutContainer.style.setProperty('min-height', calculatedHeight + 'px', 'important');
+        layoutContainer.style.setProperty('max-height', 'none', 'important');
+        layoutContainer.style.setProperty('overflow', 'visible', 'important');
 
         // 获取或创建 Runner 容器（在布局容器内部）
         let container = layoutContainer.querySelector('.runner-container');
-        let cmEditor, contentEl;
+        let panel;
 
         if (!container) {
             const result = createRunnerContainer(layoutContainer, runButton, language);
             container = result.container;
-            cmEditor = result.cmEditor;
-            contentEl = result.contentEl;
+            panel = result.panel;
             // 存储 runButton 引用，用于关闭时恢复显示
             container._runButton = runButton;
-            // 存储语言类型
-            container._language = language;
             // 插入到布局容器内部
             layoutContainer.appendChild(container);
         } else {
-            cmEditor = container._cmEditor;
-            contentEl = container.querySelector('.runner-result-content');
+            panel = container._panel;
         }
         
         // 隐藏 Run 按钮
@@ -476,14 +338,13 @@
         // 直接使用 textContent 获取代码
         const code = getCodeText(codeElement);
 
-        // 存储语言类型到容器上，供内部 Run 按钮使用
-        container._language = language;
-
-        if (cmEditor) {
-            cmEditor.setValue(code);
-            setTimeout(() => cmEditor.refresh(), 10);
+        // 设置代码并运行
+        if (panel) {
+            panel.setCode(code);
+            panel.setLanguage(language);
+            setTimeout(() => panel.refresh(), 10);
+            await panel.run();
         }
-        await executeCode(code, contentEl, runButton, language);
     }
 
     // ===== 输出渲染 =====

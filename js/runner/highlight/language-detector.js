@@ -2,22 +2,27 @@
  * LanguageDetector - 基于 Highlight.js 的代码语言检测器
  * 
  * 使用 Highlight.js 的 highlightAuto 功能自动检测代码语言
+ * 语言配置来自全局 RUNNER_LANGUAGES（constants.js）
  */
 
 (function() {
     'use strict';
 
-    // Highlight.js 支持的语言列表（用于检测）
-    // 注意：css 不单独支持运行，只作为 HTML 的一部分
-    const HLJS_LANGUAGES = ['javascript', 'python', 'typescript', 'sql', 'xml', 'json', 'markdown', 'lua', 'ruby'];
-    
-    // 语言名称映射（hljs 名称 -> 我们的名称）
-    const LANGUAGE_MAP = {
-        'xml': 'html'  // Highlight.js 用 xml 表示 HTML
-    };
-    
-    // 我们支持的语言列表（用于外部引用）
-    const SUPPORTED_LANGUAGES = ['javascript', 'python', 'typescript', 'sql', 'html', 'json', 'markdown', 'lua', 'ruby'];
+    // 从全局配置获取 Highlight.js 语言列表
+    function getHljsLangs() {
+        return RUNNER_LANGUAGES.map(l => l.hljsLang);
+    }
+
+    // 从全局配置获取支持的语言 ID 列表
+    function getSupportedLangs() {
+        return RUNNER_LANGUAGES.map(l => l.id);
+    }
+
+    // 将 hljs 语言名称映射到我们的语言 ID
+    function mapHljsToLangId(hljsLang) {
+        const lang = RUNNER_LANGUAGES.find(l => l.hljsLang === hljsLang);
+        return lang ? lang.id : null;
+    }
     
     // 最低置信度阈值
     const MIN_RELEVANCE = 10;
@@ -25,7 +30,7 @@
     /**
      * 检测代码语言
      * @param {string} code - 代码文本
-     * @returns {string|null} 'javascript' | 'python' | 'typescript' | 'sql' | 'html' | 'css' | 'json' | 'markdown' | null
+     * @returns {string|null} 语言 ID 或 null
      */
     function detectLanguage(code) {
         if (!code || typeof code !== 'string' || !code.trim()) {
@@ -38,16 +43,16 @@
         }
 
         try {
-            const result = hljs.highlightAuto(code, HLJS_LANGUAGES);
+            const hljsLangs = getHljsLangs();
+            const result = hljs.highlightAuto(code, hljsLangs);
             
             if (result.relevance < MIN_RELEVANCE) {
                 return null;
             }
             
-            if (HLJS_LANGUAGES.includes(result.language)) {
-                // 应用语言映射
-                const mapped = LANGUAGE_MAP[result.language] || result.language;
-                return mapped;
+            if (hljsLangs.includes(result.language)) {
+                // 映射到我们的语言 ID
+                return mapHljsToLangId(result.language);
             }
             
             return null;
@@ -72,10 +77,11 @@
         }
 
         try {
-            const result = hljs.highlightAuto(code, HLJS_LANGUAGES);
-            const mapped = LANGUAGE_MAP[result.language] || result.language;
+            const hljsLangs = getHljsLangs();
+            const result = hljs.highlightAuto(code, hljsLangs);
+            const mapped = mapHljsToLangId(result.language);
             return {
-                language: result.relevance >= MIN_RELEVANCE && HLJS_LANGUAGES.includes(result.language) 
+                language: result.relevance >= MIN_RELEVANCE && hljsLangs.includes(result.language) 
                     ? mapped : null,
                 relevance: result.relevance,
                 secondBest: result.secondBest ? {
@@ -93,7 +99,9 @@
         window.LanguageDetector = {
             detect: detectLanguage,
             detectWithDetails: detectWithDetails,
-            supportedLanguages: SUPPORTED_LANGUAGES
+            get supportedLanguages() {
+                return getSupportedLangs();
+            }
         };
     }
 

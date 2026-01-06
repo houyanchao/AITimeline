@@ -15,54 +15,8 @@ class RunnerTab extends BaseTab {
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>`;
         
-        // 语言配置
-        this.languages = [
-            {
-                id: 'javascript',
-                name: 'JavaScript',
-                storageKey: 'runnerJsEnabled'
-            },
-            {
-                id: 'typescript',
-                name: 'TypeScript',
-                storageKey: 'runnerTypeScriptEnabled'
-            },
-            {
-                id: 'python',
-                name: 'Python',
-                storageKey: 'runnerPythonEnabled'
-            },
-            {
-                id: 'sql',
-                name: 'SQL',
-                storageKey: 'runnerSQLEnabled'
-            },
-            {
-                id: 'html',
-                name: 'HTML',
-                storageKey: 'runnerHtmlEnabled'
-            },
-            {
-                id: 'json',
-                name: 'JSON',
-                storageKey: 'runnerJsonEnabled'
-            },
-            {
-                id: 'markdown',
-                name: 'Markdown',
-                storageKey: 'runnerMarkdownEnabled'
-            },
-            {
-                id: 'lua',
-                name: 'Lua',
-                storageKey: 'runnerLuaEnabled'
-            },
-            {
-                id: 'ruby',
-                name: 'Ruby',
-                storageKey: 'runnerRubyEnabled'
-            }
-        ];
+        // 使用全局语言配置（来自 constants.js）
+        this.languages = RUNNER_LANGUAGES;
     }
     
     /**

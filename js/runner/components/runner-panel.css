@@ -1,0 +1,456 @@
+/**
+ * RunnerPanel 核心组件样式
+ * 
+ * 特点：宽高 100%，填满父容器
+ * 配色策略：
+ *   - 页面浅色主题 → Runner 深色背景（VSCode Dark+）
+ *   - 页面深色主题 → Runner 浅色背景（VSCode Light+）
+ */
+
+/* ===== 默认：GitHub Dark 风格（用于浅色页面）===== */
+.runner-panel {
+    /* 背景色 - GitHub Dark */
+    --runner-bg: #0d1117;
+    --runner-header-bg: #161b22;
+    --runner-output-bg: #0d1117;
+    
+    /* 边框 */
+    --runner-border: #30363d;
+    
+    /* 文字 */
+    --runner-text: #e6edf3;
+    --runner-text-secondary: #8b949e;
+    
+    /* 交互 */
+    --runner-btn-hover: #21262d;
+    --runner-btn-active: #30363d;
+    --runner-selection: rgba(56, 139, 253, 0.25);
+    
+    /* 语义色 */
+    --runner-success: #3fb950;
+    --runner-error: #f85149;
+    --runner-warning: #d29922;
+    --runner-info: #58a6ff;
+    
+    /* 按钮 - 紫色 */
+    --runner-run-btn-bg: #7c3aed;
+    --runner-run-btn-hover: #6d28d9;
+    
+    /* CodeMirror - VSCode Dark+ 风格高亮 */
+    --runner-cursor: #aeafad;
+    --runner-matching-bracket-bg: rgba(124, 58, 237, 0.2);
+    --runner-matching-bracket-border: #7c3aed;
+    --runner-activeline-bg: #161b22;
+    
+    /* 语法高亮变量 */
+    --syntax-keyword: #c586c0;      /* 粉紫 */
+    --syntax-def: #dcdcaa;          /* 淡黄 - 函数名 */
+    --syntax-variable: #9cdcfe;     /* 亮蓝 - 变量 */
+    --syntax-variable-2: #9cdcfe;   /* 亮蓝 */
+    --syntax-variable-3: #4ec9b0;   /* 蓝绿 - 类型/类名 */
+    --syntax-property: #9cdcfe;     /* 亮蓝 - 属性 */
+    --syntax-operator: #d4d4d4;     /* 灰白 - 运算符 */
+    --syntax-number: #b5cea8;       /* 浅青 - 数字 */
+    --syntax-string: #ce9178;       /* 砖红 - 字符串 */
+    --syntax-comment: #6a9955;      /* 绿色 - 注释 */
+    --syntax-atom: #569cd6;         /* 蓝色 - true/false/null */
+    --syntax-meta: #d4d4d4;
+    --syntax-tag: #569cd6;          /* 蓝色 - HTML标签 */
+    --syntax-attribute: #9cdcfe;    /* 亮蓝 - HTML属性 */
+    --syntax-builtin: #4ec9b0;      /* 蓝绿 - 内置对象 */
+    --syntax-qualifier: #dcdcaa;
+}
+
+/* ===== 深色页面：VSCode Light+ 风格 ===== */
+html.dark .runner-panel,
+body.dark .runner-panel,
+body.dark-theme .runner-panel,
+html[data-theme*="dark"] .runner-panel,
+html[style*="color-scheme: dark"] .runner-panel {
+    /* 背景色 */
+    --runner-bg: #ffffff;
+    --runner-header-bg: #f3f3f3;
+    --runner-output-bg: #ffffff;
+    
+    /* 边框 */
+    --runner-border: #e7e7e7;
+    
+    /* 文字 */
+    --runner-text: #333333;
+    --runner-text-secondary: #6e6e6e;
+    
+    /* 交互 */
+    --runner-btn-hover: #e8e8e8;
+    --runner-btn-active: #d4d4d4;
+    --runner-selection: #add6ff;
+    
+    /* 语义色 */
+    --runner-success: #008000;
+    --runner-error: #cd3131;
+    --runner-warning: #bf8803;
+    --runner-info: #0451a5;
+    
+    /* 按钮 - 紫色 */
+    --runner-run-btn-bg: #7c3aed;
+    --runner-run-btn-hover: #6d28d9;
+    
+    /* CodeMirror */
+    --runner-cursor: #000000;
+    --runner-matching-bracket-bg: rgba(0, 100, 0, 0.1);
+    --runner-matching-bracket-border: #0064001a;
+    --runner-activeline-bg: #f5f5f5;
+}
+
+/* ===== 面板容器 ===== */
+.runner-panel {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;  /* 边框包含在 100% 尺寸内 */
+    display: flex;
+    flex-direction: column;
+    background: var(--runner-bg);
+    border: 1px solid var(--runner-border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 13px;
+    color: var(--runner-text);
+}
+
+/* ===== 编辑器区域 ===== */
+.runner-panel-editor-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* min-height = header(36) + editor最小(100) = 136px */
+    min-height: 136px;
+    overflow: hidden;
+}
+
+.runner-panel-editor {
+    flex: 1;
+    overflow: hidden;
+}
+
+.runner-panel-editor .CodeMirror {
+    height: 100%;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    background: var(--runner-bg);
+    color: var(--runner-text);
+}
+
+/* CodeMirror 适配 */
+.runner-panel-editor .CodeMirror-gutters {
+    background: var(--runner-header-bg);
+    border-right: 1px solid var(--runner-border);
+}
+
+.runner-panel-editor .CodeMirror-linenumber {
+    color: var(--runner-text-secondary);
+}
+
+.runner-panel-editor .CodeMirror-cursor {
+    border-left-color: var(--runner-cursor);
+}
+
+.runner-panel-editor .CodeMirror-selected {
+    background: var(--runner-selection) !important;
+}
+
+.runner-panel-editor .CodeMirror-matchingbracket {
+    background: var(--runner-matching-bracket-bg);
+    border: 1px solid var(--runner-matching-bracket-border);
+}
+
+.runner-panel-editor .CodeMirror-activeline-background {
+    background: var(--runner-activeline-bg);
+}
+
+/* ===== 头部 ===== */
+.runner-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36px;
+    padding: 0 12px;
+    background: var(--runner-header-bg);
+    border-bottom: 1px solid var(--runner-border);
+    flex-shrink: 0;
+}
+
+.runner-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--runner-text-secondary);
+}
+
+.runner-panel-title svg {
+    opacity: 0.7;
+}
+
+.runner-panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ===== 按钮 ===== */
+.runner-panel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--runner-text-secondary);
+    transition: all 0.15s ease;
+}
+
+.runner-panel-btn:hover {
+    background: var(--runner-btn-hover);
+    color: var(--runner-text);
+}
+
+.runner-panel-btn:active {
+    background: var(--runner-btn-active);
+}
+
+.runner-panel-close:hover {
+    background: rgba(241, 76, 76, 0.15);
+    color: var(--runner-error);
+}
+
+/* ===== 语言选择器 ===== */
+.runner-panel-lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--runner-text);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.runner-panel-lang-selector:hover {
+    background: var(--runner-btn-hover);
+}
+
+.runner-panel-lang-selector svg {
+    opacity: 0.5;
+}
+
+.runner-panel-lang-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--runner-text);
+}
+
+/* ===== 分隔条 ===== */
+.runner-panel-resizer {
+    height: 4px;
+    background: var(--runner-text-secondary);
+    cursor: row-resize;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+    opacity: 0.5;
+}
+
+.runner-panel-resizer:hover {
+    background: var(--runner-info);
+    opacity: 1;
+}
+
+/* ===== 输出区域 ===== */
+.runner-panel-output-section {
+    /* height = header(36) + content(150) = 186px */
+    height: 186px;
+    /* min-height = header(36) + contentMin(50) = 86px */
+    min-height: 86px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.runner-panel-output-content {
+    flex: 1;
+    overflow: auto;
+    padding: 12px;
+    background: var(--runner-output-bg);
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* ===== 运行按钮 ===== */
+.runner-panel-run-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border: none;
+    background: var(--runner-run-btn-bg);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.runner-panel-run-btn:hover {
+    background: var(--runner-run-btn-hover);
+}
+
+.runner-panel-run-btn:active {
+    transform: scale(0.98);
+}
+
+.runner-panel-run-btn svg {
+    flex-shrink: 0;
+}
+
+/* ===== 输出内容样式 ===== */
+.runner-panel-output-empty {
+    color: var(--runner-text-secondary);
+    font-style: italic;
+}
+
+.runner-panel-output-loading {
+    color: var(--runner-info);
+}
+
+.runner-panel-output-log {
+    color: var(--runner-text);
+    margin-bottom: 4px;
+}
+
+.runner-panel-output-info {
+    color: var(--runner-info);
+    margin-bottom: 4px;
+}
+
+.runner-panel-output-warn {
+    color: var(--runner-warning);
+    margin-bottom: 4px;
+}
+
+.runner-panel-output-error {
+    color: var(--runner-error);
+    margin-bottom: 4px;
+}
+
+/* ===== 表格输出 ===== */
+.runner-panel-table-wrapper {
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.runner-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.runner-panel-table th,
+.runner-panel-table td {
+    padding: 6px 10px;
+    border: 1px solid var(--runner-border);
+    text-align: left;
+}
+
+.runner-panel-table th {
+    background: var(--runner-header-bg);
+    font-weight: 600;
+    color: var(--runner-text);
+}
+
+.runner-panel-null {
+    color: var(--runner-text-secondary);
+    font-style: italic;
+}
+
+/* ===== JSON 输出 ===== */
+.runner-panel-json-output {
+    margin: 0;
+    padding: 8px;
+    background: var(--runner-header-bg);
+    border: 1px solid var(--runner-border);
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* ===== HTML 预览 ===== */
+.runner-panel-html-preview iframe {
+    display: block;
+}
+
+/* ===== Markdown 预览 ===== */
+.runner-panel-markdown-preview {
+    padding: 8px;
+    background: var(--runner-header-bg);
+    border: 1px solid var(--runner-border);
+    border-radius: 4px;
+}
+
+.runner-panel-markdown-preview h1,
+.runner-panel-markdown-preview h2,
+.runner-panel-markdown-preview h3 {
+    margin: 0.5em 0;
+    color: var(--runner-text);
+}
+
+.runner-panel-markdown-preview p {
+    margin: 0.5em 0;
+}
+
+.runner-panel-markdown-preview code {
+    background: var(--runner-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.runner-panel-markdown-preview pre {
+    background: var(--runner-bg);
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.runner-panel-markdown-preview pre code {
+    background: none;
+    padding: 0;
+    color: var(--runner-text);
+}
+
+/* ===== 语法高亮 - VSCode Dark+ 风格 ===== */
+.runner-panel-editor .cm-keyword { color: var(--syntax-keyword, #c586c0); }
+.runner-panel-editor .cm-def { color: var(--syntax-def, #dcdcaa); }
+.runner-panel-editor .cm-variable { color: var(--syntax-variable, #9cdcfe); }
+.runner-panel-editor .cm-variable-2 { color: var(--syntax-variable-2, #9cdcfe); }
+.runner-panel-editor .cm-variable-3 { color: var(--syntax-variable-3, #4ec9b0); }
+.runner-panel-editor .cm-property { color: var(--syntax-property, #9cdcfe); }
+.runner-panel-editor .cm-operator { color: var(--syntax-operator, #d4d4d4); }
+.runner-panel-editor .cm-number { color: var(--syntax-number, #b5cea8); }
+.runner-panel-editor .cm-string { color: var(--syntax-string, #ce9178); }
+.runner-panel-editor .cm-string-2 { color: var(--syntax-string, #ce9178); }
+.runner-panel-editor .cm-comment { color: var(--syntax-comment, #6a9955); }
+.runner-panel-editor .cm-atom { color: var(--syntax-atom, #569cd6); }
+.runner-panel-editor .cm-meta { color: var(--syntax-meta, #d4d4d4); }
+.runner-panel-editor .cm-tag { color: var(--syntax-tag, #569cd6); }
+.runner-panel-editor .cm-attribute { color: var(--syntax-attribute, #9cdcfe); }
+.runner-panel-editor .cm-builtin { color: var(--syntax-builtin, #4ec9b0); }
+.runner-panel-editor .cm-qualifier { color: var(--syntax-qualifier, #dcdcaa); }

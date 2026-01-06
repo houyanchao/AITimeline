@@ -2,127 +2,40 @@
  * LanguageRegistry - 语言运行器注册表
  * 
  * 管理所有支持的编程语言及其运行器
+ * 语言配置来自全局 RUNNER_LANGUAGES（constants.js）
  */
 
 class LanguageRegistry {
     constructor() {
         this.runners = new Map();
-        this.languageConfigs = [
-            {
-                id: 'javascript',
-                name: 'JavaScript',
-                enabled: true,
-                icon: '🟨',
-                runnerClass: 'JavaScriptRunner'
-            },
-            {
-                id: 'python',
-                name: 'Python',
-                enabled: true,
-                icon: '🐍',
-                runnerClass: 'PythonRunner'
-            },
-            {
-                id: 'typescript',
-                name: 'TypeScript',
-                enabled: true,
-                icon: '🔷',
-                runnerClass: 'TypeScriptRunner'
-            },
-            {
-                id: 'sql',
-                name: 'SQL',
-                enabled: true,
-                icon: '🗃️',
-                runnerClass: 'SQLRunner'
-            },
-            {
-                id: 'html',
-                name: 'HTML',
-                enabled: true,
-                icon: '🌐',
-                runnerClass: 'HtmlRunner'
-            },
-            {
-                id: 'json',
-                name: 'JSON',
-                enabled: true,
-                icon: '📋',
-                runnerClass: 'JsonRunner'
-            },
-            {
-                id: 'markdown',
-                name: 'Markdown',
-                enabled: true,
-                icon: '📝',
-                runnerClass: 'MarkdownRunner'
-            },
-            {
-                id: 'lua',
-                name: 'Lua',
-                enabled: true,
-                icon: '🌙',
-                runnerClass: 'LuaRunner'
-            },
-            {
-                id: 'ruby',
-                name: 'Ruby',
-                enabled: true,
-                icon: '💎',
-                runnerClass: 'RubyRunner'
-            }
-        ];
+        // 使用全局语言配置
+        this.languageConfigs = this._buildLanguageConfigs();
         this.initialize();
+    }
+
+    /**
+     * 从全局 RUNNER_LANGUAGES 构建语言配置
+     * @returns {Array}
+     */
+    _buildLanguageConfigs() {
+        return RUNNER_LANGUAGES.map(lang => ({
+            id: lang.id,
+            name: lang.name,
+            enabled: true,
+            runnerClass: lang.runnerClass
+        }));
     }
 
     /**
      * 初始化注册所有语言
      */
     initialize() {
-        // 注册 JavaScript
-        if (window.JavaScriptRunner) {
-            this.register('javascript', new window.JavaScriptRunner());
-        }
-        
-        // 注册 Python
-        if (window.PythonRunner) {
-            this.register('python', new window.PythonRunner());
-        }
-        
-        // 注册 TypeScript
-        if (window.TypeScriptRunner) {
-            this.register('typescript', new window.TypeScriptRunner());
-        }
-        
-        // 注册 SQL
-        if (window.SQLRunner) {
-            this.register('sql', new window.SQLRunner());
-        }
-        
-        // 注册 HTML
-        if (window.HtmlRunner) {
-            this.register('html', new window.HtmlRunner());
-        }
-        
-        // 注册 JSON
-        if (window.JsonRunner) {
-            this.register('json', new window.JsonRunner());
-        }
-        
-        // 注册 Markdown
-        if (window.MarkdownRunner) {
-            this.register('markdown', new window.MarkdownRunner());
-        }
-        
-        // 注册 Lua
-        if (window.LuaRunner) {
-            this.register('lua', new window.LuaRunner());
-        }
-        
-        // 注册 Ruby
-        if (window.RubyRunner) {
-            this.register('ruby', new window.RubyRunner());
-        }
+        // 根据配置动态注册运行器
+        this.languageConfigs.forEach(config => {
+            if (window[config.runnerClass]) {
+                this.register(config.id, new window[config.runnerClass]());
+            }
+        });
     }
 
     /**
@@ -162,8 +75,7 @@ class LanguageRegistry {
             languages.push({
                 id: language,
                 name: runner.displayName || language,
-                enabled: true,
-                icon: runner.icon || ''
+                enabled: true
             });
         });
         return languages;

@@ -257,6 +257,76 @@ function platformSupportsFeature(platformId, feature) {
     return platform?.features?.[feature] === true;
 }
 
+// ==================== 代码运行器语言配置 ====================
+
+/**
+ * 支持的编程语言配置
+ * 用于代码运行器（Runner）模块
+ * 
+ * @property {string} id - 语言标识符
+ * @property {string} name - 显示名称
+ * @property {string} mode - CodeMirror 语法模式
+ * @property {string} storageKey - 存储开关状态的 key
+ */
+const RUNNER_LANGUAGES = [
+    { id: 'javascript', name: 'JavaScript', mode: 'javascript', storageKey: 'runnerJsEnabled', runnerClass: 'JavaScriptRunner', hljsLang: 'javascript' },
+    { id: 'typescript', name: 'TypeScript', mode: 'javascript', storageKey: 'runnerTypeScriptEnabled', runnerClass: 'TypeScriptRunner', hljsLang: 'typescript' },
+    { id: 'python', name: 'Python', mode: 'python', storageKey: 'runnerPythonEnabled', runnerClass: 'PythonRunner', hljsLang: 'python' },
+    { id: 'sql', name: 'SQL', mode: 'sql', storageKey: 'runnerSQLEnabled', runnerClass: 'SQLRunner', hljsLang: 'sql' },
+    { id: 'lua', name: 'Lua', mode: 'lua', storageKey: 'runnerLuaEnabled', runnerClass: 'LuaRunner', hljsLang: 'lua' },
+    { id: 'ruby', name: 'Ruby', mode: 'ruby', storageKey: 'runnerRubyEnabled', runnerClass: 'RubyRunner', hljsLang: 'ruby' },
+    { id: 'html', name: 'HTML', mode: 'htmlmixed', storageKey: 'runnerHtmlEnabled', runnerClass: 'HtmlRunner', hljsLang: 'xml' },
+    { id: 'json', name: 'JSON', mode: 'javascript', storageKey: 'runnerJsonEnabled', runnerClass: 'JsonRunner', hljsLang: 'json' },
+    { id: 'markdown', name: 'Markdown', mode: 'markdown', storageKey: 'runnerMarkdownEnabled', runnerClass: 'MarkdownRunner', hljsLang: 'markdown' }
+];
+
+/**
+ * 获取 Highlight.js 使用的语言列表
+ * @returns {Array<string>}
+ */
+function getHljsLanguages() {
+    return RUNNER_LANGUAGES.map(l => l.hljsLang);
+}
+
+/**
+ * 获取支持的语言 ID 列表
+ * @returns {Array<string>}
+ */
+function getSupportedLanguageIds() {
+    return RUNNER_LANGUAGES.map(l => l.id);
+}
+
+/**
+ * 将 Highlight.js 语言名称映射到我们的语言 ID
+ * @param {string} hljsLang - Highlight.js 语言名称
+ * @returns {string|null}
+ */
+function mapHljsLangToId(hljsLang) {
+    const lang = RUNNER_LANGUAGES.find(l => l.hljsLang === hljsLang);
+    return lang ? lang.id : null;
+}
+
+/**
+ * 根据语言 ID 获取语言配置
+ * @param {string} langId - 语言 ID
+ * @returns {Object|null}
+ */
+function getRunnerLanguageById(langId) {
+    return RUNNER_LANGUAGES.find(l => l.id === langId) || null;
+}
+
+/**
+ * 获取语言显示名称
+ * @param {string} langId - 语言 ID
+ * @returns {string}
+ */
+function getRunnerLanguageName(langId) {
+    const lang = RUNNER_LANGUAGES.find(l => l.id === langId);
+    return lang ? lang.name : langId;
+}
+
+// ==================== 深色模式检测 ====================
+
 /**
  * 检测当前页面是否为深色模式
  * 整合了所有 AI 平台的 dark mode 检测逻辑
