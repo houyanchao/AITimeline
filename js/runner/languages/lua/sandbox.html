@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lua Sandbox</title>
+</head>
+<body>
+    <script>
+        // 发送加载进度
+        function postLoading(message) {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'LUA_LOADING',
+                    data: { message }
+                }, '*');
+            }
+        }
+
+        postLoading('正在加载 Lua 环境 (首次加载约需 3-5 秒)...');
+
+        // 动态加载 Fengari (Lua 5.3 JavaScript 实现)
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js';
+        script.onload = function() {
+            postLoading('Lua 环境加载完成！');
+            
+            // Fengari 加载完成后，加载 sandbox-script.js
+            const sandboxScript = document.createElement('script');
+            sandboxScript.src = 'sandbox-script.js';
+            sandboxScript.onload = function() {
+                // sandbox-script.js 加载完成后，通知它 Fengari 已就绪
+                if (window.onFengariReady) {
+                    window.onFengariReady();
+                }
+            };
+            document.body.appendChild(sandboxScript);
+        };
+        script.onerror = function() {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'LUA_ERROR',
+                    data: { message: '无法加载 Fengari CDN，请检查网络连接' }
+                }, '*');
+                window.parent.postMessage({
+                    type: 'LUA_COMPLETE',
+                    data: { success: false, duration: 0, error: '无法加载 Fengari CDN' }
+                }, '*');
+            }
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

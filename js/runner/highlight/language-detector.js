@@ -7,8 +7,17 @@
 (function() {
     'use strict';
 
-    // 支持的语言列表（限定检测范围，提高准确率和性能）
-    const SUPPORTED_LANGUAGES = ['javascript', 'python', 'typescript', 'sql'];
+    // Highlight.js 支持的语言列表（用于检测）
+    // 注意：css 不单独支持运行，只作为 HTML 的一部分
+    const HLJS_LANGUAGES = ['javascript', 'python', 'typescript', 'sql', 'xml', 'json', 'markdown', 'lua', 'ruby'];
+    
+    // 语言名称映射（hljs 名称 -> 我们的名称）
+    const LANGUAGE_MAP = {
+        'xml': 'html'  // Highlight.js 用 xml 表示 HTML
+    };
+    
+    // 我们支持的语言列表（用于外部引用）
+    const SUPPORTED_LANGUAGES = ['javascript', 'python', 'typescript', 'sql', 'html', 'json', 'markdown', 'lua', 'ruby'];
     
     // 最低置信度阈值
     const MIN_RELEVANCE = 10;
@@ -16,7 +25,7 @@
     /**
      * 检测代码语言
      * @param {string} code - 代码文本
-     * @returns {string|null} 'javascript' | 'python' | 'typescript' | 'sql' | null
+     * @returns {string|null} 'javascript' | 'python' | 'typescript' | 'sql' | 'html' | 'css' | 'json' | 'markdown' | null
      */
     function detectLanguage(code) {
         if (!code || typeof code !== 'string' || !code.trim()) {
@@ -29,14 +38,16 @@
         }
 
         try {
-            const result = hljs.highlightAuto(code, SUPPORTED_LANGUAGES);
+            const result = hljs.highlightAuto(code, HLJS_LANGUAGES);
             
             if (result.relevance < MIN_RELEVANCE) {
                 return null;
             }
             
-            if (SUPPORTED_LANGUAGES.includes(result.language)) {
-                return result.language;
+            if (HLJS_LANGUAGES.includes(result.language)) {
+                // 应用语言映射
+                const mapped = LANGUAGE_MAP[result.language] || result.language;
+                return mapped;
             }
             
             return null;
@@ -61,10 +72,11 @@
         }
 
         try {
-            const result = hljs.highlightAuto(code, SUPPORTED_LANGUAGES);
+            const result = hljs.highlightAuto(code, HLJS_LANGUAGES);
+            const mapped = LANGUAGE_MAP[result.language] || result.language;
             return {
-                language: result.relevance >= MIN_RELEVANCE && SUPPORTED_LANGUAGES.includes(result.language) 
-                    ? result.language : null,
+                language: result.relevance >= MIN_RELEVANCE && HLJS_LANGUAGES.includes(result.language) 
+                    ? mapped : null,
                 relevance: result.relevance,
                 secondBest: result.secondBest ? {
                     language: result.secondBest.language,

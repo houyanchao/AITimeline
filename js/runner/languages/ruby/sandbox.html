@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ruby Sandbox</title>
+</head>
+<body>
+    <script>
+        // 发送加载进度
+        function postLoading(message) {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'RUBY_LOADING',
+                    data: { message }
+                }, '*');
+            }
+        }
+
+        postLoading('正在加载 Ruby 环境 (首次加载约需 5-10 秒)...');
+
+        // 动态加载 Opal (Ruby → JavaScript 编译器)
+        const script = document.createElement('script');
+        script.src = 'https://cdn.opalrb.com/opal/1.7.3/opal.min.js';
+        script.onload = function() {
+            postLoading('正在加载 Opal 解析器...');
+            
+            // 加载 opal-parser 用于动态编译 Ruby 代码
+            const parserScript = document.createElement('script');
+            parserScript.src = 'https://cdn.opalrb.com/opal/1.7.3/opal-parser.min.js';
+            parserScript.onload = function() {
+                postLoading('Ruby 环境加载完成！');
+                
+                // 加载 sandbox-script.js
+                const sandboxScript = document.createElement('script');
+                sandboxScript.src = 'sandbox-script.js';
+                sandboxScript.onload = function() {
+                    if (window.onOpalLoaded) {
+                        window.onOpalLoaded();
+                    }
+                };
+                document.body.appendChild(sandboxScript);
+            };
+            parserScript.onerror = function() {
+                if (window.onOpalError) {
+                    window.onOpalError();
+                } else if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'RUBY_ERROR',
+                        data: { message: '无法加载 Opal Parser CDN，请检查网络连接' }
+                    }, '*');
+                    window.parent.postMessage({
+                        type: 'RUBY_COMPLETE',
+                        data: { success: false, duration: 0, error: '无法加载 Opal Parser CDN' }
+                    }, '*');
+                }
+            };
+            document.head.appendChild(parserScript);
+        };
+        script.onerror = function() {
+            if (window.onOpalError) {
+                window.onOpalError();
+            } else if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'RUBY_ERROR',
+                    data: { message: '无法加载 Opal CDN，请检查网络连接' }
+                }, '*');
+                window.parent.postMessage({
+                    type: 'RUBY_COMPLETE',
+                    data: { success: false, duration: 0, error: '无法加载 Opal CDN' }
+                }, '*');
+            }
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
+

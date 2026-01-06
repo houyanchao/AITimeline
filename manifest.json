@@ -46,6 +46,13 @@
         "js/runner/highlight/python.min.js",
         "js/runner/highlight/typescript.min.js",
         "js/runner/highlight/sql.min.js",
+        "js/runner/highlight/xml.min.js",
+        "js/runner/highlight/css.min.js",
+        "js/runner/highlight/json.min.js",
+        "js/runner/highlight/markdown.min.js",
+        "js/runner/highlight/lua.min.js",
+        "js/runner/highlight/ruby.min.js",
+        "js/runner/libs/marked.min.js",
         "js/runner/highlight/language-detector.js",
         "js/runner/core/base-runner.js",
         "js/runner/languages/javascript/sandbox-manager.js",
@@ -56,6 +63,13 @@
         "js/runner/languages/typescript/index.js",
         "js/runner/languages/sql/sandbox-manager.js",
         "js/runner/languages/sql/index.js",
+        "js/runner/languages/html/index.js",
+        "js/runner/languages/json/index.js",
+        "js/runner/languages/markdown/index.js",
+        "js/runner/languages/lua/sandbox-manager.js",
+        "js/runner/languages/lua/index.js",
+        "js/runner/languages/ruby/sandbox-manager.js",
+        "js/runner/languages/ruby/index.js",
         "js/runner/languages/registry.js",
         "js/runner/runner-manager.js",
         "js/runner/index.js",
@@ -137,7 +151,11 @@
         "js/runner/languages/typescript/sandbox.html",
         "js/runner/languages/typescript/sandbox-script.js",
         "js/runner/languages/sql/sandbox.html",
-        "js/runner/languages/sql/sandbox-script.js"
+        "js/runner/languages/sql/sandbox-script.js",
+        "js/runner/languages/lua/sandbox.html",
+        "js/runner/languages/lua/sandbox-script.js",
+        "js/runner/languages/ruby/sandbox.html",
+        "js/runner/languages/ruby/sandbox-script.js"
       ],
       "matches": [
         "<all_urls>"
@@ -154,11 +172,13 @@
       "js/runner/languages/javascript/sandbox.html",
       "js/runner/languages/python/sandbox.html",
       "js/runner/languages/typescript/sandbox.html",
-      "js/runner/languages/sql/sandbox.html"
+      "js/runner/languages/sql/sandbox.html",
+      "js/runner/languages/lua/sandbox.html",
+      "js/runner/languages/ruby/sandbox.html"
     ]
   },
   
   "content_security_policy": {
-    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; child-src 'self';"
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdn.opalrb.com; child-src 'self';"
   }
 }

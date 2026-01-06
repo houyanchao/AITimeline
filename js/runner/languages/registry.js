@@ -35,6 +35,41 @@ class LanguageRegistry {
                 enabled: true,
                 icon: '🗃️',
                 runnerClass: 'SQLRunner'
+            },
+            {
+                id: 'html',
+                name: 'HTML',
+                enabled: true,
+                icon: '🌐',
+                runnerClass: 'HtmlRunner'
+            },
+            {
+                id: 'json',
+                name: 'JSON',
+                enabled: true,
+                icon: '📋',
+                runnerClass: 'JsonRunner'
+            },
+            {
+                id: 'markdown',
+                name: 'Markdown',
+                enabled: true,
+                icon: '📝',
+                runnerClass: 'MarkdownRunner'
+            },
+            {
+                id: 'lua',
+                name: 'Lua',
+                enabled: true,
+                icon: '🌙',
+                runnerClass: 'LuaRunner'
+            },
+            {
+                id: 'ruby',
+                name: 'Ruby',
+                enabled: true,
+                icon: '💎',
+                runnerClass: 'RubyRunner'
             }
         ];
         this.initialize();
@@ -62,6 +97,31 @@ class LanguageRegistry {
         // 注册 SQL
         if (window.SQLRunner) {
             this.register('sql', new window.SQLRunner());
+        }
+        
+        // 注册 HTML
+        if (window.HtmlRunner) {
+            this.register('html', new window.HtmlRunner());
+        }
+        
+        // 注册 JSON
+        if (window.JsonRunner) {
+            this.register('json', new window.JsonRunner());
+        }
+        
+        // 注册 Markdown
+        if (window.MarkdownRunner) {
+            this.register('markdown', new window.MarkdownRunner());
+        }
+        
+        // 注册 Lua
+        if (window.LuaRunner) {
+            this.register('lua', new window.LuaRunner());
+        }
+        
+        // 注册 Ruby
+        if (window.RubyRunner) {
+            this.register('ruby', new window.RubyRunner());
         }
     }
 

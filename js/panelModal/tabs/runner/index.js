@@ -36,6 +36,31 @@ class RunnerTab extends BaseTab {
                 id: 'sql',
                 name: 'SQL',
                 storageKey: 'runnerSQLEnabled'
+            },
+            {
+                id: 'html',
+                name: 'HTML',
+                storageKey: 'runnerHtmlEnabled'
+            },
+            {
+                id: 'json',
+                name: 'JSON',
+                storageKey: 'runnerJsonEnabled'
+            },
+            {
+                id: 'markdown',
+                name: 'Markdown',
+                storageKey: 'runnerMarkdownEnabled'
+            },
+            {
+                id: 'lua',
+                name: 'Lua',
+                storageKey: 'runnerLuaEnabled'
+            },
+            {
+                id: 'ruby',
+                name: 'Ruby',
+                storageKey: 'runnerRubyEnabled'
             }
         ];
     }
@@ -117,6 +142,16 @@ class RunnerTab extends BaseTab {
                 this._handleTypeScriptToggle(enabled);
             } else if (lang.id === 'sql') {
                 this._handleSQLToggle(enabled);
+            } else if (lang.id === 'html') {
+                this._handleHtmlToggle(enabled);
+            } else if (lang.id === 'json') {
+                this._handleJsonToggle(enabled);
+            } else if (lang.id === 'markdown') {
+                this._handleMarkdownToggle(enabled);
+            } else if (lang.id === 'lua') {
+                this._handleLuaToggle(enabled);
+            } else if (lang.id === 'ruby') {
+                this._handleRubyToggle(enabled);
             }
             
             console.log(`[RunnerTab] ${lang.id} runner enabled:`, enabled);
@@ -180,14 +215,76 @@ class RunnerTab extends BaseTab {
      */
     _handleSQLToggle(enabled) {
         if (enabled) {
-            // 开启功能
             if (window.Runner) {
-                // 重新扫描页面，添加 Run 按钮
                 window.Runner.scan();
             }
         } else {
-            // 关闭功能：移除 SQL 的 Run 按钮
             this._removeRunButtonsByLanguage('sql');
+        }
+    }
+    
+    /**
+     * 处理 HTML 运行器开关
+     */
+    _handleHtmlToggle(enabled) {
+        if (enabled) {
+            if (window.Runner) {
+                window.Runner.scan();
+            }
+        } else {
+            this._removeRunButtonsByLanguage('html');
+        }
+    }
+    
+    /**
+     * 处理 JSON 运行器开关
+     */
+    _handleJsonToggle(enabled) {
+        if (enabled) {
+            if (window.Runner) {
+                window.Runner.scan();
+            }
+        } else {
+            this._removeRunButtonsByLanguage('json');
+        }
+    }
+    
+    /**
+     * 处理 Markdown 运行器开关
+     */
+    _handleMarkdownToggle(enabled) {
+        if (enabled) {
+            if (window.Runner) {
+                window.Runner.scan();
+            }
+        } else {
+            this._removeRunButtonsByLanguage('markdown');
+        }
+    }
+    
+    /**
+     * 处理 Lua 运行器开关
+     */
+    _handleLuaToggle(enabled) {
+        if (enabled) {
+            if (window.Runner) {
+                window.Runner.scan();
+            }
+        } else {
+            this._removeRunButtonsByLanguage('lua');
+        }
+    }
+    
+    /**
+     * 处理 Ruby 运行器开关
+     */
+    _handleRubyToggle(enabled) {
+        if (enabled) {
+            if (window.Runner) {
+                window.Runner.scan();
+            }
+        } else {
+            this._removeRunButtonsByLanguage('ruby');
         }
     }
     

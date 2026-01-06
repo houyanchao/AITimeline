@@ -171,7 +171,12 @@
         'javascript': 'JavaScript',
         'python': 'Python',
         'typescript': 'TypeScript',
-        'sql': 'SQL'
+        'sql': 'SQL',
+        'html': 'HTML',
+        'json': 'JSON',
+        'markdown': 'Markdown',
+        'lua': 'Lua',
+        'ruby': 'Ruby'
     };
 
     /**
@@ -221,7 +226,7 @@
         const resultHeader = document.createElement('div');
         resultHeader.className = 'runner-section-header';
         resultHeader.style.height = CONFIG.headerHeight + 'px';
-        resultHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg><span>Output</span></span><div class="runner-section-actions"><button class="runner-action-clear" title="清空输出"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button><button class="runner-action-run" title="运行代码"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Run</span></button></div>`;
+        resultHeader.innerHTML = `<span class="runner-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg><span>Output</span></span><div class="runner-section-actions"><button class="runner-action-clear" title="清空输出"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button><button class="runner-output-copy" title="${safeI18n('mvkxpz', '复制')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="runner-action-run" title="运行代码"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Run</span></button></div>`;
 
         const resultContent = document.createElement('div');
         resultContent.className = 'runner-result-content';
@@ -331,6 +336,17 @@
             resultContent.innerHTML = '<div class="runner-output-empty">（无输出）</div>';
         });
 
+        const copyOutputBtn = resultHeader.querySelector('.runner-output-copy');
+        copyOutputBtn.addEventListener('click', () => {
+            // 获取输出内容的纯文本
+            const outputText = resultContent.innerText || resultContent.textContent || '';
+            navigator.clipboard.writeText(outputText).then(() => {
+                if (window.globalToastManager) {
+                    window.globalToastManager.success(safeI18n('xpzmvk', '复制成功'), copyOutputBtn);
+                }
+            });
+        });
+
         resultHeader.querySelector('.runner-action-run').addEventListener('click', () => {
             const code = cmEditor ? cmEditor.getValue() : '';
             const language = container._language || 'javascript';
@@ -365,19 +381,29 @@
 
             await manager.run(code, language, {
                 onOutput: (output) => {
-                    // 特殊处理 SQL 表格输出
+                    // 特殊处理各种输出类型
                     if (output.level === 'table') {
+                        // SQL 表格
                         outputs.push({ 
                             type: 'table', 
                             columns: output.data.columns, 
                             values: output.data.values 
                         });
+                    } else if (output.level === 'html-preview') {
+                        // HTML 预览
+                        outputs.push({ type: 'html-preview', html: output.data.html });
+                    } else if (output.level === 'json-formatted') {
+                        // JSON 格式化
+                        outputs.push({ type: 'json-formatted', json: output.data.json });
+                    } else if (output.level === 'markdown-preview') {
+                        // Markdown 预览
+                        outputs.push({ type: 'markdown-preview', html: output.data.html });
                     } else {
-                        // 转换格式：{ level, data } -> { type, content }
+                        // 普通输出
                         const content = Array.isArray(output.data) ? output.data.join(' ') : output.data;
                         outputs.push({ type: output.level || 'log', content: content });
                     }
-                    // 实时渲染输出（对于 Python/SQL 加载提示很有用）
+                    // 实时渲染输出
                     renderOutput(contentEl, outputs);
                 },
                 onError: (error) => {
@@ -474,14 +500,69 @@
         }
 
         container.innerHTML = outputs.map(output => {
-            // SQL 表格特殊渲染
+            // SQL 表格
             if (output.type === 'table') {
                 return renderSQLTable(output.columns, output.values);
             }
+            // HTML 预览
+            if (output.type === 'html-preview') {
+                return renderHtmlPreview(output.html);
+            }
+            // JSON 格式化
+            if (output.type === 'json-formatted') {
+                return renderJsonFormatted(output.json);
+            }
+            // Markdown 预览
+            if (output.type === 'markdown-preview') {
+                return renderMarkdownPreview(output.html);
+            }
+            // 普通输出
             const typeClass = `runner-output-${output.type || 'log'}`;
             const content = formatOutputContent(output.content);
             return `<div class="${typeClass}">${content}</div>`;
         }).join('');
+    }
+
+    /**
+     * 渲染 HTML 预览
+     */
+    function renderHtmlPreview(html) {
+        // 使用 srcdoc 创建安全的 iframe 预览
+        const escapedHtml = html.replace(/"/g, '&quot;');
+        return `
+            <div class="runner-html-preview">
+                <iframe 
+                    srcdoc="${escapedHtml}" 
+                    sandbox="allow-scripts allow-same-origin"
+                    style="width: 100%; height: 200px; border: 1px solid var(--runner-border); border-radius: 4px; background: white;"
+                ></iframe>
+            </div>
+        `;
+    }
+
+    /**
+     * 渲染格式化的 JSON
+     */
+    function renderJsonFormatted(json) {
+        // 语法高亮
+        const highlighted = json
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"([^"]+)":/g, '<span class="runner-json-key">"$1"</span>:')
+            .replace(/: "([^"]*)"/g, ': <span class="runner-json-string">"$1"</span>')
+            .replace(/: (\d+)/g, ': <span class="runner-json-number">$1</span>')
+            .replace(/: (true|false)/g, ': <span class="runner-json-boolean">$1</span>')
+            .replace(/: (null)/g, ': <span class="runner-json-null">$1</span>');
+        
+        return `<pre class="runner-json-output">${highlighted}</pre>`;
+    }
+
+    /**
+     * 渲染 Markdown 预览
+     */
+    function renderMarkdownPreview(html) {
+        return `<div class="runner-markdown-preview">${html}</div>`;
     }
 
     /**
@@ -640,6 +721,71 @@
     }
 
     /**
+     * 检查 HTML Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isHtmlRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerHtmlEnabled');
+            return result.runnerHtmlEnabled !== false;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    /**
+     * 检查 JSON Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isJsonRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerJsonEnabled');
+            return result.runnerJsonEnabled !== false;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    /**
+     * 检查 Markdown Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isMarkdownRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerMarkdownEnabled');
+            return result.runnerMarkdownEnabled !== false;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    /**
+     * 检查 Lua Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isLuaRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerLuaEnabled');
+            return result.runnerLuaEnabled !== false;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    /**
+     * 检查 Ruby Runner 是否启用
+     * @returns {Promise<boolean>}
+     */
+    async function isRubyRunnerEnabled() {
+        try {
+            const result = await chrome.storage.local.get('runnerRubyEnabled');
+            return result.runnerRubyEnabled !== false;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    /**
      * 检查指定语言是否启用
      * @param {string} language - 语言类型
      * @returns {Promise<boolean>}
@@ -649,6 +795,11 @@
         if (language === 'python') return isPythonRunnerEnabled();
         if (language === 'typescript') return isTypeScriptRunnerEnabled();
         if (language === 'sql') return isSQLRunnerEnabled();
+        if (language === 'html') return isHtmlRunnerEnabled();
+        if (language === 'json') return isJsonRunnerEnabled();
+        if (language === 'markdown') return isMarkdownRunnerEnabled();
+        if (language === 'lua') return isLuaRunnerEnabled();
+        if (language === 'ruby') return isRubyRunnerEnabled();
         return false;
     }
 
@@ -657,15 +808,20 @@
      */
     async function scanCodeBlocks() {
         // 检查各语言是否启用
-        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled] = await Promise.all([
+        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled, htmlEnabled, jsonEnabled, mdEnabled, luaEnabled, rubyEnabled] = await Promise.all([
             isJavaScriptRunnerEnabled(),
             isPythonRunnerEnabled(),
             isTypeScriptRunnerEnabled(),
-            isSQLRunnerEnabled()
+            isSQLRunnerEnabled(),
+            isHtmlRunnerEnabled(),
+            isJsonRunnerEnabled(),
+            isMarkdownRunnerEnabled(),
+            isLuaRunnerEnabled(),
+            isRubyRunnerEnabled()
         ]);
         
         // 如果所有语言都禁用，不扫描
-        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled) {
+        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled && !htmlEnabled && !jsonEnabled && !mdEnabled && !luaEnabled && !rubyEnabled) {
             return;
         }
         
@@ -673,7 +829,12 @@
             javascript: jsEnabled,
             python: pyEnabled,
             typescript: tsEnabled,
-            sql: sqlEnabled
+            sql: sqlEnabled,
+            html: htmlEnabled,
+            json: jsonEnabled,
+            markdown: mdEnabled,
+            lua: luaEnabled,
+            ruby: rubyEnabled
         };
         
         // 遍历配置，按优先级匹配代码块
@@ -697,14 +858,19 @@
      */
     async function initialize() {
         // 检查是否有任何语言启用
-        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled] = await Promise.all([
+        const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled, htmlEnabled, jsonEnabled, mdEnabled, luaEnabled, rubyEnabled] = await Promise.all([
             isJavaScriptRunnerEnabled(),
             isPythonRunnerEnabled(),
             isTypeScriptRunnerEnabled(),
-            isSQLRunnerEnabled()
+            isSQLRunnerEnabled(),
+            isHtmlRunnerEnabled(),
+            isJsonRunnerEnabled(),
+            isMarkdownRunnerEnabled(),
+            isLuaRunnerEnabled(),
+            isRubyRunnerEnabled()
         ]);
         
-        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled) {
+        if (!jsEnabled && !pyEnabled && !tsEnabled && !sqlEnabled && !htmlEnabled && !jsonEnabled && !mdEnabled && !luaEnabled && !rubyEnabled) {
             console.log('[Runner] All runners are disabled, skipping initialization');
             return;
         }

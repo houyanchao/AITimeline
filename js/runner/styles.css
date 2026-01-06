@@ -117,6 +117,7 @@
 /* Icon 按钮（设置、复制、关闭、清空） */
 .runner-action-settings,
 .runner-action-copy,
+.runner-output-copy,
 .runner-action-close,
 .runner-action-clear {
     display: flex;
@@ -139,7 +140,8 @@
     color: var(--runner-text);
 }
 
-.runner-action-copy:hover {
+.runner-action-copy:hover,
+.runner-output-copy:hover {
     background: rgba(88, 166, 255, 0.1);
     border-color: var(--runner-info);
     color: var(--runner-info);
@@ -159,6 +161,7 @@
 
 .runner-action-settings svg,
 .runner-action-copy svg,
+.runner-output-copy svg,
 .runner-action-close svg,
 .runner-action-clear svg {
     width: 14px;
@@ -603,4 +606,161 @@
     text-align: right;
     background: var(--runner-bg-secondary);
     border-radius: 4px;
+}
+
+/* ===== HTML 预览样式 ===== */
+.runner-html-preview {
+    margin: 8px 0;
+}
+
+.runner-html-preview iframe {
+    display: block;
+    width: 100% !important;
+    min-height: 150px;
+    max-height: 400px;
+    resize: vertical;
+    overflow: auto;
+}
+
+/* ===== JSON 格式化样式 ===== */
+.runner-json-output {
+    margin: 8px 0;
+    padding: 12px;
+    background: var(--runner-bg) !important;
+    border: 1px solid var(--runner-border);
+    border-radius: 6px;
+    font-family: ui-monospace, 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--runner-text) !important;
+}
+
+.runner-json-key {
+    color: #7dd3fc !important;
+}
+
+.runner-json-string {
+    color: #86efac !important;
+}
+
+.runner-json-number {
+    color: #fbbf24 !important;
+}
+
+.runner-json-boolean {
+    color: #f472b6 !important;
+}
+
+.runner-json-null {
+    color: var(--runner-text-secondary) !important;
+    font-style: italic;
+}
+
+/* ===== Markdown 预览样式 ===== */
+.runner-markdown-preview {
+    margin: 8px 0;
+    padding: 16px;
+    background: var(--runner-bg-secondary) !important;
+    border: 1px solid var(--runner-border);
+    border-radius: 6px;
+    color: var(--runner-text) !important;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+.runner-markdown-preview h1,
+.runner-markdown-preview h2,
+.runner-markdown-preview h3,
+.runner-markdown-preview h4,
+.runner-markdown-preview h5,
+.runner-markdown-preview h6 {
+    color: var(--runner-text) !important;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.runner-markdown-preview h1 { font-size: 1.5em; border-bottom: 1px solid var(--runner-border); padding-bottom: 8px; }
+.runner-markdown-preview h2 { font-size: 1.3em; border-bottom: 1px solid var(--runner-border); padding-bottom: 6px; }
+.runner-markdown-preview h3 { font-size: 1.1em; }
+
+.runner-markdown-preview p {
+    margin: 12px 0;
+}
+
+.runner-markdown-preview code {
+    background: rgba(0,0,0,0.3) !important;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: ui-monospace, 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-size: 0.9em;
+    color: #f472b6 !important;
+}
+
+.runner-markdown-preview pre {
+    background: var(--runner-bg) !important;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 12px 0;
+}
+
+.runner-markdown-preview pre code {
+    background: transparent !important;
+    padding: 0;
+    color: var(--runner-text) !important;
+}
+
+.runner-markdown-preview blockquote {
+    border-left: 4px solid var(--runner-accent);
+    margin: 12px 0;
+    padding: 8px 16px;
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--runner-text-secondary) !important;
+}
+
+.runner-markdown-preview ul,
+.runner-markdown-preview ol {
+    margin: 12px 0;
+    padding-left: 24px;
+}
+
+.runner-markdown-preview li {
+    margin: 4px 0;
+}
+
+.runner-markdown-preview a {
+    color: var(--runner-info) !important;
+    text-decoration: none;
+}
+
+.runner-markdown-preview a:hover {
+    text-decoration: underline;
+}
+
+.runner-markdown-preview table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+.runner-markdown-preview th,
+.runner-markdown-preview td {
+    padding: 8px 12px;
+    border: 1px solid var(--runner-border);
+    text-align: left;
+}
+
+.runner-markdown-preview th {
+    background: var(--runner-bg) !important;
+    font-weight: 600;
+}
+
+.runner-markdown-preview hr {
+    border: none;
+    border-top: 1px solid var(--runner-border);
+    margin: 16px 0;
 }
