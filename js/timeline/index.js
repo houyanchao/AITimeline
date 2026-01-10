@@ -159,6 +159,9 @@ function initializeTimeline() {
     if (!currentAdapter) {
         return;
     }
+    
+    // 2. 符合条件的 AI 平台，时间轴初始化之前
+    window.trackEvent?.('timeline');
 
     if (timelineManagerInstance) {
         try { timelineManagerInstance.destroy(); } catch {}
@@ -178,7 +181,6 @@ function initializeTimeline() {
     try {
         timelineManagerInstance = new TimelineManager(currentAdapter);
         timelineManagerInstance.init().catch(err => {});
-        
     } catch (err) {
     }
 }
