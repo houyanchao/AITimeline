@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Trợ lý AI đa nền tảng"
+    "message": "AI Timeline: Tăng gấp đôi hiệu suất AI | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "Công cụ AI cho GPT, Gemini, DeepSeek: dòng thời gian hội thoại, sao chép LaTeX, thư viện prompt, chạy mã."
+    "message": "Hỗ trợ GPT, Gemini, DeepSeek và tất cả nền tảng AI: sao chép LaTeX, dòng thời gian tương tác, thư viện prompt, chạy mã để tăng gấp đôi hiệu suất AI."
   },
   "qwxpzm": {
     "message": "Yêu thích"
@@ -277,6 +277,15 @@
   },
   "urlButtonHint": {
     "message": "Chuyển đổi URL văn bản thuần thành liên kết có thể nhấp, mở trong tab mới"
+  },
+  "runBtn": {
+    "message": "Chạy"
+  },
+  "themeDark": {
+    "message": "Tối"
+  },
+  "themeLight": {
+    "message": "Sáng"
   }
 }
 

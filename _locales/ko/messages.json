@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: 전 플랫폼 AI 효율 어시스턴트"
+    "message": "AI Timeline: AI 효율 두 배로 | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "AI 효율 어시스턴트, GPT·Gemini·DeepSeek 등 모든 AI 플랫폼 지원: 인터랙티브 대화 타임라인, LaTeX 수식 복사, 커스텀 프롬프트 라이브러리, 코드 블록 실행 등 다양한 기능으로 AI 사용 효율 두 배로!"
+    "message": "GPT, Gemini, DeepSeek 등 모든 주요 AI 플랫폼 지원: LaTeX 복사, 대화 타임라인, 프롬프트 라이브러리, 코드 실행으로 AI 효율 두 배로."
   },
   "qwxpzm": {
     "message": "즐겨찾기"
@@ -277,5 +277,14 @@
   },
   "urlButtonHint": {
     "message": "일반 텍스트 URL을 클릭 가능한 링크로 변환하여 새 탭에서 열기"
+  },
+  "runBtn": {
+    "message": "실행"
+  },
+  "themeDark": {
+    "message": "다크"
+  },
+  "themeLight": {
+    "message": "라이트"
   }
 }

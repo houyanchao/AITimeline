@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: ऑल-प्लेटफॉर्म AI सहायक"
+    "message": "AI Timeline: AI दक्षता दोगुनी करें | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "GPT, Gemini, DeepSeek के लिए AI टूल्स: वार्तालाप टाइमलाइन, LaTeX कॉपी, प्रॉम्प्ट लाइब्रेरी, कोड रनर।"
+    "message": "GPT, Gemini, DeepSeek और सभी AI प्लेटफ़ॉर्म का समर्थन: LaTeX कॉपी, इंटरैक्टिव टाइमलाइन, प्रॉम्प्ट लाइब्रेरी, कोड रन - AI दक्षता दोगुनी।"
   },
   "qwxpzm": {
     "message": "पसंदीदा"
@@ -277,5 +277,14 @@
   },
   "urlButtonHint": {
     "message": "सादे टेक्स्ट URL को क्लिक करने योग्य लिंक में बदलें जो नए टैब में खुलते हैं"
+  },
+  "runBtn": {
+    "message": "चलाएं"
+  },
+  "themeDark": {
+    "message": "गहरा"
+  },
+  "themeLight": {
+    "message": "हल्का"
   }
 }

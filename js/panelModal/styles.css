@@ -233,7 +233,7 @@
 
 .panel-modal-footer-link {
     display: inline;
-    color: #007aff;
+    color: #007aff!important;
     text-decoration: none;
     white-space: nowrap;
     font-weight: 500;

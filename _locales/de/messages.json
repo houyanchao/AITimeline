@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Plattformübergreifender KI-Effizienzassistent"
+    "message": "AI Timeline: KI-Effizienz verdoppeln | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "KI-Tools für GPT, Gemini, DeepSeek: Gesprächszeitleiste, LaTeX kopieren, Prompt-Bibliothek, Code ausführen."
+    "message": "Unterstützt GPT, Gemini, DeepSeek & alle großen AI-Plattformen: LaTeX kopieren, interaktive Zeitleiste, Prompt-Bibliothek, Code ausführen - KI-Effizienz verdoppeln."
   },
   "qwxpzm": {
     "message": "Favorisieren"
@@ -277,5 +277,14 @@
   },
   "urlButtonHint": {
     "message": "Klartext-URLs in anklickbare Links umwandeln, die in einem neuen Tab öffnen"
+  },
+  "runBtn": {
+    "message": "Ausführen"
+  },
+  "themeDark": {
+    "message": "Dunkel"
+  },
+  "themeLight": {
+    "message": "Hell"
   }
 }

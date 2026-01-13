@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline：全プラットフォーム AI 効率アシスタント"
+    "message": "AI Timeline：AI効率を倍増 | GPT、Gemini、DeepSeek、Qwen"
   },
   "extDescription": {
-    "message": "AI効率アシスタント、GPT・Gemini・DeepSeek等すべてのAIプラットフォーム対応：インタラクティブな対話タイムライン、LaTeX数式コピー、カスタムプロンプトライブラリ、コードブロック実行など多彩な機能でAI使用効率を倍増。"
+    "message": "GPT、Gemini、DeepSeek等すべての主要AIプラットフォーム対応：LaTeX数式コピー、対話タイムライン、プロンプトライブラリ、コード実行でAI効率を倍増。"
   },
   "qwxpzm": {
     "message": "お気に入り"
@@ -277,5 +277,14 @@
   },
   "urlButtonHint": {
     "message": "テキストURLをクリック可能なリンクに変換し、新しいタブで開きます"
+  },
+  "runBtn": {
+    "message": "実行"
+  },
+  "themeDark": {
+    "message": "ダーク"
+  },
+  "themeLight": {
+    "message": "ライト"
   }
 }

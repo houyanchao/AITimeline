@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline：全平台 AI 效率助手"
+    "message": "AI Timeline：助你使用 AI 效率翻倍 | GPT、Gemini、DeepSeek、Qwen"
   },
   "extDescription": {
-    "message": "AI 效率助手，支持 GPT、Gemini、DeepSeek 等所有 AI 平台：可交互对话时间轴、复制 LaTeX 公式、自定义提示词库、运行代码块等超多功能，助你使用 AI 效率翻倍。"
+    "message": "支持 GPT、Gemini、DeepSeek 等所有主流 AI 平台：复制 LaTeX 公式、可交互对话时间轴、自定义提示词库、运行代码块等超多功能，助你使用 AI 效率翻倍。"
   },
   "qwxpzm": {
     "message": "收藏"
@@ -295,5 +295,14 @@
   },
   "urlButtonHint": {
     "message": "将纯文本网址转为可点击的链接，点击可在新标签页打开链接"
+  },
+  "runBtn": {
+    "message": "运行"
+  },
+  "themeDark": {
+    "message": "深色"
+  },
+  "themeLight": {
+    "message": "浅色"
   }
 }

@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: ผู้ช่วย AI ทุกแพลตฟอร์ม"
+    "message": "AI Timeline: เพิ่มประสิทธิภาพ AI เท่าตัว | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "เครื่องมือ AI สำหรับ GPT, Gemini, DeepSeek: ไทม์ไลน์สนทนา, คัดลอก LaTeX, คลัง Prompt, รันโค้ด"
+    "message": "รองรับ GPT, Gemini, DeepSeek และทุกแพลตฟอร์ม AI: คัดลอก LaTeX, ไทม์ไลน์โต้ตอบ, คลัง Prompt, รันโค้ด เพิ่มประสิทธิภาพ AI เท่าตัว"
   },
   "qwxpzm": {
     "message": "รายการโปรด"
@@ -277,6 +277,15 @@
   },
   "urlButtonHint": {
     "message": "แปลง URL ข้อความธรรมดาเป็นลิงก์ที่คลิกได้ เปิดในแท็บใหม่"
+  },
+  "runBtn": {
+    "message": "รัน"
+  },
+  "themeDark": {
+    "message": "มืด"
+  },
+  "themeLight": {
+    "message": "สว่าง"
   }
 }
 

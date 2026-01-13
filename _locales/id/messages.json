@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Asisten AI lintas platform"
+    "message": "AI Timeline: Gandakan Efisiensi AI | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "Alat AI untuk GPT, Gemini, DeepSeek: lini masa percakapan, salin LaTeX, perpustakaan prompt, jalankan kode."
+    "message": "Mendukung GPT, Gemini, DeepSeek & semua platform AI: salin LaTeX, lini masa interaktif, perpustakaan prompt, jalankan kode untuk menggandakan efisiensi AI."
   },
   "qwxpzm": {
     "message": "Favorit"
@@ -277,5 +277,14 @@
   },
   "urlButtonHint": {
     "message": "Ubah URL teks biasa menjadi tautan yang dapat diklik, buka di tab baru"
+  },
+  "runBtn": {
+    "message": "Jalankan"
+  },
+  "themeDark": {
+    "message": "Gelap"
+  },
+  "themeLight": {
+    "message": "Terang"
   }
 }

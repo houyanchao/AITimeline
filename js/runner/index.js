@@ -42,19 +42,33 @@
     const CODE_BLOCK_CONFIGS = [
         { 
             codeSelector: 'code-block code',  // Gemini
-            layoutSelector: 'code-block'
+            layoutSelector: 'code-block',
+            useFloatingPanel: true
         },
         { 
             codeSelector: '.md-code-block pre',  // DeepSeek
-            layoutSelector: '.md-code-block'
+            layoutSelector: '.md-code-block',
+            useFloatingPanel: true
         },
         { 
             codeSelector: '[class*="code-area-"] code',  // 豆包
-            layoutSelector: '[class*="code-area-"]'
+            layoutSelector: '[class*="code-area-"]',
+            useFloatingPanel: true
+        },
+        { 
+            codeSelector: '.cnblogs_code pre',  // 博客园
+            layoutSelector: '.cnblogs_code',
+            useFloatingPanel: true
+        },
+        { 
+            codeSelector: '.CodeMirror pre',        // 阿里云社区（通义千问）
+            layoutSelector: '.CodeMirror',
+            useFloatingPanel: true
         },
         { 
             codeSelector: 'pre code',         // 通用（ChatGPT, Claude, Kimi...）
-            layoutSelector: 'pre'
+            layoutSelector: 'pre',
+            useFloatingPanel: true
         },
     ];
 
@@ -129,18 +143,20 @@
      * @param {HTMLElement} codeElement - code 元素
      * @param {HTMLElement} layoutContainer - 布局容器
      * @param {string} language - 语言类型 'javascript' | 'python'
+     * @param {Object} config - 代码块配置（可选）
      * @returns {HTMLElement}
      */
-    function createRunButton(codeElement, layoutContainer, language = 'javascript') {
+    function createRunButton(codeElement, layoutContainer, language = 'javascript', config = {}) {
         const button = document.createElement('button');
         button.className = 'runner-code-run-btn';
+        const runLabel = safeI18n('runBtn', '运行');
         button.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
             </svg>
-            <span>Run</span>
+            <span>${runLabel}</span>
         `;
-        button.setAttribute('title', '运行代码');
+        button.setAttribute('title', runLabel);
         button.setAttribute('data-language', language);
         
         // 动态计算 z-index，确保在其他同级元素之上
@@ -150,7 +166,15 @@
         button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            handleRunClick(codeElement, layoutContainer, button, language);
+            
+            // 如果配置了使用悬浮面板，直接打开 FloatingRunnerPanel
+            if (config.useFloatingPanel && window.FloatingRunnerPanel) {
+                const code = getCodeText(codeElement);
+                const floatingPanel = window.FloatingRunnerPanel.getInstance();
+                floatingPanel.show({ code, language });
+            } else {
+                handleRunClick(codeElement, layoutContainer, button, language);
+            }
         });
         
         return button;
@@ -177,9 +201,15 @@
         const container = document.createElement('div');
         container.className = 'runner-container';
         
-        // 动态计算 z-index，确保在其他同级元素之上
-        const maxZ = getMaxChildZIndex(layoutContainer);
-        container.style.zIndex = maxZ + 1;
+        // 计算 z-index
+        // CSDN 网站使用固定值 20
+        if (location.hostname.includes('csdn.net')) {
+            container.style.zIndex = 20;
+        } else {
+            // 其他网站动态计算，确保在其他同级元素之上
+            const maxZ = getMaxChildZIndex(layoutContainer);
+            container.style.zIndex = maxZ + 1;
+        }
 
         // 创建 RunnerPanel 核心组件
         const panel = new window.RunnerPanel(container, {
@@ -515,7 +545,7 @@
         }
 
         // 创建运行按钮（absolute 定位在 layoutContainer 内）
-        const runButton = createRunButton(codeElement, layoutContainer, language);
+        const runButton = createRunButton(codeElement, layoutContainer, language, config);
         
         // 插入按钮到 layoutContainer 内部
         layoutContainer.appendChild(runButton);

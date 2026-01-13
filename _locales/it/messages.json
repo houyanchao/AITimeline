@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Assistente AI multipiattaforma"
+    "message": "AI Timeline: Raddoppia l'efficienza AI | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "Strumenti AI per GPT, Gemini, DeepSeek: cronologia conversazioni, copia LaTeX, libreria prompt, esecuzione codice."
+    "message": "Supporta GPT, Gemini, DeepSeek e tutte le piattaforme AI: copia LaTeX, cronologia interattiva, libreria prompt, esecuzione codice per raddoppiare l'efficienza AI."
   },
   "qwxpzm": {
     "message": "Preferito"
@@ -277,6 +277,15 @@
   },
   "urlButtonHint": {
     "message": "Converti gli URL in testo semplice in link cliccabili che si aprono in una nuova scheda"
+  },
+  "runBtn": {
+    "message": "Esegui"
+  },
+  "themeDark": {
+    "message": "Scuro"
+  },
+  "themeLight": {
+    "message": "Chiaro"
   }
 }
 

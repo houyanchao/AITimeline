@@ -68,11 +68,23 @@
             };
 
             this.language = this.options.language;
+            this.theme = this._detectTheme(); // 'dark' or 'light'
             this.cmEditor = null;
             this.resultContent = null;
             this.element = null;
 
             this.render();
+        }
+        
+        /**
+         * 获取默认主题
+         * 复用全局 detectDarkMode 函数（定义在 constants.js）
+         */
+        _detectTheme() {
+            // 检测页面是否为深色模式
+            const isDarkPage = typeof detectDarkMode === 'function' ? detectDarkMode() : false;
+            // 深色页面默认用浅色主题，浅色页面默认用深色主题
+            return isDarkPage ? 'light' : 'dark';
         }
 
         /**
@@ -85,6 +97,12 @@
             // 创建面板元素
             this.element = document.createElement('div');
             this.element.className = 'runner-panel';
+            // 根据初始主题添加类名
+            if (this.theme === 'light') {
+                this.element.classList.add('runner-panel-light');
+            } else {
+                this.element.classList.add('runner-panel-dark');
+            }
             this.element.innerHTML = this._getHTML(langConfig);
 
             this.container.appendChild(this.element);
@@ -96,6 +114,13 @@
             // 设置初始代码
             if (this.options.code) {
                 this.setCode(this.options.code);
+            }
+            
+            // 同步悬浮容器的边框颜色（如果存在）
+            const floatingContainer = this.element.closest('.floating-runner-container');
+            if (floatingContainer) {
+                floatingContainer.style.setProperty('--floating-border', this.theme === 'light' ? '#e7e7e7' : '#30363d');
+                floatingContainer.style.setProperty('--floating-bg', this.theme === 'light' ? '#ffffff' : '#0d1117');
             }
         }
 
@@ -154,6 +179,15 @@
                        </svg>
                    </button>`
                 : `<span class="runner-panel-lang-name">${langConfig?.name || this.language}</span>`;
+            
+            // 主题选择器
+            const themeLabel = this.theme === 'dark' ? safeI18n('themeDark', '深色') : safeI18n('themeLight', '浅色');
+            const themeSelectorHTML = `<button class="runner-panel-theme-selector" data-theme="${this.theme}">
+                <span class="theme-name">${themeLabel}</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>`;
 
             return `
                 <div class="runner-panel-editor-section">
@@ -164,6 +198,7 @@
                                 <polyline points="8 6 2 12 8 18"></polyline>
                             </svg>
                             ${titleHTML}
+                            ${themeSelectorHTML}
                         </span>
                         <div class="runner-panel-actions">${actionsHTML}</div>
                     </div>
@@ -196,7 +231,7 @@
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M8 5v14l11-7z"/>
                                 </svg>
-                                <span>Run</span>
+                                <span>${safeI18n('runBtn', '运行')}</span>
                             </button>
                         </div>
                     </div>
@@ -256,6 +291,12 @@
             const langSelector = this.element.querySelector('.runner-panel-lang-selector');
             if (langSelector) {
                 langSelector.addEventListener('click', () => this._showLanguageDropdown(langSelector));
+            }
+            
+            // 主题选择器
+            const themeSelector = this.element.querySelector('.runner-panel-theme-selector');
+            if (themeSelector) {
+                themeSelector.addEventListener('click', () => this._showThemeDropdown(themeSelector));
             }
 
             // 分隔条拖动
@@ -406,6 +447,63 @@
                     this.run();
                 }
             });
+        }
+        
+        /**
+         * 显示主题选择下拉菜单
+         */
+        _showThemeDropdown(anchor) {
+            if (!window.globalDropdownManager) return;
+
+            const themes = [
+                { id: 'dark', label: safeI18n('themeDark', '深色') },
+                { id: 'light', label: safeI18n('themeLight', '浅色') }
+            ];
+            const items = themes.map(t => ({
+                id: t.id,
+                label: t.label,
+                selected: t.id === this.theme
+            }));
+
+            window.globalDropdownManager.show({
+                trigger: anchor,
+                items,
+                onSelect: (item) => {
+                    this.setTheme(item.id);
+                }
+            });
+        }
+        
+        /**
+         * 设置主题
+         */
+        setTheme(themeId) {
+            if (themeId !== 'dark' && themeId !== 'light') return;
+            
+            this.theme = themeId;
+            
+            // 更新 UI
+            const selector = this.element.querySelector('.runner-panel-theme-selector');
+            if (selector) {
+                selector.querySelector('.theme-name').textContent = themeId === 'dark' ? safeI18n('themeDark', '深色') : safeI18n('themeLight', '浅色');
+                selector.dataset.theme = themeId;
+            }
+            
+            // 应用主题：切换主题类
+            if (themeId === 'light') {
+                this.element.classList.remove('runner-panel-dark');
+                this.element.classList.add('runner-panel-light');
+            } else {
+                this.element.classList.remove('runner-panel-light');
+                this.element.classList.add('runner-panel-dark');
+            }
+            
+            // 同步更新悬浮容器的边框颜色（如果存在）
+            const floatingContainer = this.element.closest('.floating-runner-container');
+            if (floatingContainer) {
+                floatingContainer.style.setProperty('--floating-border', themeId === 'light' ? '#e7e7e7' : '#30363d');
+                floatingContainer.style.setProperty('--floating-bg', themeId === 'light' ? '#ffffff' : '#0d1117');
+            }
         }
 
         // ===== 公共 API =====

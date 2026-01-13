@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Мультиплатформенный ИИ-ассистент"
+    "message": "AI Timeline: Удвойте эффективность ИИ | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "ИИ-инструменты для GPT, Gemini, DeepSeek: шкала времени диалога, копирование LaTeX, библиотека промптов, запуск кода."
+    "message": "Поддержка GPT, Gemini, DeepSeek и всех AI-платформ: копирование LaTeX, интерактивная шкала времени, библиотека промптов, запуск кода - удвойте эффективность ИИ."
   },
   "qwxpzm": {
     "message": "Избранное"
@@ -277,6 +277,15 @@
   },
   "urlButtonHint": {
     "message": "Преобразовать текстовые URL в кликабельные ссылки, открывающиеся в новой вкладке"
+  },
+  "runBtn": {
+    "message": "Запуск"
+  },
+  "themeDark": {
+    "message": "Тёмная"
+  },
+  "themeLight": {
+    "message": "Светлая"
   }
 }
 

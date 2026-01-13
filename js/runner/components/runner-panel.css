@@ -104,6 +104,114 @@ html[style*="color-scheme: dark"] .runner-panel {
     --runner-activeline-bg: #f5f5f5;
 }
 
+/* ===== 手动切换深色主题（优先级最高）===== */
+.runner-panel.runner-panel-dark.runner-panel-dark {
+    /* 背景色 */
+    --runner-bg: #0d1117;
+    --runner-header-bg: #161b22;
+    --runner-output-bg: #0d1117;
+    
+    /* 边框 */
+    --runner-border: #30363d;
+    
+    /* 文字 */
+    --runner-text: #e6edf3;
+    --runner-text-secondary: #8b949e;
+    
+    /* 交互 */
+    --runner-btn-hover: #21262d;
+    --runner-btn-active: #30363d;
+    --runner-selection: rgba(56, 139, 253, 0.25);
+    
+    /* 语义色 */
+    --runner-success: #3fb950;
+    --runner-error: #f85149;
+    --runner-warning: #d29922;
+    --runner-info: #58a6ff;
+    
+    /* 按钮 - 紫色 */
+    --runner-run-btn-bg: #7c3aed;
+    --runner-run-btn-hover: #6d28d9;
+    
+    /* CodeMirror */
+    --runner-cursor: #aeafad;
+    --runner-matching-bracket-bg: rgba(124, 58, 237, 0.2);
+    --runner-matching-bracket-border: #7c3aed;
+    --runner-activeline-bg: #161b22;
+    
+    /* 语法高亮 - VSCode Dark+ */
+    --syntax-keyword: #c586c0;
+    --syntax-def: #dcdcaa;
+    --syntax-variable: #9cdcfe;
+    --syntax-variable-2: #9cdcfe;
+    --syntax-variable-3: #4ec9b0;
+    --syntax-property: #9cdcfe;
+    --syntax-operator: #d4d4d4;
+    --syntax-number: #b5cea8;
+    --syntax-string: #ce9178;
+    --syntax-comment: #6a9955;
+    --syntax-atom: #569cd6;
+    --syntax-meta: #d4d4d4;
+    --syntax-tag: #569cd6;
+    --syntax-attribute: #9cdcfe;
+    --syntax-builtin: #4ec9b0;
+    --syntax-qualifier: #dcdcaa;
+}
+
+/* ===== 手动切换浅色主题（优先级最高）===== */
+.runner-panel.runner-panel-light.runner-panel-light {
+    /* 背景色 */
+    --runner-bg: #ffffff;
+    --runner-header-bg: #f3f3f3;
+    --runner-output-bg: #ffffff;
+    
+    /* 边框 */
+    --runner-border: #e7e7e7;
+    
+    /* 文字 */
+    --runner-text: #333333;
+    --runner-text-secondary: #6e6e6e;
+    
+    /* 交互 */
+    --runner-btn-hover: #e8e8e8;
+    --runner-btn-active: #d4d4d4;
+    --runner-selection: #add6ff;
+    
+    /* 语义色 */
+    --runner-success: #008000;
+    --runner-error: #cd3131;
+    --runner-warning: #bf8803;
+    --runner-info: #0451a5;
+    
+    /* 按钮 - 紫色 */
+    --runner-run-btn-bg: #7c3aed;
+    --runner-run-btn-hover: #6d28d9;
+    
+    /* CodeMirror */
+    --runner-cursor: #000000;
+    --runner-matching-bracket-bg: rgba(0, 100, 0, 0.1);
+    --runner-matching-bracket-border: #0064001a;
+    --runner-activeline-bg: #f5f5f5;
+    
+    /* 语法高亮 - VSCode Light+ */
+    --syntax-keyword: #0000ff;
+    --syntax-def: #795e26;
+    --syntax-variable: #001080;
+    --syntax-variable-2: #001080;
+    --syntax-variable-3: #267f99;
+    --syntax-property: #001080;
+    --syntax-operator: #000000;
+    --syntax-number: #098658;
+    --syntax-string: #a31515;
+    --syntax-comment: #008000;
+    --syntax-atom: #0000ff;
+    --syntax-meta: #000000;
+    --syntax-tag: #800000;
+    --syntax-attribute: #ff0000;
+    --syntax-builtin: #267f99;
+    --syntax-qualifier: #795e26;
+}
+
 /* ===== 面板容器 ===== */
 .runner-panel {
     width: 100%;
@@ -173,7 +281,7 @@ html[style*="color-scheme: dark"] .runner-panel {
 
 /* ===== 头部 ===== */
 .runner-panel-header {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: space-between;
     height: 36px;
@@ -181,6 +289,10 @@ html[style*="color-scheme: dark"] .runner-panel {
     background: var(--runner-header-bg);
     border-bottom: 1px solid var(--runner-border);
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .runner-panel-title {
@@ -195,14 +307,19 @@ html[style*="color-scheme: dark"] .runner-panel {
 }
 
 .runner-panel-actions {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 4px;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* ===== 按钮 ===== */
 .runner-panel-btn {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 28px;
@@ -213,6 +330,15 @@ html[style*="color-scheme: dark"] .runner-panel {
     cursor: pointer;
     color: var(--runner-text-secondary);
     transition: all 0.15s ease;
+    position: relative;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    min-width: 28px;
+    min-height: 28px;
+    flex-shrink: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .runner-panel-btn:hover {
@@ -224,13 +350,21 @@ html[style*="color-scheme: dark"] .runner-panel {
     background: var(--runner-btn-active);
 }
 
+.runner-panel-btn svg {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none;
+}
+
 .runner-panel-close:hover {
     background: rgba(241, 76, 76, 0.15);
     color: var(--runner-error);
 }
 
-/* ===== 语言选择器 ===== */
-.runner-panel-lang-selector {
+/* ===== 语言选择器 & 主题选择器 ===== */
+.runner-panel-lang-selector,
+.runner-panel-theme-selector {
     display: flex;
     align-items: center;
     gap: 4px;
@@ -245,7 +379,12 @@ html[style*="color-scheme: dark"] .runner-panel {
     transition: all 0.15s ease;
 }
 
-.runner-panel-lang-selector:hover {
+.runner-panel-theme-selector {
+    margin-left: 8px;
+}
+
+.runner-panel-lang-selector:hover,
+.runner-panel-theme-selector:hover {
     background: var(--runner-btn-hover);
 }
 

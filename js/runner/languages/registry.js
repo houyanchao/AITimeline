@@ -34,7 +34,7 @@ class LanguageRegistry {
         this.languageConfigs.forEach(config => {
             if (window[config.runnerClass]) {
                 this.register(config.id, new window[config.runnerClass]());
-            }
+        }
         });
     }
 

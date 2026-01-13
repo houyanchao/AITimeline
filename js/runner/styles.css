@@ -19,30 +19,51 @@
 
 /* ===== 运行按钮（absolute 定位） ===== */
 .runner-code-run-btn {
-    position: absolute;
+    position: absolute !important;
     top: 60px;
     right: 10px;
     /* z-index 由 JS 动态计算 */
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     gap: 3px;
-    width: 55px;
+    width: 60px;
     height: 24px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: #fff;
-    background: var(--runner-accent);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    color: #ffffff !important;
+    background: var(--runner-accent) !important;
+    background-color: #7c3aed !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: all 0.15s ease !important;
+}
+
+.runner-code-run-btn:hover {
+    background: var(--runner-accent-hover) !important;
+    background-color: #6d28d9 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4) !important;
+}
+
+.runner-code-run-btn:active {
+    transform: translateY(0);
 }
 
 .runner-code-run-btn.loading {
-    opacity: 0.7;
-    pointer-events: none;
-    background: var(--runner-text-secondary);
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+    background: var(--runner-text-secondary) !important;
+    background-color: #8b949e !important;
 }
 
 .runner-code-run-btn.loading span::after {
@@ -59,8 +80,20 @@
 
 .runner-code-run-btn svg {
     flex-shrink: 0;
-    width: 15px;
-    height: 15px;
+    width: 15px !important;
+    height: 15px !important;
+    fill: currentColor !important;
+    stroke: none !important;
+    display: block !important;
+    pointer-events: none !important;
+}
+
+.runner-code-run-btn span {
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    display: inline-block !important;
 }
 
 /* ===== Runner 容器（整体，absolute 定位） ===== */

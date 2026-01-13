@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: All-Platform AI Efficiency Assistant"
+    "message": "AI Timeline: Double Your AI Efficiency | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "AI efficiency tools for GPT, Gemini, DeepSeek & more: conversation timeline, LaTeX copy, prompt library, code runner."
+    "message": "Supports GPT, Gemini, DeepSeek & all major AI platforms: LaTeX copy, interactive timeline, prompt library, code runner."
   },
   "qwxpzm": {
     "message": "Star"
@@ -295,5 +295,14 @@
   },
   "urlButtonHint": {
     "message": "Convert plain text URLs to clickable links that open in a new tab"
+  },
+  "runBtn": {
+    "message": "Run"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "themeLight": {
+    "message": "Light"
   }
 }

@@ -30,8 +30,8 @@ html[style*="color-scheme: dark"] .floating-runner-container {
 
 /* ===== 容器 ===== */
 .floating-runner-container {
-    position: fixed;
-    z-index: 9999;
+    position: fixed !important;
+    z-index: 2147483647 !important;
     display: none;
     flex-direction: column;
     background: var(--floating-bg);
