@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Konten tidak boleh kosong"
   },
-  "kmvxpz": {
-    "message": "Semua data disimpan secara lokal di browser Anda"
-  },
   "vxpzmk": {
     "message": "Sumber terbuka"
   },
   "mkvxpz": {
-    "message": "Beri bintang di GitHub"
+    "message": "Beri bintang"
   },
   "xpzmkv": {
     "message": "Selamat datang"
   },
   "pkmzvx": {
     "message": "Bagikan ke teman"
-  },
-  "fbklink": {
-    "message": "Umpan balik"
   },
   "mvxkpz": {
     "message": "Salin rumus LaTeX"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "Terang"
+  },
+  "watermarkRemoverHint": {
+    "message": "Saat diaktifkan, secara otomatis menghapus tanda air Nano Banana dari gambar yang dibuat Gemini"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Unduh tanpa tanda air"
+  },
+  "watermarkTabName": {
+    "message": "Tanda Air"
   }
 }

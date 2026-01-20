@@ -64,12 +64,11 @@ class RunnerManager {
         onStart();
 
         try {
-            // 执行代码
+            // 执行代码（使用各语言默认的超时时间）
             const result = await runner.execute(code, {
                 onOutput: (output) => {
                     this.handleOutput(output, onOutput);
-                },
-                timeout: 5000
+                }
             });
 
             this.isRunning = false;

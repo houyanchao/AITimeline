@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "AI Timeline",
-  "version": "4.1.4",
+  "version": "4.1.6",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "author": "yanchao hou",
@@ -23,7 +23,6 @@
       ],
       "js": [
         "js/global/constants.js",
-        "js/global/analytics.js",
         "js/global/dom-observer-manager/index.js",
         "js/global/tooltip-manager/index.js",
         "js/global/toast-manager/index.js",
@@ -85,6 +84,7 @@
         "js/runner/components/floating-runner.js",
         "js/runner/index.js",
         "js/panelModal/tabs/runner/index.js",
+        "js/panelModal/tabs/watermark/index.js",
         "js/panelModal/tabs/settings/index.js",
         "js/panelModal/tab-registry.js",
         "js/panelModal/index.js",
@@ -122,7 +122,11 @@
         "js/timeline/star-input-modal/star-input-modal.js",
         "js/timeline/timeline-manager.js",
         "js/timeline/index.js",
-        "js/url-button/index.js"
+        "js/url-button/index.js",
+        "js/watermark-remover/alpha-map.js",
+        "js/watermark-remover/blend-modes.js",
+        "js/watermark-remover/watermark-engine.js",
+        "js/watermark-remover/index.js"
       ],
       "css": [
         "styles/variables.css",
@@ -142,12 +146,14 @@
         "js/runner/components/runner-panel.css",
         "js/runner/components/floating-runner.css",
         "js/panelModal/tabs/runner/styles.css",
+        "js/panelModal/tabs/watermark/styles.css",
         "js/panelModal/tabs/settings/styles.css",
         "js/timeline/star-input-modal/star-input-modal.css",
         "js/timeline/timeline.css",
         "js/formula/formula.css",
         "js/smartInputBox/prompt-button.css",
-        "js/url-button/styles.css"
+        "js/url-button/styles.css",
+        "js/watermark-remover/styles.css"
       ],
       "run_at": "document_idle"
     }
@@ -157,6 +163,7 @@
     {
       "resources": [
         "images/logo/*.webp",
+        "js/watermark-remover/assets/*.png",
         "js/runner/languages/javascript/sandbox.html",
         "js/runner/languages/javascript/sandbox-script.js",
         "js/runner/languages/python/sandbox.html",

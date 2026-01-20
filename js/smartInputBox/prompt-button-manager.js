@@ -322,21 +322,6 @@ class PromptButtonManager {
             this.buttonElement.style.top = `${safeTop}px`;
             this.buttonElement.style.left = `${safeLeft}px`;
             this.buttonElement.style.visibility = 'visible';
-            
-            // 埋点：每天首次展示时上报（_tracked 防止重复读取 storage），后续可以删除
-            if (!this._tracked) {
-                this._tracked = true;
-                const today = new Date().toLocaleDateString('zh-CN', { 
-                    timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
-                }).replace(/\//g, '');
-                chrome.storage.local.get('smartinputDate').then(result => {
-                    if (result.smartinputDate !== today) {
-                        window.trackEvent?.('smartinput');
-                        chrome.storage.local.set({ smartinputDate: today });
-                    }
-                }).catch(() => {});
-            }
-            
         } catch (e) {
             this._hideButton();
         }

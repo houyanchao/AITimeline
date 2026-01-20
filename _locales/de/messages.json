@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Inhalt darf nicht leer sein"
   },
-  "kmvxpz": {
-    "message": "Alle Daten werden lokal in Ihrem Browser gespeichert"
-  },
   "vxpzmk": {
     "message": "Open Source"
   },
   "mkvxpz": {
-    "message": "Auf GitHub bewerten"
+    "message": "Projekt mit Stern markieren"
   },
   "xpzmkv": {
     "message": "Willkommen"
   },
   "pkmzvx": {
     "message": "Mit Freunden teilen"
-  },
-  "fbklink": {
-    "message": "Feedback"
   },
   "mvxkpz": {
     "message": "LaTeX-Formel kopieren"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "Hell"
+  },
+  "watermarkRemoverHint": {
+    "message": "Wenn aktiviert, werden Nano Banana Wasserzeichen automatisch von Gemini-generierten Bildern entfernt"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Ohne Wasserzeichen herunterladen"
+  },
+  "watermarkTabName": {
+    "message": "Wasserzeichen"
   }
 }

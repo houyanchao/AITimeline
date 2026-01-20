@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "내용은 비워둘 수 없습니다"
   },
-  "kmvxpz": {
-    "message": "모든 데이터는 브라우저에 로컬 저장됩니다"
-  },
   "vxpzmk": {
     "message": "오픈 소스"
   },
   "mkvxpz": {
-    "message": "GitHub에서 스타하기"
+    "message": "프로젝트에 스타 주기"
   },
   "xpzmkv": {
     "message": "환영합니다"
   },
   "pkmzvx": {
     "message": "친구에게 공유"
-  },
-  "fbklink": {
-    "message": "피드백"
   },
   "mvxkpz": {
     "message": "LaTeX 수식 복사"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "라이트"
+  },
+  "watermarkRemoverHint": {
+    "message": "활성화하면 Gemini 생성 이미지에서 Nano Banana 워터마크를 자동으로 제거합니다"
+  },
+  "watermarkRemoverDownload": {
+    "message": "워터마크 없이 다운로드"
+  },
+  "watermarkTabName": {
+    "message": "워터마크 제거"
   }
 }

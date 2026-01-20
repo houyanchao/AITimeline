@@ -1,0 +1,79 @@
+/**
+ * Watermark Remover Styles
+ * 
+ * Based on gemini-watermark-remover by journey-ad (Jad)
+ * Original: https://github.com/journey-ad/gemini-watermark-remover
+ * License: MIT - Copyright (c) 2025 Jad
+ */
+
+/* Download button */
+.nanobanana-download-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease, background-color 0.2s ease, transform 0.1s ease;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+
+.nanobanana-download-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.nanobanana-download-btn span {
+    font-size: 14px;
+}
+
+/* Show button on hover */
+generated-image:hover .nanobanana-download-btn,
+.generated-image-container:hover .nanobanana-download-btn,
+[data-generated-image]:hover .nanobanana-download-btn {
+    opacity: 1;
+}
+
+.nanobanana-download-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+    transform: scale(1.05);
+}
+
+.nanobanana-download-btn:active {
+    transform: scale(0.95);
+}
+
+/* Success state */
+.nanobanana-download-btn.success {
+    background: rgba(34, 197, 94, 0.9);
+}
+
+/* Processing indicator */
+img[data-watermark-processed="processing"] {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+img[data-watermark-processed="true"] {
+    opacity: 1;
+}
+
+/* Indicator badge for processed images */
+.nanobanana-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 16px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+    z-index: 10;
+}

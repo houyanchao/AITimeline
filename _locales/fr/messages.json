@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Le contenu ne peut pas être vide"
   },
-  "kmvxpz": {
-    "message": "Toutes les données sont stockées localement dans votre navigateur"
-  },
   "vxpzmk": {
     "message": "Open Source"
   },
   "mkvxpz": {
-    "message": "Mettre une étoile sur GitHub"
+    "message": "Mettre une étoile"
   },
   "xpzmkv": {
     "message": "Bienvenue"
   },
   "pkmzvx": {
     "message": "Partager avec des amis"
-  },
-  "fbklink": {
-    "message": "Commentaires"
   },
   "mvxkpz": {
     "message": "Copier la formule LaTeX"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "Clair"
+  },
+  "watermarkRemoverHint": {
+    "message": "Lorsqu'activé, supprime automatiquement les filigranes Nano Banana des images générées par Gemini"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Télécharger sans filigrane"
+  },
+  "watermarkTabName": {
+    "message": "Filigrane"
   }
 }

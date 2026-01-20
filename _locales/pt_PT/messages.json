@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "O conteúdo não pode estar vazio"
   },
-  "kmvxpz": {
-    "message": "Todos os dados são armazenados localmente no seu navegador"
-  },
   "vxpzmk": {
     "message": "Código aberto"
   },
   "mkvxpz": {
-    "message": "Dar estrela no GitHub"
+    "message": "Dar uma estrela"
   },
   "xpzmkv": {
     "message": "Bem-vindo"
   },
   "pkmzvx": {
     "message": "Partilhar com amigos"
-  },
-  "fbklink": {
-    "message": "Feedback"
   },
   "mvxkpz": {
     "message": "Copiar fórmula LaTeX"
@@ -286,6 +280,15 @@
   },
   "themeLight": {
     "message": "Claro"
+  },
+  "watermarkRemoverHint": {
+    "message": "Quando ativado, remove automaticamente as marcas d'água Nano Banana das imagens geradas pelo Gemini"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Baixar sem marca d'água"
+  },
+  "watermarkTabName": {
+    "message": "Marca d'água"
   }
 }
 

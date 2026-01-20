@@ -102,28 +102,12 @@ class PanelModal {
         const storeUrl = isEdge 
             ? 'https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9Agemini%E3%80%81chatgp/ekednjjojnhlajfobalaaihkibbdcbab'
             : 'https://chromewebstore.google.com/detail/fgebdnlceacaiaeikopldglhffljjlhh?utm_source=item-share-cb';
-        const reviewUrl = isEdge
-            ? 'https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9Agemini%E3%80%81chatgp/ekednjjojnhlajfobalaaihkibbdcbab'
-            : 'https://chromewebstore.google.com/detail/ai-timeline%EF%BC%9A%E6%9C%80%E5%BC%BA%E5%A4%A7%E7%9A%84ai%E6%8F%90%E6%95%88%E5%8A%A9%E6%89%8B%EF%BC%9Ach/fgebdnlceacaiaeikopldglhffljjlhh/reviews';
         
         footer.innerHTML = `
-            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>${chrome.i18n.getMessage('kmvxpz')}</span></div>
-            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>${chrome.i18n.getMessage('xpzmkv')}</span><a href="${storeUrl}" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('pkmzvx')}</a><span> &</span><span class="panel-modal-footer-link panel-modal-feedback-trigger">${chrome.i18n.getMessage('fbklink')}</span><span> ❤️</span></div>
-            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>${chrome.i18n.getMessage('fiveStarReview')}</span><a href="${reviewUrl}" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('goToReview')}</a> ⭐</div>
-            <!-- 隐藏：已开源 Star on GitHub（后期可能恢复）
-            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span>${chrome.i18n.getMessage('vxpzmk')}</span><a href="https://github.com/houyanchao/AITimeline" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('mkvxpz')} ⭐</a></div>
-            -->
+            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>${chrome.i18n.getMessage('xpzmkv')}</span><a href="${storeUrl}" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('pkmzvx')}</a> ❤️</div>
+            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>${chrome.i18n.getMessage('fiveStarReview')}</span><a href="${storeUrl}" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('goToReview')}</a> ⭐</div>
+            <div class="panel-modal-footer-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span>${chrome.i18n.getMessage('vxpzmk')}</span><a href="https://github.com/houyanchao/AITimeline" target="_blank" class="panel-modal-footer-link">${chrome.i18n.getMessage('mkvxpz')}</a> ⭐</div>
         `;
-        
-        // 绑定反馈按钮点击事件
-        const feedbackTrigger = footer.querySelector('.panel-modal-feedback-trigger');
-        if (feedbackTrigger) {
-            feedbackTrigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this._showFeedbackModal();
-            });
-        }
         
         sidebar.appendChild(sidebarHeader);
         sidebar.appendChild(this.tabsContainer);
@@ -397,136 +381,11 @@ class PanelModal {
     }
     
     /**
-     * 显示反馈弹窗
-     */
-    _showFeedbackModal() {
-        // 如果已存在，先移除
-        this._hideFeedbackModal();
-        
-        // 创建反馈弹窗
-        const feedbackModal = document.createElement('div');
-        feedbackModal.className = 'feedback-modal';
-        feedbackModal.innerHTML = `
-            <div class="feedback-modal-overlay"></div>
-            <div class="feedback-modal-content">
-                <div class="feedback-modal-header">
-                    <h3 class="feedback-modal-title">${chrome.i18n.getMessage('fbklink')}</h3>
-                    <button class="feedback-modal-close">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-                <div class="feedback-modal-body">
-                    <div class="feedback-option feedback-option-email">
-                        <div class="feedback-option-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </div>
-                        <div class="feedback-option-info">
-                            <div class="feedback-option-label">Email</div>
-                            <div class="feedback-option-value">houyanchao@outlook.com</div>
-                        </div>
-                        <button class="feedback-option-copy" data-email="houyanchao@outlook.com">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                            <span>${chrome.i18n.getMessage('mvkxpz')}</span>
-                        </button>
-                    </div>
-                    <a href="https://ai.feishu.cn/share/base/form/shrcnm9dxA0OZVK96buotGs1the" target="_blank" class="feedback-option">
-                        <div class="feedback-option-icon feedback-option-icon-feishu">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12.4 5.2c-1.5-1.1-3.5-1.2-5.1-.3L4.5 6.6c-.5.3-.5 1 0 1.3l8.2 5.4c.5.3 1.1.3 1.5 0l5.5-3.6c.5-.3.5-1 0-1.3L12.4 5.2z"/>
-                                <path d="M19.8 10.7l-5.5 3.6c-.5.3-1.1.3-1.5 0l-8.2-5.4c-.5-.3-1.1.1-1.1.7v5.9c0 .5.3 1 .7 1.2l7.5 4.1c.5.3 1.1.3 1.5 0l7.5-4.1c.5-.3.7-.7.7-1.2v-5.9c0-.6-.6-1-1.1-.7z" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <div class="feedback-option-info">
-                            <div class="feedback-option-label">${chrome.i18n.getMessage('febhyejd')}</div>
-                        </div>
-                        <div class="feedback-option-arrow">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="9 18 15 12 9 6"/>
-                            </svg>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(feedbackModal);
-        
-        // 绑定关闭事件
-        const closeBtn = feedbackModal.querySelector('.feedback-modal-close');
-        const overlay = feedbackModal.querySelector('.feedback-modal-overlay');
-        
-        closeBtn.addEventListener('click', () => this._hideFeedbackModal());
-        overlay.addEventListener('click', () => this._hideFeedbackModal());
-        
-        // 绑定复制按钮事件
-        const copyBtn = feedbackModal.querySelector('.feedback-option-copy');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const email = copyBtn.getAttribute('data-email');
-                try {
-                    await navigator.clipboard.writeText(email);
-                    // 显示复制成功提示
-                    if (window.globalToastManager) {
-                        window.globalToastManager.show('success', chrome.i18n.getMessage('xpzmvk'));
-                    }
-                } catch (err) {
-                    console.error('[PanelModal] Failed to copy email:', err);
-                    if (window.globalToastManager) {
-                        window.globalToastManager.show('error', chrome.i18n.getMessage('kpzmvx'));
-                    }
-                }
-            });
-        }
-        
-        // 点击飞书选项后关闭弹窗
-        const feishuOption = feedbackModal.querySelector('.feedback-option:not(.feedback-option-email)');
-        if (feishuOption) {
-            feishuOption.addEventListener('click', () => {
-                // 延迟关闭，让用户看到点击效果
-                setTimeout(() => this._hideFeedbackModal(), 100);
-            });
-        }
-        
-        // 触发动画
-        requestAnimationFrame(() => {
-            feedbackModal.classList.add('visible');
-        });
-    }
-    
-    /**
-     * 隐藏反馈弹窗
-     */
-    _hideFeedbackModal() {
-        const feedbackModal = document.querySelector('.feedback-modal');
-        if (feedbackModal) {
-            feedbackModal.classList.remove('visible');
-            setTimeout(() => {
-                feedbackModal.remove();
-            }, 200);
-        }
-    }
-    
-    /**
      * 销毁
      */
     destroy() {
         // 移除 URL 监听
         this._detachUrlListeners();
-        
-        // 移除反馈弹窗
-        this._hideFeedbackModal();
         
         // 移除 DOM
         if (this.container && this.container.parentNode) {

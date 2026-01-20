@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "内容は空にできません"
   },
-  "kmvxpz": {
-    "message": "すべてのデータはブラウザにローカル保存されます"
-  },
   "vxpzmk": {
     "message": "オープンソース"
   },
   "mkvxpz": {
-    "message": "GitHubでスターする"
+    "message": "プロジェクトにスターを"
   },
   "xpzmkv": {
     "message": "ようこそ"
   },
   "pkmzvx": {
     "message": "友達にシェア"
-  },
-  "fbklink": {
-    "message": "フィードバック"
   },
   "mvxkpz": {
     "message": "LaTeX数式をコピー"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "ライト"
+  },
+  "watermarkRemoverHint": {
+    "message": "有効にすると、Gemini で生成された画像から Nano Banana ウォーターマークを自動的に削除します"
+  },
+  "watermarkRemoverDownload": {
+    "message": "ウォーターマークなしでダウンロード"
+  },
+  "watermarkTabName": {
+    "message": "透かし削除"
   }
 }

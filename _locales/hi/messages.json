@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "सामग्री खाली नहीं हो सकती"
   },
-  "kmvxpz": {
-    "message": "सभी डेटा आपके ब्राउज़र में स्थानीय रूप से संग्रहीत है"
-  },
   "vxpzmk": {
     "message": "ओपन सोर्स"
   },
   "mkvxpz": {
-    "message": "GitHub पर स्टार करें"
+    "message": "प्रोजेक्ट को स्टार दें"
   },
   "xpzmkv": {
     "message": "स्वागत है"
   },
   "pkmzvx": {
     "message": "दोस्तों के साथ साझा करें"
-  },
-  "fbklink": {
-    "message": "प्रतिक्रिया"
   },
   "mvxkpz": {
     "message": "LaTeX फ़ॉर्मूला कॉपी करें"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "हल्का"
+  },
+  "watermarkRemoverHint": {
+    "message": "सक्षम होने पर, Gemini द्वारा बनाई गई छवियों से Nano Banana वॉटरमार्क स्वचालित रूप से हटा देता है"
+  },
+  "watermarkRemoverDownload": {
+    "message": "बिना वॉटरमार्क के डाउनलोड करें"
+  },
+  "watermarkTabName": {
+    "message": "वॉटरमार्क"
   }
 }

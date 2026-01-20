@@ -744,10 +744,54 @@
         }
     }
 
+    // 排除的网站列表（不在这些网站上显示 Run 按钮）
+    const EXCLUDED_SITES = [
+        // GitHub
+        'github.com',
+        'gist.github.com',
+        'github.io',
+        'githubusercontent.com',
+        'github.dev',
+        'githubassets.com',
+        // GitLab
+        'gitlab.com',
+        'gitlab.io',
+        // Bitbucket
+        'bitbucket.org',
+        'bitbucket.io',
+        // 码云 Gitee
+        'gitee.com',
+        'gitee.io',
+        // Coding
+        'coding.net',
+        // Gitea
+        'gitea.com',
+        'gitea.io',
+        // SourceForge
+        'sourceforge.net',
+        // Codeberg
+        'codeberg.org'
+    ];
+
+    /**
+     * 检查当前网站是否在排除列表中
+     * @returns {boolean}
+     */
+    function isExcludedSite() {
+        const hostname = location.hostname;
+        return EXCLUDED_SITES.some(site => hostname.includes(site));
+    }
+
     /**
      * 初始化 Runner 模块
      */
     async function initialize() {
+        // 检查是否在排除的网站上
+        if (isExcludedSite()) {
+            console.log('[Runner] Current site is excluded, skipping initialization');
+            return;
+        }
+
         // 检查是否有任何语言启用
         const [jsEnabled, pyEnabled, tsEnabled, sqlEnabled, htmlEnabled, jsonEnabled, mdEnabled, luaEnabled, rubyEnabled] = await Promise.all([
             isJavaScriptRunnerEnabled(),

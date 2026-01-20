@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Содержимое не может быть пустым"
   },
-  "kmvxpz": {
-    "message": "Все данные хранятся локально в вашем браузере"
-  },
   "vxpzmk": {
     "message": "Открытый исходный код"
   },
   "mkvxpz": {
-    "message": "Поставить звезду на GitHub"
+    "message": "Поставить звезду"
   },
   "xpzmkv": {
     "message": "Добро пожаловать"
   },
   "pkmzvx": {
     "message": "Поделиться с друзьями"
-  },
-  "fbklink": {
-    "message": "Обратная связь"
   },
   "mvxkpz": {
     "message": "Копировать формулу LaTeX"
@@ -286,6 +280,15 @@
   },
   "themeLight": {
     "message": "Светлая"
+  },
+  "watermarkRemoverHint": {
+    "message": "При включении автоматически удаляет водяные знаки Nano Banana с изображений, созданных Gemini"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Скачать без водяного знака"
+  },
+  "watermarkTabName": {
+    "message": "Водяной знак"
   }
 }
 

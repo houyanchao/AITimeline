@@ -36,7 +36,7 @@ class LuaRunner extends BaseRunner {
         
         const {
             onOutput = () => {},
-            timeout = 15000  // Lua 执行较快，15秒超时
+            timeout = 30000  // Lua 超时 30 秒
         } = options;
         
         try {

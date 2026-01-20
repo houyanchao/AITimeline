@@ -33,7 +33,7 @@ class TypeScriptSandboxManager {
      * @param {number} timeout - 超时时间（毫秒）
      * @returns {Promise}
      */
-    execute(code, onMessage, timeout = 15000) {
+    execute(code, onMessage, timeout = 30000) {
         return new Promise((resolve, reject) => {
             this.destroy();
             
@@ -119,7 +119,7 @@ class TypeScriptSandboxManager {
                 const savedReject = this.pendingReject;
                 this.destroy();
                 if (savedReject) {
-                    savedReject(new Error('代码执行超时（15秒）'));
+                    savedReject(new Error('代码执行超时（30秒）'));
                 }
             }, timeout);
             

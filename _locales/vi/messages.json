@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Nội dung không được để trống"
   },
-  "kmvxpz": {
-    "message": "Tất cả dữ liệu được lưu trữ cục bộ trong trình duyệt của bạn"
-  },
   "vxpzmk": {
     "message": "Mã nguồn mở"
   },
   "mkvxpz": {
-    "message": "Đánh dấu sao trên GitHub"
+    "message": "Gắn sao cho dự án"
   },
   "xpzmkv": {
     "message": "Chào mừng"
   },
   "pkmzvx": {
     "message": "Chia sẻ với bạn bè"
-  },
-  "fbklink": {
-    "message": "Phản hồi"
   },
   "mvxkpz": {
     "message": "Sao chép công thức LaTeX"
@@ -286,6 +280,15 @@
   },
   "themeLight": {
     "message": "Sáng"
+  },
+  "watermarkRemoverHint": {
+    "message": "Khi bật, tự động xóa hình mờ Nano Banana khỏi hình ảnh do Gemini tạo"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Tải xuống không có hình mờ"
+  },
+  "watermarkTabName": {
+    "message": "Hình mờ"
   }
 }
 

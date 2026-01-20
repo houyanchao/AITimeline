@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "內容不能為空"
   },
-  "kmvxpz": {
-    "message": "所有資料儲存在您的瀏覽器本機"
-  },
   "vxpzmk": {
     "message": "已開源"
   },
   "mkvxpz": {
-    "message": "在 GitHub 上給星星"
+    "message": "為項目點亮"
   },
   "xpzmkv": {
     "message": "歡迎"
   },
   "pkmzvx": {
     "message": "分享給朋友"
-  },
-  "fbklink": {
-    "message": "回饋"
   },
   "mvxkpz": {
     "message": "複製 LaTeX 公式"
@@ -286,5 +280,14 @@
   },
   "themeLight": {
     "message": "淺色"
+  },
+  "watermarkRemoverHint": {
+    "message": "啟用後，自動去除 Gemini 生成圖片上的 Nano Banana 浮水印"
+  },
+  "watermarkRemoverDownload": {
+    "message": "下載無浮水印圖片"
+  },
+  "watermarkTabName": {
+    "message": "去除浮水印"
   }
 }

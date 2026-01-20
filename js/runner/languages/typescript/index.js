@@ -36,7 +36,7 @@ class TypeScriptRunner extends BaseRunner {
         
         const {
             onOutput = () => {},
-            timeout = 15000  // TypeScript 编译+执行超时 15 秒
+            timeout = 30000  // TypeScript 编译+执行超时 30 秒
         } = options;
         
         try {

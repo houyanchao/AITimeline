@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "เนื้อหาไม่สามารถเว้นว่างได้"
   },
-  "kmvxpz": {
-    "message": "ข้อมูลทั้งหมดถูกเก็บไว้ในเบราว์เซอร์ของคุณ"
-  },
   "vxpzmk": {
     "message": "โอเพนซอร์ส"
   },
   "mkvxpz": {
-    "message": "ให้ดาวบน GitHub"
+    "message": "ให้ดาวโปรเจกต์"
   },
   "xpzmkv": {
     "message": "ยินดีต้อนรับ"
   },
   "pkmzvx": {
     "message": "แชร์กับเพื่อน"
-  },
-  "fbklink": {
-    "message": "ข้อเสนอแนะ"
   },
   "mvxkpz": {
     "message": "คัดลอกสูตร LaTeX"
@@ -286,6 +280,15 @@
   },
   "themeLight": {
     "message": "สว่าง"
+  },
+  "watermarkRemoverHint": {
+    "message": "เมื่อเปิดใช้งาน จะลบลายน้ำ Nano Banana ออกจากรูปภาพที่สร้างโดย Gemini โดยอัตโนมัติ"
+  },
+  "watermarkRemoverDownload": {
+    "message": "ดาวน์โหลดโดยไม่มีลายน้ำ"
+  },
+  "watermarkTabName": {
+    "message": "ลายน้ำ"
   }
 }
 

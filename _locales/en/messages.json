@@ -59,23 +59,17 @@
   "pzmkvx": {
     "message": "Content cannot be empty"
   },
-  "kmvxpz": {
-    "message": "All data is stored locally in your browser"
-  },
   "vxpzmk": {
     "message": "Open Source"
   },
   "mkvxpz": {
-    "message": "Star on GitHub"
+    "message": "Star the Project"
   },
   "xpzmkv": {
     "message": "Welcome"
   },
   "pkmzvx": {
     "message": "Share with Friends"
-  },
-  "fbklink": {
-    "message": "Feedback"
   },
   "mvxkpz": {
     "message": "Copy LaTeX Formula"
@@ -304,5 +298,14 @@
   },
   "themeLight": {
     "message": "Light"
+  },
+  "watermarkRemoverHint": {
+    "message": "When enabled, automatically removes Nano Banana watermarks from Gemini-generated images"
+  },
+  "watermarkRemoverDownload": {
+    "message": "Download without watermark"
+  },
+  "watermarkTabName": {
+    "message": "Watermark"
   }
 }

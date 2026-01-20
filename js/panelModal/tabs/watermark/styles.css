@@ -1,0 +1,143 @@
+/**
+ * Watermark Tab Styles
+ * Nano Banana 水印去除设置样式
+ */
+
+/* 设置容器 */
+.watermark-tab {
+    padding: 0;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 设置区块 */
+.watermark-tab .setting-section {
+    margin-bottom: 20px;
+}
+
+/* 设置项 */
+.watermark-tab .setting-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.watermark-tab .setting-item:hover {
+    background: #f3f4f6;
+}
+
+/* 设置信息 */
+.watermark-tab .setting-info {
+    flex: 1;
+}
+
+.watermark-tab .setting-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.watermark-tab .banana-icon {
+    font-size: 18px;
+}
+
+.watermark-tab .setting-hint {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+/* 信息区域 */
+.watermark-tab .watermark-info {
+    padding: 16px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.watermark-tab .info-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 12px;
+}
+
+.watermark-tab .info-list {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.watermark-tab .info-list li {
+    font-size: 13px;
+    color: #78350f;
+    line-height: 1.8;
+}
+
+.watermark-tab .info-credit {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(146, 64, 14, 0.2);
+    font-size: 12px;
+    color: #92400e;
+}
+
+.watermark-tab .info-credit a {
+    color: #b45309;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.watermark-tab .info-credit a:hover {
+    color: #92400e;
+}
+
+/* 深色模式 */
+@media (prefers-color-scheme: dark) {
+    .watermark-tab .setting-item {
+        background: #374151;
+    }
+    
+    .watermark-tab .setting-item:hover {
+        background: #4b5563;
+    }
+    
+    .watermark-tab .setting-label {
+        color: #f9fafb;
+    }
+    
+    .watermark-tab .setting-hint {
+        color: #9ca3af;
+    }
+    
+    .watermark-tab .watermark-info {
+        background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+    }
+    
+    .watermark-tab .info-title {
+        color: #fde68a;
+    }
+    
+    .watermark-tab .info-list li {
+        color: #fcd34d;
+    }
+    
+    .watermark-tab .info-credit {
+        border-top-color: rgba(253, 230, 138, 0.2);
+        color: #fde68a;
+    }
+    
+    .watermark-tab .info-credit a {
+        color: #fbbf24;
+    }
+}
