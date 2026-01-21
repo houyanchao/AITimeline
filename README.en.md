@@ -13,12 +13,16 @@
 
   <h4><a href="./README.md">简体中文</a> | <strong>English</strong></h4>
 
-  <p><strong>Boost your AI efficiency. When using AI in your browser, you'll need it. Trusted by 10,000+ users worldwide.</strong></p>
+  <p><strong>Boost your AI efficiency. When using AI in your browser, you'll need it. 10,000+ installs.</strong></p>
 
   <img src="./READMEIMAGE/index.png" alt="AI Timeline Demo" width="800">
 </div>
 
 ---
+
+## 💡 Why AI Timeline
+
+> As a heavy user of ChatGPT and Gemini, I often have long conversations, and finding past messages was always a pain. The timeline feature in this extension solved this perfectly. Building on that, I've added many more useful features. Looking forward to your experience!
 
 ## ✨ Key Features
 

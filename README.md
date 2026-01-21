@@ -13,12 +13,16 @@
 
   <h4><strong>简体中文</strong> | <a href="./README.en.md">English</a></h4>
 
-  <p><strong>提升你使用 AI 的效率，当你在浏览器上使用 AI 时，你会需要它，已被全球 10,000+ 用户信赖。</strong></p>
+  <p><strong>提升你使用 AI 的效率，当你在浏览器上使用 AI 时，你会需要它，10,000+ 用户安装。</strong></p>
 
   <img src="./READMEIMAGE/index.png" alt="AI Timeline 效果展示" width="800">
 </div>
 
 ---
+
+## 💡 为什么开发 AI Timeline
+
+> 作为 ChatGPT、Gemini 的重度用户，经常进行长对话，每次翻找聊天记录都很痛苦，本插件的时间轴功能完美解决了这个问题。在此基础上，又陆续添加了更多实用功能，期待你的体验！
 
 ## ✨ 核心功能
 
