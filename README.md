@@ -1,163 +1,110 @@
 <div align="center">
-  <img src="./icons/icon128.png" alt="AI Chat Timeline Logo" width="100" height="100">
-  <h1>AI Chat Timeline</h1>
-  <h4 align="center"><strong>English</strong> | <a href="./README.zh_CN.md">简体中文</a> | <a href="./README.ja.md">日本語</a></h4>
-  <p><strong>Double your AI chat efficiency! Add interactive timeline to ChatGPT, Gemini, DeepSeek, 🚀 jump to any conversation easily, 📌 mark key conversations, ⭐️ favorite important chats.</strong></p>
-  <img src="https://image.bushishier.com/demo_en.png" alt="AI Chat Timeline Demo" width="800">
+  <img src="./icons/icon128.png" alt="AI Timeline Logo" width="100" height="100">
+  <h1>AI Timeline</h1>
+
+  <p>
+    <a href="https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh">
+      <img src="https://img.shields.io/badge/Chrome-安装扩展-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store">
+    </a>
+    <img src="https://img.shields.io/badge/用户-10000+-brightgreen?style=flat-square" alt="Users">
+    <img src="https://img.shields.io/badge/版本-4.1.6-blue?style=flat-square" alt="Version">
+    <img src="https://img.shields.io/badge/许可证-MIT-green?style=flat-square" alt="License">
+  </p>
+
+  <h4><strong>简体中文</strong> | <a href="./README.en.md">English</a></h4>
+
+  <p><strong>提升你使用 AI 的效率，当你在浏览器上使用 AI 时，你会需要它，已被全球 10,000+ 用户信赖。</strong></p>
+
+  <img src="./READMEIMAGE/index.png" alt="AI Timeline 效果展示" width="800">
 </div>
 
-## 🌟 Features
+---
 
-- Adds an interactive timeline to AI chat interfaces
-- Click on timeline dots to instantly jump to any question in the conversation
-- Star important questions and answers for easy access later
-- Automatically highlights the current position in the conversation
-- All data is stored locally in your browser, not uploaded to servers
-- Works with all mainstream AI platforms
-- Supports 42 languages with the industry's most comprehensive language coverage
+## ✨ 核心功能
 
-## ✅ Installation
+| 功能 | 描述 |
+|------|------|
+| 🎯 **时间轴导航** | 点击时间轴节点，快速跳转到任意对话位置 |
+| 🧮 **公式提取** | 智能识别公式并提取它的 LaTeX |
+| 🖼️ **水印去除** | 去除 Gemini 生成图片上的 Nano Banana 水印 |
+| ⭐️ **智能收藏** | 收藏重要问答，支持添加备注和分组管理 |
+| 📌 **整页收藏** | 一键收藏整个对话页面，方便后续回顾 |
+| 🔍 **快速预览** | 悬停预览对话内容，无需跳转 |
+| ▶️ **代码运行** | 一键运行 AI 生成的代码（支持 JS/Python/SQL 等） |
 
-### Method 1: Install via Web Store (Highly Recommended)
-
-The English installation guide is as follows:
-1. Go to 👉 [Chrome Web Store](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) to install
-2. After installation, open any AI platform and start a conversation
-
-中文版安装教程如下：
-1. 前往👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 进行安装
-2. 安装完成后，打开任意 AI 平台，开始对话即可
-
-### Method 2: Manual Installation
-
-1. **Download** - Download the [AI-Chat-Timeline-v3.2.0.zip] archive from the project
-2. **Extract** - Unzip the downloaded file
-3. **Open Extensions Page** - Navigate to `chrome://extensions/`
-4. **Enable Developer Mode** - Toggle [Developer Mode] in the top right corner
-5. **Load Extension** - Click "Load unpacked" and select the extracted folder
-6. **Start Using** - After installation, open any AI platform and start a conversation
-
-## 🚧 Planned Features
-
-- ✅ Support quick jump to any message
-- ✅ Support starring questions
-- ✅ Support quick preview of questions
-- ✅ Support cross-platform starring
-- ✅ Support quick jump to corresponding question through starred records
-- ✅ Support starring entire chat page
-- ✅ Support adding notes after starring
-- [ ] Add support for Claude and Copilot
-- [ ] Support starring AI responses
-- [ ] Support Firefox, Edge, and other browsers
-
-## 🚀 Supported Platforms
+## 🚀 支持平台
 
 <table>
   <tr>
-    <td align="center">✅ ChatGPT</td>
-    <td align="center">✅ Gemini</td>
-    <td align="center">✅ Doubao</td>
-    <td align="center">✅ DeepSeek</td>
+    <td align="center"><strong>ChatGPT</strong></td>
+    <td align="center"><strong>Claude</strong></td>
+    <td align="center"><strong>Gemini</strong></td>
+    <td align="center"><strong>DeepSeek</strong></td>
   </tr>
   <tr>
-    <td align="center">✅ Baidu Yiyan</td>
-    <td align="center">✅ Alibaba Tongyi</td>
-    <td align="center">✅ Kimi</td>
-    <td align="center">✅ Tencent Yuanbao</td>
+    <td align="center"><strong>Grok</strong></td>
+    <td align="center"><strong>Perplexity</strong></td>
+    <td align="center"><strong>Kimi</strong></td>
+    <td align="center"><strong>豆包</strong></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>通义千问</strong></td>
+    <td align="center"><strong>文心一言</strong></td>
+    <td align="center"><strong>腾讯元宝</strong></td>
+    <td align="center">更多适配中...</td>
   </tr>
 </table>
 
-## 📋 Changelog
+## 📥 安装方式
 
-### Version 3.0.1 2025-10-18
+前往 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 安装，安装完成后打开任意 AI 网站进行对话即可。
 
-- Support starring entire chat page
-- Support adding notes after starring conversations
-- Added data privacy notice and open-source project information
+## 🌍 多语言支持
 
-### Version 2.1.9 2025-10-16
+支持 **42 种语言**，覆盖全球主要语言：
 
-- Fixed known bugs
-- Optimized interaction experience
+<details open>
+<summary>点击查看完整语言列表</summary>
 
-### Version 1.1.0 2025-10-13
+| 语言 | 代码 | 语言 | 代码 | 语言 | 代码 |
+|------|------|------|------|------|------|
+| 🇬🇧 English | en | 🇨🇳 简体中文 | zh_CN | 🇹🇼 繁體中文 | zh_TW |
+| 🇯🇵 日本語 | ja | 🇰🇷 한국어 | ko | 🇪🇸 Español | es |
+| 🇫🇷 Français | fr | 🇩🇪 Deutsch | de | 🇮🇹 Italiano | it |
+| 🇵🇹 Português | pt | 🇷🇺 Русский | ru | 🇳🇱 Nederlands | nl |
+| 🇵🇱 Polski | pl | 🇹🇷 Türkçe | tr | 🇸🇦 العربية | ar |
+| 🇮🇱 עברית | he | 🇮🇳 हिन्दी | hi | 🇹🇭 ไทย | th |
+| 🇻🇳 Tiếng Việt | vi | 🇮🇩 Bahasa Indonesia | id | 🇲🇾 Bahasa Melayu | ms |
+| 🇵🇭 Filipino | fil | 🇸🇪 Svenska | sv | 🇩🇰 Dansk | da |
+| 🇳🇴 Norsk | no | 🇫🇮 Suomi | fi | 🇮🇸 Íslenska | is |
+| 🇨🇿 Čeština | cs | 🇭🇺 Magyar | hu | 🇷🇴 Română | ro |
+| 🇺🇦 Українська | uk | 🇬🇷 Ελληνικά | el | 🇧🇬 Български | bg |
+| 🇭🇷 Hrvatski | hr | 🇷🇸 Српски | sr | 🇸🇰 Slovenčina | sk |
+| 🇱🇹 Lietuvių | lt | 🇱🇻 Latviešu | lv | 🇨🇦 Français (CA) | fr_CA |
+| 🇧🇩 বাংলা | bn | 🇰🇿 Қазақша | kk | 🇦🇿 Azərbaycan | az |
 
-- Support viewing starred list
-- Support quick copy of chat questions
-- Fixed known bugs and optimized interaction experience
+</details>
 
-### Version 1.0.0 2025-10-10
+## 🗺️ 开发计划
 
-- Support cross-AI platform starring
-- Project initialization
+- [ ] Firefox 浏览器支持
+- [ ] 数据云同步
 
-## 🌍 Language Support
+## 💬 联系与反馈
 
-Supporting **42 languages** - The industry's most comprehensive language coverage:
+- **问题反馈**：[GitHub Issues](../../issues)
+- **邮件联系**：houyanchao@outlook.com
 
-- 🇬🇧 English (en)
-- 🇨🇳 Chinese Simplified (zh_CN)
-- 🇹🇼 Chinese Traditional (zh_TW)
-- 🇯🇵 Japanese (ja)
-- 🇰🇷 Korean (ko)
-- 🇪🇸 Spanish (es)
-- 🇫🇷 French (fr)
-- 🇩🇪 German (de)
-- 🇮🇹 Italian (it)
-- 🇵🇹 Portuguese (pt)
-- 🇷🇺 Russian (ru)
-- 🇳🇱 Dutch (nl)
-- 🇵🇱 Polish (pl)
-- 🇹🇷 Turkish (tr)
-- 🇸🇦 Arabic (ar)
-- 🇮🇱 Hebrew (he)
-- 🇮🇳 Hindi (hi)
-- 🇹🇭 Thai (th)
-- 🇻🇳 Vietnamese (vi)
-- 🇮🇩 Indonesian (id)
-- 🇲🇾 Malay (ms)
-- 🇵🇭 Filipino (fil)
-- 🇸🇪 Swedish (sv)
-- 🇩🇰 Danish (da)
-- 🇳🇴 Norwegian (no)
-- 🇫🇮 Finnish (fi)
-- 🇮🇸 Icelandic (is)
-- 🇨🇿 Czech (cs)
-- 🇭🇺 Hungarian (hu)
-- 🇷🇴 Romanian (ro)
-- 🇺🇦 Ukrainian (uk)
-- 🇬🇷 Greek (el)
-- 🇧🇬 Bulgarian (bg)
-- 🇭🇷 Croatian (hr)
-- 🇷🇸 Serbian (sr)
-- 🇸🇰 Slovak (sk)
-- 🇱🇹 Lithuanian (lt)
-- 🇱🇻 Latvian (lv)
-- 🇨🇦 French Canadian (fr_CA)
-- 🇧🇩 Bengali (bn)
-- 🇰🇿 Kazakh (kk)
-- 🇦🇿 Azerbaijani (az)
-- 🇬🇪 Georgian (ka)
-- 🇦🇲 Armenian (hy)
-- 🇱🇰 Sinhala (si)
-- 🇳🇵 Nepali (ne)
-- 🇲🇲 Burmese (my)
-- 🇰🇭 Khmer (km)
+## 📄 开源协议
 
-## 💬 Contact & Support
+本项目基于 [MIT License](./LICENSE) 开源
 
-- **Issue Tracker**: [GitHub Issues](../../issues)
-- **Email**: houyanchao@outlook.com
+## 🙏 致谢
 
-## 📄 License
+本项目基于 [chatgpt-conversation-timeline](https://github.com/Reborn14/chatgpt-conversation-timeline) 进行开发，感谢原作者的开源贡献。
 
-This project is licensed under the [MIT License](./LICENSE)
-
-## 🙏 Acknowledgements
-
-This project is developed based on the initial code from [chatgpt-conversation-timeline](https://github.com/Reborn14/chatgpt-conversation-timeline). We sincerely appreciate the original author's open-source contribution. 
-Building upon this foundation, we have optimized the interaction and enhanced features: added support for all mainstream AI platforms; added cross-platform conversation starring support; added support for starring entire chat pages; all data is stored only in your browser locally and we will never upload any chat data to servers without your permission.
+---
 
 <div align="center">
-  <p>⭐ If you find this extension useful, please consider giving it a star on GitHub!</p>
+  <p>如果这个扩展对你有帮助，欢迎给项目点个 ⭐️ Star</p>
 </div>
