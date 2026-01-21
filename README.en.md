@@ -59,6 +59,8 @@
 
 Visit 👉 [Chrome Web Store](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) to install. After installation, open any AI website and start chatting.
 
+Visit 👉 [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) to install. After installation, open any AI website and start chatting.
+
 ## 🌍 Language Support
 
 Supporting **42 languages** with industry-leading coverage:

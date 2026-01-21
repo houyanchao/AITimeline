@@ -59,6 +59,8 @@
 
 前往 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 安装，安装完成后打开任意 AI 网站进行对话即可。
 
+前往 👉 [Edge 应用商店](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) 安装，安装完成后打开任意 AI 网站进行对话即可。
+
 ## 🌍 多语言支持
 
 支持 **42 种语言**，覆盖全球主要语言：
