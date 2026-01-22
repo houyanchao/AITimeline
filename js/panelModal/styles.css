@@ -203,7 +203,7 @@
 .panel-modal-footer {
     padding: 12px 10px 12px 12px;
     border-top: 1px solid #e5e5e7;
-    font-size: 10px;
+    font-size: 11px;
     color: #888;
     line-height: 1.6;
 }
@@ -239,6 +239,16 @@
     font-weight: 500;
     vertical-align: middle;
     margin-left: 4px;
+}
+
+.panel-modal-footer-version {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 10px;
+    color: #6d28d9;
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.1) 0%, rgba(76, 29, 149, 0.1) 100%);
+    border-radius: 10px;
+    border: 1px solid rgba(109, 40, 217, 0.2);
 }
 
 .panel-modal-footer-link:hover {

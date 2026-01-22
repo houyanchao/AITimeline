@@ -2429,7 +2429,7 @@ class TimelineManager {
         if (!paddingEl) {
             paddingEl = document.createElement('div');
             paddingEl.className = 'ait-scroll-padding';
-            paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; order: 9999; height: 0; transition: height 0.3s ease-out; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;';
+            paddingEl.style.cssText = 'pointer-events: none; width: 100%; flex-shrink: 0; order: 9999; height: 0; transition: height 0.3s ease-out;';
             this._currentPadding = 0;
         }
         
@@ -2469,7 +2469,6 @@ class TimelineManager {
         if (shouldSetZeroHeight) {
             if (this._currentPadding !== 0) {
                 paddingEl.style.height = '0px';
-                paddingEl.textContent = '0px';
                 this._currentPadding = 0;
             }
             return;
@@ -2487,7 +2486,6 @@ class TimelineManager {
         // 只有高度变化时才更新（触发 CSS 过渡动画）
         if (this._currentPadding !== paddingNeeded) {
             paddingEl.style.height = paddingNeeded + 'px';
-            paddingEl.textContent = paddingNeeded + 'px';
             this._currentPadding = paddingNeeded;
         }
     }

@@ -36,6 +36,12 @@
 | 🔍 **快速预览** | 悬停预览对话内容，无需跳转 |
 | ▶️ **代码运行** | 一键运行 AI 生成的代码（支持 JS/Python/SQL 等） |
 
+## 📥 安装方式
+
+前往 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 安装，安装完成后打开任意 AI 网站进行对话即可。
+
+前往 👉 [Edge 应用商店](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) 安装，安装完成后打开任意 AI 网站进行对话即可。
+
 ## 🚀 支持平台
 
 <table>
@@ -58,12 +64,6 @@
     <td align="center">更多适配中...</td>
   </tr>
 </table>
-
-## 📥 安装方式
-
-前往 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 安装，安装完成后打开任意 AI 网站进行对话即可。
-
-前往 👉 [Edge 应用商店](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) 安装，安装完成后打开任意 AI 网站进行对话即可。
 
 ## 🌍 多语言支持
 
