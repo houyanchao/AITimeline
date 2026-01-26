@@ -33,7 +33,7 @@ const TAB_CONFIG = [
     { id: 'smart-input-box', className: 'SmartInputBoxTab' },
     { id: 'formula', className: 'FormulaTab' },
     { id: 'runner', className: 'RunnerTab' },
-    { id: 'watermark', className: 'WatermarkTab' },
+    // { id: 'watermark', className: 'WatermarkTab' },  // 暂时隐藏
     { id: 'settings', className: 'SettingsTab' }
 ];
 
