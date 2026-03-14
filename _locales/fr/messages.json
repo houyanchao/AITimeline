@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline : Outil d'amélioration des chats IA | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline : Outil de chat IA | GPT, Gemini, DeepSeek, Qwen"
   },
   "extDescription": {
-    "message": "Prend en charge GPT, Gemini, DeepSeek et toutes les plateformes IA : copie LaTeX, chronologie interactive, bibliothèque de prompts, exécution de code pour doubler votre efficacité IA."
+    "message": "Timeline de chat IA, copie de formules LaTeX, notes rapides, bibliothèque de prompts, exécution de code et plus."
   },
   "qwxpzm": {
     "message": "Favori"
