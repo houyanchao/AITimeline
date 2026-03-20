@@ -14,6 +14,24 @@ class SidebarStarredAdapterRegistry {
         if (typeof GeminiSidebarStarredAdapter !== 'undefined') {
             this.adapters.push(new GeminiSidebarStarredAdapter());
         }
+        if (typeof ChatGPTSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new ChatGPTSidebarStarredAdapter());
+        }
+        if (typeof DeepSeekSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new DeepSeekSidebarStarredAdapter());
+        }
+        if (typeof DoubaoSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new DoubaoSidebarStarredAdapter());
+        }
+        if (typeof KimiSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new KimiSidebarStarredAdapter());
+        }
+        if (typeof ClaudeSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new ClaudeSidebarStarredAdapter());
+        }
+        if (typeof TongyiSidebarStarredAdapter !== 'undefined') {
+            this.adapters.push(new TongyiSidebarStarredAdapter());
+        }
     }
 
     /**

@@ -15,24 +15,9 @@ let timelineManagerInstance = null;
 let currentUrl = location.href;
 let initVersion = 0; // Version number for initialization, increments on URL change
 let unsubscribePageObserver = null;  // DOMObserverManager 取消订阅函数
-let routeCheckIntervalId = null;
 let routeListenersAttached = false;
 let adapterRegistry = new SiteAdapterRegistry();
 let currentAdapter = null;
-
-// Hook history methods for better SPA detection (more efficient than polling)
-const originalPushState = history.pushState;
-const originalReplaceState = history.replaceState;
-
-history.pushState = function(...args) {
-    originalPushState.apply(this, args);
-    setTimeout(handleUrlChange, 0);
-};
-
-history.replaceState = function(...args) {
-    originalReplaceState.apply(this, args);
-    setTimeout(handleUrlChange, 0);
-};
 
 // Check if current route is a conversation page (uses adapter)
 function isConversationRoute(pathname = location.pathname) {
@@ -120,29 +105,16 @@ async function initWithRetry(version, delays, retryIndex = 0) {
 function attachRouteListenersOnce() {
     if (routeListenersAttached) return;
     routeListenersAttached = true;
-    
-    TimelineUtils.removeEventListenerSafe(window, 'popstate', handleUrlChange);
-    TimelineUtils.removeEventListenerSafe(window, 'hashchange', handleUrlChange);
-    
-    try { window.addEventListener('popstate', handleUrlChange); } catch {}
-    try { window.addEventListener('hashchange', handleUrlChange); } catch {}
-    
-    // Lightweight polling fallback (less frequent now that we hook history methods)
-    routeCheckIntervalId = TimelineUtils.clearIntervalSafe(routeCheckIntervalId);
-    try {
-        routeCheckIntervalId = setInterval(() => {
-            if (location.href !== currentUrl) handleUrlChange();
-        }, TIMELINE_CONFIG.ROUTE_CHECK_INTERVAL);
-    } catch {}
+
+    TimelineUtils.removeEventListenerSafe(window, 'url:change', handleUrlChange);
+    try { window.addEventListener('url:change', handleUrlChange); } catch {}
 }
 
 function detachRouteListeners() {
     if (!routeListenersAttached) return;
     routeListenersAttached = false;
-    
-    TimelineUtils.removeEventListenerSafe(window, 'popstate', handleUrlChange);
-    TimelineUtils.removeEventListenerSafe(window, 'hashchange', handleUrlChange);
-    routeCheckIntervalId = TimelineUtils.clearIntervalSafe(routeCheckIntervalId);
+
+    TimelineUtils.removeEventListenerSafe(window, 'url:change', handleUrlChange);
 }
 
 function cleanupGlobalObservers() {
@@ -290,14 +262,6 @@ if (!adapterRegistry.isSupportedSite()) {
                 initWithRetry(currentVersion, TIMELINE_CONFIG.INIT_RETRY_DELAYS);
             }
             
-            // 使用 DOMObserverManager 创建 pageObserver
-            if (window.DOMObserverManager && !unsubscribePageObserver) {
-                unsubscribePageObserver = window.DOMObserverManager.getInstance().subscribeBody('timeline-page', {
-                    callback: handleUrlChange,
-                    filter: { hasAddedNodes: true, hasRemovedNodes: true }, // 只关心节点增删
-                    debounce: 200  // 200ms 防抖，路由检测不需要太敏感
-                });
-            }
             attachRouteListenersOnce();
             
             return true; // 已初始化

@@ -213,20 +213,7 @@ class GlobalPopconfirmManager {
      * 监听 URL 变化
      */
     _attachUrlListeners() {
-        window.addEventListener('popstate', this._boundHandleUrlChange);
-        
-        const originalPushState = history.pushState;
-        const originalReplaceState = history.replaceState;
-        
-        history.pushState = (...args) => {
-            originalPushState.apply(history, args);
-            this._handleUrlChange();
-        };
-        
-        history.replaceState = (...args) => {
-            originalReplaceState.apply(history, args);
-            this._handleUrlChange();
-        };
+        window.addEventListener('url:change', this._boundHandleUrlChange);
     }
     
     /**
@@ -256,7 +243,7 @@ class GlobalPopconfirmManager {
      */
     destroy() {
         this.hide(false);
-        window.removeEventListener('popstate', this._boundHandleUrlChange);
+        window.removeEventListener('url:change', this._boundHandleUrlChange);
         this._log('Popconfirm manager destroyed');
     }
 }

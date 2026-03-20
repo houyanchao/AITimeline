@@ -15,6 +15,139 @@
 }
 
 /* ============================================
+   侧边栏开关
+   ============================================ */
+
+.starred-sidebar-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 12px;
+    flex-shrink: 0;
+}
+
+.starred-sidebar-toggle {
+    flex-shrink: 0;
+    padding: 4px 6px 0;
+}
+
+.starred-sidebar-toggle .setting-item {
+    padding: 8px 10px;
+}
+
+.starred-manage-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+}
+.starred-manage-btn:hover {
+    background: #333;
+}
+.starred-manage-btn:active {
+    transform: scale(0.98);
+}
+
+/* Platform manage modal */
+.starred-platform-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.15s ease;
+}
+.starred-platform-modal {
+    background: white;
+    border-radius: 12px;
+    width: 340px;
+    max-height: 80vh;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    animation: scaleIn 0.2s ease;
+}
+.starred-platform-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+}
+.starred-platform-modal-close {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #9ca3af;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+.starred-platform-modal-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+.starred-platform-modal-body {
+    padding: 4px 16px 16px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+.starred-platform-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+.starred-platform-item:hover {
+    background: #f9fafb;
+}
+.starred-platform-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.starred-platform-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.starred-platform-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.starred-platform-name {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+/* ============================================
    工具栏
    ============================================ */
 
@@ -81,7 +214,9 @@
 /* 列表区域 - 可滚动（树状结构） */
 .starred-list-tree {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
+    padding-bottom: 30px;
 }
 
 /* 保留原有的 timeline-starred-list 类名（向后兼容） */
@@ -108,19 +243,31 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 5px 12px;
+    padding: 6px 36px 6px 12px;
     margin-bottom: 2px;
-    border-radius: 6px;
+    border-radius: 18px;
     background: transparent;
     border: 1px solid transparent;
+    position: relative;
     transition: all 0.15s ease;
     cursor: pointer;
 }
 
 .timeline-starred-item:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.06);
 }
 
+.timeline-starred-item.active {
+    background: #D3E3FD;
+}
+
+.timeline-starred-item.active .timeline-starred-item-name {
+    color: #0842A0;
+}
+
+.timeline-starred-item.active:hover {
+    background: #C4D7F8;
+}
 
 /* Logo 容器 */
 .timeline-starred-item-logo {
@@ -176,19 +323,20 @@
 }
 
 
-/* 操作按钮容器 - hover 时显示 */
+/* 操作按钮容器 */
 .timeline-starred-item-actions {
-    flex-shrink: 0;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 6px;
-    opacity: 0;
-    transition: opacity 0.15s;
 }
 
-.timeline-starred-item:hover .timeline-starred-item-actions {
-    opacity: 1;
-}
+/* 三个点默认隐藏，hover 显示 */
+.timeline-starred-item-more { display: none; }
+.timeline-starred-item:hover .timeline-starred-item-more { display: flex; }
 
 /* 编辑按钮 - 与星标按钮尺寸一致 */
 .timeline-starred-item-edit {
@@ -343,20 +491,16 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 6px 36px 6px 12px;
+    border-radius: 18px;
     transition: background 0.2s;
     cursor: pointer;
+    position: relative;
 }
 
-/* 第一个文件夹头部（默认文件夹）增加上下间距 */
-.starred-list-tree > .ait-folder-item:first-child .ait-folder-header {
-    padding-top: 9px;
-    padding-bottom: 9px;
-}
 
 .ait-folder-header:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.06);
 }
 
 
@@ -371,22 +515,18 @@
     user-select: none;
     flex-shrink: 0;
     transition: transform 0.2s ease;
-    color: #9ca3af;
+    color: #444746;
 }
 
 .ait-folder-toggle svg {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     transition: transform 0.2s ease;
     color: currentColor;
 }
 
 .ait-folder-toggle.expanded svg {
     transform: rotate(90deg);
-}
-
-.ait-folder-toggle:hover {
-    color: #6b7280;
 }
 
 
@@ -428,16 +568,17 @@
 
 /* 文件夹操作按钮 */
 .ait-folder-actions {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 4px;
-    opacity: 0;
-    transition: opacity 0.15s;
 }
 
-.ait-folder-header:hover .ait-folder-actions {
-    opacity: 1;
-}
+.ait-folder-action-btn { display: none; }
+.ait-folder-header:hover .ait-folder-action-btn { display: flex; }
 
 .ait-folder-action-btn {
     width: 28px;
@@ -446,7 +587,6 @@
     background: transparent;
     border-radius: 4px;
     cursor: pointer;
-    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
@@ -461,7 +601,6 @@
 
 .ait-folder-action-btn:hover {
     background: rgba(0, 0, 0, 0.05);
-    transform: scale(1.1);
 }
 
 
@@ -484,11 +623,23 @@
     display: block;
 }
 
-/* 默认文件夹（虚拟） */
+/* 置顶标识（默认显示，hover 时隐藏换成三个点） */
+.ait-pin-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+.ait-pin-indicator svg { width: 14px; height: 14px; }
+
+.ait-folder-header:hover .ait-pin-indicator,
+.timeline-starred-item:hover .ait-pin-indicator { display: none; }
+
+/* 默认文件夹（虚拟）：不显示操作按钮 */
 .default-folder .ait-folder-actions {
-    opacity: 0 !important; /* 默认文件夹不显示操作按钮，但保留空间 */
-    visibility: hidden !important;
-    pointer-events: none; /* 禁用交互 */
+    display: none !important;
 }
 
 /* 移动按钮 */
@@ -537,7 +688,6 @@
     background: transparent;
     border-radius: 4px;
     cursor: pointer;
-    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
@@ -552,7 +702,6 @@
 
 .timeline-starred-item-more:hover {
     background-color: rgba(0, 0, 0, 0.05);
-    transform: scale(1.1);
 }
 
 

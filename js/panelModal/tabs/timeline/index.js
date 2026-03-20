@@ -23,56 +23,18 @@ class TimelineSettingsTab extends BaseTab {
     render() {
         const container = document.createElement('div');
         container.className = 'timeline-settings';
-        
-        // 第一部分：平台列表
-        const timelinePlatforms = getPlatformsByFeature('timeline');
-        const platformListTitle = `
-            <div class="platform-list-title">${chrome.i18n.getMessage('mkvzpx')}</div>
-            <div class="platform-list-hint">${chrome.i18n.getMessage('mzkvxp')}</div>
-        `;
-        
-        // 生成平台列表项
-        const platformItems = timelinePlatforms.map(platform => {
-            const logoHtml = platform.logoPath 
-                ? `<img src="${chrome.runtime.getURL(platform.logoPath)}" class="platform-logo" alt="${platform.name}">`
-                : `<span class="platform-logo-placeholder">${platform.name.charAt(0)}</span>`;
-            
-            return `
-                <div class="platform-item">
-                    <div class="platform-info-left">
-                        ${logoHtml}
-                        <span class="platform-name">${platform.name}</span>
-                    </div>
-                    <label class="ait-toggle-switch">
-                        <input type="checkbox" class="platform-toggle" data-platform-id="${platform.id}">
-                        <span class="ait-toggle-slider"></span>
-                    </label>
-                </div>
-            `;
-        }).join('');
-        
-        // 将所有平台项包裹在统一的背景框中
-        const platformSection = `
-            <div class="platform-list">
-                ${platformListTitle}
-                <div class="platform-list-container">
-                    ${platformItems}
-                </div>
-            </div>
-        `;
-        
-        // 分隔线
+
         const divider = `<div class="divider"></div>`;
-        
-        // 显示对话时间开关
-        const chatTimeLabelSection = `
+
+        // ==================== 滚动区域 ====================
+        const scrollArea = document.createElement('div');
+        scrollArea.className = 'timeline-settings-scroll';
+        scrollArea.innerHTML = `
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${chrome.i18n.getMessage('chatTimeLabelTitle')}</div>
-                        <div class="setting-hint">
-                            ${chrome.i18n.getMessage('chatTimeLabelHint')}
-                        </div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('chatTimeLabelHint')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="chat-time-label-toggle">
@@ -80,17 +42,12 @@ class TimelineSettingsTab extends BaseTab {
                     </label>
                 </div>
             </div>
-        `;
-        
-        // 第一部分：长按标记重点对话开关
-        const longPressMarkSection = `
+            ${divider}
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${chrome.i18n.getMessage('pxmzkv')}</div>
-                        <div class="setting-hint">
-                            ${chrome.i18n.getMessage('kzxvpm')}
-                        </div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('kzxvpm')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="long-press-mark-toggle">
@@ -98,17 +55,12 @@ class TimelineSettingsTab extends BaseTab {
                     </label>
                 </div>
             </div>
-        `;
-        
-        // 闪记开关
-        const notepadSection = `
+            ${divider}
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${chrome.i18n.getMessage('notepadTitle')}</div>
-                        <div class="setting-hint">
-                            ${chrome.i18n.getMessage('notepadToggleHint')}
-                        </div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('notepadToggleHint')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="notepad-toggle">
@@ -116,17 +68,12 @@ class TimelineSettingsTab extends BaseTab {
                     </label>
                 </div>
             </div>
-        `;
-        
-        // 第二部分：箭头键导航开关
-        const arrowKeysSection = `
+            ${divider}
             <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${chrome.i18n.getMessage('vkpmzx')}</div>
-                        <div class="setting-hint">
-                            ${chrome.i18n.getMessage('xpvmkz')}
-                        </div>
+                        <div class="setting-hint">${chrome.i18n.getMessage('xpvmkz')}</div>
                     </div>
                     <label class="ait-toggle-switch">
                         <input type="checkbox" id="arrow-keys-nav-toggle">
@@ -135,9 +82,30 @@ class TimelineSettingsTab extends BaseTab {
                 </div>
             </div>
         `;
-        
-        container.innerHTML = chatTimeLabelSection + divider + longPressMarkSection + divider + notepadSection + divider + arrowKeysSection + divider + platformSection;
-        
+        container.appendChild(scrollArea);
+
+        // ==================== 底部悬浮区域 ====================
+        const bottomDivider = document.createElement('div');
+        bottomDivider.className = 'timeline-settings-bottom-divider';
+        container.appendChild(bottomDivider);
+
+        const bottomSection = document.createElement('div');
+        bottomSection.className = 'timeline-settings-bottom';
+        bottomSection.innerHTML = `
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-label">${chrome.i18n.getMessage('mkvzpx')}</div>
+                    <div class="setting-hint">${chrome.i18n.getMessage('mzkvxp')}</div>
+                </div>
+                <button class="starred-manage-btn">${chrome.i18n.getMessage('sidebarStarredManage') || 'Settings'}</button>
+            </div>
+        `;
+        container.appendChild(bottomSection);
+
+        this.addEventListener(bottomSection.querySelector('.starred-manage-btn'), 'click', () => {
+            this._showPlatformManageModal();
+        });
+
         return container;
     }
     
@@ -273,67 +241,64 @@ class TimelineSettingsTab extends BaseTab {
             });
         }
         
-        // 3. 处理平台开关
-        await this.loadPlatformSettings();
     }
-    
-    /**
-     * 加载并初始化平台设置
-     */
-    async loadPlatformSettings() {
-        try {
-            // 从 Storage 读取平台设置
-            const result = await chrome.storage.local.get('timelinePlatformSettings');
-            const platformSettings = result.timelinePlatformSettings || {};
-            
-            // 为每个平台开关设置状态和事件
-            const platformToggles = document.querySelectorAll('.platform-toggle');
-            platformToggles.forEach(toggle => {
-                const platformId = toggle.getAttribute('data-platform-id');
-                
-                // 设置初始状态（默认开启）
-                toggle.checked = platformSettings[platformId] !== false;
-                
-                // 监听开关变化
-                this.addEventListener(toggle, 'change', async (e) => {
+
+    async _showPlatformManageModal() {
+        const platforms = getPlatformsByFeature('timeline');
+        const result = await chrome.storage.local.get('timelinePlatformSettings');
+        const settings = result.timelinePlatformSettings || {};
+
+        const overlay = document.createElement('div');
+        overlay.className = 'starred-platform-modal-overlay';
+
+        const items = platforms.map(p => {
+            const logoHtml = p.logoPath
+                ? `<img src="${chrome.runtime.getURL(p.logoPath)}" alt="${p.name}">`
+                : `<span>${p.name.charAt(0)}</span>`;
+            return `
+                <div class="starred-platform-item">
+                    <div class="starred-platform-info">
+                        <div class="starred-platform-logo">${logoHtml}</div>
+                        <span class="starred-platform-name">${p.name}</span>
+                    </div>
+                    <label class="ait-toggle-switch">
+                        <input type="checkbox" data-platform-id="${p.id}" ${settings[p.id] !== false ? 'checked' : ''}>
+                        <span class="ait-toggle-slider"></span>
+                    </label>
+                </div>`;
+        }).join('');
+
+        overlay.innerHTML = `
+            <div class="starred-platform-modal">
+                <div class="starred-platform-modal-header">
+                    <span>${chrome.i18n.getMessage('mkvzpx')}</span>
+                    <button class="starred-platform-modal-close">✕</button>
+                </div>
+                <div class="starred-platform-modal-body">${items}</div>
+            </div>`;
+
+        document.body.appendChild(overlay);
+
+        const close = () => overlay.remove();
+        overlay.querySelector('.starred-platform-modal-close').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+        overlay.querySelectorAll('input[data-platform-id]').forEach(cb => {
+            cb.addEventListener('change', async () => {
+                const cur = (await chrome.storage.local.get('timelinePlatformSettings')).timelinePlatformSettings || {};
+                cur[cb.dataset.platformId] = cb.checked;
+                await chrome.storage.local.set({ timelinePlatformSettings: cur });
+
+                if (cb.dataset.platformId === 'grok' && !cb.checked) {
                     try {
-                        const enabled = e.target.checked;
-                        
-                        // 读取当前所有设置
-                        const result = await chrome.storage.local.get('timelinePlatformSettings');
-                        const settings = result.timelinePlatformSettings || {};
-                        
-                        // 更新当前平台
-                        settings[platformId] = enabled;
-                        
-                        // 保存到 Storage
-                        await chrome.storage.local.set({ timelinePlatformSettings: settings });
-                        
-                        // ✅ 特殊处理：Grok 平台关闭时恢复原生时间轴
-                        if (platformId === 'grok' && !enabled) {
-                            try {
-                                const nativeTimeline = document.querySelector('.group\\/timeline');
-                                if (nativeTimeline) {
-                                    nativeTimeline.style.display = '';
-                                }
-                            } catch {}
-                        }
-                    } catch (e) {
-                        console.error('[TimelineSettingsTab] Failed to save platform setting:', e);
-                        
-                        // 保存失败，恢复开关状态
-                        toggle.checked = !toggle.checked;
-                    }
-                });
+                        const el = document.querySelector('.group\\/timeline');
+                        if (el) el.style.display = '';
+                    } catch {}
+                }
             });
-        } catch (e) {
-            console.error('[TimelineSettingsTab] Failed to load platform settings:', e);
-        }
+        });
     }
-    
-    /**
-     * Tab 卸载时清理
-     */
+
     unmounted() {
         super.unmounted();
     }

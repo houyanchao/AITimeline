@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Công cụ nâng cao trò chuyện AI | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Plugin nâng cao trò chuyện AI | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Timeline trò chuyện AI, sao chép công thức LaTeX, ghi chú nhanh, thư viện prompt, chạy code và nhiều tính năng khác."
+    "message": "Nhân đôi trải nghiệm AI. Timeline trò chuyện, thư mục, sao chép công thức LaTeX, ghi chú nhanh, thư viện prompt và nhiều tính năng khác."
   },
   "qwxpzm": {
     "message": "Yêu thích"
@@ -12,13 +12,13 @@
     "message": "Xem mục yêu thích"
   },
   "zmvkpx": {
-    "message": "Thêm hội thoại vào yêu thích"
+    "message": "Lưu vào thư mục"
   },
   "bpxjkw": {
     "message": "Xóa khỏi yêu thích"
   },
   "vnkxpm": {
-    "message": "Danh sách yêu thích"
+    "message": "Thư mục"
   },
   "kxpmzv": {
     "message": "Đã thêm vào yêu thích"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Vui lòng chọn một thư mục"
+  },
+  "defaultFolder": {
+    "message": "Mặc định"
+  },
+  "pinItem": {
+    "message": "Ghim lên đầu"
+  },
+  "unpinItem": {
+    "message": "Bỏ ghim"
+  },
+  "searchPrompt": {
+    "message": "Tìm prompt..."
+  },
+  "sidebarStarredHint": {
+    "message": "Khi bật, thư mục sẽ hiển thị trong thanh bên"
+  },
+  "sidebarStarredManage": {
+    "message": "Cài đặt"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Quản lý mục yêu thích"
+  },
+  "animTabTitle": {
+    "message": "Hoạt hình vui"
+  },
+  "animTabDesc": {
+    "message": "Chọn hoạt hình phía trên ô nhập."
+  },
+  "animSnail": {
+    "message": "Diễu hành ốc sên"
+  },
+  "animZombie": {
+    "message": "Zombie đi bộ"
+  },
+  "animAnt": {
+    "message": "Kiến diễu hành"
+  },
+  "animWizard": {
+    "message": "Phù thủy"
+  },
+  "animTabEmpty": {
+    "message": "Không có hoạt hình"
+  },
+  "animGrowHint": {
+    "message": "Thêm {n} tin nhắn"
   },
   "xvkpmz": {
     "message": "Đổi tên"
@@ -105,7 +150,7 @@
     "message": "Tên thư mục không được để trống"
   },
   "pxmzvk": {
-    "message": "Đổi tên thư mục"
+    "message": "Chỉnh sửa thư mục"
   },
   "mvzxkp": {
     "message": "Nhập tên mới"
@@ -135,13 +180,13 @@
     "message": "Di chuyển đến"
   },
   "wjxnkp": {
-    "message": "Bạn có chắc muốn xóa thư mục \"{folderName}\"?\n\nThư mục này và các thư mục con chứa {count} mục yêu thích. Sau khi xóa, các mục này sẽ được chuyển đến thư mục mặc định."
+    "message": "{count} mục yêu thích cũng sẽ bị xóa."
   },
   "qzmvkx": {
     "message": "Bạn có chắc muốn xóa thư mục \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Tìm kiếm yêu thích..."
+    "message": "Tìm kiếm..."
   },
   "kxzpmv": {
     "message": "Lưu vào"
@@ -156,7 +201,7 @@
     "message": "Dòng thời gian"
   },
   "mzkvxp": {
-    "message": "Khi bật, dòng thời gian tương tác sẽ hiển thị ở bên phải trang hội thoại AI."
+    "message": "Khi bật, dòng thời gian sẽ hiển thị ở bên phải trang hội thoại AI"
   },
   "vkpmzx": {
     "message": "Sử dụng phím ↑ / ↓ để di chuyển giữa các nút hội thoại"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Nếu tiện ích này hữu ích, hãy chia sẻ trên X, Reddit, YouTube, v.v., và với bạn bè, bạn học hoặc đồng nghiệp. Tôi duy trì plugin này một mình, không có thời gian làm marketing — điều tôi có thể làm là làm cho nó ngày càng tốt hơn. Cảm ơn rất nhiều. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

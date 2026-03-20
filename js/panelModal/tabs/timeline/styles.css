@@ -6,9 +6,35 @@
 /* 设置容器 */
 .timeline-settings {
     padding: 0;
-    overflow-y: auto;
     height: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 滚动区域 */
+.timeline-settings-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+}
+
+/* 底部悬浮区域 */
+.timeline-settings-bottom-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 12px;
+    flex-shrink: 0;
+}
+
+.timeline-settings-bottom {
+    flex-shrink: 0;
+    padding: 4px 6px 0;
+}
+
+.timeline-settings-bottom .setting-item {
+    padding: 8px 10px;
 }
 
 /* 分隔线 */

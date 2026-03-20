@@ -1,0 +1,30 @@
+/* 蚂蚁行军队列 */
+.ant-parade { position: fixed; z-index: 8; height: 26px; overflow: visible; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); }
+.ant-track { width: 100%; height: 100%; position: relative; }
+.ant-group { display: flex; align-items: flex-end; gap: 4px; position: absolute; bottom: 0; pointer-events: auto; cursor: pointer; animation: ant-march 40s linear infinite; }
+.ant-group:hover, .ant-group:hover * { animation-play-state: paused !important; }
+.ant-item { display: inline-flex; flex-shrink: 0; }
+
+.ant-bob-1 { animation: ant-bob 0.3s ease-in-out infinite; }
+.ant-bob-2 { animation: ant-bob 0.3s ease-in-out infinite 0.1s; }
+.ant-bob-3 { animation: ant-bob 0.3s ease-in-out infinite 0.2s; }
+
+@keyframes ant-march { 0%, 1.4% { transform: translateX(-100%); } 100% { transform: translateX(calc(var(--pw, 600px) + 10px)); } }
+@keyframes ant-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
+
+.ant-leg-1, .ant-leg-3, .ant-leg-5 { animation: ant-step-a 0.35s ease-in-out infinite; transform-origin: top center; }
+.ant-leg-2, .ant-leg-4, .ant-leg-6 { animation: ant-step-b 0.35s ease-in-out infinite; transform-origin: top center; }
+@keyframes ant-step-a { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+@keyframes ant-step-b { 0%,100% { transform: rotate(8deg); } 50% { transform: rotate(-8deg); } }
+
+.ant-antenna-l, .ant-antenna-r { animation: ant-antenna 0.6s ease-in-out infinite; transform-origin: bottom center; }
+.ant-antenna-r { animation-delay: 0.15s; }
+@keyframes ant-antenna { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(4deg); } }
+
+/* 深色模式下蚂蚁提亮 */
+html[data-timeline-theme="dark"] .ant-parade svg,
+html[class*="dark"] .ant-parade svg,
+body.dark .ant-parade svg,
+body[class*="dark"] .ant-parade svg { filter: brightness(2.2) saturate(0.8); }
+
+.anim-paused * { animation-play-state: paused !important; }

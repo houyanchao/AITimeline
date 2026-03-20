@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline：AI 对话增强工具 | GPT、Gemini、DeepSeek、Qwen"
+    "message": "AI Timeline：AI 对话增强插件 | GPT、Gemini、DeepSeek、Kimi"
   },
   "extDescription": {
-    "message": "AI 对话时间轴、复制 LaTeX 公式、闪记、自定义提示词库、运行代码块等超多提效功能。"
+    "message": "让 AI 使用体验翻倍。对话时间轴、文件夹、复制 LaTeX 公式、闪记、自定义提示词库等超多提效功能。"
   },
   "qwxpzm": {
     "message": "收藏"
@@ -12,13 +12,13 @@
     "message": "查看收藏"
   },
   "zmvkpx": {
-    "message": "收藏对话"
+    "message": "收藏到文件夹"
   },
   "bpxjkw": {
     "message": "取消收藏"
   },
   "vnkxpm": {
-    "message": "收藏列表"
+    "message": "文件夹"
   },
   "kxpmzv": {
     "message": "收藏成功"
@@ -55,6 +55,51 @@
   },
   "folderRequired": {
     "message": "请选择一个文件夹"
+  },
+  "defaultFolder": {
+    "message": "默认文件夹"
+  },
+  "pinItem": {
+    "message": "置顶"
+  },
+  "unpinItem": {
+    "message": "取消置顶"
+  },
+  "searchPrompt": {
+    "message": "搜索提示词..."
+  },
+  "sidebarStarredHint": {
+    "message": "启用后，在侧边栏中显示文件夹"
+  },
+  "sidebarStarredManage": {
+    "message": "设置"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "侧边栏收藏管理"
+  },
+  "animTabTitle": {
+    "message": "趣味动画"
+  },
+  "animTabDesc": {
+    "message": "选择一个趣味动画，显示在输入框上方。"
+  },
+  "animSnail": {
+    "message": "蜗牛爬行"
+  },
+  "animZombie": {
+    "message": "僵尸出没"
+  },
+  "animAnt": {
+    "message": "蚂蚁行军"
+  },
+  "animWizard": {
+    "message": "巫师学徒"
+  },
+  "animTabEmpty": {
+    "message": "暂无可用动画"
+  },
+  "animGrowHint": {
+    "message": "再发 {n} 条消息解锁"
   },
   "xvkpmz": {
     "message": "重命名"
@@ -99,7 +144,7 @@
     "message": "文件夹名称不能为空"
   },
   "pxmzvk": {
-    "message": "修改文件夹名称"
+    "message": "编辑文件夹"
   },
   "mvzxkp": {
     "message": "请输入新名称"
@@ -129,13 +174,13 @@
     "message": "移动到"
   },
   "wjxnkp": {
-    "message": "确定要删除文件夹「{folderName}」吗？\n\n该文件夹及其子文件夹中有 {count} 个收藏项，删除后这些收藏项将移至默认文件夹。"
+    "message": "其中的 {count} 个收藏项也将一并删除。"
   },
   "qzmvkx": {
     "message": "确定要删除文件夹「{folderName}」吗？"
   },
   "mvkzpx": {
-    "message": "搜索收藏..."
+    "message": "搜索..."
   },
   "kxzpmv": {
     "message": "收藏到"
@@ -150,7 +195,7 @@
     "message": "时间轴"
   },
   "mzkvxp": {
-    "message": "启用后，在AI 对话页面右侧会显示可交互时间轴。"
+    "message": "启用后，在 AI 对话页面的右侧显示时间轴"
   },
   "vkpmzx": {
     "message": "键盘 ↑ / ↓ 键跳转对话节点"
@@ -502,5 +547,14 @@
   },
   "aboutShareContent": {
     "message": "如果这个插件帮到了你，欢迎分享到 小红书、X、Reddit、YouTube 等等，也欢迎分享给朋友、同学、同事，让更多人使用到它。我是一个人维护这个插件，精力有限，无法抽身去做用户增长运营，我能做到的是让这个插件越来越好用，非常感谢。❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "收藏到文件夹"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "该对话已收藏"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "收藏成功"
   }
 }

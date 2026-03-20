@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline : Outil de chat IA | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline : Extension de chat IA | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Timeline de chat IA, copie de formules LaTeX, notes rapides, bibliothèque de prompts, exécution de code et plus."
+    "message": "Doublez votre expérience IA. Timeline de chat, dossiers, copie de formules LaTeX, notes rapides, bibliothèque de prompts et plus."
   },
   "qwxpzm": {
     "message": "Favori"
@@ -12,13 +12,13 @@
     "message": "Voir les favoris"
   },
   "zmvkpx": {
-    "message": "Ajouter la conversation aux favoris"
+    "message": "Enregistrer dans le dossier"
   },
   "bpxjkw": {
     "message": "Retirer des favoris"
   },
   "vnkxpm": {
-    "message": "Liste des favoris"
+    "message": "Dossier"
   },
   "kxpmzv": {
     "message": "Ajouté aux favoris"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Veuillez sélectionner un dossier"
+  },
+  "defaultFolder": {
+    "message": "Par défaut"
+  },
+  "pinItem": {
+    "message": "Épingler"
+  },
+  "unpinItem": {
+    "message": "Désépingler"
+  },
+  "searchPrompt": {
+    "message": "Rechercher..."
+  },
+  "sidebarStarredHint": {
+    "message": "Lorsque activé, les dossiers sont affichés dans la barre latérale"
+  },
+  "sidebarStarredManage": {
+    "message": "Paramètres"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Gestion des favoris"
+  },
+  "animTabTitle": {
+    "message": "Animation amusante"
+  },
+  "animTabDesc": {
+    "message": "Choisissez une animation amusante au-dessus de la zone de saisie."
+  },
+  "animSnail": {
+    "message": "Défilé d'escargots"
+  },
+  "animZombie": {
+    "message": "Marche des zombies"
+  },
+  "animAnt": {
+    "message": "Marche des fourmis"
+  },
+  "animWizard": {
+    "message": "Sorcier"
+  },
+  "animTabEmpty": {
+    "message": "Aucune animation disponible"
+  },
+  "animGrowHint": {
+    "message": "Encore {n} messages"
   },
   "xvkpmz": {
     "message": "Renommer"
@@ -105,7 +150,7 @@
     "message": "Le nom du dossier ne peut pas être vide"
   },
   "pxmzvk": {
-    "message": "Renommer le dossier"
+    "message": "Modifier le dossier"
   },
   "mvzxkp": {
     "message": "Entrez le nouveau nom"
@@ -135,13 +180,13 @@
     "message": "Déplacer vers"
   },
   "wjxnkp": {
-    "message": "Êtes-vous sûr de vouloir supprimer le dossier « {folderName} » ?\n\nCe dossier et ses sous-dossiers contiennent {count} éléments favoris. Après la suppression, ces éléments seront déplacés vers le dossier par défaut."
+    "message": "{count} éléments favoris seront également supprimés."
   },
   "qzmvkx": {
     "message": "Êtes-vous sûr de vouloir supprimer le dossier « {folderName} » ?"
   },
   "mvkzpx": {
-    "message": "Rechercher dans les favoris..."
+    "message": "Rechercher..."
   },
   "kxzpmv": {
     "message": "Enregistrer dans"
@@ -156,7 +201,7 @@
     "message": "Chronologie"
   },
   "mzkvxp": {
-    "message": "Lorsque activé, une chronologie interactive s'affichera sur le côté droit de la page de conversation IA."
+    "message": "Lorsque activé, une chronologie est affichée sur le côté droit de la page de conversation IA"
   },
   "vkpmzx": {
     "message": "Utiliser les touches ↑ / ↓ pour naviguer entre les nœuds de conversation"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Si cette extension vous a aidé, n'hésitez pas à le partager sur X, Reddit, YouTube, etc., et avec vos amis, camarades ou collègues. Je maintiens ce plugin seul avec des ressources limitées et ne peux pas consacrer de temps au marketing — ce que je peux faire, c'est de le rendre de mieux en mieux. Merci beaucoup. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

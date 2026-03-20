@@ -39,7 +39,7 @@
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 420px;
+    max-width: 500px;
     animation: starInputModalSlideIn 0.3s ease;
 }
 
@@ -103,12 +103,21 @@ html[data-timeline-theme="dark"] .star-input-modal-header h3 {
 /* 左侧标签 */
 .star-input-modal-label {
     flex-shrink: 0;
-    width: 50px;
+    width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     font-size: 14px;
     font-weight: 500;
     color: #374151;
-    text-align: right;
     padding-top: 10px;
+    white-space: nowrap;
+}
+
+.star-input-modal-required {
+    color: #ef4444;
+    margin-left: 1px;
+    font-size: 14px;
 }
 
 html[data-timeline-theme="dark"] .star-input-modal-label {
@@ -157,6 +166,14 @@ html[data-timeline-theme="dark"] .star-input-modal-folder-selector:hover {
     white-space: nowrap;
 }
 
+.star-input-modal-folder-text.placeholder {
+    color: #9ca3af;
+}
+
+html[data-timeline-theme="dark"] .star-input-modal-folder-text.placeholder {
+    color: #6b7280;
+}
+
 .star-input-modal-folder-arrow {
     width: 14px;
     height: 14px;
@@ -164,10 +181,11 @@ html[data-timeline-theme="dark"] .star-input-modal-folder-selector:hover {
     opacity: 0.5;
 }
 
-/* 输入框（textarea） */
+/* 输入框 */
 .star-input-modal-input {
     flex: 1;
-    padding: 10px 14px;
+    height: 40px;
+    padding: 0 14px;
     font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -177,9 +195,7 @@ html[data-timeline-theme="dark"] .star-input-modal-folder-selector:hover {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #1f2937;
     background: #ffffff;
-    resize: vertical;
-    min-height: 60px;
-    line-height: 1.5;
+    line-height: 40px;
 }
 
 html[data-timeline-theme="dark"] .star-input-modal-input {

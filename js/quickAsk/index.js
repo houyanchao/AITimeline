@@ -13,17 +13,12 @@
 
 (function() {
     'use strict';
-    
-    // 配置
-    const ROUTE_CHECK_INTERVAL = 500; // URL 轮询检测间隔（ms）
-    
+
     let manager = null;
     let isSupported = false;
     let adapterRegistry = null;
     let currentAdapter = null;
     let currentUrl = location.href;
-    let routeCheckIntervalId = null;
-    let unsubscribeDomObserver = null;
     
     // 检查当前平台是否支持引用回复功能
     function isQuickAskSupported() {
@@ -94,30 +89,9 @@
         updateQuickAskState();
     }
     
-    // 监听 URL 变化（SPA 路由切换）
+    // 监听 URL 变化（SPA 路由切换，由 UrlChangeMonitor 统一管理）
     function setupUrlChangeListener() {
-        // 监听 popstate（浏览器前进/后退）
-        window.addEventListener('popstate', handleUrlChange);
-        
-        // 监听 hashchange
-        window.addEventListener('hashchange', handleUrlChange);
-        
-        // 使用 DOMObserverManager 监听 body DOM 变化（与时间轴保持一致）
-        // DOM 变化通常伴随着路由变化，这比轮询更及时
-        if (window.DOMObserverManager && !unsubscribeDomObserver) {
-            unsubscribeDomObserver = window.DOMObserverManager.getInstance().subscribeBody('quick-ask-page', {
-                callback: handleUrlChange,
-                filter: { hasAddedNodes: true, hasRemovedNodes: true },
-                debounce: 200
-            });
-        }
-        
-        // 轮询检测 URL 变化（后备方案）
-        routeCheckIntervalId = setInterval(() => {
-            if (location.href !== currentUrl) {
-                handleUrlChange();
-            }
-        }, ROUTE_CHECK_INTERVAL);
+        window.addEventListener('url:change', handleUrlChange);
     }
     
     // 初始化

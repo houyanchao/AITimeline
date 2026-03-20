@@ -157,26 +157,27 @@ class StarInputModal {
                 <div class="star-input-modal-body">
                     <div class="star-input-modal-row">
                         <label class="star-input-modal-label">
-                            ${chrome.i18n.getMessage('kxzpmv')}
+                            ${chrome.i18n.getMessage('pkmvxz')}<span class="star-input-modal-required">*</span>
                         </label>
-                        <div class="star-input-modal-folder-selector">
-                            <span class="star-input-modal-folder-text">${chrome.i18n.getMessage('folderRequired') || 'Please select a folder'}</span>
-                            <svg class="star-input-modal-folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="star-input-modal-row">
-                        <label class="star-input-modal-label">
-                            ${chrome.i18n.getMessage('pkmvxz')}
-                        </label>
-                        <textarea 
+                        <input 
+                            type="text"
                             class="star-input-modal-input" 
                             placeholder="${escapeHTML(config.placeholder)}" 
                             maxlength="${config.maxLength}"
                             autocomplete="off"
-                            rows="3"
-                        >${escapeHTML(config.defaultValue)}</textarea>
+                            value="${escapeHTML(config.defaultValue)}"
+                        />
+                    </div>
+                    <div class="star-input-modal-row">
+                        <label class="star-input-modal-label">
+                            ${chrome.i18n.getMessage('kxzpmv')}<span class="star-input-modal-required">*</span>
+                        </label>
+                        <div class="star-input-modal-folder-selector">
+                            <span class="star-input-modal-folder-text placeholder">${chrome.i18n.getMessage('folderRequired') || 'Please select a folder'}</span>
+                            <svg class="star-input-modal-folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="star-input-modal-footer">
@@ -204,6 +205,7 @@ class StarInputModal {
                 selectedFolderPath = await config.folderManager.getFolderPath(selectedFolderId);
                 if (selectedFolderPath) {
                     folderText.textContent = selectedFolderPath;
+                    folderText.classList.remove('placeholder');
                 }
             }
             
@@ -236,6 +238,7 @@ class StarInputModal {
                             selectedFolderId = rootFolder.id;
                             selectedFolderPath = rootFolder.name;
                             folderText.textContent = rootFolder.name;
+                            folderText.classList.remove('placeholder');
                         }
                     };
                     
@@ -253,6 +256,7 @@ class StarInputModal {
                                 selectedFolderId = childFolder.id;
                                 selectedFolderPath = `${rootFolder.name} / ${childFolder.name}`;
                                 folderText.textContent = selectedFolderPath;
+                                folderText.classList.remove('placeholder');
                             }
                         });
                     });
@@ -275,6 +279,7 @@ class StarInputModal {
                                 selectedFolderId = newFolder.id;
                                 selectedFolderPath = `${rootFolder.name} / ${newFolder.name}`;
                                 folderText.textContent = selectedFolderPath;
+                                folderText.classList.remove('placeholder');
                             }
                         }
                     });
@@ -300,6 +305,7 @@ class StarInputModal {
                             selectedFolderId = newFolder.id;
                             selectedFolderPath = newFolder.name;
                             folderText.textContent = newFolder.name;
+                            folderText.classList.remove('placeholder');
                         }
                     }
                 });
@@ -452,8 +458,7 @@ class StarInputModal {
      */
     _attachUrlListeners() {
         try {
-            window.addEventListener('popstate', this._boundHandleUrlChange);
-            window.addEventListener('hashchange', this._boundHandleUrlChange);
+            window.addEventListener('url:change', this._boundHandleUrlChange);
             this._log('URL listeners attached');
         } catch (error) {
             console.error('[StarInputModal] Failed to attach URL listeners:', error);
@@ -465,8 +470,7 @@ class StarInputModal {
      */
     _detachUrlListeners() {
         try {
-            window.removeEventListener('popstate', this._boundHandleUrlChange);
-            window.removeEventListener('hashchange', this._boundHandleUrlChange);
+            window.removeEventListener('url:change', this._boundHandleUrlChange);
             this._log('URL listeners detached');
         } catch (error) {
             console.error('[StarInputModal] Failed to detach URL listeners:', error);
@@ -497,58 +501,33 @@ class StarInputModal {
      */
     async _createFolder(parentId, folderManager) {
         try {
-            if (!window.globalInputModal || !folderManager) {
-                return null;
-            }
-            
-            // 构建标题
-            let title;
-            if (parentId) {
-                const parentPath = await folderManager.getFolderPath(parentId);
-                title = chrome.i18n.getMessage('xmkvpz')
-                    ? chrome.i18n.getMessage('xmkvpz').replace('{folderName}', parentPath)
-                    : `在「${parentPath}」下创建子文件夹`;
-            } else {
-                title = chrome.i18n.getMessage('kxvpmz');
-            }
-            
-            // 显示输入框
-            const name = await window.globalInputModal.show({
-                title: title,
-                defaultValue: '',
-                placeholder: chrome.i18n.getMessage('vzkpmx'),
-                required: true,
-                requiredMessage: chrome.i18n.getMessage('kmxpvz'),
+            if (!window.folderEditModal || !folderManager) return null;
+
+            const parentPath = parentId ? await folderManager.getFolderPath(parentId) : '';
+            const title = parentId
+                ? (chrome.i18n.getMessage('xmkvpz') || 'New subfolder in {folderName}').replace('{folderName}', parentPath)
+                : chrome.i18n.getMessage('kxvpmz') || 'New Folder';
+
+            const result = await window.folderEditModal.show({
+                mode: 'create', title,
+                placeholder: chrome.i18n.getMessage('vzkpmx') || 'Folder name',
+                requiredMessage: chrome.i18n.getMessage('kmxpvz') || 'Name is required',
                 maxLength: 10
             });
-            
-            if (!name || !name.trim()) {
-                return null;
-            }
-            
-            // 检查名称是否已存在
-            const exists = await folderManager.isFolderNameExists(name.trim(), parentId);
+            if (!result) return null;
+
+            const exists = await folderManager.isFolderNameExists(result.name, parentId);
             if (exists) {
-                if (window.globalToastManager) {
-                    window.globalToastManager.error(chrome.i18n.getMessage('kpvzmx'));
-                }
+                window.globalToastManager?.error(chrome.i18n.getMessage('kpvzmx') || 'Name already exists');
                 return null;
             }
-            
-            // 创建文件夹
-            const newFolder = await folderManager.createFolder(name.trim(), parentId);
-            
-            // 显示成功提示
-            if (window.globalToastManager) {
-                window.globalToastManager.success(chrome.i18n.getMessage('xzvkpm'));
-            }
-            
+
+            const newFolder = await folderManager.createFolder(result.name, parentId, result.icon);
+            window.globalToastManager?.success(chrome.i18n.getMessage('xzvkpm') || 'Created');
             return newFolder;
         } catch (error) {
             console.error('[StarInputModal] Failed to create folder:', error);
-            if (window.globalToastManager && error.message) {
-                window.globalToastManager.error(error.message);
-            }
+            if (error.message) window.globalToastManager?.error(error.message);
             return null;
         }
     }

@@ -917,8 +917,7 @@ class GlobalTooltipManager {
      */
     _attachUrlListeners() {
         try {
-            window.addEventListener('popstate', this._boundHandleUrlChange);
-            window.addEventListener('hashchange', this._boundHandleUrlChange);
+            window.addEventListener('url:change', this._boundHandleUrlChange);
             this._log('URL listeners attached');
         } catch (error) {
             console.error('[TooltipManager] Failed to attach URL listeners:', error);
@@ -930,8 +929,7 @@ class GlobalTooltipManager {
      */
     _detachUrlListeners() {
         try {
-            window.removeEventListener('popstate', this._boundHandleUrlChange);
-            window.removeEventListener('hashchange', this._boundHandleUrlChange);
+            window.removeEventListener('url:change', this._boundHandleUrlChange);
             this._log('URL listeners detached');
         } catch (error) {
             console.error('[TooltipManager] Failed to detach URL listeners:', error);

@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: เครื่องมือเสริมแชท AI | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: ปลั๊กอินเสริมแชท AI | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "ไทม์ไลน์แชท AI, คัดลอกสูตร LaTeX, บันทึกด่วน, คลังพรอมต์, รันโค้ด และฟีเจอร์เพิ่มประสิทธิภาพอีกมากมาย"
+    "message": "เพิ่มประสบการณ์ AI เป็นสองเท่า ไทม์ไลน์แชท, โฟลเดอร์, คัดลอกสูตร LaTeX, บันทึกด่วน, คลังพรอมต์ และฟีเจอร์อีกมากมาย"
   },
   "qwxpzm": {
     "message": "รายการโปรด"
@@ -12,13 +12,13 @@
     "message": "ดูรายการโปรด"
   },
   "zmvkpx": {
-    "message": "เพิ่มการสนทนาในรายการโปรด"
+    "message": "บันทึกไปยังโฟลเดอร์"
   },
   "bpxjkw": {
     "message": "ลบออกจากรายการโปรด"
   },
   "vnkxpm": {
-    "message": "รายการโปรด"
+    "message": "โฟลเดอร์"
   },
   "kxpmzv": {
     "message": "เพิ่มในรายการโปรดแล้ว"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "กรุณาเลือกโฟลเดอร์"
+  },
+  "defaultFolder": {
+    "message": "ค่าเริ่มต้น"
+  },
+  "pinItem": {
+    "message": "ปักหมุด"
+  },
+  "unpinItem": {
+    "message": "เลิกปักหมุด"
+  },
+  "searchPrompt": {
+    "message": "ค้นหาพร้อมท์..."
+  },
+  "sidebarStarredHint": {
+    "message": "เมื่อเปิดใช้งาน โฟลเดอร์จะแสดงในแถบด้านข้าง"
+  },
+  "sidebarStarredManage": {
+    "message": "ตั้งค่า"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "จัดการรายการโปรดแถบด้านข้าง"
+  },
+  "animTabTitle": {
+    "message": "แอนิเมชั่นสนุก"
+  },
+  "animTabDesc": {
+    "message": "เลือกแอนิเมชั่นเหนือช่องพิมพ์"
+  },
+  "animSnail": {
+    "message": "ขบวนหอยทาก"
+  },
+  "animZombie": {
+    "message": "ซอมบี้เดิน"
+  },
+  "animAnt": {
+    "message": "มดเดินขบวน"
+  },
+  "animWizard": {
+    "message": "พ่อมด"
+  },
+  "animTabEmpty": {
+    "message": "ไม่มีแอนิเมชั่น"
+  },
+  "animGrowHint": {
+    "message": "อีก {n} ข้อความ"
   },
   "xvkpmz": {
     "message": "เปลี่ยนชื่อ"
@@ -105,7 +150,7 @@
     "message": "ชื่อโฟลเดอร์ไม่สามารถเว้นว่างได้"
   },
   "pxmzvk": {
-    "message": "เปลี่ยนชื่อโฟลเดอร์"
+    "message": "แก้ไขโฟลเดอร์"
   },
   "mvzxkp": {
     "message": "กรอกชื่อใหม่"
@@ -135,13 +180,13 @@
     "message": "ย้ายไปที่"
   },
   "wjxnkp": {
-    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ \"{folderName}\"?\n\nโฟลเดอร์นี้และโฟลเดอร์ย่อยมี {count} รายการโปรด หลังจากลบ รายการเหล่านี้จะถูกย้ายไปยังโฟลเดอร์เริ่มต้น"
+    "message": "{count} รายการโปรดจะถูกลบด้วย"
   },
   "qzmvkx": {
     "message": "คุณแน่ใจหรือไม่ว่าต้องการลบโฟลเดอร์ \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "ค้นหารายการโปรด..."
+    "message": "ค้นหา..."
   },
   "kxzpmv": {
     "message": "บันทึกไปที่"
@@ -156,7 +201,7 @@
     "message": "ไทม์ไลน์"
   },
   "mzkvxp": {
-    "message": "เมื่อเปิดใช้งาน ไทม์ไลน์แบบโต้ตอบจะแสดงทางด้านขวาของหน้าสนทนา AI"
+    "message": "เมื่อเปิดใช้งาน ไทม์ไลน์จะแสดงทางด้านขวาของหน้าสนทนา AI"
   },
   "vkpmzx": {
     "message": "ใช้ปุ่ม ↑ / ↓ เพื่อนำทางระหว่างโหนดการสนทนา"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "หากส่วนขยายนี้ช่วยคุณได้ ยินดีหากแบ่งปันบน X, Reddit, YouTube ฯลฯ และแบ่งปันให้เพื่อน เพื่อนร่วมชั้น หรือเพื่อนร่วมงาน ผมดูแลปลั๊กอินนี้คนเดียว ไม่มีเวลาทำการตลาด สิ่งที่ทำได้คือทำให้มันดียิ่งขึ้นเรื่อยๆ ขอบคุณมากครับ ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

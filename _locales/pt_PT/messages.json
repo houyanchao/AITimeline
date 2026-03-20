@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Ferramenta de chat IA | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Extensão de chat IA | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Timeline de chat IA, copiar fórmulas LaTeX, notas rápidas, biblioteca de prompts, executar código e mais."
+    "message": "Duplique a sua experiência com IA. Timeline de chat, pastas, copiar fórmulas LaTeX, notas rápidas, biblioteca de prompts e mais."
   },
   "qwxpzm": {
     "message": "Favorito"
@@ -12,13 +12,13 @@
     "message": "Ver favoritos"
   },
   "zmvkpx": {
-    "message": "Adicionar conversa aos favoritos"
+    "message": "Guardar na pasta"
   },
   "bpxjkw": {
     "message": "Remover dos favoritos"
   },
   "vnkxpm": {
-    "message": "Lista de favoritos"
+    "message": "Pasta"
   },
   "kxpmzv": {
     "message": "Adicionado aos favoritos"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Selecione uma pasta"
+  },
+  "defaultFolder": {
+    "message": "Padrão"
+  },
+  "pinItem": {
+    "message": "Fixar no topo"
+  },
+  "unpinItem": {
+    "message": "Desafixar"
+  },
+  "searchPrompt": {
+    "message": "Pesquisar prompts..."
+  },
+  "sidebarStarredHint": {
+    "message": "Quando ativado, as pastas são exibidas na barra lateral"
+  },
+  "sidebarStarredManage": {
+    "message": "Configurações"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Favoritos na barra lateral"
+  },
+  "animTabTitle": {
+    "message": "Animação divertida"
+  },
+  "animTabDesc": {
+    "message": "Escolha uma animação sobre a caixa de texto."
+  },
+  "animSnail": {
+    "message": "Desfile de caracóis"
+  },
+  "animZombie": {
+    "message": "Marcha dos zombies"
+  },
+  "animAnt": {
+    "message": "Marcha das formigas"
+  },
+  "animWizard": {
+    "message": "Mago"
+  },
+  "animTabEmpty": {
+    "message": "Sem animações disponíveis"
+  },
+  "animGrowHint": {
+    "message": "Mais {n} mensagens"
   },
   "xvkpmz": {
     "message": "Renomear"
@@ -105,7 +150,7 @@
     "message": "O nome da pasta não pode estar vazio"
   },
   "pxmzvk": {
-    "message": "Renomear pasta"
+    "message": "Editar pasta"
   },
   "mvzxkp": {
     "message": "Introduza o novo nome"
@@ -135,13 +180,13 @@
     "message": "Mover para"
   },
   "wjxnkp": {
-    "message": "Tem a certeza de que pretende eliminar a pasta \"{folderName}\"?\n\nEsta pasta e as suas subpastas contêm {count} itens favoritos. Após a eliminação, estes itens serão movidos para a pasta predefinida."
+    "message": "{count} itens favoritos também serão eliminados."
   },
   "qzmvkx": {
     "message": "Tem a certeza de que pretende eliminar a pasta \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Pesquisar favoritos..."
+    "message": "Pesquisar..."
   },
   "kxzpmv": {
     "message": "Guardar em"
@@ -156,7 +201,7 @@
     "message": "Cronologia"
   },
   "mzkvxp": {
-    "message": "Quando ativado, uma cronologia interativa será exibida no lado direito da página de conversa de IA."
+    "message": "Quando ativado, uma cronologia é exibida no lado direito da página de conversa de IA"
   },
   "vkpmzx": {
     "message": "Use as teclas ↑ / ↓ para navegar entre os nós da conversa"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Se esta extensão o ajudou, sinta-se à vontade para partilhá-la no X, Reddit, YouTube, etc., e com amigos, colegas de turma ou de trabalho. Mantenho este plugin sozinho e não consigo dedicar tempo ao marketing — o que posso fazer é torná-lo cada vez melhor. Muito obrigado. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

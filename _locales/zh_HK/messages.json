@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline：AI 對話增強工具 | GPT、Gemini、DeepSeek、Qwen"
+    "message": "AI Timeline：AI 對話增強插件 | GPT、Gemini、DeepSeek、Kimi"
   },
   "extDescription": {
-    "message": "AI 對話時間軸、複製 LaTeX 公式、閃記、自定義提示詞庫、執行程式碼區塊等超多提效功能。"
+    "message": "讓 AI 使用體驗翻倍。對話時間軸、資料夾、複製 LaTeX 公式、閃記、自定義提示詞庫等超多提效功能。"
   },
   "qwxpzm": {
     "message": "收藏"
@@ -12,13 +12,13 @@
     "message": "查看收藏"
   },
   "zmvkpx": {
-    "message": "收藏對話"
+    "message": "收藏到文件夾"
   },
   "bpxjkw": {
     "message": "取消收藏"
   },
   "vnkxpm": {
-    "message": "收藏清單"
+    "message": "文件夾"
   },
   "kxpmzv": {
     "message": "收藏成功"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "請選擇一個資料夾"
+  },
+  "defaultFolder": {
+    "message": "預設資料夾"
+  },
+  "pinItem": {
+    "message": "置頂"
+  },
+  "unpinItem": {
+    "message": "取消置頂"
+  },
+  "searchPrompt": {
+    "message": "搜尋提示詞..."
+  },
+  "sidebarStarredHint": {
+    "message": "啟用後，在側邊欄中顯示資料夾"
+  },
+  "sidebarStarredManage": {
+    "message": "設定"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "側邊欄收藏管理"
+  },
+  "animTabTitle": {
+    "message": "趣味動畫"
+  },
+  "animTabDesc": {
+    "message": "選擇一個趣味動畫，顯示在輸入框上方。"
+  },
+  "animSnail": {
+    "message": "蝸牛爬行"
+  },
+  "animZombie": {
+    "message": "殭屍出沒"
+  },
+  "animAnt": {
+    "message": "螞蟻行軍"
+  },
+  "animWizard": {
+    "message": "巫師學徒"
+  },
+  "animTabEmpty": {
+    "message": "暫無可用動畫"
+  },
+  "animGrowHint": {
+    "message": "再發 {n} 條訊息解鎖"
   },
   "xvkpmz": {
     "message": "重新命名"
@@ -105,7 +150,7 @@
     "message": "文件夾名稱不能為空"
   },
   "pxmzvk": {
-    "message": "修改文件夾名稱"
+    "message": "編輯文件夾"
   },
   "mvzxkp": {
     "message": "請輸入新名稱"
@@ -135,13 +180,13 @@
     "message": "移動到"
   },
   "wjxnkp": {
-    "message": "確定要刪除文件夾「{folderName}」嗎？\n\n該文件夾及其子文件夾中有 {count} 個收藏項，刪除後這些收藏項將移至預設文件夾。"
+    "message": "其中的 {count} 個收藏項也將一併刪除。"
   },
   "qzmvkx": {
     "message": "確定要刪除文件夾「{folderName}」嗎？"
   },
   "mvkzpx": {
-    "message": "搜尋收藏..."
+    "message": "搜尋..."
   },
   "kxzpmv": {
     "message": "收藏到"
@@ -156,7 +201,7 @@
     "message": "時間軸"
   },
   "mzkvxp": {
-    "message": "啟用後，在 AI 對話頁面右側會顯示可互動時間軸。"
+    "message": "啟用後，在 AI 對話頁面的右側顯示時間軸"
   },
   "vkpmzx": {
     "message": "鍵盤 ↑ / ↓ 鍵跳轉對話節點"
@@ -433,5 +478,14 @@
   },
   "formulaMathMLHint": {
     "message": "點擊公式複製為 MathML 格式，可直接貼到 Word"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "收藏到資料夾"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "該對話已收藏"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "收藏成功"
   }
 }

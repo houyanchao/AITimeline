@@ -439,8 +439,7 @@ class FolderEditModal {
 
     _attachUrlListeners() {
         try {
-            window.addEventListener('popstate', this._boundHandleUrlChange);
-            window.addEventListener('hashchange', this._boundHandleUrlChange);
+            window.addEventListener('url:change', this._boundHandleUrlChange);
         } catch (error) {
             console.error('[FolderEditModal] Failed to attach URL listeners:', error);
         }
@@ -448,8 +447,7 @@ class FolderEditModal {
 
     _detachUrlListeners() {
         try {
-            window.removeEventListener('popstate', this._boundHandleUrlChange);
-            window.removeEventListener('hashchange', this._boundHandleUrlChange);
+            window.removeEventListener('url:change', this._boundHandleUrlChange);
         } catch (error) {
             console.error('[FolderEditModal] Failed to detach URL listeners:', error);
         }

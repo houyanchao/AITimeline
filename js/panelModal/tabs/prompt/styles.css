@@ -6,9 +6,35 @@
 /* 设置容器 */
 .prompt-settings {
     padding: 0;
-    overflow-y: auto;
     height: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 滚动区域 */
+.prompt-settings-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 30px;
+}
+
+/* 底部悬浮区域 */
+.prompt-settings-bottom-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 12px;
+    flex-shrink: 0;
+}
+
+.prompt-settings-bottom {
+    flex-shrink: 0;
+    padding: 4px 6px 0;
+}
+
+.prompt-settings-bottom .setting-item {
+    padding: 8px 10px;
 }
 
 /* 分隔线 */
@@ -301,65 +327,6 @@
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* ==================== 平台列表样式 ==================== */
-
-.prompt-settings .platform-list {
-    padding: 0;
-}
-
-.prompt-settings .platform-list-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 6px;
-    padding: 0;
-}
-
-.prompt-settings .platform-list-hint {
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    padding: 0;
-}
-
-.prompt-settings .platform-list-container {
-    background: #f9fafb;
-    border-radius: 8px;
-    padding: 12px;
-}
-
-.prompt-settings .platform-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 8px;
-    background: transparent;
-    border-radius: 4px;
-    margin-bottom: 6px;
-    transition: background 0.2s;
-}
-
-.prompt-settings .platform-item:hover {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.prompt-settings .platform-item:last-child {
-    margin-bottom: 0;
-}
-
-.prompt-settings .platform-info-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.prompt-settings .platform-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #1f2937;
-}
-
 /* ==================== 提示词下拉菜单样式 ==================== */
 
 /* 遮罩层 */
@@ -466,6 +433,42 @@
     width: 20px !important;
     height: 20px !important;
     stroke-width: 2.5 !important;
+}
+
+/* 搜索区域 */
+.prompt-dropdown-search {
+    flex-shrink: 0;
+    padding: 8px 10px 4px;
+}
+
+.prompt-dropdown-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    color: #333;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.prompt-dropdown-search-input::placeholder {
+    color: #9ca3af;
+}
+
+.prompt-dropdown-search-input:focus {
+    border-color: #7c3aed;
+    background: #fff;
+}
+
+.prompt-dropdown-search-empty {
+    padding: 24px 16px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
 }
 
 /* Body 区域 */

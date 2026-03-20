@@ -85,9 +85,11 @@ class FolderManager {
     /**
      * 删除文件夹
      * @param {string} folderId - 要删除的文件夹 ID
-     * @param {string|null} moveToFolderId - 收藏项移动到的目标文件夹 ID（null = 未分类）
+     * @param {Object} [options]
+     * @param {boolean} [options.deleteItems=true] - true: 连同收藏项一起删除; false: 移到未分类
      */
-    async deleteFolder(folderId, moveToFolderId = null) {
+    async deleteFolder(folderId, options = {}) {
+        const { deleteItems = true } = options;
         const folders = await this.getFolders();
         const folderToDelete = folders.find(f => f.id === folderId);
         
@@ -95,31 +97,30 @@ class FolderManager {
             throw new Error('文件夹不存在');
         }
         
-        // 1. 找出所有子文件夹
         const childFolderIds = folders
             .filter(f => f.parentId === folderId)
             .map(f => f.id);
         
-        // 2. 删除文件夹及其子文件夹
         const newFolders = folders.filter(f => 
             f.id !== folderId && !childFolderIds.includes(f.id)
         );
         await this.storage.set('folders', newFolders);
         
-        // 3. 处理该文件夹及子文件夹中的收藏项（移到目标文件夹或默认文件夹）
         const allDeletedFolderIds = [folderId, ...childFolderIds];
         
-        // 使用 StarStorageManager 批量更新
         await StarStorageManager.batchUpdate(items => {
+            if (deleteItems) {
+                return items.filter(item => !allDeletedFolderIds.includes(item.folderId));
+            }
             return items.map(item => {
                 if (allDeletedFolderIds.includes(item.folderId)) {
-                    return { ...item, folderId: moveToFolderId };
+                    return { ...item, folderId: null };
                 }
                 return item;
             });
         });
         
-        console.log('[FolderManager] Deleted folder:', folderId, 'and', childFolderIds.length, 'children');
+        console.log('[FolderManager] Deleted folder:', folderId, 'and', childFolderIds.length, 'children', deleteItems ? '(items deleted)' : '(items moved)');
     }
     
     /**
@@ -189,9 +190,13 @@ class FolderManager {
         const assignedTurnIds = new Set(); // 记录已分配的收藏项
         
         
-        // 1. 先构建根文件夹
+        // 1. 先构建根文件夹（置顶的在前）
         const rootFolders = folders.filter(f => f.parentId === null);
-        rootFolders.sort((a, b) => a.order - b.order);
+        rootFolders.sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return a.order - b.order;
+        });
         
         // 2. 为每个根文件夹添加子文件夹和收藏项
         for (const rootFolder of rootFolders) {
@@ -225,14 +230,18 @@ class FolderManager {
                             nodeId: nodeKey,  // 新字段
                             theme: item.question || '整个对话',
                             timestamp: item.timestamp || 0,
-                            folderId: item.folderId
+                            folderId: item.folderId,
+                            pinned: !!item.pinned
                         });
                         assignedTurnIds.add(turnId);
                     }
                 }
                 
-                // 按时间排序
-                childNode.items.sort((a, b) => b.timestamp - a.timestamp);
+                childNode.items.sort((a, b) => {
+                    if (a.pinned && !b.pinned) return -1;
+                    if (!a.pinned && b.pinned) return 1;
+                    return b.timestamp - a.timestamp;
+                });
                 
                 folderNode.children.push(childNode);
             }
@@ -251,14 +260,18 @@ class FolderManager {
                         nodeId: nodeKey,  // 新字段
                         theme: item.question || '整个对话',
                         timestamp: item.timestamp || 0,
-                        folderId: item.folderId
+                        folderId: item.folderId,
+                        pinned: !!item.pinned
                     });
                     assignedTurnIds.add(turnId);
                 }
             }
             
-            // 按时间排序
-            folderNode.items.sort((a, b) => b.timestamp - a.timestamp);
+            folderNode.items.sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return b.timestamp - a.timestamp;
+            });
             
             tree.folders.push(folderNode);
         }
@@ -279,13 +292,17 @@ class FolderManager {
                     nodeId: nodeKey,  // 新字段
                     theme: item.question || '整个对话',
                     timestamp: item.timestamp || 0,
-                    folderId: item.folderId
+                    folderId: item.folderId,
+                    pinned: !!item.pinned
                 });
             }
         }
         
-        // 按时间排序未分类项
-        tree.uncategorized.sort((a, b) => b.timestamp - a.timestamp);
+        tree.uncategorized.sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return b.timestamp - a.timestamp;
+        });
         
         
         return tree;
@@ -327,6 +344,21 @@ class FolderManager {
         );
         
         return siblings.some(f => f.name === name);
+    }
+
+    async togglePinFolder(folderId) {
+        const folders = await this.getFolders();
+        const folder = folders.find(f => f.id === folderId);
+        if (!folder) return;
+        folder.pinned = !folder.pinned;
+        await this.storage.set('folders', folders);
+    }
+
+    async togglePinStarred(turnId) {
+        const key = `chatTimelineStar:${turnId}`;
+        const item = await StarStorageManager.findByKey(key);
+        if (!item) return;
+        await StarStorageManager.update(key, { pinned: !item.pinned });
     }
 }
 

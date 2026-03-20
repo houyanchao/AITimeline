@@ -48,6 +48,13 @@
         }
     }
 
+    function destroyManager() {
+        if (manager) {
+            manager.destroy();
+            manager = null;
+        }
+    }
+
     function initWithRetry(retryIndex = 0) {
         if (retryIndex >= RETRY_DELAYS.length) return;
 
@@ -60,11 +67,31 @@
         }, RETRY_DELAYS[retryIndex]);
     }
 
+    // ==================== 监听开关变化 ====================
+
+    StorageAdapter.addChangeListener((changes, areaName) => {
+        if (areaName !== 'local' || !changes.sidebarStarredPlatformSettings) return;
+        const settings = changes.sidebarStarredPlatformSettings.newValue || {};
+        const enabled = settings[platform.id] !== false;
+        if (enabled && !manager) {
+            if (canInject()) { initialize(0); } else { initWithRetry(); }
+        } else if (!enabled && manager) {
+            destroyManager();
+        }
+    });
+
     // ==================== Bootstrap ====================
 
-    if (canInject()) {
-        initialize(0);
-    } else {
-        initWithRetry();
+    async function bootstrap() {
+        const settings = await StorageAdapter.get('sidebarStarredPlatformSettings');
+        if (settings && settings[platform.id] === false) return;
+
+        if (canInject()) {
+            initialize(0);
+        } else {
+            initWithRetry();
+        }
     }
+
+    bootstrap();
 })();

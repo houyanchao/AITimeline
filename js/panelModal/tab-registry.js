@@ -14,6 +14,7 @@ function getTabClass(name) {
         case 'PromptTab': return typeof PromptTab !== 'undefined' ? PromptTab : null;
         case 'SmartInputBoxTab': return typeof SmartInputBoxTab !== 'undefined' ? SmartInputBoxTab : null;
         case 'FormulaTab': return typeof FormulaTab !== 'undefined' ? FormulaTab : null;
+        case 'AnimationTab': return typeof AnimationTab !== 'undefined' ? AnimationTab : null;
         case 'RunnerTab': return typeof RunnerTab !== 'undefined' ? RunnerTab : null;
         case 'DataSyncTab': return typeof DataSyncTab !== 'undefined' ? DataSyncTab : null;
         case 'AboutTab': return typeof AboutTab !== 'undefined' ? AboutTab : null;
@@ -27,12 +28,13 @@ function getTabClass(name) {
  * - className: 对应的类名（字符串）
  */
 const TAB_CONFIG = [
-    { id: 'starred', className: 'StarredTab' },
     { id: 'timeline-settings', className: 'TimelineSettingsTab' },
+    { id: 'starred', className: 'StarredTab' },
     { id: 'prompt', className: 'PromptTab' },
     { id: 'smart-input-box', className: 'SmartInputBoxTab' },
     { id: 'formula', className: 'FormulaTab' },
     { id: 'runner', className: 'RunnerTab' },
+    { id: 'animation', className: 'AnimationTab' },
     { id: 'data-sync', className: 'DataSyncTab' },
     { id: 'about', className: 'AboutTab' }
 ];

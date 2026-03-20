@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline：AI チャット強化ツール | GPT、Gemini、DeepSeek、Qwen"
+    "message": "AI Timeline：AI チャット強化プラグイン | GPT、Gemini、DeepSeek、Kimi"
   },
   "extDescription": {
-    "message": "AI チャットタイムライン、LaTeX 数式コピー、クイックメモ、カスタムプロンプト、コード実行など多数の効率化機能。"
+    "message": "AI の使用体験を倍増。チャットタイムライン、フォルダ、LaTeX 数式コピー、クイックメモ、カスタムプロンプトなど多数の効率化機能。"
   },
   "qwxpzm": {
     "message": "お気に入り"
@@ -12,13 +12,13 @@
     "message": "お気に入りを見る"
   },
   "zmvkpx": {
-    "message": "会話をお気に入りに追加"
+    "message": "フォルダに保存"
   },
   "bpxjkw": {
     "message": "お気に入りから削除"
   },
   "vnkxpm": {
-    "message": "お気に入りリスト"
+    "message": "フォルダ"
   },
   "kxpmzv": {
     "message": "お気に入りに追加しました"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "フォルダーを選択してください"
+  },
+  "defaultFolder": {
+    "message": "デフォルト"
+  },
+  "pinItem": {
+    "message": "ピン留め"
+  },
+  "unpinItem": {
+    "message": "ピン留め解除"
+  },
+  "searchPrompt": {
+    "message": "プロンプトを検索..."
+  },
+  "sidebarStarredHint": {
+    "message": "有効にすると、サイドバーにフォルダが表示されます"
+  },
+  "sidebarStarredManage": {
+    "message": "設定"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "サイドバーお気に入り管理"
+  },
+  "animTabTitle": {
+    "message": "楽しいアニメ"
+  },
+  "animTabDesc": {
+    "message": "入力欄の上に楽しいアニメーションを表示します。"
+  },
+  "animSnail": {
+    "message": "カタツムリ行進"
+  },
+  "animZombie": {
+    "message": "ゾンビウォーク"
+  },
+  "animAnt": {
+    "message": "アリの行進"
+  },
+  "animWizard": {
+    "message": "魔法使い"
+  },
+  "animTabEmpty": {
+    "message": "利用可能なアニメーションはありません"
+  },
+  "animGrowHint": {
+    "message": "あと{n}メッセージ"
   },
   "xvkpmz": {
     "message": "名前を変更"
@@ -105,7 +150,7 @@
     "message": "フォルダ名は空にできません"
   },
   "pxmzvk": {
-    "message": "フォルダ名を変更"
+    "message": "フォルダを編集"
   },
   "mvzxkp": {
     "message": "新しい名前を入力"
@@ -135,13 +180,13 @@
     "message": "移動先"
   },
   "wjxnkp": {
-    "message": "フォルダ「{folderName}」を削除しますか？\n\nこのフォルダとサブフォルダには {count} 件のお気に入りがあります。削除後、これらはデフォルトフォルダに移動されます。"
+    "message": "{count} 件のお気に入りも一緒に削除されます。"
   },
   "qzmvkx": {
     "message": "フォルダ「{folderName}」を削除しますか？"
   },
   "mvkzpx": {
-    "message": "お気に入りを検索..."
+    "message": "検索..."
   },
   "kxzpmv": {
     "message": "お気に入りに保存"
@@ -156,7 +201,7 @@
     "message": "タイムライン"
   },
   "mzkvxp": {
-    "message": "有効にすると、AI会話ページの右側にインタラクティブなタイムラインが表示されます。"
+    "message": "有効にすると、AI 会話ページの右側にタイムラインが表示されます"
   },
   "vkpmzx": {
     "message": "↑ / ↓ キーで会話ノードを移動"
@@ -460,5 +505,14 @@
   },
   "aboutShareContent": {
     "message": "このプラグインが役に立ったら、X、Reddit、YouTube などでシェアしていただけると嬉しいです。友人や同僚への共有も大歓迎です。一人で維持しており、マーケティングに手が回らないので、できることはプラグインをもっと良くし続けることです。ありがとうございます。❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "フォルダにスター"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "すでにスター済みです"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "スターしました"
   }
 }

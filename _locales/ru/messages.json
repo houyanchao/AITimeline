@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Инструмент улучшения ИИ-чатов | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Плагин для улучшения ИИ-чатов | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Таймлайн ИИ-чатов, копирование формул LaTeX, быстрые заметки, библиотека промптов, запуск кода и многое другое."
+    "message": "Удвойте эффективность работы с ИИ. Таймлайн чатов, папки, копирование формул LaTeX, быстрые заметки, библиотека промптов и многое другое."
   },
   "qwxpzm": {
     "message": "Избранное"
@@ -12,13 +12,13 @@
     "message": "Просмотр избранного"
   },
   "zmvkpx": {
-    "message": "Добавить диалог в избранное"
+    "message": "Сохранить в папку"
   },
   "bpxjkw": {
     "message": "Удалить из избранного"
   },
   "vnkxpm": {
-    "message": "Список избранного"
+    "message": "Папка"
   },
   "kxpmzv": {
     "message": "Добавлено в избранное"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Выберите папку"
+  },
+  "defaultFolder": {
+    "message": "По умолчанию"
+  },
+  "pinItem": {
+    "message": "Закрепить"
+  },
+  "unpinItem": {
+    "message": "Открепить"
+  },
+  "searchPrompt": {
+    "message": "Поиск промптов..."
+  },
+  "sidebarStarredHint": {
+    "message": "При включении папки отображаются на боковой панели"
+  },
+  "sidebarStarredManage": {
+    "message": "Настройки"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Избранное на боковой панели"
+  },
+  "animTabTitle": {
+    "message": "Весёлая анимация"
+  },
+  "animTabDesc": {
+    "message": "Выберите анимацию над полем ввода."
+  },
+  "animSnail": {
+    "message": "Парад улиток"
+  },
+  "animZombie": {
+    "message": "Зомби-марш"
+  },
+  "animAnt": {
+    "message": "Марш муравьёв"
+  },
+  "animWizard": {
+    "message": "Волшебник"
+  },
+  "animTabEmpty": {
+    "message": "Анимации недоступны"
+  },
+  "animGrowHint": {
+    "message": "Ещё {n} сообщений"
   },
   "xvkpmz": {
     "message": "Переименовать"
@@ -105,7 +150,7 @@
     "message": "Название папки не может быть пустым"
   },
   "pxmzvk": {
-    "message": "Переименовать папку"
+    "message": "Редактировать папку"
   },
   "mvzxkp": {
     "message": "Введите новое название"
@@ -135,13 +180,13 @@
     "message": "Переместить в"
   },
   "wjxnkp": {
-    "message": "Вы уверены, что хотите удалить папку «{folderName}»?\n\nЭта папка и её подпапки содержат {count} избранных элементов. После удаления эти элементы будут перемещены в папку по умолчанию."
+    "message": "{count} избранных элементов также будут удалены."
   },
   "qzmvkx": {
     "message": "Вы уверены, что хотите удалить папку «{folderName}»?"
   },
   "mvkzpx": {
-    "message": "Поиск в избранном..."
+    "message": "Поиск..."
   },
   "kxzpmv": {
     "message": "Сохранить в"
@@ -156,7 +201,7 @@
     "message": "Шкала времени"
   },
   "mzkvxp": {
-    "message": "При включении справа на странице диалога с ИИ отображается интерактивная шкала времени."
+    "message": "При включении на правой стороне страницы диалога с ИИ отображается шкала времени"
   },
   "vkpmzx": {
     "message": "Используйте клавиши ↑ / ↓ для навигации по узлам диалога"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Если это расширение вам помогло, буду рад, если поделитесь им на X, Reddit, YouTube и т. д., а также с друзьями, однокурсниками или коллегами. Я поддерживаю этот плагин один и не могу тратить время на маркетинг — всё, что я могу — делать его всё лучше и лучше. Большое спасибо. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

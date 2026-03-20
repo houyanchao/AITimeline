@@ -179,18 +179,23 @@ class PromptButtonManager {
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
         `;
-        
+
         button.style.display = 'none';
-        
+
         // ✅ 使用事件委托（解决长时间停留后事件失效问题）
         window.eventDelegateManager.on('click', '.smart-input-prompt-btn', (e) => {
             e.preventDefault();
             e.stopPropagation();
             this._handleClick();
         });
-        
+
         document.body.appendChild(button);
         this.buttonElement = button;
+
+        const platform = typeof getCurrentPlatform === 'function' ? getCurrentPlatform() : null;
+        if (window.inputBoxAnimationManager && platform?.features?.inputAnimation === true) {
+            window.inputBoxAnimationManager.init();
+        }
     }
     
     /**
@@ -251,8 +256,8 @@ class PromptButtonManager {
                         this._updatePosition();
                     }
                 },
-                filter: { hasAddedNodes: true },
-                debounce: 300  // 300ms 防抖，减少执行频率
+                filter: { hasAddedNodes: true, hasAttributeChanges: true },
+                debounce: 100
             });
         }
     }
@@ -264,6 +269,14 @@ class PromptButtonManager {
         if (this._unsubscribeObserver) {
             this._unsubscribeObserver();
             this._unsubscribeObserver = null;
+        }
+        if (this._resizeObserver) {
+            this._resizeObserver.disconnect();
+            this._resizeObserver = null;
+        }
+        if (this._transitionHandler) {
+            document.body.removeEventListener('transitionend', this._transitionHandler);
+            this._transitionHandler = null;
         }
     }
     
@@ -280,12 +293,30 @@ class PromptButtonManager {
             if (input) {
                 this.inputElement = input;
                 this._updatePosition();
+                this._observeInputResize();
             }
         } catch (e) {
             // 忽略
         }
     }
     
+    _observeInputResize() {
+        if (this._resizeObserver) this._resizeObserver.disconnect();
+        if (!this.inputElement) return;
+        const ref = this.adapter.getPositionReferenceElement?.(this.inputElement) || this.inputElement;
+        this._resizeObserver = new ResizeObserver(() => {
+            if (this.isEnabled && !this.isDestroyed) this._updatePosition();
+        });
+        this._resizeObserver.observe(ref);
+
+        if (!this._transitionHandler) {
+            this._transitionHandler = () => {
+                if (this.isEnabled && !this.isDestroyed) this._updatePosition();
+            };
+            document.body.addEventListener('transitionend', this._transitionHandler);
+        }
+    }
+
     /**
      * 更新按钮位置
      */
@@ -325,6 +356,11 @@ class PromptButtonManager {
             this.buttonElement.style.top = `${safeTop}px`;
             this.buttonElement.style.left = `${safeLeft}px`;
             this.buttonElement.style.visibility = 'visible';
+
+            if (window.inputBoxAnimationManager) {
+                const ref = this.adapter.getPositionReferenceElement?.(this.inputElement) || this.inputElement;
+                window.inputBoxAnimationManager.updatePosition(ref.getBoundingClientRect());
+            }
         } catch (e) {
             this._hideButton();
         }
@@ -336,6 +372,9 @@ class PromptButtonManager {
     _hideButton() {
         if (this.buttonElement) {
             this.buttonElement.style.display = 'none';
+        }
+        if (window.inputBoxAnimationManager) {
+            window.inputBoxAnimationManager.hideActive();
         }
     }
     
@@ -407,10 +446,6 @@ class PromptButtonManager {
         
         this._promptDropdown.appendChild(header);
         
-        // ============ Body 区域（可滚动） ============
-        const body = document.createElement('div');
-        body.className = 'prompt-dropdown-body';
-        
         // 获取当前平台筛选提示词
         const currentPlatform = typeof getCurrentPlatform === 'function' ? getCurrentPlatform() : null;
         const currentPlatformId = currentPlatform?.id || '';
@@ -423,13 +458,32 @@ class PromptButtonManager {
             return 0;
         });
         
+        // ============ 搜索区域（超过2条时显示） ============
+        if (sortedPrompts.length >= 5) {
+            const searchWrap = document.createElement('div');
+            searchWrap.className = 'prompt-dropdown-search';
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.className = 'prompt-dropdown-search-input';
+            searchInput.placeholder = chrome.i18n.getMessage('searchPrompt') || '搜索提示词...';
+            searchInput.autocomplete = 'off';
+            searchInput.addEventListener('input', () => {
+                this._filterPromptItems(searchInput.value.trim().toLowerCase());
+            });
+            searchWrap.appendChild(searchInput);
+            this._promptDropdown.appendChild(searchWrap);
+        }
+        
+        // ============ Body 区域（可滚动） ============
+        const body = document.createElement('div');
+        body.className = 'prompt-dropdown-body';
+        
         if (sortedPrompts.length > 0) {
             sortedPrompts.forEach(prompt => {
                 const item = this._createPromptItem(prompt);
                 body.appendChild(item);
             });
         } else {
-            // 暂无提示词
             const emptyItem = document.createElement('div');
             emptyItem.className = 'prompt-dropdown-empty';
             emptyItem.innerHTML = `
@@ -546,6 +600,36 @@ class PromptButtonManager {
         });
         
         return item;
+    }
+    
+    /**
+     * 搜索过滤提示词列表
+     */
+    _filterPromptItems(query) {
+        if (!this._promptDropdown) return;
+        const body = this._promptDropdown.querySelector('.prompt-dropdown-body');
+        if (!body) return;
+        const items = body.querySelectorAll('.prompt-dropdown-item');
+        let visibleCount = 0;
+        items.forEach(item => {
+            const name = item.querySelector('.prompt-dropdown-item-name')?.textContent || '';
+            const content = item.querySelector('.prompt-dropdown-item-content')?.textContent || '';
+            const match = !query || name.toLowerCase().includes(query) || content.toLowerCase().includes(query);
+            item.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+        });
+        let emptyTip = body.querySelector('.prompt-dropdown-search-empty');
+        if (visibleCount === 0 && query) {
+            if (!emptyTip) {
+                emptyTip = document.createElement('div');
+                emptyTip.className = 'prompt-dropdown-search-empty';
+                emptyTip.textContent = chrome.i18n.getMessage('jwvnkp') || 'No results';
+                body.appendChild(emptyTip);
+            }
+            emptyTip.style.display = '';
+        } else if (emptyTip) {
+            emptyTip.style.display = 'none';
+        }
     }
     
     /**
@@ -764,9 +848,12 @@ class PromptButtonManager {
         }
         
         // 移除按钮
-        if (this.buttonElement && this.buttonElement.parentNode) {
+        if (this.buttonElement?.parentNode) {
             this.buttonElement.parentNode.removeChild(this.buttonElement);
             this.buttonElement = null;
+        }
+        if (window.inputBoxAnimationManager) {
+            window.inputBoxAnimationManager.destroy();
         }
     }
 }

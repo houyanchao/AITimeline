@@ -199,7 +199,7 @@ class QuickAskManager {
     }
     
     /**
-     * 检查选区是否有效（在对话区域内，不在输入框内）
+     * 检查选区是否有效（必须在聊天对话区域内，且不在输入框等区域内）
      */
     _isValidSelection(selection) {
         if (!selection || selection.rangeCount === 0) return false;
@@ -207,6 +207,7 @@ class QuickAskManager {
         const range = selection.getRangeAt(0);
         const container = range.commonAncestorContainer;
         const element = container.nodeType === Node.TEXT_NODE ? container.parentElement : container;
+        if (!element) return false;
         
         // 排除输入框
         if (element.closest('textarea, [contenteditable="true"], input')) {
@@ -223,7 +224,19 @@ class QuickAskManager {
             return false;
         }
         
-        return true;
+        // 必须在聊天对话区域内（白名单机制）
+        // 优先使用 timeline 已定位的对话容器（最精确）
+        const convContainer = window.timelineManager?.conversationContainer;
+        if (convContainer && convContainer.isConnected) {
+            return convContainer.contains(element);
+        }
+        
+        // 降级：timeline 未初始化时，限制在 <main> 区域内（排除侧边栏/导航）
+        if (element.closest('main, [role="main"]')) {
+            return true;
+        }
+        
+        return false;
     }
     
     /**

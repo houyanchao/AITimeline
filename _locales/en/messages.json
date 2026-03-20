@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: AI Chat Enhancement Tool | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: AI Chat Enhancement Plugin | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "AI chat timeline, copy LaTeX formulas, quick notes, custom prompt library, run code blocks, and many more productivity features."
+    "message": "Double your AI experience. Chat timeline, folders, copy LaTeX formulas, quick notes, custom prompt library, and many more productivity features."
   },
   "qwxpzm": {
     "message": "Star"
@@ -12,13 +12,13 @@
     "message": "View Starred"
   },
   "zmvkpx": {
-    "message": "Star Conversation"
+    "message": "Star to Folder"
   },
   "bpxjkw": {
     "message": "Unstar"
   },
   "vnkxpm": {
-    "message": "Starred List"
+    "message": "Folder"
   },
   "kxpmzv": {
     "message": "Starred Successfully"
@@ -55,6 +55,51 @@
   },
   "folderRequired": {
     "message": "Please select a folder"
+  },
+  "defaultFolder": {
+    "message": "Default"
+  },
+  "pinItem": {
+    "message": "Pin to top"
+  },
+  "unpinItem": {
+    "message": "Unpin"
+  },
+  "searchPrompt": {
+    "message": "Search prompts..."
+  },
+  "sidebarStarredHint": {
+    "message": "When enabled, folders are displayed in the sidebar"
+  },
+  "sidebarStarredManage": {
+    "message": "Settings"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Sidebar Starred"
+  },
+  "animTabTitle": {
+    "message": "Fun Animation"
+  },
+  "animTabDesc": {
+    "message": "Choose a fun animation above the input box."
+  },
+  "animSnail": {
+    "message": "Snail Parade"
+  },
+  "animZombie": {
+    "message": "Zombie Walk"
+  },
+  "animAnt": {
+    "message": "Ant March"
+  },
+  "animWizard": {
+    "message": "Wizard Flight"
+  },
+  "animTabEmpty": {
+    "message": "No animations available"
+  },
+  "animGrowHint": {
+    "message": "{n} more messages"
   },
   "xvkpmz": {
     "message": "Rename"
@@ -99,7 +144,7 @@
     "message": "Folder name cannot be empty"
   },
   "pxmzvk": {
-    "message": "Rename Folder"
+    "message": "Edit Folder"
   },
   "mvzxkp": {
     "message": "Enter new name"
@@ -129,13 +174,13 @@
     "message": "Move to"
   },
   "wjxnkp": {
-    "message": "Are you sure you want to delete folder \"{folderName}\"?\n\nThis folder and its subfolders contain {count} starred items. These items will be moved to the default folder after deletion."
+    "message": "{count} starred items inside will also be deleted."
   },
   "qzmvkx": {
     "message": "Are you sure you want to delete folder \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Search starred..."
+    "message": "Search..."
   },
   "kxzpmv": {
     "message": "Save to"
@@ -150,7 +195,7 @@
     "message": "Timeline"
   },
   "mzkvxp": {
-    "message": "When enabled, an interactive timeline will be displayed on the right side of the AI conversation page."
+    "message": "When enabled, a timeline is displayed on the right side of the AI conversation page"
   },
   "vkpmzx": {
     "message": "Use ↑ / ↓ keys to navigate conversation nodes"
@@ -502,5 +547,14 @@
   },
   "aboutShareContent": {
     "message": "If this extension has been helpful, Feel free to share it on X, Reddit, YouTube, etc., and with friends, classmates, or colleagues so more people can discover it. I maintain this plugin solo with limited energy and can't spare time for marketing — what I can do is keep making it better and better. Thank you so much. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

@@ -765,7 +765,7 @@ class TimelineManager {
                 const defaultTheme = this.adapter.getDefaultChatTheme?.() || '';
                 
                 const result = await window.starInputModal.show({
-                    title: chrome.i18n.getMessage('qwxpzm'),
+                    title: chrome.i18n.getMessage('zmvkpx'),
                     defaultValue: defaultTheme,
                     placeholder: chrome.i18n.getMessage('zmxvkp'),
                     folderManager: this.folderManager,
@@ -1744,7 +1744,18 @@ class TimelineManager {
                 if (changes.chatTimelineStars) {
                     // 重新加载收藏数据
                     await this.loadStars();
-                    
+
+                    // 同步收藏整个对话按钮的状态
+                    const starBtn = this.ui.starChatBtn || document.querySelector('.ait-timeline-star-chat-btn-native');
+                    if (starBtn) {
+                        const nowStarred = await this.isChatStarred();
+                        const svg = starBtn.querySelector('svg');
+                        if (svg) {
+                            svg.setAttribute('fill', nowStarred ? 'rgb(255, 125, 3)' : 'none');
+                            svg.setAttribute('stroke', nowStarred ? 'rgb(255, 125, 3)' : 'currentColor');
+                        }
+                    }
+
                     // 同步收藏状态到所有 marker
                     this.markers.forEach(marker => {
                         const nodeId = this.adapter.extractIndexFromTurnId?.(marker.id);
@@ -2195,11 +2206,25 @@ class TimelineManager {
         const id = dot.dataset.targetTurnId;
         const isStarred = id && this.starred.has(id);
         
-        // 创建容器（用于包装 content + star）
+        // 创建容器（水平：左侧内容区 + 右侧星标）
         const container = document.createElement('div');
         container.style.display = 'flex';
         container.style.alignItems = 'center';
         container.style.gap = '8px';
+        
+        // 左侧内容区（垂直：时间在上 + 文字在下）
+        const contentWrap = document.createElement('div');
+        contentWrap.className = 'timeline-tooltip-content-wrap';
+        
+        // 时间标签（从节点 DOM 读取）
+        const marker = this.markerMap.get(id);
+        const timeStr = marker?.element?.getAttribute('data-ait-time');
+        if (timeStr) {
+            const timeTag = document.createElement('span');
+            timeTag.className = 'timeline-tooltip-time';
+            timeTag.textContent = timeStr;
+            contentWrap.appendChild(timeTag);
+        }
         
         // 创建内容区
         const content = document.createElement('div');
@@ -2254,7 +2279,8 @@ class TimelineManager {
         });
         
         // 组装
-        container.appendChild(content);
+        contentWrap.appendChild(content);
+        container.appendChild(contentWrap);
         container.appendChild(starSpan);
         
         return container;
@@ -3472,7 +3498,7 @@ class TimelineManager {
             }
             
             const result = await window.starInputModal.show({
-                title: chrome.i18n.getMessage('qwxpzm'),
+                title: chrome.i18n.getMessage('zmvkpx'),
                 defaultValue: m.summary,
                 placeholder: chrome.i18n.getMessage('zmxvkp'),
                 folderManager: this.folderManager,

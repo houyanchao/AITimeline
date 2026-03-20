@@ -1,0 +1,53 @@
+/* 僵尸行走队列 */
+.zombie-parade { position: fixed; z-index: 8; height: 42px; overflow: visible; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); }
+.zombie-track { width: 100%; height: 100%; position: relative; }
+.zombie-group { display: flex; align-items: flex-end; gap: 8px; position: absolute; bottom: 0; pointer-events: auto; cursor: pointer; animation: z-march 50s linear infinite; }
+.zombie-group:hover, .zombie-group:hover * { animation-play-state: paused !important; }
+.zombie-item { display: inline-flex; flex-shrink: 0; }
+
+.z-bob-1 { animation: z-lurch-1 1.4s ease-in-out infinite; }
+.z-bob-2 { animation: z-lurch-2 1.8s ease-in-out infinite 0.3s; }
+.z-bob-3 { animation: z-lurch-3 1.6s ease-in-out infinite 0.7s; }
+.z-bob-4 { animation: z-lurch-1 2.0s ease-in-out infinite 0.5s; }
+.z-bob-5 { animation: z-lurch-2 1.5s ease-in-out infinite 1.1s; }
+
+@keyframes z-march { 0%, 1% { transform: translateX(-100%); } 100% { transform: translateX(calc(var(--pw, 600px) + 10px)); } }
+
+@keyframes z-lurch-1 {
+    0%, 100% { transform: rotate(0deg); }
+    30% { transform: rotate(3deg); }
+    70% { transform: rotate(-2deg); }
+}
+@keyframes z-lurch-2 {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    60% { transform: rotate(2deg); }
+    85% { transform: rotate(-1deg); }
+}
+@keyframes z-lurch-3 {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(2deg); }
+    50% { transform: rotate(-3deg); }
+    80% { transform: rotate(1deg); }
+}
+
+.z-arm-front { animation: z-arm-f 1.6s ease-in-out infinite; transform-origin: left center; }
+@keyframes z-arm-f { 0%, 100% { transform: rotate(0deg); } 40% { transform: rotate(-5deg); } 80% { transform: rotate(3deg); } }
+
+.z-arm-back { animation: z-arm-b 1.6s ease-in-out infinite; transform-origin: right center; }
+@keyframes z-arm-b { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(5deg); } }
+
+.z-bob-1 .z-leg-l { animation: z-drag-l 1.4s ease-in-out infinite; transform-origin: top center; }
+.z-bob-1 .z-leg-r { animation: z-drag-r 1.4s ease-in-out infinite; transform-origin: top center; }
+.z-bob-2 .z-leg-l { animation: z-drag-l 1.8s ease-in-out infinite 0.2s; transform-origin: top center; }
+.z-bob-2 .z-leg-r { animation: z-drag-r 1.8s ease-in-out infinite 0.2s; transform-origin: top center; }
+.z-bob-3 .z-leg-l { animation: z-drag-l 1.6s ease-in-out infinite 0.5s; transform-origin: top center; }
+.z-bob-3 .z-leg-r { animation: z-drag-r 1.6s ease-in-out infinite 0.5s; transform-origin: top center; }
+.z-bob-4 .z-leg-l { animation: z-drag-l 2.0s ease-in-out infinite 0.3s; transform-origin: top center; }
+.z-bob-4 .z-leg-r { animation: z-drag-r 2.0s ease-in-out infinite 0.3s; transform-origin: top center; }
+.z-bob-5 .z-leg-l { animation: z-drag-l 1.5s ease-in-out infinite 0.8s; transform-origin: top center; }
+.z-bob-5 .z-leg-r { animation: z-drag-r 1.5s ease-in-out infinite 0.8s; transform-origin: top center; }
+@keyframes z-drag-l { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes z-drag-r { 0%,100% { transform: rotate(4deg); } 50% { transform: rotate(-4deg); } }
+
+.anim-paused * { animation-play-state: paused !important; }

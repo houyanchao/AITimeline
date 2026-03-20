@@ -661,8 +661,7 @@ class FormulaManager {
      */
     _attachUrlListeners() {
         try {
-            window.addEventListener('popstate', this._boundHandleUrlChange);
-            window.addEventListener('hashchange', this._boundHandleUrlChange);
+            window.addEventListener('url:change', this._boundHandleUrlChange);
         } catch (error) {
             console.error('[FormulaManager] Failed to attach URL listeners:', error);
         }
@@ -673,8 +672,7 @@ class FormulaManager {
      */
     _detachUrlListeners() {
         try {
-            window.removeEventListener('popstate', this._boundHandleUrlChange);
-            window.removeEventListener('hashchange', this._boundHandleUrlChange);
+            window.removeEventListener('url:change', this._boundHandleUrlChange);
         } catch (error) {
             console.error('[FormulaManager] Failed to detach URL listeners:', error);
         }

@@ -35,12 +35,11 @@ class PromptTab extends BaseTab {
     render() {
         const container = document.createElement('div');
         container.className = 'prompt-settings';
-        
-        // 平台列表
-        const smartInputPlatforms = getPlatformsByFeature('smartInput');
-        
-        container.innerHTML = `
-            <!-- 提示词列表管理模块 -->
+
+        // ==================== 滚动区域 ====================
+        const scrollArea = document.createElement('div');
+        scrollArea.className = 'prompt-settings-scroll';
+        scrollArea.innerHTML = `
             <div class="prompt-list-section">
                 <div class="prompt-list-header">
                     <div class="prompt-list-title">${chrome.i18n.getMessage('biwhckdj')}</div>
@@ -52,33 +51,33 @@ class PromptTab extends BaseTab {
                         <span>${chrome.i18n.getMessage('addkbt')}</span>
                     </button>
                 </div>
-                <div class="prompt-list-container" id="prompt-list-container">
-                    <!-- 提示词列表将动态渲染 -->
-                </div>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <!-- 平台开关模块 -->
-            <div class="platform-list">
-                <div class="platform-list-title">${chrome.i18n.getMessage('mkvzpx')}</div>
-                <div class="platform-list-hint">${chrome.i18n.getMessage('hobsidbg')}</div>
-                <div class="platform-list-container">
-                    ${smartInputPlatforms.map(platform => `
-                        <div class="platform-item">
-                            <div class="platform-info-left">
-                                <span class="platform-name">${platform.name}</span>
-                            </div>
-                            <label class="ait-toggle-switch">
-                                <input type="checkbox" class="prompt-button-toggle" data-platform-id="${platform.id}">
-                                <span class="ait-toggle-slider"></span>
-                            </label>
-                        </div>
-                    `).join('')}
-                </div>
+                <div class="prompt-list-container" id="prompt-list-container"></div>
             </div>
         `;
-        
+        container.appendChild(scrollArea);
+
+        // ==================== 底部悬浮区域 ====================
+        const bottomDivider = document.createElement('div');
+        bottomDivider.className = 'prompt-settings-bottom-divider';
+        container.appendChild(bottomDivider);
+
+        const bottomSection = document.createElement('div');
+        bottomSection.className = 'prompt-settings-bottom';
+        bottomSection.innerHTML = `
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-label">${chrome.i18n.getMessage('mkvzpx')}</div>
+                    <div class="setting-hint">${chrome.i18n.getMessage('hobsidbg')}</div>
+                </div>
+                <button class="starred-manage-btn">${chrome.i18n.getMessage('sidebarStarredManage') || 'Settings'}</button>
+            </div>
+        `;
+        container.appendChild(bottomSection);
+
+        this.addEventListener(bottomSection.querySelector('.starred-manage-btn'), 'click', () => {
+            this._showPlatformManageModal();
+        });
+
         return container;
     }
     
@@ -96,9 +95,6 @@ class PromptTab extends BaseTab {
         
         // 绑定添加按钮事件
         this.bindAddButtonEvent();
-        
-        // 加载平台开关设置
-        await this.loadPromptButtonSettings();
     }
     
     /**
@@ -640,38 +636,53 @@ class PromptTab extends BaseTab {
         }
     }
     
-    /**
-     * 加载并初始化提示词按钮设置
-     */
-    async loadPromptButtonSettings() {
-        try {
-            const result = await chrome.storage.local.get('promptButtonPlatformSettings');
-            const promptButtonSettings = result.promptButtonPlatformSettings || {};
-            
-            const promptButtonToggles = document.querySelectorAll('.prompt-button-toggle');
-            promptButtonToggles.forEach(toggle => {
-                const platformId = toggle.getAttribute('data-platform-id');
-                
-                // 设置初始状态（默认开启：!== false）
-                toggle.checked = promptButtonSettings[platformId] !== false;
-                
-                // 监听开关变化
-                this.addEventListener(toggle, 'change', async (e) => {
-                    try {
-                        const enabled = e.target.checked;
-                        const result = await chrome.storage.local.get('promptButtonPlatformSettings');
-                        const settings = result.promptButtonPlatformSettings || {};
-                        settings[platformId] = enabled;
-                        await chrome.storage.local.set({ promptButtonPlatformSettings: settings });
-                    } catch (e) {
-                        console.error('[PromptTab] Failed to save prompt button setting:', e);
-                        toggle.checked = !toggle.checked;
-                    }
-                });
+    async _showPlatformManageModal() {
+        const platforms = getPlatformsByFeature('smartInput');
+        const result = await chrome.storage.local.get('promptButtonPlatformSettings');
+        const settings = result.promptButtonPlatformSettings || {};
+
+        const overlay = document.createElement('div');
+        overlay.className = 'starred-platform-modal-overlay';
+
+        const items = platforms.map(p => {
+            const logoHtml = p.logoPath
+                ? `<img src="${chrome.runtime.getURL(p.logoPath)}" alt="${p.name}">`
+                : `<span>${p.name.charAt(0)}</span>`;
+            return `
+                <div class="starred-platform-item">
+                    <div class="starred-platform-info">
+                        <div class="starred-platform-logo">${logoHtml}</div>
+                        <span class="starred-platform-name">${p.name}</span>
+                    </div>
+                    <label class="ait-toggle-switch">
+                        <input type="checkbox" data-platform-id="${p.id}" ${settings[p.id] !== false ? 'checked' : ''}>
+                        <span class="ait-toggle-slider"></span>
+                    </label>
+                </div>`;
+        }).join('');
+
+        overlay.innerHTML = `
+            <div class="starred-platform-modal">
+                <div class="starred-platform-modal-header">
+                    <span>${chrome.i18n.getMessage('mkvzpx')}</span>
+                    <button class="starred-platform-modal-close">✕</button>
+                </div>
+                <div class="starred-platform-modal-body">${items}</div>
+            </div>`;
+
+        document.body.appendChild(overlay);
+
+        const close = () => overlay.remove();
+        overlay.querySelector('.starred-platform-modal-close').addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+        overlay.querySelectorAll('input[data-platform-id]').forEach(cb => {
+            cb.addEventListener('change', async () => {
+                const cur = (await chrome.storage.local.get('promptButtonPlatformSettings')).promptButtonPlatformSettings || {};
+                cur[cb.dataset.platformId] = cb.checked;
+                await chrome.storage.local.set({ promptButtonPlatformSettings: cur });
             });
-        } catch (e) {
-            console.error('[PromptTab] Failed to load prompt button settings:', e);
-        }
+        });
     }
     
     /**

@@ -1,0 +1,25 @@
+/* Wizard flight parade */
+.wizard-parade { position: fixed; z-index: 8; height: 48px; overflow: visible; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent); }
+.wizard-track { width: 100%; height: 100%; position: relative; }
+.wizard-group { display: flex; align-items: flex-end; gap: 0; position: absolute; bottom: 0; pointer-events: auto; cursor: pointer; animation: wizard-march 40s linear infinite; }
+.wizard-group:hover, .wizard-group:hover * { animation-play-state: paused !important; }
+.wizard-item { display: inline-flex; flex-shrink: 0; }
+
+.wizard-float { animation: wizard-bob 2s ease-in-out infinite; }
+
+@keyframes wizard-march { 0%, 1.4% { transform: translateX(-100%); } 100% { transform: translateX(calc(var(--pw, 600px) + 10px)); } }
+@keyframes wizard-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+.wizard-cape { animation: wizard-cape-flutter 1.2s ease-in-out infinite; transform-origin: top right; }
+@keyframes wizard-cape-flutter { 0%,100% { transform: skewY(0deg); } 30% { transform: skewY(3deg); } 70% { transform: skewY(-2deg); } }
+
+.wizard-star-1 { animation: wizard-twinkle 0.8s ease-in-out infinite; }
+.wizard-star-2 { animation: wizard-twinkle 1s ease-in-out infinite 0.25s; }
+.wizard-star-3 { animation: wizard-twinkle 0.9s ease-in-out infinite 0.5s; }
+.wizard-star-4 { animation: wizard-twinkle 1.1s ease-in-out infinite 0.7s; }
+@keyframes wizard-twinkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.5); } }
+
+.wizard-hat-star { animation: wizard-hat-shimmer 2s ease-in-out infinite; }
+@keyframes wizard-hat-shimmer { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+.anim-paused * { animation-play-state: paused !important; }

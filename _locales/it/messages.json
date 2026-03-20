@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Strumento chat IA | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Estensione chat IA | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Timeline chat IA, copia formule LaTeX, note rapide, libreria prompt, esecuzione codice e altro."
+    "message": "Raddoppia la tua esperienza AI. Timeline chat, cartelle, copia formule LaTeX, note rapide, libreria prompt e altro."
   },
   "qwxpzm": {
     "message": "Preferito"
@@ -12,13 +12,13 @@
     "message": "Visualizza preferiti"
   },
   "zmvkpx": {
-    "message": "Aggiungi conversazione ai preferiti"
+    "message": "Salva nella cartella"
   },
   "bpxjkw": {
     "message": "Rimuovi dai preferiti"
   },
   "vnkxpm": {
-    "message": "Lista preferiti"
+    "message": "Cartella"
   },
   "kxpmzv": {
     "message": "Aggiunto ai preferiti"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Seleziona una cartella"
+  },
+  "defaultFolder": {
+    "message": "Predefinito"
+  },
+  "pinItem": {
+    "message": "Fissa in alto"
+  },
+  "unpinItem": {
+    "message": "Rimuovi fissaggio"
+  },
+  "searchPrompt": {
+    "message": "Cerca prompt..."
+  },
+  "sidebarStarredHint": {
+    "message": "Quando attivato, le cartelle vengono visualizzate nella barra laterale"
+  },
+  "sidebarStarredManage": {
+    "message": "Impostazioni"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Preferiti barra laterale"
+  },
+  "animTabTitle": {
+    "message": "Animazione divertente"
+  },
+  "animTabDesc": {
+    "message": "Scegli un'animazione sopra la casella di input."
+  },
+  "animSnail": {
+    "message": "Parata di lumache"
+  },
+  "animZombie": {
+    "message": "Marcia degli zombie"
+  },
+  "animAnt": {
+    "message": "Marcia delle formiche"
+  },
+  "animWizard": {
+    "message": "Mago"
+  },
+  "animTabEmpty": {
+    "message": "Nessuna animazione disponibile"
+  },
+  "animGrowHint": {
+    "message": "Ancora {n} messaggi"
   },
   "xvkpmz": {
     "message": "Rinomina"
@@ -105,7 +150,7 @@
     "message": "Il nome della cartella non può essere vuoto"
   },
   "pxmzvk": {
-    "message": "Rinomina cartella"
+    "message": "Modifica cartella"
   },
   "mvzxkp": {
     "message": "Inserisci nuovo nome"
@@ -135,13 +180,13 @@
     "message": "Sposta in"
   },
   "wjxnkp": {
-    "message": "Sei sicuro di voler eliminare la cartella \"{folderName}\"?\n\nQuesta cartella e le sue sottocartelle contengono {count} elementi preferiti. Dopo l'eliminazione, questi elementi saranno spostati nella cartella predefinita."
+    "message": "{count} elementi preferiti saranno eliminati."
   },
   "qzmvkx": {
     "message": "Sei sicuro di voler eliminare la cartella \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Cerca nei preferiti..."
+    "message": "Cerca..."
   },
   "kxzpmv": {
     "message": "Salva in"
@@ -156,7 +201,7 @@
     "message": "Cronologia"
   },
   "mzkvxp": {
-    "message": "Quando attivato, una cronologia interattiva verrà visualizzata sul lato destro della pagina di conversazione IA."
+    "message": "Quando attivato, una cronologia viene visualizzata sul lato destro della pagina di conversazione IA"
   },
   "vkpmzx": {
     "message": "Usa i tasti ↑ / ↓ per navigare tra i nodi della conversazione"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Se questa estensione ti è stata utile, sentiti libero di condividerla su X, Reddit, YouTube, ecc., e con amici, compagni o colleghi. Mantengo questo plugin da solo e non posso dedicare tempo al marketing — quello che posso fare è renderlo sempre migliore. Grazie mille. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

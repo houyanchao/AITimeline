@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: KI-Chat-Erweiterungstool | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: KI-Chat-Erweiterung | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "AI-Chat-Timeline, LaTeX-Formeln kopieren, Schnellnotizen, Prompt-Bibliothek, Code ausführen und mehr."
+    "message": "Verdoppeln Sie Ihr AI-Erlebnis. Chat-Timeline, Ordner, LaTeX-Formeln kopieren, Schnellnotizen, Prompt-Bibliothek und mehr."
   },
   "qwxpzm": {
     "message": "Favorisieren"
@@ -12,13 +12,13 @@
     "message": "Favoriten ansehen"
   },
   "zmvkpx": {
-    "message": "Gespräch favorisieren"
+    "message": "In Ordner speichern"
   },
   "bpxjkw": {
     "message": "Favorit entfernen"
   },
   "vnkxpm": {
-    "message": "Favoritenliste"
+    "message": "Ordner"
   },
   "kxpmzv": {
     "message": "Erfolgreich favorisiert"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Bitte wählen Sie einen Ordner"
+  },
+  "defaultFolder": {
+    "message": "Standard"
+  },
+  "pinItem": {
+    "message": "Anheften"
+  },
+  "unpinItem": {
+    "message": "Lösen"
+  },
+  "searchPrompt": {
+    "message": "Prompts suchen..."
+  },
+  "sidebarStarredHint": {
+    "message": "Wenn aktiviert, werden Ordner in der Seitenleiste angezeigt"
+  },
+  "sidebarStarredManage": {
+    "message": "Einstellungen"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Seitenleiste Favoriten"
+  },
+  "animTabTitle": {
+    "message": "Spaß-Animation"
+  },
+  "animTabDesc": {
+    "message": "Wähle eine Animation über dem Eingabefeld."
+  },
+  "animSnail": {
+    "message": "Schneckenparade"
+  },
+  "animZombie": {
+    "message": "Zombie-Marsch"
+  },
+  "animAnt": {
+    "message": "Ameisenmarsch"
+  },
+  "animWizard": {
+    "message": "Zauberer"
+  },
+  "animTabEmpty": {
+    "message": "Keine Animationen verfügbar"
+  },
+  "animGrowHint": {
+    "message": "Noch {n} Nachrichten"
   },
   "xvkpmz": {
     "message": "Umbenennen"
@@ -105,7 +150,7 @@
     "message": "Ordnername darf nicht leer sein"
   },
   "pxmzvk": {
-    "message": "Ordner umbenennen"
+    "message": "Ordner bearbeiten"
   },
   "mvzxkp": {
     "message": "Neuen Namen eingeben"
@@ -135,13 +180,13 @@
     "message": "Verschieben nach"
   },
   "wjxnkp": {
-    "message": "Möchten Sie den Ordner \"{folderName}\" wirklich löschen?\n\nDieser Ordner und seine Unterordner enthalten {count} Favoriten. Nach dem Löschen werden diese in den Standardordner verschoben."
+    "message": "{count} Favoriten werden ebenfalls gelöscht."
   },
   "qzmvkx": {
     "message": "Möchten Sie den Ordner \"{folderName}\" wirklich löschen?"
   },
   "mvkzpx": {
-    "message": "Favoriten durchsuchen..."
+    "message": "Suchen..."
   },
   "kxzpmv": {
     "message": "Speichern unter"
@@ -156,7 +201,7 @@
     "message": "Zeitleiste"
   },
   "mzkvxp": {
-    "message": "Wenn aktiviert, wird eine interaktive Zeitleiste auf der rechten Seite der KI-Gesprächsseite angezeigt."
+    "message": "Wenn aktiviert, wird eine Zeitleiste auf der rechten Seite der KI-Gesprächsseite angezeigt"
   },
   "vkpmzx": {
     "message": "Mit ↑ / ↓ Tasten zwischen Gesprächsknoten navigieren"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Wenn Ihnen diese Erweiterung geholfen hat, teilen Sie es gerne auf X, Reddit, YouTube usw. und mit Freunden, Kommilitonen oder Kollegen teilen. Ich pflege dieses Plugin allein und kann keine Zeit für Marketing aufwenden — was ich tun kann, ist es immer besser zu machen. Vielen Dank. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

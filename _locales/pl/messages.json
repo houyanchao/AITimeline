@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Narzędzie ulepszania czatu AI | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Wtyczka do czatu AI | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Oś czasu czatu AI, kopiowanie formuł LaTeX, szybkie notatki, biblioteka promptów, uruchamianie kodu i wiele więcej."
+    "message": "Podwój swoje doświadczenie z AI. Oś czasu czatu, foldery, kopiowanie formuł LaTeX, szybkie notatki, biblioteka promptów i wiele więcej."
   },
   "qwxpzm": {
     "message": "Ulubione"
@@ -12,13 +12,13 @@
     "message": "Zobacz ulubione"
   },
   "zmvkpx": {
-    "message": "Dodaj rozmowę do ulubionych"
+    "message": "Zapisz w folderze"
   },
   "bpxjkw": {
     "message": "Usuń z ulubionych"
   },
   "vnkxpm": {
-    "message": "Lista ulubionych"
+    "message": "Folder"
   },
   "kxpmzv": {
     "message": "Dodano do ulubionych"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Proszę wybrać folder"
+  },
+  "defaultFolder": {
+    "message": "Domyślny"
+  },
+  "pinItem": {
+    "message": "Przypnij"
+  },
+  "unpinItem": {
+    "message": "Odepnij"
+  },
+  "searchPrompt": {
+    "message": "Szukaj promptów..."
+  },
+  "sidebarStarredHint": {
+    "message": "Po włączeniu foldery są wyświetlane na pasku bocznym"
+  },
+  "sidebarStarredManage": {
+    "message": "Ustawienia"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Ulubione na pasku bocznym"
+  },
+  "animTabTitle": {
+    "message": "Zabawna animacja"
+  },
+  "animTabDesc": {
+    "message": "Wybierz animację nad polem tekstowym."
+  },
+  "animSnail": {
+    "message": "Parada ślimaków"
+  },
+  "animZombie": {
+    "message": "Marsz zombie"
+  },
+  "animAnt": {
+    "message": "Marsz mrówek"
+  },
+  "animWizard": {
+    "message": "Czarodziej"
+  },
+  "animTabEmpty": {
+    "message": "Brak dostępnych animacji"
+  },
+  "animGrowHint": {
+    "message": "Jeszcze {n} wiadomości"
   },
   "xvkpmz": {
     "message": "Zmień nazwę"
@@ -105,7 +150,7 @@
     "message": "Nazwa folderu nie może być pusta"
   },
   "pxmzvk": {
-    "message": "Zmień nazwę folderu"
+    "message": "Edytuj folder"
   },
   "mvzxkp": {
     "message": "Wprowadź nową nazwę"
@@ -135,13 +180,13 @@
     "message": "Przenieś do"
   },
   "wjxnkp": {
-    "message": "Czy na pewno chcesz usunąć folder \"{folderName}\"?\n\nTen folder i jego podfoldery zawierają {count} ulubionych elementów. Po usunięciu te elementy zostaną przeniesione do folderu domyślnego."
+    "message": "{count} ulubionych elementów zostanie również usuniętych."
   },
   "qzmvkx": {
     "message": "Czy na pewno chcesz usunąć folder \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Szukaj w ulubionych..."
+    "message": "Szukaj..."
   },
   "kxzpmv": {
     "message": "Zapisz w"
@@ -156,7 +201,7 @@
     "message": "Oś czasu"
   },
   "mzkvxp": {
-    "message": "Po włączeniu, interaktywna oś czasu będzie wyświetlana po prawej stronie strony rozmowy AI."
+    "message": "Po włączeniu oś czasu jest wyświetlana po prawej stronie strony rozmowy AI"
   },
   "vkpmzx": {
     "message": "Użyj klawiszy ↑ / ↓ do nawigacji między węzłami rozmowy"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Jeśli to rozszerzenie Ci pomogło, zachęcam do udostępnienia go na X, Reddit, YouTube itp., a także znajomym, kolegom z klasy lub współpracownikom. Utrzymuję tę wtyczkę sam i nie mogę poświęcać czasu na marketing — mogę jedynie dbać o to, by była coraz lepsza. Dziękuję bardzo. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

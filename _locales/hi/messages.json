@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: AI चैट संवर्धन टूल | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: AI चैट संवर्धन प्लगइन | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "AI चैट टाइमलाइन, LaTeX सूत्र कॉपी, त्वरित नोट्स, कस्टम प्रॉम्प्ट, कोड चलाएं और कई उत्पादकता सुविधाएं।"
+    "message": "AI अनुभव को दोगुना करें। चैट टाइमलाइन, फ़ोल्डर, LaTeX सूत्र कॉपी, त्वरित नोट्स, कस्टम प्रॉम्प्ट और कई उत्पादकता सुविधाएं।"
   },
   "qwxpzm": {
     "message": "पसंदीदा"
@@ -12,13 +12,13 @@
     "message": "पसंदीदा देखें"
   },
   "zmvkpx": {
-    "message": "वार्तालाप पसंदीदा में जोड़ें"
+    "message": "फ़ोल्डर में सहेजें"
   },
   "bpxjkw": {
     "message": "पसंदीदा से हटाएं"
   },
   "vnkxpm": {
-    "message": "पसंदीदा सूची"
+    "message": "फ़ोल्डर"
   },
   "kxpmzv": {
     "message": "पसंदीदा में जोड़ा गया"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "कृपया एक फ़ोल्डर चुनें"
+  },
+  "defaultFolder": {
+    "message": "डिफ़ॉल्ट"
+  },
+  "pinItem": {
+    "message": "पिन करें"
+  },
+  "unpinItem": {
+    "message": "अनपिन करें"
+  },
+  "searchPrompt": {
+    "message": "प्रॉम्प्ट खोजें..."
+  },
+  "sidebarStarredHint": {
+    "message": "सक्षम होने पर, साइडबार में फ़ोल्डर प्रदर्शित होते हैं"
+  },
+  "sidebarStarredManage": {
+    "message": "सेटिंग्स"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "साइडबार स्टार प्रबंधन"
+  },
+  "animTabTitle": {
+    "message": "मज़ेदार एनिमेशन"
+  },
+  "animTabDesc": {
+    "message": "इनपुट बॉक्स के ऊपर एक एनिमेशन चुनें।"
+  },
+  "animSnail": {
+    "message": "घोंघा परेड"
+  },
+  "animZombie": {
+    "message": "ज़ॉम्बी वॉक"
+  },
+  "animAnt": {
+    "message": "चींटी मार्च"
+  },
+  "animWizard": {
+    "message": "जादूगर"
+  },
+  "animTabEmpty": {
+    "message": "कोई एनिमेशन उपलब्ध नहीं"
+  },
+  "animGrowHint": {
+    "message": "{n} और संदेश"
   },
   "xvkpmz": {
     "message": "नाम बदलें"
@@ -105,7 +150,7 @@
     "message": "फ़ोल्डर का नाम खाली नहीं हो सकता"
   },
   "pxmzvk": {
-    "message": "फ़ोल्डर का नाम बदलें"
+    "message": "फ़ोल्डर संपादित करें"
   },
   "mvzxkp": {
     "message": "नया नाम दर्ज करें"
@@ -135,13 +180,13 @@
     "message": "यहां स्थानांतरित करें"
   },
   "wjxnkp": {
-    "message": "क्या आप वाकई \"{folderName}\" फ़ोल्डर को हटाना चाहते हैं?\n\nइस फ़ोल्डर और इसके सबफ़ोल्डर में {count} पसंदीदा आइटम हैं। हटाने के बाद, ये आइटम डिफ़ॉल्ट फ़ोल्डर में स्थानांतरित कर दिए जाएंगे।"
+    "message": "{count} पसंदीदा आइटम भी हटा दिए जाएंगे।"
   },
   "qzmvkx": {
     "message": "क्या आप वाकई \"{folderName}\" फ़ोल्डर को हटाना चाहते हैं?"
   },
   "mvkzpx": {
-    "message": "पसंदीदा खोजें..."
+    "message": "खोजें..."
   },
   "kxzpmv": {
     "message": "यहां सहेजें"
@@ -156,7 +201,7 @@
     "message": "टाइमलाइन"
   },
   "mzkvxp": {
-    "message": "सक्षम होने पर, AI वार्तालाप पृष्ठ के दाईं ओर एक इंटरैक्टिव टाइमलाइन प्रदर्शित होगी।"
+    "message": "सक्षम होने पर, AI वार्तालाप पृष्ठ के दाईं ओर एक टाइमलाइन प्रदर्शित होती है"
   },
   "vkpmzx": {
     "message": "वार्तालाप नोड्स के बीच नेविगेट करने के लिए ↑ / ↓ कुंजियों का उपयोग करें"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "अगर यह एक्सटेंशन आपके काम आया, तो X, Reddit, YouTube आदि पर शेयर करें, और दोस्तों, सहपाठियों या सहकर्मियों के साथ शेयर करें। मैं अकेले इस प्लगइन को मैन्टेन करता हूँ, मार्केटिंग के लिए समय नहीं है — जो मैं कर सकता हूँ वह है इसे बेहतर से बेहतर बनाते रहना। बहुत धन्यवाद। ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

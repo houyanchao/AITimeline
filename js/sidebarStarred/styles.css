@@ -1,56 +1,77 @@
 /**
  * Sidebar Starred Styles
- * 简洁的文件夹展开/收起列表
+ *
+ * 树结构复用 StarredTreeRenderer 的 DOM 类名（ait-folder-* / timeline-starred-item），
+ * 此文件只定义侧边栏容器（ait-sidebar-starred）和 header（ait-ss-*）的样式，
+ * 树节点样式由 panelModal/tabs/starred/styles.css 统一管理。
  */
 
-.ait-sidebar-starred { padding: 20px 0 0px 10px; }
+.ait-sidebar-starred { padding: 10px 0 5px 10px; }
+.ait-sidebar-starred.gemini { padding-bottom: 0; }
+.ait-sidebar-starred.chatgpt { padding-top: 0; padding-left: 0; margin-top: -10px; }
+.ait-sidebar-starred.doubao { padding-top: 0; padding-left: 0; padding-bottom: 10px; margin-left: -6px; margin-top: -5px; }
+.ait-sidebar-starred.kimi { margin-left: -12px; }
+.ait-sidebar-starred.deepseek { padding-top: 18px; padding-left: 0; padding-bottom: 0; margin-left: -6px; margin-bottom: -5px; }
+.ait-sidebar-starred.claude { padding: 8px 0 0 0; margin-left: -10px; }
+.ait-sidebar-starred.tongyi { padding-top: 5px; }
+.ait-sidebar-starred.deepseek .ait-ss-list { max-height: 300px; overflow-y: scroll; margin-right: -5px; padding-right: 5px; }
+.ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar { width: 4px; }
+.ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar-track { background: transparent; }
+.ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 4px; }
+.ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.35); }
+body.dark-theme .ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
+body.dark-theme .ait-sidebar-starred.deepseek .ait-ss-list::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.35); }
+.ait-ss-list { padding-right: 5px; }
 
 /* Header */
-.ait-ss-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 4px 16px; margin-bottom: 2px; }
+.ait-ss-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 12px 4px 10px; margin-bottom: 2px; }
+.ait-ss-title-area { display: flex; align-items: center; gap: 2px; user-select: none; border-radius: 6px; padding: 2px 4px 2px 2px; transition: background-color 0.15s; }
+.ait-ss-title-area:hover { background-color: rgba(68, 71, 70, 0.08); }
 .ait-ss-title { font-size: 14px; font-weight: 600; color: #1f1f1f; user-select: none; }
+
+/* Chevron */
+.ait-ss-chevron { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex-shrink: 0; color: #444746; transition: transform 0.2s ease; transform: rotate(90deg); }
+.ait-ss-chevron svg { width: 16px; height: 16px; }
+.ait-ss-collapsed .ait-ss-chevron { transform: rotate(0deg); }
+
+/* Collapse */
+.ait-ss-collapsed .ait-ss-list { display: none; }
+.ait-ss-collapsed .ait-ss-header-actions { display: none; }
+
+.ait-ss-header-actions { display: flex; align-items: center; gap: 2px; }
 .ait-ss-add-btn { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: none; background: transparent; border-radius: 50%; cursor: pointer; color: #444746; padding: 0; transition: background-color 0.2s; }
 .ait-ss-add-btn:hover { background-color: rgba(68, 71, 70, 0.08); }
 
-/* Folder row */
-.ait-ss-folder-row { display: flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px 0 6px; margin: 0 8px; border-radius: 16px; cursor: pointer; user-select: none; transition: background-color 0.15s; }
-.ait-ss-folder-row:hover { background-color: rgba(68, 71, 70, 0.08); }
-
-/* Chevron */
-.ait-ss-chevron { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex-shrink: 0; color: #444746; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-.ait-ss-chevron.open { transform: rotate(90deg); }
-.ait-ss-chevron svg { width: 16px; height: 16px; }
-
-/* Folder icon */
-.ait-ss-folder-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 18px; height: 18px; font-size: 14px; line-height: 1; }
-
-/* Folder name */
-.ait-ss-name { font-size: 14px; font-weight: 500; color: #444746; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-
-/* Folder body (grid collapse) */
-.ait-ss-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-.ait-ss-body > * { overflow: hidden; }
-.ait-ss-body.open { grid-template-rows: 1fr; }
-
-/* Nested folder indent */
-.ait-ss-folder .ait-ss-folder .ait-ss-folder-row { padding-left: 28px; }
-.ait-ss-folder .ait-ss-folder .ait-ss-item { padding-left: 44px; }
-
-/* Item */
-.ait-ss-item { height: 32px; display: flex; align-items: center; padding: 0 12px 0 36px; margin: 0 8px; border-radius: 16px; font-size: 14px; font-weight: 500; color: #444746; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: background-color 0.15s; }
-.ait-ss-item:hover { background-color: rgba(68, 71, 70, 0.08); }
+/* 收藏项：整体缩进，hover 背景无左侧空白 */
+.ait-sidebar-starred > .ait-ss-list > .timeline-starred-item { margin-left: 24px; }
+.ait-sidebar-starred .ait-folder-content .timeline-starred-item { margin-left: 10px; }
 
 /* Empty */
 .ait-ss-empty { padding: 16px; font-size: 13px; color: #70757a; text-align: center; }
 
 /* ============ Dark theme ============ */
 body.dark-theme .ait-ss-title { color: #e8eaed; }
-body.dark-theme .ait-ss-add-btn, body.dark-theme .ait-ss-chevron { color: #9aa0a6; }
-body.dark-theme .ait-ss-name, body.dark-theme .ait-ss-item { color: #dadce0; }
-body.dark-theme .ait-ss-folder-row:hover, body.dark-theme .ait-ss-item:hover, body.dark-theme .ait-ss-add-btn:hover { background-color: rgba(232, 234, 237, 0.08); }
+body.dark-theme .ait-ss-chevron { color: #9aa0a6; }
+body.dark-theme .ait-ss-title-area:hover { background-color: rgba(232, 234, 237, 0.08); }
+body.dark-theme .ait-ss-add-btn { color: #9aa0a6; }
+body.dark-theme .ait-ss-add-btn:hover { background-color: rgba(232, 234, 237, 0.08); }
 body.dark-theme .ait-ss-empty { color: #9aa0a6; }
 
 html[data-timeline-theme="dark"] .ait-ss-title { color: #e8eaed; }
-html[data-timeline-theme="dark"] .ait-ss-add-btn, html[data-timeline-theme="dark"] .ait-ss-chevron { color: #9aa0a6; }
-html[data-timeline-theme="dark"] .ait-ss-name, html[data-timeline-theme="dark"] .ait-ss-item { color: #dadce0; }
-html[data-timeline-theme="dark"] .ait-ss-folder-row:hover, html[data-timeline-theme="dark"] .ait-ss-item:hover, html[data-timeline-theme="dark"] .ait-ss-add-btn:hover { background-color: rgba(232, 234, 237, 0.08); }
+html[data-timeline-theme="dark"] .ait-ss-chevron { color: #9aa0a6; }
+html[data-timeline-theme="dark"] .ait-ss-title-area:hover { background-color: rgba(232, 234, 237, 0.08); }
+html[data-timeline-theme="dark"] .ait-ss-add-btn { color: #9aa0a6; }
+html[data-timeline-theme="dark"] .ait-ss-add-btn:hover { background-color: rgba(232, 234, 237, 0.08); }
 html[data-timeline-theme="dark"] .ait-ss-empty { color: #9aa0a6; }
+
+/* 侧边栏对话项收藏标记 */
+.ait-conv-starred-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 4px;
+    vertical-align: middle;
+    line-height: 1;
+    position: relative;
+    top: -2px;
+}

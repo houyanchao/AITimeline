@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: Alat Peningkatan Obrolan AI | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: Plugin Peningkatan Obrolan AI | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "Timeline obrolan AI, salin rumus LaTeX, catatan cepat, pustaka prompt, jalankan kode, dan banyak fitur produktivitas lainnya."
+    "message": "Gandakan pengalaman AI Anda. Timeline obrolan, folder, salin rumus LaTeX, catatan cepat, pustaka prompt, dan banyak fitur produktivitas lainnya."
   },
   "qwxpzm": {
     "message": "Favorit"
@@ -12,13 +12,13 @@
     "message": "Lihat Favorit"
   },
   "zmvkpx": {
-    "message": "Tambahkan percakapan ke favorit"
+    "message": "Simpan ke folder"
   },
   "bpxjkw": {
     "message": "Hapus dari favorit"
   },
   "vnkxpm": {
-    "message": "Daftar Favorit"
+    "message": "Folder"
   },
   "kxpmzv": {
     "message": "Ditambahkan ke favorit"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "Silakan pilih folder"
+  },
+  "defaultFolder": {
+    "message": "Default"
+  },
+  "pinItem": {
+    "message": "Sematkan"
+  },
+  "unpinItem": {
+    "message": "Lepas"
+  },
+  "searchPrompt": {
+    "message": "Cari prompt..."
+  },
+  "sidebarStarredHint": {
+    "message": "Saat diaktifkan, folder ditampilkan di bilah sisi"
+  },
+  "sidebarStarredManage": {
+    "message": "Pengaturan"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "Kelola favorit bilah sisi"
+  },
+  "animTabTitle": {
+    "message": "Animasi lucu"
+  },
+  "animTabDesc": {
+    "message": "Pilih animasi di atas kotak input."
+  },
+  "animSnail": {
+    "message": "Parade siput"
+  },
+  "animZombie": {
+    "message": "Zombie berjalan"
+  },
+  "animAnt": {
+    "message": "Barisan semut"
+  },
+  "animWizard": {
+    "message": "Penyihir"
+  },
+  "animTabEmpty": {
+    "message": "Tidak ada animasi"
+  },
+  "animGrowHint": {
+    "message": "{n} pesan lagi"
   },
   "xvkpmz": {
     "message": "Ganti nama"
@@ -105,7 +150,7 @@
     "message": "Nama folder tidak boleh kosong"
   },
   "pxmzvk": {
-    "message": "Ganti nama folder"
+    "message": "Edit folder"
   },
   "mvzxkp": {
     "message": "Masukkan nama baru"
@@ -135,13 +180,13 @@
     "message": "Pindahkan ke"
   },
   "wjxnkp": {
-    "message": "Yakin ingin menghapus folder \"{folderName}\"?\n\nFolder ini dan subfoldernya berisi {count} item favorit. Setelah dihapus, item-item ini akan dipindahkan ke folder default."
+    "message": "{count} item favorit juga akan dihapus."
   },
   "qzmvkx": {
     "message": "Yakin ingin menghapus folder \"{folderName}\"?"
   },
   "mvkzpx": {
-    "message": "Cari favorit..."
+    "message": "Cari..."
   },
   "kxzpmv": {
     "message": "Simpan ke"
@@ -156,7 +201,7 @@
     "message": "Lini Masa"
   },
   "mzkvxp": {
-    "message": "Saat diaktifkan, lini masa interaktif akan ditampilkan di sisi kanan halaman percakapan AI."
+    "message": "Saat diaktifkan, lini masa ditampilkan di sisi kanan halaman percakapan AI"
   },
   "vkpmzx": {
     "message": "Gunakan tombol ↑ / ↓ untuk navigasi antar node percakapan"
@@ -433,5 +478,14 @@
   },
   "aboutShareContent": {
     "message": "Jika ekstensi ini membantu, silakan bagikan di X, Reddit, YouTube, dll., dan ke teman, teman sekelas, atau rekan kerja. Saya mengelola plugin ini sendirian dan tidak bisa meluangkan waktu untuk pemasaran — yang bisa saya lakukan adalah membuatnya semakin baik. Terima kasih banyak. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "Star to Folder"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "Already starred"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "Starred successfully"
   }
 }

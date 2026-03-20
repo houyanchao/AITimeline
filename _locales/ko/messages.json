@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "AI Timeline: AI 대화 향상 도구 | GPT, Gemini, DeepSeek, Qwen"
+    "message": "AI Timeline: AI 대화 향상 플러그인 | GPT, Gemini, DeepSeek, Kimi"
   },
   "extDescription": {
-    "message": "AI 채팅 타임라인, LaTeX 수식 복사, 빠른 메모, 맞춤 프롬프트, 코드 실행 등 다양한 생산성 기능."
+    "message": "AI 사용 경험을 두 배로. 대화 타임라인, 폴더, LaTeX 수식 복사, 빠른 메모, 맞춤 프롬프트 등 다양한 생산성 기능."
   },
   "qwxpzm": {
     "message": "즐겨찾기"
@@ -12,13 +12,13 @@
     "message": "즐겨찾기 보기"
   },
   "zmvkpx": {
-    "message": "대화 즐겨찾기"
+    "message": "폴더에 저장"
   },
   "bpxjkw": {
     "message": "즐겨찾기 해제"
   },
   "vnkxpm": {
-    "message": "즐겨찾기 목록"
+    "message": "폴더"
   },
   "kxpmzv": {
     "message": "즐겨찾기에 추가됨"
@@ -61,6 +61,51 @@
   },
   "folderRequired": {
     "message": "폴더를 선택해 주세요"
+  },
+  "defaultFolder": {
+    "message": "기본 폴더"
+  },
+  "pinItem": {
+    "message": "상단 고정"
+  },
+  "unpinItem": {
+    "message": "고정 해제"
+  },
+  "searchPrompt": {
+    "message": "프롬프트 검색..."
+  },
+  "sidebarStarredHint": {
+    "message": "활성화하면 사이드바에 폴더가 표시됩니다"
+  },
+  "sidebarStarredManage": {
+    "message": "설정"
+  },
+  "sidebarStarredManageTitle": {
+    "message": "사이드바 즐겨찾기 관리"
+  },
+  "animTabTitle": {
+    "message": "재미있는 애니메이션"
+  },
+  "animTabDesc": {
+    "message": "입력란 위에 재미있는 애니메이션을 표시합니다."
+  },
+  "animSnail": {
+    "message": "달팽이 행진"
+  },
+  "animZombie": {
+    "message": "좀비 행진"
+  },
+  "animAnt": {
+    "message": "개미 행진"
+  },
+  "animWizard": {
+    "message": "마법사"
+  },
+  "animTabEmpty": {
+    "message": "사용 가능한 애니메이션이 없습니다"
+  },
+  "animGrowHint": {
+    "message": "{n}개 메시지 더"
   },
   "xvkpmz": {
     "message": "이름 변경"
@@ -105,7 +150,7 @@
     "message": "폴더 이름은 비워둘 수 없습니다"
   },
   "pxmzvk": {
-    "message": "폴더 이름 변경"
+    "message": "폴더 편집"
   },
   "mvzxkp": {
     "message": "새 이름을 입력하세요"
@@ -135,13 +180,13 @@
     "message": "이동 위치"
   },
   "wjxnkp": {
-    "message": "「{folderName}」 폴더를 삭제하시겠습니까?\n\n이 폴더와 하위 폴더에는 {count}개의 즐겨찾기 항목이 있습니다. 삭제 후 이 항목들은 기본 폴더로 이동됩니다."
+    "message": "{count}개의 즐겨찾기 항목도 함께 삭제됩니다."
   },
   "qzmvkx": {
     "message": "「{folderName}」 폴더를 삭제하시겠습니까?"
   },
   "mvkzpx": {
-    "message": "즐겨찾기 검색..."
+    "message": "검색..."
   },
   "kxzpmv": {
     "message": "즐겨찾기에 저장"
@@ -156,7 +201,7 @@
     "message": "타임라인"
   },
   "mzkvxp": {
-    "message": "활성화하면 AI 대화 페이지 오른쪽에 인터랙티브 타임라인이 표시됩니다."
+    "message": "활성화하면 AI 대화 페이지 오른쪽에 타임라인이 표시됩니다"
   },
   "vkpmzx": {
     "message": "↑ / ↓ 키로 대화 노드 이동"
@@ -460,5 +505,14 @@
   },
   "aboutShareContent": {
     "message": "이 플러그인이 도움이 되었다면, X, Reddit, YouTube 등에서 공유해 주시고, 친구나 동료에게도 공유해 주세요. 혼자서 유지보수하는 플러그인이라 마케팅에 시간을 할애할 수 없지만, 플러그인을 점점 더 좋게 만들겠습니다. 감사합니다. ❤️"
+  },
+  "nativeMenuStarToFolder": {
+    "message": "폴더에 즐겨찾기"
+  },
+  "nativeMenuAlreadyStarred": {
+    "message": "이미 즐겨찾기됨"
+  },
+  "nativeMenuStarSuccess": {
+    "message": "즐겨찾기 완료"
   }
 }

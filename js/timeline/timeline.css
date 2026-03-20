@@ -338,6 +338,23 @@ html[data-timeline-theme="dark"] .ait-timeline-dot.active::after {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 26 26"><path fill="rgb(255, 125, 3)" stroke="rgb(255, 125, 3)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>');
 }
 
+/* Tooltip 内容包装（垂直：时间在上 + 文字在下） */
+.timeline-tooltip-content-wrap {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 时间标签 */
+.timeline-tooltip-time {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.5;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
 /* ✅ 重新设计：Tooltip 内容区域（简化，不依赖 -webkit-line-clamp） */
 .timeline-tooltip-content {
     flex: 0 1 auto; /* 自适应内容宽度，不占据剩余空间 */
