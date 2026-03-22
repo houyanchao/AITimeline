@@ -333,7 +333,7 @@
     "message": "복사 형식 선택"
   },
   "dataSyncTabName": {
-    "message": "데이터 마이그레이션"
+    "message": "데이터 동기화"
   },
   "exportTitle": {
     "message": "수동 동기화"

@@ -381,7 +381,7 @@
     "message": "Click on a formula to copy it in MathML format, paste directly into Word"
   },
   "dataSyncTabName": {
-    "message": "Data Migration"
+    "message": "Data Sync"
   },
   "exportTitle": {
     "message": "Manual Sync"

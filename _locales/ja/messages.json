@@ -333,7 +333,7 @@
     "message": "コピー形式を選択"
   },
   "dataSyncTabName": {
-    "message": "データ移行"
+    "message": "データ同期"
   },
   "exportTitle": {
     "message": "手動同期"

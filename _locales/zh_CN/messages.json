@@ -393,7 +393,7 @@
     "message": "点击公式复制为 MathML 格式，可直接粘贴到 Word"
   },
   "dataSyncTabName": {
-    "message": "数据迁移"
+    "message": "数据同步"
   },
   "exportTitle": {
     "message": "手动同步"
