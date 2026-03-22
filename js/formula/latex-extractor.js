@@ -104,13 +104,38 @@ class FormulaSourceParser {
 
     /**
      * 从公式元素中解析 MathML
-     * temml 作为 content_script 直接加载，同步可用
+     * 
+     * 策略：
+     * 1. 优先从 DOM 直接提取（零转换成本）
+     * 2. 兜底：通过已提取的 LaTeX 经 temml 转换
      * 
      * @param {Element} formulaElement - 公式 DOM 元素
      * @returns {string|null} - MathML XML 字符串，失败返回 null
      */
     static parseMathML(formulaElement) {
         if (!formulaElement) return null;
+
+        // ==================== 策略1: 从 DOM 直接提取 MathML ====================
+
+        // 方法1: data-mathml 属性（MathJax 2.x SVG 输出）
+        if (formulaElement.hasAttribute('data-mathml')) {
+            const raw = formulaElement.getAttribute('data-mathml');
+            if (raw) return raw;
+        }
+
+        // 方法2: .MJX_Assistive_MathML 中的 <math> 元素（MathJax 2.x 无障碍节点）
+        const assistiveMath = formulaElement.querySelector('.MJX_Assistive_MathML math');
+        if (assistiveMath) {
+            return assistiveMath.outerHTML;
+        }
+
+        // 方法3: 兄弟 script[type="math/mml"]（MathJax MathML 输入格式）
+        const mmlScript = FormulaSourceParser._findMathMmlScript(formulaElement);
+        if (mmlScript) {
+            return mmlScript;
+        }
+
+        // ==================== 策略2: LaTeX → MathML 转换（兜底）====================
 
         const latexSource = formulaElement.getAttribute('data-latex-source');
         if (latexSource) {
@@ -122,31 +147,56 @@ class FormulaSourceParser {
     }
 
     /**
-     * 将 LaTeX 转换为 MathML
+     * 从兄弟元素中查找 math/mml script
+     */
+    static _findMathMmlScript(formulaElement) {
+        let sibling = formulaElement.nextElementSibling;
+        if (sibling?.tagName === 'SCRIPT' && sibling.type?.startsWith('math/mml')) {
+            return sibling.textContent.trim();
+        }
+        sibling = formulaElement.previousElementSibling;
+        if (sibling?.tagName === 'SCRIPT' && sibling.type?.startsWith('math/mml')) {
+            return sibling.textContent.trim();
+        }
+
+        if (formulaElement.parentElement) {
+            sibling = formulaElement.parentElement.nextElementSibling;
+            if (sibling?.tagName === 'SCRIPT' && sibling.type?.startsWith('math/mml')) {
+                return sibling.textContent.trim();
+            }
+            sibling = formulaElement.parentElement.previousElementSibling;
+            if (sibling?.tagName === 'SCRIPT' && sibling.type?.startsWith('math/mml')) {
+                return sibling.textContent.trim();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 通过 temml 引擎将 LaTeX 公式转为 MathML 标记
      * @param {string} latex - LaTeX 源码
-     * @returns {string|null}
+     * @returns {string|null} MathML 字符串，转换失败返回 null
      */
     static latexToMathML(latex) {
         if (!latex) return null;
 
+        const engine = typeof temml !== 'undefined' ? temml : null;
+        if (!engine?.renderToString) return null;
+
         try {
-            if (typeof temml !== 'undefined' && temml.renderToString) {
-                const rawMathML = temml.renderToString(latex, {
-                    displayMode: false,
-                    xml: true,
-                    annotate: false,
-                    throwOnError: false,
-                    trust: false
-                });
-
-                const stripped = FormulaSourceParser.stripMathMLWrapper(rawMathML);
-                return FormulaSourceParser.prefixForWord(stripped);
-            }
+            const output = engine.renderToString(latex, {
+                displayMode: false,
+                xml: true,
+                annotate: false,
+                throwOnError: false,
+                trust: false
+            });
+            return FormulaSourceParser.stripMathMLWrapper(output);
         } catch (e) {
-            console.warn('[FormulaSourceParser] temml conversion failed:', e);
+            console.warn('[FormulaSourceParser] LaTeX → MathML conversion error:', e);
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -158,10 +208,48 @@ class FormulaSourceParser {
     }
 
     /**
-     * 转换为 Word 兼容的 MathML（添加命名空间前缀）
-     * TODO: 后续重新实现
+     * 转换为 Word 兼容的 MathML
+     * Word 要求所有 MathML 标签带 mml: 命名空间前缀才能识别为公式
+     * 
+     * @param {string} mathml - 标准 MathML 字符串
+     * @returns {string} Word 兼容的 MathML 字符串
      */
     static prefixForWord(mathml) {
-        return mathml;
+        if (!mathml) return mathml;
+
+        const NAMESPACE = 'http://www.w3.org/1998/Math/MathML';
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(mathml, 'application/xml');
+
+        if (doc.querySelector('parsererror')) {
+            return mathml;
+        }
+
+        const serialize = (node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                return node.textContent;
+            }
+            if (node.nodeType !== Node.ELEMENT_NODE) {
+                return '';
+            }
+
+            const isMathML = node.namespaceURI === NAMESPACE;
+            const tagName = isMathML ? `mml:${node.localName}` : node.localName;
+
+            let attrs = '';
+            for (const attr of node.attributes) {
+                if (attr.name === 'xmlns' || attr.name.startsWith('xmlns:')) continue;
+                attrs += ` ${attr.name}="${attr.value}"`;
+            }
+
+            if (node.localName === 'math' && isMathML) {
+                attrs += ` xmlns:mml="${NAMESPACE}"`;
+            }
+
+            const children = Array.from(node.childNodes).map(serialize).join('');
+            return `<${tagName}${attrs}>${children}</${tagName}>`;
+        };
+
+        return serialize(doc.documentElement);
     }
 }

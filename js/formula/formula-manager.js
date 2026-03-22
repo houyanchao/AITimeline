@@ -47,7 +47,7 @@ class FormulaManager {
         
         // 缓存开关状态
         this._latexEnabled = true;
-        this._mathmlEnabled = false;
+        this._mathmlEnabled = false;  // 默认关闭，init() 中从 storage 读取实际值
         
         // 绑定事件处理器
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -79,9 +79,7 @@ class FormulaManager {
         try {
             const r = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
             this._latexEnabled = r.formulaLatexEnabled !== false;
-            // MathML 暂时禁用，后续重新实现
-            // this._mathmlEnabled = r.formulaMathMLEnabled === true;
-            this._mathmlEnabled = false;
+            this._mathmlEnabled = r.formulaMathMLEnabled !== false;
         } catch (e) {}
 
         // ✅ 始终创建降级方案的 tooltip 和反馈元素（以防全局管理器失败）
@@ -105,9 +103,7 @@ class FormulaManager {
         try {
             const result = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled']);
             const latexOn = result.formulaLatexEnabled !== false;
-            // MathML 暂时禁用，后续重新实现
-            // const mathmlOn = result.formulaMathMLEnabled === true;
-            const mathmlOn = false;
+            const mathmlOn = result.formulaMathMLEnabled !== false;
             return latexOn || mathmlOn;
         } catch (e) {
             console.error('[FormulaManager] Failed to check if enabled:', e);
@@ -127,7 +123,7 @@ class FormulaManager {
                 this._latexEnabled = changes.formulaLatexEnabled.newValue !== false;
             }
             if (changes.formulaMathMLEnabled) {
-                this._mathmlEnabled = changes.formulaMathMLEnabled.newValue === true;
+                this._mathmlEnabled = changes.formulaMathMLEnabled.newValue !== false;
             }
         };
         
@@ -194,11 +190,16 @@ class FormulaManager {
         // 检查元素是否在 DOM 中且可见
         if (!formulaElement.isConnected) return;
         
-        // 前置提取逻辑：使用独立的 LatexExtractor
+        // 前置提取逻辑：优先提取 LaTeX，失败则尝试 MathML
         let latexCode = FormulaSourceParser.parseLatex(formulaElement);
         if (!latexCode) {
-            // 无法提取公式，不添加交互功能
-            return;
+            // LaTeX 不可用，检查是否有 MathML 可提取
+            const mathml = FormulaSourceParser.parseMathML(formulaElement);
+            if (!mathml) {
+                return;
+            }
+            // 仅 MathML 可用，空字符串作为已处理标记
+            latexCode = '';
         }
         
         // 特殊处理：如果是维基百科的 mwe-math-element，清理格式
@@ -304,42 +305,53 @@ class FormulaManager {
 
         if (!this._latexEnabled && !this._mathmlEnabled) return;
 
-        const bothEnabled = this._latexEnabled && this._mathmlEnabled;
+        const hasLatex = !!formulaElement.getAttribute('data-latex-source');
 
-        if (bothEnabled) {
-            if (window.globalDropdownManager) {
-                const rect = formulaElement.getBoundingClientRect();
-                const dropdownWidth = 210;
-                const centerX = rect.left + rect.width / 2 - dropdownWidth / 2;
-                const virtualTrigger = document.createElement('div');
-                virtualTrigger.style.cssText = `position:fixed;left:${centerX}px;top:${rect.top}px;width:${dropdownWidth}px;height:0;pointer-events:none;`;
-                document.body.appendChild(virtualTrigger);
+        // 构建可用的菜单项
+        const items = [];
+        if (hasLatex && this._latexEnabled) {
+            items.push({
+                label: chrome.i18n.getMessage('mvxkpz') || '复制 LaTeX 公式',
+                icon: '📐',
+                onClick: () => this._copyAsLatex(formulaElement)
+            });
+        }
+        if (this._mathmlEnabled) {
+            items.push({
+                label: chrome.i18n.getMessage('formulaCopyMathML') || '复制 MathML 公式',
+                icon: '📊',
+                onClick: () => this._copyAsMathML(formulaElement)
+            });
+            items.push({
+                label: chrome.i18n.getMessage('formulaCopyMathMLWord') || '复制 MathML 公式（Word 版）',
+                icon: '📝',
+                onClick: () => this._copyAsMathMLForWord(formulaElement)
+            });
+        }
 
-                window.globalDropdownManager.show({
-                    trigger: virtualTrigger,
-                    items: [
-                        {
-                            label: chrome.i18n.getMessage('mvxkpz') || '复制 LaTeX 公式',
-                            icon: '📐',
-                            onClick: () => this._copyAsLatex(formulaElement)
-                        },
-                        {
-                            label: chrome.i18n.getMessage('formulaCopyMathML') || '复制 MathML 公式',
-                            icon: '📊',
-                            onClick: () => this._copyAsMathML(formulaElement)
-                        }
-                    ],
-                    position: 'top-left',
-                    width: dropdownWidth,
-                    className: 'formula-dropdown'
-                });
+        if (items.length === 0) return;
 
-                setTimeout(() => virtualTrigger.remove(), 100);
-            }
-        } else if (this._mathmlEnabled) {
-            await this._copyAsMathML(formulaElement);
-        } else if (this._latexEnabled) {
-            await this._copyAsLatex(formulaElement);
+        if (items.length === 1) {
+            // 只有一个选项，直接执行
+            await items[0].onClick();
+        } else if (window.globalDropdownManager) {
+            // 多个选项，弹出下拉菜单
+            const rect = formulaElement.getBoundingClientRect();
+            const dropdownWidth = 260;
+            const centerX = rect.left + rect.width / 2 - dropdownWidth / 2;
+            const virtualTrigger = document.createElement('div');
+            virtualTrigger.style.cssText = `position:fixed;left:${centerX}px;top:${rect.top}px;width:${dropdownWidth}px;height:0;pointer-events:none;`;
+            document.body.appendChild(virtualTrigger);
+
+            window.globalDropdownManager.show({
+                trigger: virtualTrigger,
+                items,
+                position: 'top-left',
+                width: dropdownWidth,
+                className: 'formula-dropdown'
+            });
+
+            setTimeout(() => virtualTrigger.remove(), 100);
         }
     }
 
@@ -387,6 +399,34 @@ class FormulaManager {
             this.showCopyFeedback(chrome.i18n.getMessage('xpzmvk'), formulaElement, false);
         } catch (err) {
             console.error('复制 MathML 失败:', err);
+            this.showCopyFeedback('⚠ 复制失败', formulaElement, true);
+        }
+    }
+
+    /**
+     * 复制为 Word 兼容的 MathML（带 mml: 命名空间前缀）
+     */
+    async _copyAsMathMLForWord(formulaElement) {
+        try {
+            const mathml = FormulaSourceParser.parseMathML(formulaElement);
+            if (!mathml) {
+                this.showCopyFeedback('⚠ 无法获取 MathML', formulaElement, true);
+                return;
+            }
+            const wordMathML = FormulaSourceParser.prefixForWord(mathml);
+            if (navigator.clipboard.write) {
+                const htmlContent = `<html xmlns:mml="http://www.w3.org/1998/Math/MathML"><body>${wordMathML}</body></html>`;
+                const clipboardItem = new ClipboardItem({
+                    'text/plain': new Blob([wordMathML], { type: 'text/plain' }),
+                    'text/html': new Blob([htmlContent], { type: 'text/html' })
+                });
+                await navigator.clipboard.write([clipboardItem]);
+            } else {
+                await navigator.clipboard.writeText(wordMathML);
+            }
+            this.showCopyFeedback(chrome.i18n.getMessage('xpzmvk'), formulaElement, false);
+        } catch (err) {
+            console.error('复制 MathML(Word) 失败:', err);
             this.showCopyFeedback('⚠ 复制失败', formulaElement, true);
         }
     }
@@ -594,6 +634,10 @@ class FormulaManager {
                 this.attachFormulaListeners(mathJaxElement);
             }
         });
+        
+        // 扫描带 data-mathml 属性的 MathJax 公式（覆盖仅有 MathML、无 LaTeX 的场景）
+        const mathmlElements = document.querySelectorAll('[data-mathml]:not([data-latex-source])');
+        mathmlElements.forEach(formula => this.attachFormulaListeners(formula));
     }
     
     /**
@@ -698,7 +742,7 @@ class FormulaManager {
      * 清理所有公式的交互标记和样式类
      */
     _cleanupFormulaMarkers() {
-        const formulas = document.querySelectorAll('.katex[data-latex-source], .math-inline[data-latex-source], .mwe-math-element[data-latex-source], .MathJax_SVG[data-latex-source], .MathJax[data-latex-source]');
+        const formulas = document.querySelectorAll('.katex[data-latex-source], .math-inline[data-latex-source], .mwe-math-element[data-latex-source], .MathJax_SVG[data-latex-source], .MathJax[data-latex-source], [data-mathml][data-latex-source]');
         formulas.forEach(formula => {
             formula.removeEventListener('mouseenter', this.handleMouseEnter);
             formula.removeEventListener('mouseleave', this.handleMouseLeave);

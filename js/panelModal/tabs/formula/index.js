@@ -34,7 +34,7 @@ class FormulaTab extends BaseTab {
         `).join('');
         
         container.innerHTML = `
-            <div class="setting-section mathml-section-hidden">
+            <div class="setting-section">
                 <div class="setting-item">
                     <div class="setting-info">
                         <div class="setting-label">${chrome.i18n.getMessage('formulaMathMLTitle') || '复制 MathML 公式'}</div>
@@ -90,7 +90,7 @@ class FormulaTab extends BaseTab {
             const result = await chrome.storage.local.get(['formulaLatexEnabled', 'formulaMathMLEnabled', 'formulaFormat']);
             
             const latexEnabled = result.formulaLatexEnabled !== false;
-            const mathmlEnabled = result.formulaMathMLEnabled === true;
+            const mathmlEnabled = result.formulaMathMLEnabled !== false;
             
             latexToggle.checked = latexEnabled;
             mathmlToggle.checked = mathmlEnabled;
@@ -106,7 +106,7 @@ class FormulaTab extends BaseTab {
         } catch (e) {
             console.error('[FormulaTab] Failed to load state:', e);
             latexToggle.checked = true;
-            mathmlToggle.checked = false;
+            mathmlToggle.checked = true;
         }
         
         this.addEventListener(latexToggle, 'change', async (e) => {

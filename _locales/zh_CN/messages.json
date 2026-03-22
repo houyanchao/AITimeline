@@ -227,6 +227,18 @@
   "mkvzpx": {
     "message": "支持的平台"
   },
+  "promptBtnDisplayLabel": {
+    "message": "显示提示词按钮"
+  },
+  "timelineDisplayLabel": {
+    "message": "显示时间轴"
+  },
+  "starredDisplayLabel": {
+    "message": "显示文件夹"
+  },
+  "promptBtnSwitch": {
+    "message": "开关"
+  },
   "vxmkpz": {
     "message": "Enter键：单击换行，双击发送消息"
   },

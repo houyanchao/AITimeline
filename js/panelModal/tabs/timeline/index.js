@@ -94,10 +94,10 @@ class TimelineSettingsTab extends BaseTab {
         bottomSection.innerHTML = `
             <div class="setting-item">
                 <div class="setting-info">
-                    <div class="setting-label">${chrome.i18n.getMessage('mkvzpx')}</div>
+                    <div class="setting-label">${chrome.i18n.getMessage('timelineDisplayLabel') || '显示时间轴'}</div>
                     <div class="setting-hint">${chrome.i18n.getMessage('mzkvxp')}</div>
                 </div>
-                <button class="starred-manage-btn">${chrome.i18n.getMessage('sidebarStarredManage') || 'Settings'}</button>
+                <button class="starred-manage-btn">${chrome.i18n.getMessage('promptBtnSwitch') || '开关'}</button>
             </div>
         `;
         container.appendChild(bottomSection);

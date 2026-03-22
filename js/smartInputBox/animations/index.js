@@ -37,9 +37,7 @@ class InputBoxAnimationManager {
     async init() {
         this._petData = await StorageAdapter.get(this._petDataKey) || {};
         const savedId = await StorageAdapter.get(this._storageKey);
-        if (savedId === undefined || savedId === null) {
-            this._activate('ant');
-        } else if (savedId && this._animations.has(savedId)) {
+        if (savedId && this._animations.has(savedId)) {
             this._activate(savedId);
         }
         this._startStorageListener();
