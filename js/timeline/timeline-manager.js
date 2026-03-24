@@ -1206,6 +1206,7 @@ class TimelineManager {
         // Ensure active class is applied after dots are created
         this.updateActiveDotUI();
         this.scheduleScrollSync();
+        this.updateIntersectionObserverTargets();
         
         // ✅ 对外派发节点数量变化事件
         if (pendingNodesChange) {
@@ -1291,7 +1292,6 @@ class TimelineManager {
             
             try { this.ensureContainersUpToDate(); } catch {}
             this.debouncedRecalculateAndRender();
-            this.updateIntersectionObserverTargets();
         });
         this.mutationObserver.observe(this.conversationContainer, { childList: true, subtree: true });
         // Resize: update long-canvas geometry and virtualization
@@ -2837,8 +2837,12 @@ class TimelineManager {
         this.scrollRafId = requestAnimationFrame(() => {
             this.scrollRafId = null;
             
-            // 重新计算节点位置和 padding
-            this._recalcMarkerPositions();
+            // 节流：最多每秒重算一次节点位置，避免每帧触发强制重排
+            const now = Date.now();
+            if (now - (this._lastRecalcTime || 0) >= 1000) {
+                this._lastRecalcTime = now;
+                this._recalcMarkerPositions();
+            }
             
             // Sync long-canvas scroll and virtualized dots before computing active
             this.syncTimelineTrackToMain();
