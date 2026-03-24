@@ -312,7 +312,7 @@ html[data-timeline-theme="dark"] .ait-timeline-dot.active::after {
 .timeline-tooltip-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
 }
 

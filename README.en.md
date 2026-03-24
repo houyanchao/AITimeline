@@ -25,7 +25,7 @@
 
 ## 💡 Why AI Timeline
 
-> As a heavy user of ChatGPT and Gemini, I often have long conversations, and finding past messages was always a pain. The timeline feature in this extension solved this perfectly. Building on that, I've added many more useful features. Looking forward to your experience!
+> Double your AI chat experience. When you use AI in your browser, it becomes your efficiency partner. Conversation timeline, prompts, copy math formulas, bookmark folders, follow-up questions, and more — maximize your productivity.
 
 ## ✨ Key Features
 

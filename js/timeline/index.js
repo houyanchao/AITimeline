@@ -163,6 +163,12 @@ function initializeTimeline() {
 async function handleUrlChange() {
     // 检测 URL 是否变化
     if (location.href === currentUrl) return;
+
+    // URL 变化确认，立即隐藏提问列表
+    if (window.questionListPopup && window.questionListPopup.visible) {
+        window.questionListPopup.hide();
+    }
+
     currentUrl = location.href;
     initVersion++;
 
