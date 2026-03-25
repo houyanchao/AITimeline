@@ -477,10 +477,10 @@
     "message": "這個專案由我一個人維護，每週 1～2 個新版本的更新節奏。如果想回饋 bug 或功能建議，可透過以下任一管道進行回饋（我看到一定會回覆）："
   },
   "aboutShareTitle": {
-    "message": "想請你幫個忙"
+    "message": "推薦給朋友"
   },
   "aboutShareContent": {
-    "message": "如果這個插件幫到了你，歡迎分享到 X、Reddit、YouTube 等等，也歡迎分享給朋友、同學、同事，讓更多人使用到它。我是一個人維護這個插件，精力有限，無法抽身去做用戶增長運營，我能做到的是讓這個插件越來越好用，非常感謝。❤️"
+    "message": "如果這個插件幫到了你，歡迎分享到 小紅書、B站、X、Reddit、YouTube 等等，也歡迎分享給朋友、同學、同事，讓更多人使用到它。❤️"
   },
   "formulaCopyGeneric": {
     "message": "複製公式"
@@ -505,5 +505,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "收藏成功"
+  },
+  "animViewMore": {
+    "message": "更換動畫"
   }
 }

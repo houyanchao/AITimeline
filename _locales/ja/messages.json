@@ -519,10 +519,10 @@
     "message": "このプロジェクトは私一人で管理しており、毎週1～2件の新バージョンをリリースしています。バグ報告や機能提案は以下のいずれかのチャンネルからご連絡ください（見つけ次第必ずご返信します）："
   },
   "aboutShareTitle": {
-    "message": "お願い"
+    "message": "友達にすすめる"
   },
   "aboutShareContent": {
-    "message": "このプラグインが役に立ったら、X、Reddit、YouTube などでシェアしていただけると嬉しいです。友人や同僚への共有も大歓迎です。一人で維持しており、マーケティングに手が回らないので、できることはプラグインをもっと良くし続けることです。ありがとうございます。❤️"
+    "message": "このプラグインが役に立ったら、Bilibili、X、Reddit、YouTube などでシェアしていただけると嬉しいです。友人や同僚への共有も大歓迎です。❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "フォルダにスター"
@@ -532,5 +532,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "スターしました"
+  },
+  "animViewMore": {
+    "message": "アニメーション変更"
   }
 }

@@ -1,78 +1,143 @@
 <div align="center">
-  <img src="./icons/icon128.png" alt="AI Timeline Logo" width="100" height="100">
+  <img src="./icons/icon128.png" alt="AI Timeline Logo" width="80" height="80">
   <h1>AI Timeline</h1>
+  <p><strong>浏览器端 AI 对话增强插件</strong><br>支持 GPT、Gemini、DeepSeek、Kimi、千问、Claude、元宝、NotebookLM 等所有主流 AI 平台</p>
 
   <p>
-    <a href="https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh">
-      <img src="https://img.shields.io/badge/Chrome-安装扩展-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store">
-    </a>
-    <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab">
-      <img src="https://img.shields.io/badge/Edge-安装扩展-0078D7?style=flat-square&logo=microsoftedge&logoColor=white" alt="Edge Add-ons">
-    </a>
-    <img src="https://img.shields.io/badge/用户-20000+-brightgreen?style=flat-square" alt="Users">
-    <img src="https://img.shields.io/badge/版本-4.1.6-blue?style=flat-square" alt="Version">
+    <a href="https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh"><img src="https://img.shields.io/badge/Chrome-安装-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome"></a>
+    <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab"><img src="https://img.shields.io/badge/Edge-安装-0078D7?style=for-the-badge&logo=microsoftedge&logoColor=white" alt="Edge"></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai"><img src="https://img.shields.io/badge/Firefox-安装-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox"></a>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/用户-22,000+-brightgreen?style=flat-square" alt="Users">
     <img src="https://img.shields.io/badge/许可证-MIT-green?style=flat-square" alt="License">
+    <a href="https://github.com/houyanchao/AITimeline"><img src="https://img.shields.io/badge/GitHub-开源-181717?style=flat-square&logo=github" alt="GitHub"></a>
   </p>
 
   <h4><strong>简体中文</strong> | <a href="./README.en.md">English</a></h4>
 
-  <p><strong>提升你使用 AI 的效率，当你在浏览器上使用 AI 时，你会需要它，22,000+ 用户安装。</strong></p>
-
   <img src="./READMEIMAGE/index.png" alt="AI Timeline 效果展示" width="800">
 </div>
 
----
+<br>
 
-## 💡 为什么开发 AI Timeline
+## 📥 安装
 
-> 让 AI 对话体验翻倍，当你在浏览器里使用 AI，它会成为你的效率搭档。对话时间轴、提示词、复制数学公式、收藏文件夹、追问等功能，把效率拉满。
+> 安装后打开任意 AI 网站开始对话即可使用，无需额外配置。
 
-## ✨ 核心功能
+| 浏览器 | 安装链接 |
+|--------|---------|
+| Chrome | 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) |
+| Edge | 👉 [Edge 应用商店](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) |
+| Firefox | 👉 [Firefox 应用商店](https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai) |
 
-| 功能 | 描述 |
-|------|------|
-| 🎯 **时间轴导航** | 点击时间轴节点，快速跳转到任意对话位置 |
-| 🧮 **公式提取** | 智能识别公式并提取它的 LaTeX |
-| ⭐️ **智能收藏** | 收藏重要问答，支持添加备注和分组管理 |
-| 📌 **整页收藏** | 一键收藏整个对话页面，方便后续回顾 |
-| 🔍 **快速预览** | 悬停预览对话内容，无需跳转 |
-| ▶️ **代码运行** | 一键运行 AI 生成的代码（支持 JS/Python/SQL 等） |
-
-## 📥 安装方式
-
-前往 👉 [Chrome 应用商店](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) 安装，安装完成后打开任意 AI 网站进行对话即可。
-
-前往 👉 [Edge 应用商店](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) 安装，安装完成后打开任意 AI 网站进行对话即可。
-
-## 🚀 支持平台
+## 🎯 核心功能
 
 <table>
   <tr>
-    <td align="center"><strong>ChatGPT</strong></td>
-    <td align="center"><strong>Claude</strong></td>
-    <td align="center"><strong>Gemini</strong></td>
-    <td align="center"><strong>DeepSeek</strong></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Grok</strong></td>
-    <td align="center"><strong>Perplexity</strong></td>
-    <td align="center"><strong>Kimi</strong></td>
-    <td align="center"><strong>豆包</strong></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>通义千问</strong></td>
-    <td align="center"><strong>文心一言</strong></td>
-    <td align="center"><strong>腾讯元宝</strong></td>
-    <td align="center">更多适配中...</td>
+    <td width="50%">
+
+**对话时间轴** — 右侧竖向时间轴，一键跳转到任意对话
+
+**提问列表** — 展示所有问题，标记重点、跳转、收藏
+
+**收藏系统** — 收藏问答到文件夹，侧边栏快速访问
+
+**闪记** — 浮动笔记面板，随手记录想法
+
+  </td>
+  <td width="50%">
+
+**快捷追问** — 选中文本一键引用追问
+
+**提示词库** — 保存常用 Prompt，一键插入
+
+**代码运行** — 运行 JS/Python/TS/SQL 等代码块
+
+**公式复制** — 一键复制 LaTeX / MathML 源码
+
+  </td>
   </tr>
 </table>
 
-## 🌍 多语言支持
+<details>
+<summary><strong>查看完整功能列表（20 项）</strong></summary>
 
-支持 **42 种语言**，覆盖全球主要语言：
+<br>
 
-<details open>
-<summary>点击查看完整语言列表</summary>
+### 核心功能
+
+| 功能 | 说明 |
+|------|------|
+| 🎯 **对话时间轴** | 右侧竖向时间轴，点击节点跳转到对应对话位置 |
+| 📋 **提问列表** | 展示当前对话所有问题，支持标记重点、跳转、收藏 |
+| ⭐️ **收藏对话** | 收藏单条问答或整页对话到文件夹，支持备注 |
+| 📂 **收藏管理** | 设置面板中的收藏库，支持文件夹分组、搜索、跳转 |
+| 📌 **侧边栏收藏** | 在 AI 平台原生侧边栏中注入收藏列表 |
+| 📝 **闪记** | 浮动笔记面板，对话中随手记录想法 |
+| 🕐 **提问时间标签** | 在时间轴上显示每条消息的发送时间 |
+
+### 输入增强
+
+| 功能 | 说明 |
+|------|------|
+| ⏎ **智能回车** | Enter 换行，双击 Enter 发送 |
+| 💬 **提示词库** | 保存常用 Prompt，一键插入输入框 |
+| 🔍 **快捷追问** | 选中 AI 回复文本，一键引用追问 |
+| 🎨 **输入框动画** | AI 回复时输入框上方的趣味动画 |
+
+### 公式与代码
+
+| 功能 | 说明 |
+|------|------|
+| 🧮 **公式复制** | 点击数学公式复制 LaTeX / MathML 源码 |
+| ▶️ **代码运行器** | 一键运行代码块（JS/Python/TS/SQL/Lua/Ruby/HTML/JSON/Markdown） |
+| 📊 **Mermaid 图表** | 渲染 Mermaid 代码块为图表，支持全屏查看 |
+
+### 导航与操作
+
+| 功能 | 说明 |
+|------|------|
+| ⌨️ **键盘导航** | 上下方向键切换对话节点 |
+| 📌 **长按标记** | 长按时间轴节点标记/取消重点 |
+| ⬇️ **回到底部** | 快速滚动到最新消息 |
+
+### 数据与设置
+
+| 功能 | 说明 |
+|------|------|
+| ☁️ **数据同步** | Google Drive 云备份 + JSON 导入导出 |
+| ⚙️ **设置面板** | 多 Tab 设置界面，集中管理所有功能 |
+| 🌍 **多语言** | 支持 19 种语言 |
+
+</details>
+
+## 🌐 支持平台
+
+| 平台 | 时间轴 | 智能输入 | 输入动画 | 快捷追问 | 提问时间 | 侧边栏收藏 | 回到底部 |
+|------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| ChatGPT | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Gemini | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DeepSeek | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Claude | ✅ | ✅ | — | ✅ | — | ✅ | — |
+| Kimi | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| 豆包 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| 千问 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Qwen 国际版 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Grok | ✅ | ✅ | ✅ | ✅ | — | — | — |
+| Perplexity | ✅ | ✅ | — | ✅ | — | — | — |
+| 元宝 | ✅ | ✅ | ✅ | ✅ | — | — | — |
+| 文心一言 | ✅ | — | — | ✅ | — | — | — |
+| NotebookLM | — | ✅ | — | ✅ | — | — | — |
+
+> 💡 **公式复制**和**代码运行器**不受平台限制，在所有页面上检测到对应内容即自动激活。
+
+## 🌍 多语言
+
+支持 **42 种语言**，覆盖全球主要语言。
+
+<details>
+<summary>查看完整语言列表</summary>
 
 | 语言 | 代码 | 语言 | 代码 | 语言 | 代码 |
 |------|------|------|------|------|------|
@@ -95,7 +160,11 @@
 
 ## 🗺️ 开发计划
 
-- [ ] Firefox 浏览器支持
+- [x] Firefox 浏览器支持
+- [x] 跨浏览器同步数据
+- [ ] 通过隐藏对话节点解决 GPT 卡顿
+- [ ] 支持一键同步到 NotebookLM
+- [ ] 优化 Gemini 中 Canvas 自动打开
 - [ ] 数据云同步
 
 ## 💬 联系与反馈
@@ -114,5 +183,5 @@
 ---
 
 <div align="center">
-  <p>如果这个扩展对你有帮助，欢迎给项目点个 ⭐️ Star</p>
+  <p>如果觉得好用，欢迎 <a href="https://github.com/houyanchao/AITimeline">⭐ Star</a> 支持一下</p>
 </div>

@@ -492,10 +492,10 @@
     "message": "Dự án này được tôi duy trì một mình, với nhịp độ 1–2 phiên bản mới mỗi tuần. Để báo lỗi hoặc đề xuất tính năng, hãy liên hệ qua bất kỳ kênh nào bên dưới (tôi chắc chắn sẽ trả lời khi thấy):"
   },
   "aboutShareTitle": {
-    "message": "Nhờ giúp một chút"
+    "message": "Giới thiệu cho bạn bè"
   },
   "aboutShareContent": {
-    "message": "Nếu tiện ích này hữu ích, hãy chia sẻ trên X, Reddit, YouTube, v.v., và với bạn bè, bạn học hoặc đồng nghiệp. Tôi duy trì plugin này một mình, không có thời gian làm marketing — điều tôi có thể làm là làm cho nó ngày càng tốt hơn. Cảm ơn rất nhiều. ❤️"
+    "message": "Nếu tiện ích này hữu ích, hãy chia sẻ trên Bilibili, X, Reddit, YouTube, v.v., và với bạn bè, bạn học hoặc đồng nghiệp. ❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "Star to Folder"
@@ -505,5 +505,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "Starred successfully"
+  },
+  "animViewMore": {
+    "message": "Đổi hoạt ảnh"
   }
 }

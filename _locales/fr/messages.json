@@ -492,10 +492,10 @@
     "message": "Ce projet est maintenu par moi seul, avec un rythme de 1 à 2 nouvelles versions par semaine. Pour signaler un bug ou suggérer une fonctionnalité, contactez-moi via l'un des canaux ci-dessous (je répondrai dès que je le verrai) :"
   },
   "aboutShareTitle": {
-    "message": "Un petit coup de main"
+    "message": "Recommander à des amis"
   },
   "aboutShareContent": {
-    "message": "Si cette extension vous a aidé, n'hésitez pas à le partager sur X, Reddit, YouTube, etc., et avec vos amis, camarades ou collègues. Je maintiens ce plugin seul avec des ressources limitées et ne peux pas consacrer de temps au marketing — ce que je peux faire, c'est de le rendre de mieux en mieux. Merci beaucoup. ❤️"
+    "message": "Si cette extension vous a aidé, n'hésitez pas à le partager sur Bilibili, X, Reddit, YouTube, etc., et avec vos amis, camarades ou collègues. ❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "Star to Folder"
@@ -505,5 +505,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "Starred successfully"
+  },
+  "animViewMore": {
+    "message": "Changer l'animation"
   }
 }

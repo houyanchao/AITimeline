@@ -492,10 +492,10 @@
     "message": "Ten projekt jest utrzymywany przeze mnie samego, w rytmie 1–2 nowych wersji tygodniowo. Aby zgłosić błąd lub zaproponować funkcję, skontaktuj się ze mną przez jeden z poniższych kanałów (na pewno odpiszę, gdy to zobaczę):"
   },
   "aboutShareTitle": {
-    "message": "Mała prośba"
+    "message": "Poleć znajomym"
   },
   "aboutShareContent": {
-    "message": "Jeśli to rozszerzenie Ci pomogło, zachęcam do udostępnienia go na X, Reddit, YouTube itp., a także znajomym, kolegom z klasy lub współpracownikom. Utrzymuję tę wtyczkę sam i nie mogę poświęcać czasu na marketing — mogę jedynie dbać o to, by była coraz lepsza. Dziękuję bardzo. ❤️"
+    "message": "Jeśli to rozszerzenie Ci pomogło, zachęcam do udostępnienia go na Bilibili, X, Reddit, YouTube itp., a także znajomym, kolegom z klasy lub współpracownikom. ❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "Star to Folder"
@@ -505,5 +505,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "Starred successfully"
+  },
+  "animViewMore": {
+    "message": "Zmień animację"
   }
 }

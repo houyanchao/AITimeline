@@ -26,15 +26,19 @@ class AboutTab extends BaseTab {
             <div class="about-share-actions">
                 <a href="https://chromewebstore.google.com/detail/fgebdnlceacaiaeikopldglhffljjlhh?utm_source=item-share-cb" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
-                    Chrome 安装地址
+                    Chrome 安装
                 </a>
                 <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9Agemini%E3%80%81chatgp/ekednjjojnhlajfobalaaihkibbdcbab" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49"/></svg>
-                    Edge 安装地址
+                    Edge 安装
+                </a>
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai" target="_blank" class="about-share-action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zM17.9 17.39c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41C18.93 5.77 22 8.65 22 12c0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    Firefox 安装
                 </a>
                 <a href="https://github.com/houyanchao/AITimeline" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                    GitHub 开源地址
+                    GitHub 开源
                 </a>
                 <a href="https://timeline4ai.com/#/guide?section=timeline" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
@@ -103,9 +107,9 @@ class AboutTab extends BaseTab {
                     </svg>
                 </div>
                 <div class="about-section-body">
-                    <div class="about-section-title">${chrome.i18n.getMessage('aboutShareTitle') || '想请你帮个忙'}</div>
+                    <div class="about-section-title">${chrome.i18n.getMessage('aboutShareTitle') || '推荐给朋友'}</div>
                     <div class="about-section-content">
-                        ${chrome.i18n.getMessage('aboutShareContent') || '如果这个插件帮到了你，欢迎分享到 小红书、X、Reddit、YouTube 等等，也欢迎分享给朋友、同学、同事，让更多人使用到它。我是一个人维护这个插件，精力有限，无法抽身去做用户增长运营，我能做到的是让这个插件越来越好用，非常感谢。❤️'}
+                        ${chrome.i18n.getMessage('aboutShareContent') || '如果这个插件帮到了你，欢迎分享到 小红书、B站、X、Reddit、YouTube 等等，也欢迎分享给朋友、同学、同事，让更多人使用到它。❤️'}
                     </div>
                 </div>
             </div>

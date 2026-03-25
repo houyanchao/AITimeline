@@ -573,10 +573,10 @@
     "message": "这个项目是我一个人在维护，每周 1～2 个新版本的更新节奏。如果想反馈 bug 或功能建议，可通过以下任一渠道进行反馈（我看到一定会回复）："
   },
   "aboutShareTitle": {
-    "message": "想请你帮个忙"
+    "message": "推荐给朋友"
   },
   "aboutShareContent": {
-    "message": "如果这个插件帮到了你，欢迎分享到 小红书、X、Reddit、YouTube 等等，也欢迎分享给朋友、同学、同事，让更多人使用到它。我是一个人维护这个插件，精力有限，无法抽身去做用户增长运营，我能做到的是让这个插件越来越好用，非常感谢。❤️"
+    "message": "如果这个插件帮到了你，欢迎分享到 小红书、B站、X、Reddit、YouTube 等等，也欢迎分享给朋友、同学、同事，让更多人使用到它。❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "收藏到文件夹"
@@ -586,5 +586,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "收藏成功"
+  },
+  "animViewMore": {
+    "message": "更换动画"
   }
 }

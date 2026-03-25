@@ -519,10 +519,10 @@
     "message": "이 프로젝트는 저 혼자 유지하며, 매주 1~2개의 새 버전을 출시합니다. 버그 제보나 기능 제안은 아래 채널 중 하나로 연락해 주세요 (보는 즉시 반드시 답변 드립니다):"
   },
   "aboutShareTitle": {
-    "message": "부탁드립니다"
+    "message": "친구에게 추천"
   },
   "aboutShareContent": {
-    "message": "이 플러그인이 도움이 되었다면, X, Reddit, YouTube 등에서 공유해 주시고, 친구나 동료에게도 공유해 주세요. 혼자서 유지보수하는 플러그인이라 마케팅에 시간을 할애할 수 없지만, 플러그인을 점점 더 좋게 만들겠습니다. 감사합니다. ❤️"
+    "message": "이 플러그인이 도움이 되었다면, Bilibili, X, Reddit, YouTube 등에서 공유해 주시고, 친구나 동료에게도 공유해 주세요. ❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "폴더에 즐겨찾기"
@@ -532,5 +532,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "즐겨찾기 완료"
+  },
+  "animViewMore": {
+    "message": "애니메이션 변경"
   }
 }

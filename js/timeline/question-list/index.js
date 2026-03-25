@@ -12,6 +12,7 @@ class QuestionListPopup {
         this._timelineBar = null;
         this._wrapper = null;
         this._boundOnActiveChange = this._onActiveChange.bind(this);
+        this._boundOnClickOutside = this._onClickOutside.bind(this);
     }
 
     get visible() { return this._visible; }
@@ -65,16 +66,16 @@ class QuestionListPopup {
             }
         });
 
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'ait-ql-close';
-        closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.hide();
-        });
+        // const closeBtn = document.createElement('button');
+        // closeBtn.className = 'ait-ql-close';
+        // closeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        // closeBtn.addEventListener('click', (e) => {
+        //     e.stopPropagation();
+        //     this.hide();
+        // });
 
         headerRight.appendChild(settingsBtn);
-        headerRight.appendChild(closeBtn);
+        // headerRight.appendChild(closeBtn);
 
         header.appendChild(title);
         header.appendChild(headerRight);
@@ -104,6 +105,11 @@ class QuestionListPopup {
         // 监听时间轴激活节点变化
         window.addEventListener('timeline:activeChange', this._boundOnActiveChange);
 
+        // 点击外部区域关闭
+        setTimeout(() => {
+            document.addEventListener('click', this._boundOnClickOutside, true);
+        }, 0);
+
         // 按钮高亮
         if (tm.ui && tm.ui.questionListBtn) {
             tm.ui.questionListBtn.classList.add('active');
@@ -114,6 +120,7 @@ class QuestionListPopup {
 
     hide() {
         window.removeEventListener('timeline:activeChange', this._boundOnActiveChange);
+        document.removeEventListener('click', this._boundOnClickOutside, true);
         if (this._el) {
             this._el.remove();
             this._el = null;
@@ -203,11 +210,12 @@ class QuestionListPopup {
 
             text.addEventListener('mouseenter', () => {
                 if (text.scrollWidth > text.clientWidth) {
+                    const el = this._buildItemTooltipElement(marker);
                     window.globalTooltipManager.show(
                         `ql-item-${i}`,
                         'node',
                         item,
-                        marker.summary || '',
+                        { element: el },
                         { placement: 'left', maxWidth: 320 }
                     );
                 }
@@ -244,6 +252,39 @@ class QuestionListPopup {
         if (activeItem) {
             activeItem.scrollIntoView({ block: 'center', behavior: 'instant' });
         }
+    }
+
+    _buildItemTooltipElement(marker) {
+        const container = document.createElement('div');
+        container.className = 'timeline-tooltip-container';
+
+        const contentWrap = document.createElement('div');
+        contentWrap.className = 'timeline-tooltip-content-wrap';
+
+        const timeStr = marker.element?.getAttribute('data-ait-time');
+        if (timeStr) {
+            const timeTag = document.createElement('span');
+            timeTag.className = 'timeline-tooltip-time';
+            timeTag.textContent = timeStr;
+            contentWrap.appendChild(timeTag);
+        }
+
+        const content = document.createElement('div');
+        content.className = 'timeline-tooltip-content';
+        content.style.pointerEvents = 'none';
+        content.textContent = marker.summary || '';
+
+        contentWrap.appendChild(content);
+        container.appendChild(contentWrap);
+        return container;
+    }
+
+    _onClickOutside(e) {
+        if (!this._visible || !this._el) return;
+        if (this._el.contains(e.target)) return;
+        const tm = window.timelineManager;
+        if (tm?.ui?.questionListBtn?.contains(e.target)) return;
+        this.hide();
     }
 
     _onActiveChange(e) {

@@ -145,6 +145,7 @@ class GlobalTooltipManager {
      * @param {boolean} options.allowHover - 是否允许鼠标悬停
      * @param {string} options.placement - 位置：auto/top/bottom/left/right
      * @param {number} options.gap - 与目标元素的距离
+     * @param {string} options.style - 样式风格：'mini' 使用紧凑样式（小号字、无箭头）
      */
     show(id, type, target, content, options = {}) {
         try {
@@ -413,11 +414,13 @@ class GlobalTooltipManager {
         // 计算位置（传入配置）
         const position = this._calculatePosition(target, tooltip, config.placement, config);
         
+        const isMini = config.style === 'mini';
+        
         // 应用位置（根据placement使用对应的定位属性）
         tooltip.setAttribute('data-placement', position.placement);
         
-        // ✅ 应用箭头偏移量（当 tooltip 被边界修正后，箭头指向目标元素）
-        if (position.arrowOffset) {
+        // ✅ 应用箭头偏移量（mini 样式无箭头，跳过）
+        if (!isMini && position.arrowOffset) {
             tooltip.style.setProperty('--arrow-offset', position.arrowOffset);
         }
         
@@ -426,27 +429,23 @@ class GlobalTooltipManager {
         const vh = window.innerHeight;
         
         if (position.placement === 'left') {
-            // tooltip在左侧，箭头朝右 → 用right定位（tooltip右边缘距离视口右边缘的距离）
             tooltip.style.left = '';
             const rightValue = vw - (position.left + position.width);
             tooltip.style.right = `${rightValue}px`;
             tooltip.style.top = `${position.top}px`;
             tooltip.style.bottom = '';
         } else if (position.placement === 'right') {
-            // tooltip在右侧，箭头朝左 → 用left定位
             tooltip.style.right = '';
             tooltip.style.left = `${position.left}px`;
             tooltip.style.top = `${position.top}px`;
             tooltip.style.bottom = '';
         } else if (position.placement === 'top') {
-            // tooltip在上方，箭头朝下 → 用bottom定位
             tooltip.style.top = '';
             const bottomValue = vh - (position.top + position.height);
             tooltip.style.bottom = `${bottomValue}px`;
             tooltip.style.left = `${position.left}px`;
             tooltip.style.right = '';
         } else {
-            // tooltip在下方，箭头朝上 → 用top定位
             tooltip.style.bottom = '';
             tooltip.style.top = `${position.top}px`;
             tooltip.style.left = `${position.left}px`;
@@ -560,14 +559,20 @@ class GlobalTooltipManager {
      */
     _createTooltip(type, config) {
         const tooltip = document.createElement('div');
-        tooltip.className = config.className;
+        
+        if (config.style === 'mini') {
+            tooltip.className = 'timeline-tooltip-overlay';
+        } else {
+            tooltip.className = config.className;
+        }
+        
         tooltip.setAttribute('role', 'tooltip');
         tooltip.setAttribute('aria-hidden', 'true');
         tooltip.id = `global-tooltip-${type}`;
         
         // 通用样式
         tooltip.style.position = 'fixed';
-        tooltip.style.zIndex = '2147483648';  // 高于收藏面板，与CSS保持一致
+        tooltip.style.zIndex = '2147483648';
         tooltip.style.pointerEvents = config.allowHover ? 'auto' : 'none';
         
         document.body.appendChild(tooltip);

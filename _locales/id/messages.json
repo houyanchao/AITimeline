@@ -492,10 +492,10 @@
     "message": "Proyek ini dipelihara oleh saya sendiri, dengan ritme 1–2 versi baru setiap minggu. Untuk melaporkan bug atau menyarankan fitur, hubungi saya melalui salah satu saluran di bawah (saya pasti akan membalas ketika melihatnya):"
   },
   "aboutShareTitle": {
-    "message": "Minta bantuan kecil"
+    "message": "Rekomendasikan ke teman"
   },
   "aboutShareContent": {
-    "message": "Jika ekstensi ini membantu, silakan bagikan di X, Reddit, YouTube, dll., dan ke teman, teman sekelas, atau rekan kerja. Saya mengelola plugin ini sendirian dan tidak bisa meluangkan waktu untuk pemasaran — yang bisa saya lakukan adalah membuatnya semakin baik. Terima kasih banyak. ❤️"
+    "message": "Jika ekstensi ini membantu, silakan bagikan di Bilibili, X, Reddit, YouTube, dll., dan ke teman, teman sekelas, atau rekan kerja. ❤️"
   },
   "nativeMenuStarToFolder": {
     "message": "Star to Folder"
@@ -505,5 +505,8 @@
   },
   "nativeMenuStarSuccess": {
     "message": "Starred successfully"
+  },
+  "animViewMore": {
+    "message": "Ganti animasi"
   }
 }

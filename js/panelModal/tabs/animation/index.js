@@ -75,10 +75,9 @@ class AnimationTab extends BaseTab {
             const checkbox = toggle.querySelector('input');
             this.addEventListener(checkbox, 'change', async () => {
                 await mgr.toggle(anim.id);
+                this._renderList();
                 if (mgr.getActiveId()) {
-                    window.panelModal?.hide();
-                } else {
-                    this._renderList();
+                    setTimeout(() => window.panelModal?.hide(), 600);
                 }
             });
 

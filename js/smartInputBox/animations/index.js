@@ -37,8 +37,10 @@ class InputBoxAnimationManager {
     async init() {
         this._petData = await StorageAdapter.get(this._petDataKey) || {};
         const savedId = await StorageAdapter.get(this._storageKey);
-        if (savedId && this._animations.has(savedId)) {
-            this._activate(savedId);
+        // 默认动画为巫师
+        const activeId = savedId !== undefined ? savedId : 'wizard';
+        if (activeId && this._animations.has(activeId)) {
+            this._activate(activeId);
         }
         this._startStorageListener();
         this._startAIStateListener();
@@ -154,6 +156,19 @@ class InputBoxAnimationManager {
             const clickTarget = anim._el.querySelector('[class$="-group"], [class$="-runner"]') || anim._el;
             clickTarget.addEventListener('click', () => {
                 if (window.panelModal) window.panelModal.show('animation');
+            });
+            clickTarget.addEventListener('mouseenter', () => {
+                if (window.globalTooltipManager) {
+                    window.globalTooltipManager.show('anim-hint', 'button', clickTarget, 
+                        chrome.i18n.getMessage('animViewMore') || '更换动画', 
+                        { style: 'mini', placement: 'top' }
+                    );
+                }
+            });
+            clickTarget.addEventListener('mouseleave', () => {
+                if (window.globalTooltipManager) {
+                    window.globalTooltipManager.hide();
+                }
             });
         }
         this._active = anim;

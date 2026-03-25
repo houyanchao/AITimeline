@@ -1,78 +1,143 @@
 <div align="center">
-  <img src="./icons/icon128.png" alt="AI Timeline Logo" width="100" height="100">
+  <img src="./icons/icon128.png" alt="AI Timeline Logo" width="80" height="80">
   <h1>AI Timeline</h1>
+  <p><strong>Browser-based AI chat enhancement extension</strong><br>Supports GPT, Gemini, DeepSeek, Kimi, Qwen, Claude, Yuanbao, NotebookLM and all major AI platforms</p>
 
   <p>
-    <a href="https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh">
-      <img src="https://img.shields.io/badge/Chrome-Install_Extension-4285F4?style=flat-square&logo=googlechrome&logoColor=white" alt="Chrome Web Store">
-    </a>
-    <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab">
-      <img src="https://img.shields.io/badge/Edge-Install_Extension-0078D7?style=flat-square&logo=microsoftedge&logoColor=white" alt="Edge Add-ons">
-    </a>
-    <img src="https://img.shields.io/badge/Users-20000+-brightgreen?style=flat-square" alt="Users">
-    <img src="https://img.shields.io/badge/Version-4.1.6-blue?style=flat-square" alt="Version">
+    <a href="https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh"><img src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome"></a>
+    <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab"><img src="https://img.shields.io/badge/Edge-Install-0078D7?style=for-the-badge&logo=microsoftedge&logoColor=white" alt="Edge"></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai"><img src="https://img.shields.io/badge/Firefox-Install-FF7139?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Firefox"></a>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/Users-22,000+-brightgreen?style=flat-square" alt="Users">
     <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License">
+    <a href="https://github.com/houyanchao/AITimeline"><img src="https://img.shields.io/badge/GitHub-Open_Source-181717?style=flat-square&logo=github" alt="GitHub"></a>
   </p>
 
   <h4><a href="./README.md">简体中文</a> | <strong>English</strong></h4>
 
-  <p><strong>Boost your AI efficiency. When using AI in your browser, you'll need it. 22,000+ installs.</strong></p>
-
   <img src="./READMEIMAGE/index.png" alt="AI Timeline Demo" width="800">
 </div>
 
----
+<br>
 
-## 💡 Why AI Timeline
+## 📥 Install
 
-> Double your AI chat experience. When you use AI in your browser, it becomes your efficiency partner. Conversation timeline, prompts, copy math formulas, bookmark folders, follow-up questions, and more — maximize your productivity.
+> After installation, open any AI website and start chatting — no extra setup needed.
 
-## ✨ Key Features
-
-| Feature | Description |
+| Browser | Install Link |
 |---------|-------------|
-| 🎯 **Timeline Navigation** | Click timeline nodes to quickly jump to any conversation |
-| 🧮 **Formula Extraction** | Intelligently identify formulas and extract their LaTeX |
-| ⭐️ **Smart Bookmarks** | Save important Q&As with notes and folder organization |
-| 📌 **Page Bookmarks** | Bookmark entire chat pages for easy reference |
-| 🔍 **Quick Preview** | Hover to preview conversation content without jumping |
-| ▶️ **Code Runner** | Run AI-generated code with one click (JS/Python/SQL & more) |
+| Chrome | 👉 [Chrome Web Store](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) |
+| Edge | 👉 [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) |
+| Firefox | 👉 [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai) |
 
-## 📥 Installation
-
-Visit 👉 [Chrome Web Store](https://chromewebstore.google.com/detail/timeline-ai-chat/fgebdnlceacaiaeikopldglhffljjlhh) to install. After installation, open any AI website and start chatting.
-
-Visit 👉 [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9A%E5%8A%A9%E4%BD%A0%E4%BD%BF%E7%94%A8-ai-%E6%95%88%E7%8E%87%E7%BF%BB%E5%80%8D-/ekednjjojnhlajfobalaaihkibbdcbab) to install. After installation, open any AI website and start chatting.
-
-## 🚀 Supported Platforms
+## 🎯 Key Features
 
 <table>
   <tr>
-    <td align="center"><strong>ChatGPT</strong></td>
-    <td align="center"><strong>Claude</strong></td>
-    <td align="center"><strong>Gemini</strong></td>
-    <td align="center"><strong>DeepSeek</strong></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Grok</strong></td>
-    <td align="center"><strong>Perplexity</strong></td>
-    <td align="center"><strong>Kimi</strong></td>
-    <td align="center"><strong>Doubao</strong></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Tongyi Qianwen</strong></td>
-    <td align="center"><strong>Wenxin Yiyan</strong></td>
-    <td align="center"><strong>Tencent Yuanbao</strong></td>
-    <td align="center">More coming...</td>
+    <td width="50%">
+
+**Chat Timeline** — Vertical timeline for jumping to any conversation
+
+**Question List** — View all questions with pin, jump & bookmark
+
+**Bookmark System** — Save Q&As to folders, quick sidebar access
+
+**Quick Notes** — Floating notepad to capture ideas on the fly
+
+  </td>
+  <td width="50%">
+
+**Quick Quote** — Select text and ask follow-up questions instantly
+
+**Prompt Library** — Save and insert favorite prompts with one click
+
+**Code Runner** — Run JS/Python/TS/SQL and more code blocks inline
+
+**Formula Copy** — One-click copy LaTeX / MathML source
+
+  </td>
   </tr>
 </table>
 
-## 🌍 Language Support
+<details>
+<summary><strong>View full feature list (20 items)</strong></summary>
 
-Supporting **42 languages** with industry-leading coverage:
+<br>
 
-<details open>
-<summary>Click to view full language list</summary>
+### Core Features
+
+| Feature | Description |
+|---------|-------------|
+| 🎯 **Chat Timeline** | Vertical timeline on the right side for quick navigation to any conversation |
+| 📋 **Question List** | View all questions in the thread with pin, jump, and bookmark support |
+| ⭐️ **Bookmark Conversations** | Save individual Q&As or entire chats to folders with notes |
+| 📂 **Bookmark Manager** | Manage bookmarks with folders, search, and quick navigation |
+| 📌 **Sidebar Bookmarks** | Inject bookmark list into the AI platform's native sidebar |
+| 📝 **Quick Notes** | Floating notepad to jot down ideas while chatting |
+| 🕐 **Chat Time Labels** | Show when each message was sent on the timeline |
+
+### Input Enhancement
+
+| Feature | Description |
+|---------|-------------|
+| ⏎ **Smart Enter** | Enter for new line, double-Enter to send |
+| 💬 **Prompt Library** | Save and reuse favorite prompts with one click |
+| 🔍 **Quick Quote** | Select AI response text and ask follow-up questions instantly |
+| 🎨 **Input Animations** | Fun animated characters above the input box during AI replies |
+
+### Formula & Code
+
+| Feature | Description |
+|---------|-------------|
+| 🧮 **Formula Copy** | Click math formulas to copy LaTeX / MathML source |
+| ▶️ **Code Runner** | Run code blocks with one click (JS/Python/TS/SQL/Lua/Ruby/HTML/JSON/Markdown) |
+| 📊 **Mermaid Diagrams** | Render Mermaid code blocks as diagrams with fullscreen view |
+
+### Navigation & Actions
+
+| Feature | Description |
+|---------|-------------|
+| ⌨️ **Keyboard Navigation** | Navigate between conversation nodes with arrow keys |
+| 📌 **Long-press Pin** | Long-press timeline nodes to mark/unmark as important |
+| ⬇️ **Scroll to Bottom** | Quick scroll to the latest message |
+
+### Data & Settings
+
+| Feature | Description |
+|---------|-------------|
+| ☁️ **Data Sync** | Google Drive cloud backup + JSON import/export |
+| ⚙️ **Settings Panel** | Multi-tab settings interface for all features |
+| 🌍 **Multi-language** | Supports 19 languages |
+
+</details>
+
+## 🌐 Supported Platforms
+
+| Platform | Timeline | Smart Input | Animations | Quick Quote | Chat Times | Sidebar Bookmarks | Scroll to Bottom |
+|----------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| ChatGPT | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Gemini | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DeepSeek | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Claude | ✅ | ✅ | — | ✅ | — | ✅ | — |
+| Kimi | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Doubao | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Qwen | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Qwen Intl | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — |
+| Grok | ✅ | ✅ | ✅ | ✅ | — | — | — |
+| Perplexity | ✅ | ✅ | — | ✅ | — | — | — |
+| Yuanbao | ✅ | ✅ | ✅ | ✅ | — | — | — |
+| Yiyan | ✅ | — | — | ✅ | — | — | — |
+| NotebookLM | — | ✅ | — | ✅ | — | — | — |
+
+> 💡 **Formula Copy** and **Code Runner** work on all pages — they activate automatically when matching content is detected.
+
+## 🌍 Languages
+
+Supporting **42 languages** with global coverage.
+
+<details>
+<summary>View full language list</summary>
 
 | Language | Code | Language | Code | Language | Code |
 |----------|------|----------|------|----------|------|
@@ -95,24 +160,28 @@ Supporting **42 languages** with industry-leading coverage:
 
 ## 🗺️ Roadmap
 
-- [ ] Firefox browser support
+- [x] Firefox browser support
+- [x] Cross-browser data sync
+- [ ] Fix GPT lag by hiding conversation nodes
+- [ ] One-click sync to NotebookLM
+- [ ] Optimize Gemini Canvas auto-open
 - [ ] Cloud sync
 
 ## 💬 Contact & Support
 
-- **Issue Tracker**: [GitHub Issues](../../issues)
+- **Bug reports**: [GitHub Issues](../../issues)
 - **Email**: houyanchao@outlook.com
 
 ## 📄 License
 
-This project is licensed under the [MIT License](./LICENSE)
+This project is open source under the [MIT License](./LICENSE)
 
-## 🙏 Acknowledgements
+## 🙏 Credits
 
-This project is developed based on [chatgpt-conversation-timeline](https://github.com/Reborn14/chatgpt-conversation-timeline). We sincerely appreciate the original author's open-source contribution.
+Built upon [chatgpt-conversation-timeline](https://github.com/Reborn14/chatgpt-conversation-timeline). Thanks to the original author for the open source contribution.
 
 ---
 
 <div align="center">
-  <p>If you find this extension useful, please consider giving it a ⭐️ Star on GitHub!</p>
+  <p>If you find it useful, please <a href="https://github.com/houyanchao/AITimeline">⭐ Star</a> to support</p>
 </div>
