@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "활성화하면 입력 상자 왼쪽에 프롬프트 버튼이 표시됩니다"
+    "message": "자주 쓰는 프롬프트를 저장하고 빠르게 불러올 수 있습니다. 활성화하면 채팅창 왼쪽에 프롬프트 버튼이 표시됩니다."
   },
   "biwhckdj": {
     "message": "프롬프트 목록"
@@ -504,7 +504,7 @@
     "message": "플러그인 소개"
   },
   "aboutPluginContent": {
-    "message": "AI 대화를 위한 생산성 플러그인입니다. 대화 타임라인, 플래시 메모, LaTeX 수식 복사, 사용자 정의 프롬프트 등 다양한 기능을 제공합니다. ChatGPT, Gemini, DeepSeek, Kimi, Claude 등 주요 플랫폼을 지원하며, AI 사용 효율을 배로 높여줍니다."
+    "message": "Timeline은 AI 대화를 위한 기능 강화 플러그인입니다. 대화 타임라인, 플래시 메모, LaTeX 수식 복사, 사용자 정의 프롬프트 등 다양한 기능을 제공합니다. ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen 등 모든 주요 AI 플랫폼을 지원하며, 사용하면 AI 대화 경험이 배로 높아집니다."
   },
   "aboutDataSecurityTitle": {
     "message": "데이터 보안"
@@ -513,10 +513,10 @@
     "message": "이 확장 프로그램의 모든 데이터는 브라우저 로컬 또는 Google Drive에 저장되며, 제3자 서버를 거치지 않습니다. 확장 프로그램은 대화 내용이나 개인 정보를 수집, 업로드 또는 공유하지 않습니다. 이 프로젝트는 GitHub에서 오픈소스로 공개되어 있으며, 언제든지 코드를 검토할 수 있습니다."
   },
   "aboutDeveloperTitle": {
-    "message": "개발자"
+    "message": "피드백"
   },
   "aboutDeveloperContent": {
-    "message": "이 프로젝트는 저와 Claude가 함께 유지하며, 매주 1~2개의 새 버전을 출시합니다. 버그 제보나 기능 제안은 아래 채널 중 하나로 연락해 주세요 (보는 즉시 반드시 답변 드립니다):"
+    "message": "이 프로젝트는 저와 Claude가 함께 유지하며, 매주 1~2개의 새 버전을 출시합니다. 기능 요청이나 버그 제보는 아래 채널 중 하나로 연락해 주세요 (보는 즉시 반드시 답변 드립니다):"
   },
   "aboutShareTitle": {
     "message": "친구에게 추천"

@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "When enabled, a prompt button will be displayed on the left side of the input box"
+    "message": "Save your go-to prompts for quick access. When enabled, a prompt button will be displayed on the left side of the chat box."
   },
   "biwhckdj": {
     "message": "Prompt List"
@@ -477,7 +477,7 @@
     "message": "About This Extension"
   },
   "aboutPluginContent": {
-    "message": "A productivity plugin built for AI conversations, featuring conversation timeline, quick notes, LaTeX formula copying, custom prompts, and more. Works with ChatGPT, Gemini, DeepSeek, Kimi, Claude, and all major platforms — designed to double your AI efficiency."
+    "message": "Timeline is an enhancement plugin built for AI conversations, featuring conversation timeline, quick notes, LaTeX formula copying, custom prompts, and more. Works with ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen, and all major AI platforms — use it and double your AI chat experience."
   },
   "aboutDataSecurityTitle": {
     "message": "Data Security"
@@ -486,10 +486,10 @@
     "message": "All your data within this extension is stored locally in your browser or in your Google Drive, without passing through any third-party servers. The extension does not collect, upload, or share any of your conversation content or personal information. This project is open-source on GitHub, and the code is available for review at any time."
   },
   "aboutDeveloperTitle": {
-    "message": "Developer"
+    "message": "Feedback"
   },
   "aboutDeveloperContent": {
-    "message": "This project is co-maintained by me and Claude, with 1–2 new versions released every week. To report a bug or suggest a feature, reach out through any of the channels below (I will definitely reply when I see it):"
+    "message": "This project is co-maintained by me and Claude, with 1–2 new versions released every week. To request a feature or report a bug, reach out through any of the channels below (I will definitely reply when I see it):"
   },
   "aboutShareTitle": {
     "message": "Recommend to Friends"

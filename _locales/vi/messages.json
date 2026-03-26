@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Khi bật, một nút prompt sẽ được hiển thị ở bên trái hộp nhập liệu"
+    "message": "Lưu prompt để truy cập nhanh. Khi bật, một nút prompt sẽ được hiển thị ở bên trái hộp chat."
   },
   "biwhckdj": {
     "message": "Danh sách Prompt"
@@ -477,7 +477,7 @@
     "message": "Về tiện ích"
   },
   "aboutPluginContent": {
-    "message": "Tiện ích nâng cao năng suất cho hội thoại AI, bao gồm dòng thời gian hội thoại, ghi chú nhanh, sao chép công thức LaTeX, prompt tùy chỉnh và nhiều tính năng khác. Hỗ trợ ChatGPT, Gemini, DeepSeek, Kimi, Claude và tất cả nền tảng chính — giúp tăng gấp đôi hiệu suất sử dụng AI."
+    "message": "Timeline là tiện ích tăng cường cho hội thoại AI, bao gồm dòng thời gian hội thoại, ghi chú nhanh, sao chép công thức LaTeX, prompt tùy chỉnh và nhiều tính năng khác. Hỗ trợ ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen và tất cả nền tảng AI chính — sử dụng nó và tăng gấp đôi trải nghiệm trò chuyện AI."
   },
   "aboutDataSecurityTitle": {
     "message": "Bảo mật dữ liệu"
@@ -486,10 +486,10 @@
     "message": "Tất cả dữ liệu của bạn trong tiện ích mở rộng này được lưu trữ cục bộ trên trình duyệt hoặc trong Google Drive của bạn, không đi qua bất kỳ máy chủ bên thứ ba nào. Tiện ích không thu thập, tải lên hoặc chia sẻ bất kỳ nội dung cuộc trò chuyện hay thông tin cá nhân nào của bạn. Dự án này là mã nguồn mở trên GitHub, bạn có thể kiểm tra mã bất cứ lúc nào."
   },
   "aboutDeveloperTitle": {
-    "message": "Nhà phát triển"
+    "message": "Phản hồi"
   },
   "aboutDeveloperContent": {
-    "message": "Dự án này được tôi và Claude cùng duy trì, với nhịp độ 1–2 phiên bản mới mỗi tuần. Để báo lỗi hoặc đề xuất tính năng, hãy liên hệ qua bất kỳ kênh nào bên dưới (tôi chắc chắn sẽ trả lời khi thấy):"
+    "message": "Dự án này được tôi và Claude cùng duy trì, với nhịp độ 1–2 phiên bản mới mỗi tuần. Để yêu cầu tính năng hoặc báo lỗi, hãy liên hệ qua bất kỳ kênh nào bên dưới (tôi chắc chắn sẽ trả lời khi thấy):"
   },
   "aboutShareTitle": {
     "message": "Giới thiệu cho bạn bè"

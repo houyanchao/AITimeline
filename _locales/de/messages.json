@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Wenn aktiviert, wird links neben dem Eingabefeld eine Prompt-Taste angezeigt"
+    "message": "Speichern Sie Ihre Prompts für schnellen Zugriff. Wenn aktiviert, wird links neben dem Chatfeld eine Prompt-Taste angezeigt."
   },
   "biwhckdj": {
     "message": "Prompt-Liste"
@@ -477,7 +477,7 @@
     "message": "Über diese Erweiterung"
   },
   "aboutPluginContent": {
-    "message": "Eine Produktivitätserweiterung für KI-Gespräche mit Zeitleiste, Schnellnotizen, LaTeX-Formelkopie, benutzerdefinierten Prompts und vielem mehr. Unterstützt ChatGPT, Gemini, DeepSeek, Kimi, Claude und alle wichtigen Plattformen — verdoppelt Ihre KI-Effizienz."
+    "message": "Timeline ist eine Erweiterung zur Verbesserung von KI-Gesprächen mit Zeitleiste, Schnellnotizen, LaTeX-Formelkopie, benutzerdefinierten Prompts und vielem mehr. Unterstützt ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen und alle wichtigen KI-Plattformen — nutzen Sie es und verdoppeln Sie Ihr KI-Chat-Erlebnis."
   },
   "aboutDataSecurityTitle": {
     "message": "Datensicherheit"
@@ -486,10 +486,10 @@
     "message": "Alle Ihre Daten innerhalb dieser Erweiterung werden lokal in Ihrem Browser oder in Ihrem Google Drive gespeichert, ohne über Drittanbieter-Server zu gehen. Die Erweiterung sammelt, lädt hoch oder teilt keine Ihrer Gesprächsinhalte oder persönlichen Informationen. Dieses Projekt ist auf GitHub quelloffen, und der Code kann jederzeit überprüft werden."
   },
   "aboutDeveloperTitle": {
-    "message": "Entwickler"
+    "message": "Feedback"
   },
   "aboutDeveloperContent": {
-    "message": "Dieses Projekt wird von mir und Claude gemeinsam gepflegt, mit 1–2 neuen Versionen pro Woche. Um einen Bug zu melden oder eine Funktion vorzuschlagen, wende dich über einen der folgenden Kanäle an mich (ich antworte auf jeden Fall, wenn ich es sehe):"
+    "message": "Dieses Projekt wird von mir und Claude gemeinsam gepflegt, mit 1–2 neuen Versionen pro Woche. Um ein Feature anzufordern oder einen Bug zu melden, wende dich über einen der folgenden Kanäle an mich (ich antworte auf jeden Fall, wenn ich es sehe):"
   },
   "aboutShareTitle": {
     "message": "Freunden empfehlen"

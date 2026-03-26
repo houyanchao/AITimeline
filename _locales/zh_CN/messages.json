@@ -270,7 +270,7 @@
     "message": "提示词"
   },
   "hobsidbg": {
-    "message": "启用后，在输入框左侧显示提示词按钮"
+    "message": "把常用提示词保存起来，需要时快速调用。启用后，在对话框左侧显示提示词按钮。"
   },
   "biwhckdj": {
     "message": "提示词列表"
@@ -558,7 +558,7 @@
     "message": "插件简介"
   },
   "aboutPluginContent": {
-    "message": "专门为 AI 对话开发的提效插件，拥有 对话时间轴、闪记、复制 LaTeX 公式、自定义提示词等超多功能。支持 ChatGPT、Gemini、DeepSeek、Kimi、Claude 等主流平台，它的使命是助你使用 AI 的效率翻倍。"
+    "message": "Timeline 是专为 AI 对话开发的增强插件，拥有 对话时间轴、闪记、复制 LaTeX 公式、自定义提示词等超多功能。支持 ChatGPT、Gemini、Claude、DeepSeek、Kimi、豆包、千问等所有主流 AI 平台，用上它，AI 对话体验翻倍。"
   },
   "aboutDataSecurityTitle": {
     "message": "数据安全"
@@ -567,10 +567,10 @@
     "message": "你在本插件内的所有数据都存储在你的浏览器本地或你的 Google Drive 中，不经过任何第三方服务器。插件不会收集、上传或分享你的任何对话内容和个人信息，本项目已在GitHub开源，可随时审查代码。"
   },
   "aboutDeveloperTitle": {
-    "message": "开发者"
+    "message": "提需求"
   },
   "aboutDeveloperContent": {
-    "message": "本项目由我和 Claude 共同维护，每周 1～2 个新版本的更新节奏。如果想反馈 bug 或功能建议，可通过以下任一渠道进行反馈（我看到一定会回复）："
+    "message": "本项目由我和 Claude 共同维护，每周 1～2 个新版本的更新节奏。如果想提需求或反馈 bug，可通过以下任一渠道进行反馈（我看到一定会回复）："
   },
   "aboutShareTitle": {
     "message": "推荐给朋友"

@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Saat diaktifkan, tombol prompt akan ditampilkan di sisi kiri kotak input"
+    "message": "Simpan prompt untuk akses cepat. Saat diaktifkan, tombol prompt akan ditampilkan di sisi kiri kotak chat."
   },
   "biwhckdj": {
     "message": "Daftar Prompt"
@@ -477,7 +477,7 @@
     "message": "Tentang ekstensi"
   },
   "aboutPluginContent": {
-    "message": "Ekstensi produktivitas untuk percakapan AI, dengan timeline percakapan, catatan cepat, salin rumus LaTeX, prompt kustom, dan banyak lagi. Mendukung ChatGPT, Gemini, DeepSeek, Kimi, Claude dan semua platform utama — dirancang untuk menggandakan efisiensi penggunaan AI."
+    "message": "Timeline adalah ekstensi peningkatan untuk percakapan AI, dengan timeline percakapan, catatan cepat, salin rumus LaTeX, prompt kustom, dan banyak lagi. Mendukung ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen dan semua platform AI utama — gunakan dan gandakan pengalaman chat AI Anda."
   },
   "aboutDataSecurityTitle": {
     "message": "Keamanan Data"
@@ -486,10 +486,10 @@
     "message": "Semua data kamu di ekstensi ini disimpan secara lokal di browser atau di Google Drive kamu, tanpa melewati server pihak ketiga mana pun. Ekstensi tidak mengumpulkan, mengunggah, atau membagikan konten percakapan atau informasi pribadi kamu. Proyek ini bersifat open-source di GitHub, dan kode dapat ditinjau kapan saja."
   },
   "aboutDeveloperTitle": {
-    "message": "Pengembang"
+    "message": "Umpan Balik"
   },
   "aboutDeveloperContent": {
-    "message": "Proyek ini dipelihara bersama oleh saya dan Claude, dengan ritme 1–2 versi baru setiap minggu. Untuk melaporkan bug atau menyarankan fitur, hubungi saya melalui salah satu saluran di bawah (saya pasti akan membalas ketika melihatnya):"
+    "message": "Proyek ini dipelihara bersama oleh saya dan Claude, dengan ritme 1–2 versi baru setiap minggu. Untuk meminta fitur atau melaporkan bug, hubungi saya melalui salah satu saluran di bawah (saya pasti akan membalas ketika melihatnya):"
   },
   "aboutShareTitle": {
     "message": "Rekomendasikan ke teman"

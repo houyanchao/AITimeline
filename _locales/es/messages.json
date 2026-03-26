@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Cuando está habilitado, se mostrará un botón de prompt en el lado izquierdo del cuadro de entrada"
+    "message": "Guarda tus prompts para acceder rápidamente. Cuando está habilitado, se mostrará un botón de prompt en el lado izquierdo del cuadro de chat."
   },
   "biwhckdj": {
     "message": "Lista de prompts"
@@ -477,7 +477,7 @@
     "message": "Sobre la extensión"
   },
   "aboutPluginContent": {
-    "message": "Extensión de productividad para conversaciones con IA, con línea de tiempo, notas rápidas, copia de fórmulas LaTeX, prompts personalizados y mucho más. Compatible con ChatGPT, Gemini, DeepSeek, Kimi, Claude y todas las plataformas principales — diseñada para duplicar tu eficiencia con la IA."
+    "message": "Timeline es una extensión de mejora para conversaciones con IA, con línea de tiempo, notas rápidas, copia de fórmulas LaTeX, prompts personalizados y mucho más. Compatible con ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen y todas las principales plataformas de IA — úsalo y duplica tu experiencia de chat con IA."
   },
   "aboutDataSecurityTitle": {
     "message": "Seguridad de datos"
@@ -486,10 +486,10 @@
     "message": "Todos tus datos dentro de esta extensión se almacenan localmente en tu navegador o en tu Google Drive, sin pasar por ningún servidor de terceros. La extensión no recopila, sube ni comparte ningún contenido de tus conversaciones ni información personal. Este proyecto es de código abierto en GitHub, y el código está disponible para revisión en cualquier momento."
   },
   "aboutDeveloperTitle": {
-    "message": "Desarrollador"
+    "message": "Feedback"
   },
   "aboutDeveloperContent": {
-    "message": "Este proyecto lo mantenemos Claude y yo juntos, con un ritmo de 1–2 versiones nuevas por semana. Para reportar un bug o sugerir una función, contáctame por cualquiera de los canales a continuación (te responderé en cuanto lo vea):"
+    "message": "Este proyecto lo mantenemos Claude y yo juntos, con un ritmo de 1–2 versiones nuevas por semana. Para solicitar una función o reportar un bug, contáctame por cualquiera de los canales a continuación (te responderé en cuanto lo vea):"
   },
   "aboutShareTitle": {
     "message": "Recomendar a amigos"

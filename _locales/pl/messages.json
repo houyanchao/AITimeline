@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Po włączeniu, przycisk promptu zostanie wyświetlony po lewej stronie pola wprowadzania"
+    "message": "Zapisz prompty, aby szybko z nich korzystać. Po włączeniu, przycisk promptu zostanie wyświetlony po lewej stronie okna czatu."
   },
   "biwhckdj": {
     "message": "Lista promptów"
@@ -477,7 +477,7 @@
     "message": "O rozszerzeniu"
   },
   "aboutPluginContent": {
-    "message": "Rozszerzenie zwiększające produktywność w rozmowach z AI, z osią czasu rozmów, szybkimi notatkami, kopiowaniem formuł LaTeX, własnymi promptami i wieloma innymi funkcjami. Obsługuje ChatGPT, Gemini, DeepSeek, Kimi, Claude i wszystkie główne platformy — podwaja efektywność korzystania z AI."
+    "message": "Timeline to rozszerzenie wzbogacające rozmowy z AI, z osią czasu rozmów, szybkimi notatkami, kopiowaniem formuł LaTeX, własnymi promptami i wieloma innymi funkcjami. Obsługuje ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen i wszystkie główne platformy AI — użyj go, a wrażenia z czatu z AI się podwoją."
   },
   "aboutDataSecurityTitle": {
     "message": "Bezpieczeństwo danych"
@@ -486,10 +486,10 @@
     "message": "Wszystkie Twoje dane w tym rozszerzeniu są przechowywane lokalnie w przeglądarce lub na Twoim Google Drive, bez przechodzenia przez serwery firm trzecich. Rozszerzenie nie zbiera, nie przesyła ani nie udostępnia żadnych treści rozmów ani danych osobowych. Projekt jest open-source na GitHubie, a kod jest dostępny do przeglądu w każdej chwili."
   },
   "aboutDeveloperTitle": {
-    "message": "Deweloper"
+    "message": "Feedback"
   },
   "aboutDeveloperContent": {
-    "message": "Ten projekt jest wspólnie utrzymywany przeze mnie i Claude, w rytmie 1–2 nowych wersji tygodniowo. Aby zgłosić błąd lub zaproponować funkcję, skontaktuj się ze mną przez jeden z poniższych kanałów (na pewno odpiszę, gdy to zobaczę):"
+    "message": "Ten projekt jest wspólnie utrzymywany przeze mnie i Claude, w rytmie 1–2 nowych wersji tygodniowo. Aby poprosić o funkcję lub zgłosić błąd, skontaktuj się ze mną przez jeden z poniższych kanałów (na pewno odpiszę, gdy to zobaczę):"
   },
   "aboutShareTitle": {
     "message": "Poleć znajomym"

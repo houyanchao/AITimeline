@@ -264,7 +264,7 @@
     "message": "Prompts"
   },
   "hobsidbg": {
-    "message": "Quando attivato, verrà visualizzato un pulsante prompt sul lato sinistro della casella di input"
+    "message": "Salva i prompt per un accesso rapido. Quando attivato, verrà visualizzato un pulsante prompt sul lato sinistro della casella di chat."
   },
   "biwhckdj": {
     "message": "Lista prompt"
@@ -477,7 +477,7 @@
     "message": "Informazioni sull'estensione"
   },
   "aboutPluginContent": {
-    "message": "Estensione di produttività per le conversazioni IA, con timeline delle conversazioni, note rapide, copia formule LaTeX, prompt personalizzati e molto altro. Compatibile con ChatGPT, Gemini, DeepSeek, Kimi, Claude e tutte le principali piattaforme — progettata per raddoppiare l'efficienza nell'uso dell'IA."
+    "message": "Timeline è un'estensione di potenziamento per le conversazioni IA, con timeline delle conversazioni, note rapide, copia formule LaTeX, prompt personalizzati e molto altro. Compatibile con ChatGPT, Gemini, Claude, DeepSeek, Kimi, Doubao, Qwen e tutte le principali piattaforme IA — usalo e raddoppia la tua esperienza di chat con l'IA."
   },
   "aboutDataSecurityTitle": {
     "message": "Sicurezza dei dati"
@@ -486,10 +486,10 @@
     "message": "Tutti i tuoi dati all'interno di questa estensione sono archiviati localmente nel tuo browser o nel tuo Google Drive, senza passare per server di terze parti. L'estensione non raccoglie, carica o condivide alcun contenuto delle tue conversazioni o informazioni personali. Questo progetto è open-source su GitHub e il codice è disponibile per la revisione in qualsiasi momento."
   },
   "aboutDeveloperTitle": {
-    "message": "Sviluppatore"
+    "message": "Feedback"
   },
   "aboutDeveloperContent": {
-    "message": "Questo progetto è co-mantenuto da me e Claude, con un ritmo di 1–2 nuove versioni a settimana. Per segnalare un bug o suggerire una funzione, contattami tramite uno dei canali seguenti (risponderò di sicuro appena lo vedo):"
+    "message": "Questo progetto è co-mantenuto da me e Claude, con un ritmo di 1–2 nuove versioni a settimana. Per richiedere una funzione o segnalare un bug, contattami tramite uno dei canali seguenti (risponderò di sicuro appena lo vedo):"
   },
   "aboutShareTitle": {
     "message": "Consiglia agli amici"

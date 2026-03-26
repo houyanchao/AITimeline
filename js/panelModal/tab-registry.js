@@ -28,6 +28,7 @@ function getTabClass(name) {
  * - className: 对应的类名（字符串）
  */
 const TAB_CONFIG = [
+    { id: 'about', className: 'AboutTab' },
     { id: 'timeline-settings', className: 'TimelineSettingsTab' },
     { id: 'starred', className: 'StarredTab' },
     { id: 'prompt', className: 'PromptTab' },
@@ -35,8 +36,7 @@ const TAB_CONFIG = [
     { id: 'formula', className: 'FormulaTab' },
     { id: 'runner', className: 'RunnerTab' },
     { id: 'animation', className: 'AnimationTab' },
-    { id: 'data-sync', className: 'DataSyncTab' },
-    { id: 'about', className: 'AboutTab' }
+    { id: 'data-sync', className: 'DataSyncTab' }
 ];
 
 /**
