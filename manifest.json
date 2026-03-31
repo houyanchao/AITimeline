@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "Timeline",
-  "version": "4.5.3",
+  "version": "4.5.4",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "author": "yanchao hou",
@@ -18,13 +18,6 @@
     "identity",
     "activeTab"
   ],
-  
-  "oauth2": {
-    "client_id": "945798922226-gdjj6v37j5fueacci9253u0j1iasiht2.apps.googleusercontent.com",
-    "scopes": [
-      "https://www.googleapis.com/auth/drive.file"
-    ]
-  },
   
   "background": {
     "service_worker": "js/background.js"

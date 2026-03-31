@@ -15,29 +15,17 @@ const GDRIVE_DATA_FILE = 'ait-backup.json';
 const GDRIVE_API = 'https://www.googleapis.com';
 
 const IS_FIREFOX = typeof browser !== 'undefined' && browser.runtime?.id;
+const browserAPI = IS_FIREFOX ? browser : chrome;
 
-const OAUTH_CLIENT_ID_CHROME = '945798922226-gdjj6v37j5fueacci9253u0j1iasiht2.apps.googleusercontent.com';
-const OAUTH_CLIENT_ID_FIREFOX = '945798922226-jve664u0ibs7lsji89kr8s7f9lsnilla.apps.googleusercontent.com';
+const OAUTH_CLIENT_ID = '945798922226-jve664u0ibs7lsji89kr8s7f9lsnilla.apps.googleusercontent.com';
 const OAUTH_SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
 /**
  * 获取 OAuth2 Access Token
- * Chrome: chrome.identity.getAuthToken（内置 OAuth，自动管理 token）
- * Firefox: browser.identity.launchWebAuthFlow（打开网页授权）
+ * 统一使用 identity.launchWebAuthFlow 方式
  */
 async function getAuthToken(interactive = true) {
-    if (IS_FIREFOX) {
-        return await getAuthTokenFirefox(interactive);
-    }
-    const result = await chrome.identity.getAuthToken({ interactive });
-    if (!result.token) {
-        throw new Error('Not authenticated');
-    }
-    return result.token;
-}
-
-async function getAuthTokenFirefox(interactive) {
-    const stored = await browser.storage.local.get('gdriveToken');
+    const stored = await browserAPI.storage.local.get('gdriveToken');
     if (stored.gdriveToken?.access_token) {
         const isValid = await validateToken(stored.gdriveToken.access_token);
         if (isValid) return stored.gdriveToken.access_token;
@@ -45,14 +33,14 @@ async function getAuthTokenFirefox(interactive) {
 
     if (!interactive) throw new Error('Not authenticated');
 
-    const redirectUrl = browser.identity.getRedirectURL();
+    const redirectUrl = browserAPI.identity.getRedirectURL();
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth` +
-        `?client_id=${encodeURIComponent(OAUTH_CLIENT_ID_FIREFOX)}` +
+        `?client_id=${encodeURIComponent(OAUTH_CLIENT_ID)}` +
         `&response_type=token` +
         `&redirect_uri=${encodeURIComponent(redirectUrl)}` +
         `&scope=${encodeURIComponent(OAUTH_SCOPES)}`;
 
-    const responseUrl = await browser.identity.launchWebAuthFlow({
+    const responseUrl = await browserAPI.identity.launchWebAuthFlow({
         url: authUrl,
         interactive: true
     });
@@ -61,7 +49,7 @@ async function getAuthTokenFirefox(interactive) {
     const accessToken = params.get('access_token');
     if (!accessToken) throw new Error('OAuth failed: no access_token');
 
-    await browser.storage.local.set({
+    await browserAPI.storage.local.set({
         gdriveToken: { access_token: accessToken, obtained_at: Date.now() }
     });
 
@@ -80,19 +68,11 @@ async function validateToken(token) {
  */
 async function revokeToken() {
     try {
-        if (IS_FIREFOX) {
-            const stored = await browser.storage.local.get('gdriveToken');
-            const token = stored.gdriveToken?.access_token;
-            if (token) {
-                await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${token}`);
-                await browser.storage.local.remove('gdriveToken');
-            }
-        } else {
-            const result = await chrome.identity.getAuthToken({ interactive: false });
-            if (result.token) {
-                await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${result.token}`);
-                await chrome.identity.removeCachedAuthToken({ token: result.token });
-            }
+        const stored = await browserAPI.storage.local.get('gdriveToken');
+        const token = stored.gdriveToken?.access_token;
+        if (token) {
+            await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${token}`);
+            await browserAPI.storage.local.remove('gdriveToken');
         }
     } catch {}
 }

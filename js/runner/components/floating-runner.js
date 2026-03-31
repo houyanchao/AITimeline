@@ -224,10 +224,16 @@
 
         // ===== 位置和大小 =====
         setPosition(x, y) {
-            const maxX = window.innerWidth - this.container.offsetWidth;
-            const maxY = window.innerHeight - this.container.offsetHeight;
-            x = Math.max(0, Math.min(maxX, x));
-            y = Math.max(0, Math.min(maxY, y));
+            const minVisible = 150;
+            const headerHeight = 60;
+
+            const minX = -(this.container.offsetWidth - minVisible);
+            const maxX = window.innerWidth - minVisible;
+            const minY = 0;
+            const maxY = window.innerHeight - headerHeight;
+
+            x = Math.max(minX, Math.min(maxX, x));
+            y = Math.max(minY, Math.min(maxY, y));
 
             this.container.style.left = x + 'px';
             this.container.style.top = y + 'px';
