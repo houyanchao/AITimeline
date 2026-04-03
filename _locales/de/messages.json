@@ -102,7 +102,7 @@
     "message": "Noch keine Fragen"
   },
   "animTabTitle": {
-    "message": "Spaß-Animation"
+    "message": "Digitales Haustier"
   },
   "animTabDesc": {
     "message": "Wird über dem Chatfeld angezeigt. Niedliche Tiere laufen fröhlich herum, wenn die KI antwortet."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Nachfragen"
   },
+
+  "highlightToggleTitle": {
+    "message": "Texthervorhebung aktivieren"
+  },
+  "highlightToggleHint": {
+    "message": "Nach Aktivierung können Sie Text auf Webseiten markieren und hervorheben"
+  },
+  "highlightColorTitle": {
+    "message": "Hervorhebungsfarbe"
+  },
+  "highlightMark": {
+    "message": "Markieren"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Hervorhebung entfernen?"
+  },
+  "highlightRemoveYes": {
+    "message": "Entfernen"
+  },
+  "highlightRemoveNo": {
+    "message": "Abbrechen"
+  },
   "scrollToBottomTitle": {
     "message": "Nach unten"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Animation ändern"
+    "message": "Haustier ändern"
   },
   "dragMoveSuccess": {
     "message": "Verschoben"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Hervorhebungsstil"
+  },
+  "highlightStyleFullCover": {
+    "message": "Vollständig"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Hervorhebung deckt den gesamten Text ab"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Halb"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Hervorhebung deckt die untere Hälfte ab"
+  },
+  "highlightStyleUnderline": {
+    "message": "Unterstrichen"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Hervorhebung unter dem Text"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Nur Text"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Kein Hintergrund, nur Textfarbe"
+  },
+  "highlightMyColors": {
+    "message": "Hervorhebungsfarben"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Maximal 15 Farben"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Farbe {color} löschen?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Farbe hinzufügen"
+  },
+  "highlightAddColorBtn": {
+    "message": "Farbe"
+  },
+  "highlightInvalidHex": {
+    "message": "Ungültiges Farbformat"
+  },
+  "highlightColorExists": {
+    "message": "Farbe bereits vorhanden"
+  },
+  "highlightColorHint": {
+    "message": "6-stelligen Hex-Farbcode eingeben, z. B. #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Gedanken…"
   }
 }

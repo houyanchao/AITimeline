@@ -18,6 +18,7 @@ function getTabClass(name) {
         case 'RunnerTab': return typeof RunnerTab !== 'undefined' ? RunnerTab : null;
         case 'DataSyncTab': return typeof DataSyncTab !== 'undefined' ? DataSyncTab : null;
         case 'AboutTab': return typeof AboutTab !== 'undefined' ? AboutTab : null;
+        case 'HighlightTab': return typeof HighlightTab !== 'undefined' ? HighlightTab : null;
         default: return null;
     }
 }
@@ -35,6 +36,7 @@ const TAB_CONFIG = [
     { id: 'smart-input-box', className: 'SmartInputBoxTab' },
     { id: 'formula', className: 'FormulaTab' },
     { id: 'runner', className: 'RunnerTab' },
+    { id: 'highlight', className: 'HighlightTab' },
     { id: 'animation', className: 'AnimationTab' },
     { id: 'data-sync', className: 'DataSyncTab' }
 ];

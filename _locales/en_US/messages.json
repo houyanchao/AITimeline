@@ -102,7 +102,7 @@
     "message": "No questions yet"
   },
   "animTabTitle": {
-    "message": "Fun Animation"
+    "message": "Digital Pet"
   },
   "animTabDesc": {
     "message": "Displayed above the chat box. Cute animals walk around when AI replies."
@@ -395,6 +395,28 @@
   "quickAsk": {
     "message": "Follow Up"
   },
+
+  "highlightToggleTitle": {
+    "message": "Enable Text Highlight"
+  },
+  "highlightToggleHint": {
+    "message": "When enabled, you can highlight selected text on webpages"
+  },
+  "highlightColorTitle": {
+    "message": "Highlight Color"
+  },
+  "highlightMark": {
+    "message": "Highlight"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Remove this highlight?"
+  },
+  "highlightRemoveYes": {
+    "message": "Remove"
+  },
+  "highlightRemoveNo": {
+    "message": "Cancel"
+  },
   "scrollToBottomTitle": {
     "message": "Scroll to Bottom"
   },
@@ -531,7 +553,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Change Animation"
+    "message": "Change Pet"
   },
   "dragMoveSuccess": {
     "message": "Moved"
@@ -577,5 +599,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Highlight Style"
+  },
+  "highlightStyleFullCover": {
+    "message": "Full Cover"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Highlight fully covers text"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Half Cover"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Highlight covers lower half of text"
+  },
+  "highlightStyleUnderline": {
+    "message": "Underline"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Highlight appears below text"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Text Only"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "No background, text color only"
+  },
+  "highlightMyColors": {
+    "message": "Highlight Colors"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Maximum 15 colors"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Delete color {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Add Color"
+  },
+  "highlightAddColorBtn": {
+    "message": "Color"
+  },
+  "highlightInvalidHex": {
+    "message": "Invalid color format"
+  },
+  "highlightColorExists": {
+    "message": "Color already exists"
+  },
+  "highlightColorHint": {
+    "message": "Enter a 6-digit hex color code, e.g. #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Thoughts…"
   }
 }

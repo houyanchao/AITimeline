@@ -102,7 +102,7 @@
     "message": "ยังไม่มีคำถาม"
   },
   "animTabTitle": {
-    "message": "แอนิเมชั่นสนุก"
+    "message": "สัตว์เลี้ยงดิจิทัล"
   },
   "animTabDesc": {
     "message": "แสดงเหนือกล่องแชท สัตว์น้อยน่ารักจะเดินอย่างสนุกสนานเมื่อ AI ตอบกลับ"
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "ถามต่อ"
   },
+
+  "highlightToggleTitle": {
+    "message": "เปิดใช้ไฮไลท์ข้อความ"
+  },
+  "highlightToggleHint": {
+    "message": "เมื่อเปิดใช้ สามารถไฮไลท์ข้อความที่เลือกบนหน้าเว็บได้"
+  },
+  "highlightColorTitle": {
+    "message": "สีไฮไลท์"
+  },
+  "highlightMark": {
+    "message": "ไฮไลท์"
+  },
+  "highlightRemoveConfirm": {
+    "message": "ลบไฮไลท์นี้?"
+  },
+  "highlightRemoveYes": {
+    "message": "ลบ"
+  },
+  "highlightRemoveNo": {
+    "message": "ยกเลิก"
+  },
   "scrollToBottomTitle": {
     "message": "ไปด้านล่าง"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "เปลี่ยนแอนิเมชัน"
+    "message": "เปลี่ยนสัตว์เลี้ยง"
   },
   "dragMoveSuccess": {
     "message": "ย้ายแล้ว"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "รูปแบบไฮไลท์"
+  },
+  "highlightStyleFullCover": {
+    "message": "คลุมทั้งหมด"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "ไฮไลท์คลุมข้อความทั้งหมด"
+  },
+  "highlightStyleHalfCover": {
+    "message": "คลุมครึ่ง"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "ไฮไลท์คลุมครึ่งล่างของข้อความ"
+  },
+  "highlightStyleUnderline": {
+    "message": "ขีดเส้นใต้"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "ไฮไลท์แสดงใต้ข้อความ"
+  },
+  "highlightStyleTextOnly": {
+    "message": "ข้อความเท่านั้น"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "ไม่มีพื้นหลัง เปลี่ยนเฉพาะสีข้อความ"
+  },
+  "highlightMyColors": {
+    "message": "สีไฮไลท์"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "สูงสุด 15 สี"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "ลบสี {color} หรือไม่?"
+  },
+  "highlightAddColorTitle": {
+    "message": "เพิ่มสี"
+  },
+  "highlightAddColorBtn": {
+    "message": "สี"
+  },
+  "highlightInvalidHex": {
+    "message": "รูปแบบสีไม่ถูกต้อง"
+  },
+  "highlightColorExists": {
+    "message": "สีนี้มีอยู่แล้ว"
+  },
+  "highlightColorHint": {
+    "message": "ป้อนรหัสสี hex 6 หลัก เช่น #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "ความคิด…"
   }
 }

@@ -102,7 +102,7 @@
     "message": "Chưa có câu hỏi"
   },
   "animTabTitle": {
-    "message": "Hoạt hình vui"
+    "message": "Thú cưng số"
   },
   "animTabDesc": {
     "message": "Hiển thị phía trên hộp chat. Các chú thú dễ thương sẽ vui vẻ đi lại khi AI trả lời."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Hỏi thêm"
   },
+
+  "highlightToggleTitle": {
+    "message": "Bật đánh dấu văn bản"
+  },
+  "highlightToggleHint": {
+    "message": "Khi bật, bạn có thể đánh dấu văn bản đã chọn trên trang web"
+  },
+  "highlightColorTitle": {
+    "message": "Màu đánh dấu"
+  },
+  "highlightMark": {
+    "message": "Đánh dấu"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Xóa đánh dấu này?"
+  },
+  "highlightRemoveYes": {
+    "message": "Xóa"
+  },
+  "highlightRemoveNo": {
+    "message": "Hủy"
+  },
   "scrollToBottomTitle": {
     "message": "Xuống cuối"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Đổi hoạt ảnh"
+    "message": "Đổi thú cưng"
   },
   "dragMoveSuccess": {
     "message": "Đã di chuyển"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Kiểu tô sáng"
+  },
+  "highlightStyleFullCover": {
+    "message": "Phủ toàn bộ"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Tô sáng phủ toàn bộ văn bản"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Phủ nửa"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Tô sáng phủ nửa dưới văn bản"
+  },
+  "highlightStyleUnderline": {
+    "message": "Gạch chân"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Tô sáng hiển thị bên dưới văn bản"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Chỉ văn bản"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Không nền, chỉ đổi màu chữ"
+  },
+  "highlightMyColors": {
+    "message": "Màu tô sáng"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Tối đa 15 màu"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Xóa màu {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Thêm màu"
+  },
+  "highlightAddColorBtn": {
+    "message": "Màu"
+  },
+  "highlightInvalidHex": {
+    "message": "Định dạng màu không hợp lệ"
+  },
+  "highlightColorExists": {
+    "message": "Màu đã tồn tại"
+  },
+  "highlightColorHint": {
+    "message": "Nhập mã màu hex 6 chữ số, ví dụ #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Ý tưởng…"
   }
 }

@@ -114,9 +114,46 @@ class QuickAskManager {
         window.eventDelegateManager.on('mousedown', '.ait-quick-ask-btn', (e) => {
             e.preventDefault();
         });
+
+        // 标注按钮：集成到追问工具栏
+        this._highlightInjected = false;
+        window.eventDelegateManager.on('click', '.ait-quick-ask-btn .ait-highlight-action', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.AIChatTimelineHighlight?.onHighlightAction) {
+                window.AIChatTimelineHighlight.onHighlightAction();
+            }
+            this._hideButton();
+        });
         
         document.body.appendChild(btn);
         this.buttonElement = btn;
+    }
+
+    /**
+     * 检查并注入/移除标注按钮到追问工具栏
+     */
+    _syncHighlightButton() {
+        if (!this.buttonElement) return;
+        const hlManager = window.highlightManager;
+        const hlEnabled = hlManager?.isEnabled && !hlManager?.isSelectionInsideHighlight();
+        const existing = this.buttonElement.querySelector('.ait-highlight-action');
+
+        if (hlEnabled && !existing) {
+            const hlInfo = window.AIChatTimelineHighlight;
+            const icon = hlInfo?.getButtonIcon?.() || '';
+            const divider = document.createElement('div');
+            divider.className = 'ait-toolbar-divider';
+            const hlBtn = document.createElement('button');
+            hlBtn.className = 'ait-highlight-action';
+            hlBtn.innerHTML = `${icon}<span>${chrome.i18n.getMessage('highlightMark') || '标注'}</span>`;
+            this.buttonElement.appendChild(divider);
+            this.buttonElement.appendChild(hlBtn);
+        } else if (!hlEnabled && existing) {
+            const divider = this.buttonElement.querySelector('.ait-toolbar-divider');
+            if (divider) divider.remove();
+            existing.remove();
+        }
     }
     
     /**
@@ -251,8 +288,9 @@ class QuickAskManager {
      * 显示按钮
      */
     _showButton(selection) {
+        this._syncHighlightButton();
         if (!this.buttonElement || !selection || selection.rangeCount === 0) return;
-        
+
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
         

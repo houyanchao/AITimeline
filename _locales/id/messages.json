@@ -102,7 +102,7 @@
     "message": "Belum ada pertanyaan"
   },
   "animTabTitle": {
-    "message": "Animasi lucu"
+    "message": "Hewan peliharaan digital"
   },
   "animTabDesc": {
     "message": "Ditampilkan di atas kotak chat. Hewan-hewan lucu berjalan riang saat AI membalas."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Tanya Lanjutan"
   },
+
+  "highlightToggleTitle": {
+    "message": "Aktifkan Sorotan Teks"
+  },
+  "highlightToggleHint": {
+    "message": "Setelah diaktifkan, Anda dapat menyorot teks yang dipilih di halaman web"
+  },
+  "highlightColorTitle": {
+    "message": "Warna Sorotan"
+  },
+  "highlightMark": {
+    "message": "Sorot"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Hapus sorotan ini?"
+  },
+  "highlightRemoveYes": {
+    "message": "Hapus"
+  },
+  "highlightRemoveNo": {
+    "message": "Batal"
+  },
   "scrollToBottomTitle": {
     "message": "Ke Bawah"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Ganti animasi"
+    "message": "Ganti hewan"
   },
   "dragMoveSuccess": {
     "message": "Dipindahkan"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Gaya Sorotan"
+  },
+  "highlightStyleFullCover": {
+    "message": "Penuh"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Sorotan menutupi seluruh teks"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Setengah"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Sorotan menutupi setengah bawah teks"
+  },
+  "highlightStyleUnderline": {
+    "message": "Garis Bawah"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Sorotan muncul di bawah teks"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Teks Saja"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Tanpa latar, hanya warna teks"
+  },
+  "highlightMyColors": {
+    "message": "Warna Sorotan"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Maksimal 15 warna"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Hapus warna {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Tambah Warna"
+  },
+  "highlightAddColorBtn": {
+    "message": "Warna"
+  },
+  "highlightInvalidHex": {
+    "message": "Format warna tidak valid"
+  },
+  "highlightColorExists": {
+    "message": "Warna sudah ada"
+  },
+  "highlightColorHint": {
+    "message": "Masukkan kode warna hex 6 digit, contoh #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Ide…"
   }
 }

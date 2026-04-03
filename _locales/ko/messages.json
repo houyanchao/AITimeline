@@ -102,7 +102,7 @@
     "message": "아직 질문이 없습니다"
   },
   "animTabTitle": {
-    "message": "재미있는 애니메이션"
+    "message": "디지털 펫"
   },
   "animTabDesc": {
     "message": "대화창 위에 표시됩니다. AI가 답변할 때 귀여운 동물들이 즐겁게 걸어다닙니다."
@@ -428,6 +428,28 @@
   "quickAsk": {
     "message": "추가 질문"
   },
+
+  "highlightToggleTitle": {
+    "message": "텍스트 하이라이트 활성화"
+  },
+  "highlightToggleHint": {
+    "message": "활성화하면 웹페이지에서 텍스트를 선택하여 하이라이트할 수 있습니다"
+  },
+  "highlightColorTitle": {
+    "message": "하이라이트 색상"
+  },
+  "highlightMark": {
+    "message": "표시"
+  },
+  "highlightRemoveConfirm": {
+    "message": "이 하이라이트를 삭제하시겠습니까?"
+  },
+  "highlightRemoveYes": {
+    "message": "삭제"
+  },
+  "highlightRemoveNo": {
+    "message": "취소"
+  },
   "scrollToBottomTitle": {
     "message": "맨 아래로"
   },
@@ -558,7 +580,7 @@
     "message": "즐겨찾기 완료"
   },
   "animViewMore": {
-    "message": "애니메이션 변경"
+    "message": "펫 변경"
   },
   "dragMoveSuccess": {
     "message": "이동됨"
@@ -604,5 +626,62 @@
   },
   "guidePlatformsTitle": {
     "message": "지원 플랫폼"
+  },
+  "highlightStyleTitle": {
+    "message": "하이라이트 스타일"
+  },
+  "highlightStyleFullCover": {
+    "message": "전체 커버"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "텍스트 전체를 하이라이트로 덮기"
+  },
+  "highlightStyleHalfCover": {
+    "message": "반 커버"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "텍스트 하단 절반을 하이라이트"
+  },
+  "highlightStyleUnderline": {
+    "message": "밑줄"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "텍스트 아래에 하이라이트 표시"
+  },
+  "highlightStyleTextOnly": {
+    "message": "텍스트만"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "배경 없이 글자 색상만 변경"
+  },
+  "highlightMyColors": {
+    "message": "하이라이트 색상"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "최대 15개 색상"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "색상 {color}을(를) 삭제하시겠습니까?"
+  },
+  "highlightAddColorTitle": {
+    "message": "색상 추가"
+  },
+  "highlightAddColorBtn": {
+    "message": "색상"
+  },
+  "highlightInvalidHex": {
+    "message": "잘못된 색상 형식입니다"
+  },
+  "highlightColorExists": {
+    "message": "이미 존재하는 색상입니다"
+  },
+  "highlightColorHint": {
+    "message": "6자리 16진수 색상 코드를 입력하세요. 예: #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "생각…"
   }
 }

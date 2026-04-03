@@ -102,7 +102,7 @@
     "message": "まだ質問がありません"
   },
   "animTabTitle": {
-    "message": "楽しいアニメ"
+    "message": "デジタルペット"
   },
   "animTabDesc": {
     "message": "チャットボックスの上に表示されます。AI が返信すると、かわいい動物たちが楽しく歩き回ります。"
@@ -428,6 +428,28 @@
   "quickAsk": {
     "message": "追加質問"
   },
+
+  "highlightToggleTitle": {
+    "message": "テキストハイライトを有効にする"
+  },
+  "highlightToggleHint": {
+    "message": "有効にすると、ウェブページのテキストを選択してハイライトできます"
+  },
+  "highlightColorTitle": {
+    "message": "ハイライト色"
+  },
+  "highlightMark": {
+    "message": "マーク"
+  },
+  "highlightRemoveConfirm": {
+    "message": "このハイライトを削除しますか？"
+  },
+  "highlightRemoveYes": {
+    "message": "削除"
+  },
+  "highlightRemoveNo": {
+    "message": "キャンセル"
+  },
   "scrollToBottomTitle": {
     "message": "最下部へ"
   },
@@ -558,7 +580,7 @@
     "message": "スターしました"
   },
   "animViewMore": {
-    "message": "アニメーション変更"
+    "message": "ペット変更"
   },
   "dragMoveSuccess": {
     "message": "移動しました"
@@ -604,5 +626,62 @@
   },
   "guidePlatformsTitle": {
     "message": "対応プラットフォーム"
+  },
+  "highlightStyleTitle": {
+    "message": "ハイライトスタイル"
+  },
+  "highlightStyleFullCover": {
+    "message": "全面カバー"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "テキスト全体をハイライトで覆う"
+  },
+  "highlightStyleHalfCover": {
+    "message": "半分カバー"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "テキストの下半分をハイライト"
+  },
+  "highlightStyleUnderline": {
+    "message": "下線"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "テキストの下にハイライトを表示"
+  },
+  "highlightStyleTextOnly": {
+    "message": "テキストのみ"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "背景なし、文字色のみ変更"
+  },
+  "highlightMyColors": {
+    "message": "ハイライトカラー"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "最大15色まで"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "カラー {color} を削除しますか？"
+  },
+  "highlightAddColorTitle": {
+    "message": "色を追加"
+  },
+  "highlightAddColorBtn": {
+    "message": "色"
+  },
+  "highlightInvalidHex": {
+    "message": "無効なカラー形式です"
+  },
+  "highlightColorExists": {
+    "message": "この色は既に存在します"
+  },
+  "highlightColorHint": {
+    "message": "6桁の16進数カラーコードを入力してください（例: #FF5733）"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "考え…"
   }
 }

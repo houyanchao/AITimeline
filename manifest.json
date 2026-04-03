@@ -154,8 +154,12 @@
         "js/timeline/adapters/registry.js",
         "js/mermaid/lib/mermaid.min.js",
         "js/mermaid/index.js",
+        "js/highlight/libs/diff-match-patch.js",
+        "js/highlight/highlight-manager.js",
+        "js/panelModal/tabs/highlight/index.js",
         "js/quickAsk/quick-ask-manager.js",
         "js/quickAsk/index.js",
+        "js/highlight/index.js",
         "js/timeline/common.js",
         "js/timeline/container-finder.js",
         "js/timeline/star-input-modal/star-input-modal.js",
@@ -202,6 +206,8 @@
         "js/smartInputBox/prompt-button.css",
         "js/scrollToBottom/styles.css",
         "js/quickAsk/styles.css",
+        "js/highlight/styles.css",
+        "js/panelModal/tabs/highlight/styles.css",
         "js/mermaid/styles.css"
       ],
       "run_at": "document_idle"

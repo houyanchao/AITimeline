@@ -1,0 +1,434 @@
+/* ==================== 高亮标记 ==================== */
+
+mark.ait-highlight,
+mark.ait-highlight-pending {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    line-height: inherit;
+    font-size: inherit;
+    border-radius: 0;
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+mark.ait-highlight *,
+mark.ait-highlight-pending * {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+mark.ait-highlight[data-hl-style="textOnly"],
+mark.ait-highlight-pending[data-hl-style="textOnly"] {
+    border-radius: 2px;
+}
+
+mark.ait-highlight[data-hl-style="textOnly"] *,
+mark.ait-highlight-pending[data-hl-style="textOnly"] * {
+    color: inherit !important;
+}
+
+mark.ait-highlight-pending {
+    transition: background 0.15s ease, background-color 0.15s ease;
+}
+
+mark.ait-highlight[data-hl-style="solid"].ait-highlight-hover {
+    filter: brightness(0.88);
+}
+
+mark.ait-highlight[data-hl-style="half"].ait-highlight-hover {
+    filter: brightness(0.92) saturate(1.3);
+}
+
+mark.ait-highlight[data-hl-style="underline"] {
+    padding-bottom: 2px;
+}
+
+mark.ait-highlight[data-hl-style="underline"].ait-highlight-hover {
+    filter: brightness(0.92) saturate(1.3);
+}
+
+mark.ait-highlight[data-hl-style="textOnly"].ait-highlight-hover {
+    opacity: 0.7;
+}
+
+/* ==================== 标注按钮（独立模式，非 AI 网站） ==================== */
+
+.ait-highlight-standalone-btn {
+    position: absolute;
+    z-index: 10000;
+    display: flex;
+    align-items: stretch;
+    background: var(--ait-quick-ask-bg, #1a1a1a);
+    border-radius: 6px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 2px 8px var(--ait-quick-ask-shadow, rgba(0, 0, 0, 0.2));
+}
+
+.ait-highlight-standalone-btn.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==================== 标注按钮（通用样式，追问栏 + 独立模式共用） ==================== */
+
+.ait-highlight-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: none;
+    color: var(--ait-quick-ask-text, #fff);
+    border: none;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.ait-highlight-action:hover {
+    background: var(--ait-quick-ask-hover, #333);
+}
+
+.ait-highlight-action:active {
+    background: var(--ait-quick-ask-active, #444);
+}
+
+.ait-highlight-action svg {
+    flex-shrink: 0;
+}
+
+/* 追问栏内的分隔线 */
+.ait-toolbar-divider {
+    width: 1px;
+    background: var(--ait-quick-ask-divider, rgba(255, 255, 255, 0.15));
+    margin: 4px 0;
+}
+
+/* ==================== 标注浮窗 ==================== */
+
+.ait-hl-popover {
+    position: absolute;
+    z-index: 10001;
+    width: 300px;
+    outline: none;
+    background: rgba(28, 28, 30, 0.92);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    transition: opacity 0.12s cubic-bezier(0.2, 0, 0, 1),
+                transform 0.12s cubic-bezier(0.2, 0, 0, 1);
+    pointer-events: none;
+    box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 12px 40px rgba(0, 0, 0, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.ait-hl-popover.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* ---- 颜色区 ---- */
+
+.ait-hl-pop-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.ait-hl-pop-colors {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.ait-hl-pop-settings {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.4);
+    transition: background 0.1s ease, color 0.1s ease;
+    outline: none;
+    padding: 0;
+}
+
+.ait-hl-pop-settings:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.ait-hl-pop-color {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ait-hl-pop-color > span {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: block;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.ait-hl-pop-color:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.ait-hl-pop-color:hover > span {
+    transform: scale(1.15);
+}
+
+.ait-hl-pop-color.active > span {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px rgba(28, 28, 30, 0.92), 0 0 0 4px #fff;
+}
+
+/* ---- 样式卡片区 ---- */
+
+.ait-hl-pop-styles {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.ait-hl-pop-style-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 4px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background 0.12s ease, border-color 0.12s ease;
+    outline: none;
+}
+
+.ait-hl-pop-style-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.ait-hl-pop-style-btn.active {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #fff;
+}
+
+.ait-hl-pop-style-preview {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+    padding: 1px 6px;
+    border-radius: 0;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ---- 编辑模式元素 ---- */
+
+.ait-hl-pop-edit-only {
+    display: none;
+}
+
+/* ---- 备注行 ---- */
+
+.ait-hl-pop-note {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.ait-hl-pop-input {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+    max-height: 63px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+    transition: background 0.12s ease;
+}
+
+.ait-hl-pop-input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.ait-hl-pop-input:focus {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* ---- 删除按钮（编辑模式） ---- */
+
+.ait-hl-pop-delete {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    color: rgba(255, 100, 100, 0.75);
+    transition: background 0.1s ease, color 0.1s ease;
+    outline: none;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.ait-hl-pop-delete:hover {
+    background: rgba(255, 80, 80, 0.18);
+    color: #ff6b6b;
+}
+
+/* ---- 确认按钮 ---- */
+
+.ait-hl-pop-confirm {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 6px;
+    background: #0a84ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.1s ease, transform 0.08s ease;
+    outline: none;
+    padding: 0;
+}
+
+.ait-hl-pop-confirm:hover {
+    background: #409cff;
+}
+
+.ait-hl-pop-confirm:active {
+    background: #0071e3;
+    transform: scale(0.94);
+}
+
+/* ==================== 浅色主题 ==================== */
+
+.ait-hl-popover.ait-hl-light {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.08),
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.ait-hl-light .ait-hl-pop-settings {
+    color: rgba(0, 0, 0, 0.35);
+}
+
+.ait-hl-light .ait-hl-pop-settings:hover {
+    background: rgba(0, 0, 0, 0.07);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.ait-hl-light .ait-hl-pop-color:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.ait-hl-light .ait-hl-pop-color.active > span {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
+}
+
+.ait-hl-light .ait-hl-pop-styles {
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.ait-hl-light .ait-hl-pop-style-btn {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.ait-hl-light .ait-hl-pop-style-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ait-hl-light .ait-hl-pop-style-btn.active {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: #000;
+}
+
+.ait-hl-light .ait-hl-pop-style-preview {
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.ait-hl-light .ait-hl-pop-note {
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.ait-hl-light .ait-hl-pop-input {
+    background: rgba(0, 0, 0, 0.06);
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.ait-hl-light .ait-hl-pop-input::placeholder {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.ait-hl-light .ait-hl-pop-input:focus {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ait-hl-light .ait-hl-pop-delete {
+    color: rgba(220, 60, 60, 0.75);
+}
+
+.ait-hl-light .ait-hl-pop-delete:hover {
+    background: rgba(220, 60, 60, 0.12);
+    color: #dc3c3c;
+}

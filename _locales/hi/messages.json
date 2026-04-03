@@ -102,7 +102,7 @@
     "message": "अभी तक कोई प्रश्न नहीं"
   },
   "animTabTitle": {
-    "message": "मज़ेदार एनिमेशन"
+    "message": "डिजिटल पालतू"
   },
   "animTabDesc": {
     "message": "चैट बॉक्स के ऊपर प्रदर्शित होता है। AI के जवाब देने पर प्यारे जानवर खुशी से चलते हैं।"
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "अनुवर्ती प्रश्न"
   },
+
+  "highlightToggleTitle": {
+    "message": "टेक्स्ट हाइलाइट सक्षम करें"
+  },
+  "highlightToggleHint": {
+    "message": "सक्षम करने पर, वेबपेज पर चयनित टेक्स्ट को हाइलाइट कर सकते हैं"
+  },
+  "highlightColorTitle": {
+    "message": "हाइलाइट रंग"
+  },
+  "highlightMark": {
+    "message": "हाइलाइट"
+  },
+  "highlightRemoveConfirm": {
+    "message": "यह हाइलाइट हटाएं?"
+  },
+  "highlightRemoveYes": {
+    "message": "हटाएं"
+  },
+  "highlightRemoveNo": {
+    "message": "रद्द करें"
+  },
   "scrollToBottomTitle": {
     "message": "नीचे जाएं"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "एनिमेशन बदलें"
+    "message": "पालतू बदलें"
   },
   "dragMoveSuccess": {
     "message": "स्थानांतरित"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "हाइलाइट शैली"
+  },
+  "highlightStyleFullCover": {
+    "message": "पूर्ण कवर"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "हाइलाइट पूरे टेक्स्ट को कवर करता है"
+  },
+  "highlightStyleHalfCover": {
+    "message": "आधा कवर"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "हाइलाइट टेक्स्ट के निचले आधे भाग को कवर करता है"
+  },
+  "highlightStyleUnderline": {
+    "message": "अंडरलाइन"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "हाइलाइट टेक्स्ट के नीचे दिखाई देता है"
+  },
+  "highlightStyleTextOnly": {
+    "message": "केवल टेक्स्ट"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "कोई पृष्ठभूमि नहीं, केवल टेक्स्ट रंग"
+  },
+  "highlightMyColors": {
+    "message": "हाइलाइट रंग"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "अधिकतम 15 रंग"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "रंग {color} हटाएं?"
+  },
+  "highlightAddColorTitle": {
+    "message": "रंग जोड़ें"
+  },
+  "highlightAddColorBtn": {
+    "message": "रंग"
+  },
+  "highlightInvalidHex": {
+    "message": "अमान्य रंग प्रारूप"
+  },
+  "highlightColorExists": {
+    "message": "रंग पहले से मौजूद है"
+  },
+  "highlightColorHint": {
+    "message": "6 अंकों का हेक्स रंग कोड दर्ज करें, जैसे #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "विचार…"
   }
 }

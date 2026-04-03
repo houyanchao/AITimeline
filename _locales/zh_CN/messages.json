@@ -96,7 +96,7 @@
     "message": "暂无提问"
   },
   "animTabTitle": {
-    "message": "趣味动画"
+    "message": "电子宠物"
   },
   "animTabDesc": {
     "message": "显示在对话框上方，AI 回复时小动物会欢快走动。"
@@ -497,6 +497,28 @@
   "quickAsk": {
     "message": "追问"
   },
+
+  "highlightToggleTitle": {
+    "message": "启用文本高亮"
+  },
+  "highlightToggleHint": {
+    "message": "开启后，选中网页文字时可进行高亮标注"
+  },
+  "highlightColorTitle": {
+    "message": "标注颜色"
+  },
+  "highlightMark": {
+    "message": "文本高亮"
+  },
+  "highlightRemoveConfirm": {
+    "message": "移除该标注？"
+  },
+  "highlightRemoveYes": {
+    "message": "移除"
+  },
+  "highlightRemoveNo": {
+    "message": "取消"
+  },
   "quickAskTitle": {
     "message": "追问功能"
   },
@@ -612,7 +634,7 @@
     "message": "收藏成功"
   },
   "animViewMore": {
-    "message": "更换动画"
+    "message": "更换宠物"
   },
   "dragMoveSuccess": {
     "message": "已移动"
@@ -658,5 +680,62 @@
   },
   "guidePlatformsTitle": {
     "message": "支持的平台"
+  },
+  "highlightStyleTitle": {
+    "message": "高亮样式"
+  },
+  "highlightStyleFullCover": {
+    "message": "全覆盖"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "高亮区域完整罩住文字"
+  },
+  "highlightStyleHalfCover": {
+    "message": "半覆盖"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "高亮区域在文字腰部以下"
+  },
+  "highlightStyleUnderline": {
+    "message": "下划线"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "高亮区域在文字下方"
+  },
+  "highlightStyleTextOnly": {
+    "message": "仅文字"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "无背景高亮，仅文字变色"
+  },
+  "highlightMyColors": {
+    "message": "高亮颜色"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "最多 15 个颜色"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "确定要删除颜色 {color} 吗？"
+  },
+  "highlightAddColorTitle": {
+    "message": "添加颜色"
+  },
+  "highlightAddColorBtn": {
+    "message": "颜色"
+  },
+  "highlightInvalidHex": {
+    "message": "无效的颜色格式"
+  },
+  "highlightColorExists": {
+    "message": "颜色已存在"
+  },
+  "highlightColorHint": {
+    "message": "请输入 6 位十六进制颜色值，例如 #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "想法…"
   }
 }

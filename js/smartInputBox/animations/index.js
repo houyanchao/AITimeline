@@ -1,7 +1,7 @@
 /**
  * InputBox Animation Manager
  *
- * 管理输入框区域的趣味动画。只允许同时开启一个动画。
+ * 管理输入框区域的电子宠物。只允许同时开启一个动画。
  * 支持养成系统：发送消息越多，动物越多越大。
  *
  * Storage keys:
@@ -160,7 +160,7 @@ class InputBoxAnimationManager {
             clickTarget.addEventListener('mouseenter', () => {
                 if (window.globalTooltipManager) {
                     window.globalTooltipManager.show('anim-hint', 'button', clickTarget, 
-                        chrome.i18n.getMessage('animViewMore') || '更换动画', 
+                        chrome.i18n.getMessage('animViewMore') || '更换宠物', 
                         { style: 'mini', placement: 'top' }
                     );
                 }

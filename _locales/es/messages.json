@@ -102,7 +102,7 @@
     "message": "Sin preguntas aún"
   },
   "animTabTitle": {
-    "message": "Animación divertida"
+    "message": "Mascota digital"
   },
   "animTabDesc": {
     "message": "Se muestra sobre el cuadro de chat. Los animalitos caminan alegremente cuando la IA responde."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Preguntar más"
   },
+
+  "highlightToggleTitle": {
+    "message": "Activar resaltado de texto"
+  },
+  "highlightToggleHint": {
+    "message": "Al activar, puedes resaltar el texto seleccionado en páginas web"
+  },
+  "highlightColorTitle": {
+    "message": "Color de resaltado"
+  },
+  "highlightMark": {
+    "message": "Resaltar"
+  },
+  "highlightRemoveConfirm": {
+    "message": "¿Eliminar este resaltado?"
+  },
+  "highlightRemoveYes": {
+    "message": "Eliminar"
+  },
+  "highlightRemoveNo": {
+    "message": "Cancelar"
+  },
   "scrollToBottomTitle": {
     "message": "Ir al final"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Cambiar animación"
+    "message": "Cambiar mascota"
   },
   "dragMoveSuccess": {
     "message": "Movido"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Estilo de resaltado"
+  },
+  "highlightStyleFullCover": {
+    "message": "Cobertura total"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "El resaltado cubre todo el texto"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Media cobertura"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "El resaltado cubre la mitad inferior del texto"
+  },
+  "highlightStyleUnderline": {
+    "message": "Subrayado"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "El resaltado aparece debajo del texto"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Solo texto"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Sin fondo, solo color de texto"
+  },
+  "highlightMyColors": {
+    "message": "Colores de resaltado"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Máximo 15 colores"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "¿Eliminar el color {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Añadir color"
+  },
+  "highlightAddColorBtn": {
+    "message": "Color"
+  },
+  "highlightInvalidHex": {
+    "message": "Formato de color no válido"
+  },
+  "highlightColorExists": {
+    "message": "El color ya existe"
+  },
+  "highlightColorHint": {
+    "message": "Introduce un código de color hexadecimal de 6 dígitos, p. ej. #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Ideas…"
   }
 }

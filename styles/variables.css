@@ -52,6 +52,7 @@
     --ait-quick-ask-active: #444;
     --ait-quick-ask-text: #fff;
     --ait-quick-ask-shadow: rgba(0, 0, 0, 0.2);
+    --ait-quick-ask-divider: rgba(255, 255, 255, 0.15);
 }
 
 /* Override variables when chat's dark mode is active */
@@ -72,4 +73,5 @@ html[data-timeline-theme="dark"] {
     --ait-quick-ask-active: #d4d4d4;
     --ait-quick-ask-text: #1a1a1a;
     --ait-quick-ask-shadow: rgba(0, 0, 0, 0.3);
+    --ait-quick-ask-divider: rgba(0, 0, 0, 0.12);
 }

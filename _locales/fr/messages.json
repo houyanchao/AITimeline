@@ -102,7 +102,7 @@
     "message": "Pas encore de questions"
   },
   "animTabTitle": {
-    "message": "Animation amusante"
+    "message": "Animal numérique"
   },
   "animTabDesc": {
     "message": "Affiché au-dessus de la boîte de dialogue. De mignons animaux se promènent quand l'IA répond."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Question de suivi"
   },
+
+  "highlightToggleTitle": {
+    "message": "Activer le surlignage de texte"
+  },
+  "highlightToggleHint": {
+    "message": "Une fois activé, vous pouvez surligner le texte sélectionné sur les pages web"
+  },
+  "highlightColorTitle": {
+    "message": "Couleur de surlignage"
+  },
+  "highlightMark": {
+    "message": "Surligner"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Supprimer ce surlignage ?"
+  },
+  "highlightRemoveYes": {
+    "message": "Supprimer"
+  },
+  "highlightRemoveNo": {
+    "message": "Annuler"
+  },
   "scrollToBottomTitle": {
     "message": "Aller en bas"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Changer l'animation"
+    "message": "Changer l'animal"
   },
   "dragMoveSuccess": {
     "message": "Déplacé"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Style de surlignage"
+  },
+  "highlightStyleFullCover": {
+    "message": "Couverture totale"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Le surlignage couvre entièrement le texte"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Demi-couverture"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Le surlignage couvre la moitié inférieure du texte"
+  },
+  "highlightStyleUnderline": {
+    "message": "Soulignement"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Le surlignage apparaît sous le texte"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Texte seul"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Pas de fond, couleur du texte uniquement"
+  },
+  "highlightMyColors": {
+    "message": "Couleurs de surlignage"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "15 couleurs maximum"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Supprimer la couleur {color} ?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Ajouter une couleur"
+  },
+  "highlightAddColorBtn": {
+    "message": "Couleur"
+  },
+  "highlightInvalidHex": {
+    "message": "Format de couleur invalide"
+  },
+  "highlightColorExists": {
+    "message": "La couleur existe déjà"
+  },
+  "highlightColorHint": {
+    "message": "Entrez un code couleur hexadécimal à 6 chiffres, ex. #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Idées…"
   }
 }

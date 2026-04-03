@@ -403,6 +403,14 @@ function getRunnerLanguageName(langId) {
     return lang ? lang.name : langId;
 }
 
+// ==================== 文本高亮默认颜色 ====================
+
+/**
+ * 文本高亮功能的默认颜色列表
+ * 用于 HighlightTab（设置面板）、Highlight Popover（浮窗）、HighlightManager（标注引擎）
+ */
+const HIGHLIGHT_DEFAULT_COLORS = ['#F6E26B', '#FC7D9F', '#6BD66B', '#68B5FB', '#C59CF6'];
+
 // ==================== LaTeX 公式格式配置 ====================
 
 /**

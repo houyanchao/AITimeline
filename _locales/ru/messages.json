@@ -102,7 +102,7 @@
     "message": "Пока нет вопросов"
   },
   "animTabTitle": {
-    "message": "Весёлая анимация"
+    "message": "Цифровой питомец"
   },
   "animTabDesc": {
     "message": "Отображается над окном чата. Милые зверушки весело бегают, когда ИИ отвечает."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Уточнить"
   },
+
+  "highlightToggleTitle": {
+    "message": "Включить выделение текста"
+  },
+  "highlightToggleHint": {
+    "message": "После включения можно выделять выбранный текст на веб-страницах"
+  },
+  "highlightColorTitle": {
+    "message": "Цвет выделения"
+  },
+  "highlightMark": {
+    "message": "Выделить"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Удалить это выделение?"
+  },
+  "highlightRemoveYes": {
+    "message": "Удалить"
+  },
+  "highlightRemoveNo": {
+    "message": "Отмена"
+  },
   "scrollToBottomTitle": {
     "message": "Вниз"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Сменить анимацию"
+    "message": "Сменить питомца"
   },
   "dragMoveSuccess": {
     "message": "Перемещено"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Стиль выделения"
+  },
+  "highlightStyleFullCover": {
+    "message": "Полное покрытие"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "Выделение полностью покрывает текст"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Половина"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "Выделение покрывает нижнюю половину текста"
+  },
+  "highlightStyleUnderline": {
+    "message": "Подчёркивание"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "Выделение под текстом"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Только текст"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Без фона, только цвет текста"
+  },
+  "highlightMyColors": {
+    "message": "Цвета выделения"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Максимум 15 цветов"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Удалить цвет {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Добавить цвет"
+  },
+  "highlightAddColorBtn": {
+    "message": "Цвет"
+  },
+  "highlightInvalidHex": {
+    "message": "Неверный формат цвета"
+  },
+  "highlightColorExists": {
+    "message": "Цвет уже существует"
+  },
+  "highlightColorHint": {
+    "message": "Введите 6-значный HEX-код цвета, например #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Мысли…"
   }
 }

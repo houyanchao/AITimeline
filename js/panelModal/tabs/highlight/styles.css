@@ -1,0 +1,190 @@
+/**
+ * Highlight Tab Styles
+ * 文本高亮设置样式
+ */
+
+/* 连续的设置区块添加间距 */
+.highlight-settings .setting-section + .setting-section {
+    margin-top: 12px;
+}
+
+/* 列表型 setting-item 禁用整体 hover，由内部行自行处理 */
+.highlight-settings .setting-item.hl-list-item:hover {
+    background: #f9fafb;
+}
+
+/* ============================================
+   高亮样式选择
+   ============================================ */
+
+.hl-style-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.hl-style-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 4px;
+    border-radius: 8px;
+}
+
+.hl-style-preview {
+    flex-shrink: 0;
+    width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hl-preview-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.8;
+    padding: 1px 8px;
+    border-radius: 0;
+    white-space: nowrap;
+}
+
+.hl-style-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.hl-style-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.hl-style-desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 1px;
+}
+
+/* ============================================
+   高亮颜色
+   ============================================ */
+
+.hl-add-color-btn {
+    margin-left: auto;
+    padding: 2px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: transparent;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.hl-add-color-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.hl-color-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.hl-color-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+}
+
+.hl-color-row:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.hl-color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hl-color-hex {
+    flex: 1;
+    font-size: 13px;
+    color: #6b7280;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    letter-spacing: 0.02em;
+}
+
+.hl-color-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.hl-color-move,
+.hl-color-delete {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    color: #aaa;
+    transition: background 0.12s ease, color 0.12s ease;
+    padding: 0;
+    outline: none;
+}
+
+.hl-color-move:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.06);
+    color: #374151;
+}
+
+.hl-color-move:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+.hl-color-delete:hover {
+    background: rgba(255, 80, 80, 0.1);
+    color: #ff4444;
+}
+
+/* ---- 添加颜色弹窗中的颜色预览 ---- */
+
+.hl-modal-color-preview {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    border: 2px dashed #d1d5db;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hl-modal-color-preview.valid {
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.hl-modal-color-hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 6px;
+    line-height: 1.4;
+}

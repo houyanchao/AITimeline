@@ -102,7 +102,7 @@
     "message": "Nessuna domanda ancora"
   },
   "animTabTitle": {
-    "message": "Animazione divertente"
+    "message": "Animale digitale"
   },
   "animTabDesc": {
     "message": "Visualizzato sopra la casella di chat. Simpatici animaletti camminano allegramente quando l'IA risponde."
@@ -371,6 +371,28 @@
   "quickAsk": {
     "message": "Approfondisci"
   },
+
+  "highlightToggleTitle": {
+    "message": "Abilita evidenziazione testo"
+  },
+  "highlightToggleHint": {
+    "message": "Una volta abilitato, puoi evidenziare il testo selezionato nelle pagine web"
+  },
+  "highlightColorTitle": {
+    "message": "Colore evidenziazione"
+  },
+  "highlightMark": {
+    "message": "Evidenzia"
+  },
+  "highlightRemoveConfirm": {
+    "message": "Rimuovere questa evidenziazione?"
+  },
+  "highlightRemoveYes": {
+    "message": "Rimuovi"
+  },
+  "highlightRemoveNo": {
+    "message": "Annulla"
+  },
   "scrollToBottomTitle": {
     "message": "Vai in fondo"
   },
@@ -507,7 +529,7 @@
     "message": "Starred successfully"
   },
   "animViewMore": {
-    "message": "Cambia animazione"
+    "message": "Cambia animale"
   },
   "dragMoveSuccess": {
     "message": "Spostato"
@@ -553,5 +575,62 @@
   },
   "guidePlatformsTitle": {
     "message": "Supported Platforms"
+  },
+  "highlightStyleTitle": {
+    "message": "Stile evidenziazione"
+  },
+  "highlightStyleFullCover": {
+    "message": "Copertura totale"
+  },
+  "highlightStyleFullCoverDesc": {
+    "message": "L'evidenziazione copre tutto il testo"
+  },
+  "highlightStyleHalfCover": {
+    "message": "Mezza copertura"
+  },
+  "highlightStyleHalfCoverDesc": {
+    "message": "L'evidenziazione copre la metà inferiore del testo"
+  },
+  "highlightStyleUnderline": {
+    "message": "Sottolineato"
+  },
+  "highlightStyleUnderlineDesc": {
+    "message": "L'evidenziazione appare sotto il testo"
+  },
+  "highlightStyleTextOnly": {
+    "message": "Solo testo"
+  },
+  "highlightStyleTextOnlyDesc": {
+    "message": "Nessuno sfondo, solo colore del testo"
+  },
+  "highlightMyColors": {
+    "message": "Colori evidenziazione"
+  },
+  "highlightColorPlaceholder": {
+    "message": "#FF5733"
+  },
+  "highlightMaxColors": {
+    "message": "Massimo 15 colori"
+  },
+  "highlightDeleteColorConfirm": {
+    "message": "Eliminare il colore {color}?"
+  },
+  "highlightAddColorTitle": {
+    "message": "Aggiungi colore"
+  },
+  "highlightAddColorBtn": {
+    "message": "Colore"
+  },
+  "highlightInvalidHex": {
+    "message": "Formato colore non valido"
+  },
+  "highlightColorExists": {
+    "message": "Il colore esiste già"
+  },
+  "highlightColorHint": {
+    "message": "Inserisci un codice colore esadecimale a 6 cifre, es. #FF5733"
+  },
+  "highlightAnnotationPlaceholder": {
+    "message": "Idee…"
   }
 }
