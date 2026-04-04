@@ -494,57 +494,6 @@ class HighlightManager {
         this._bindMarkEvents(mark);
     }
 
-    _reparentIntoMark(range, mark) {
-        let ancestor = range.commonAncestorContainer;
-        if (ancestor.nodeType === Node.TEXT_NODE) ancestor = ancestor.parentNode;
-        if (!ancestor) return false;
-
-        const sc = range.startContainer, so = range.startOffset;
-        const ec = range.endContainer, eo = range.endOffset;
-
-        const climb = (n) => {
-            while (n && n.parentNode !== ancestor) n = n.parentNode;
-            return n;
-        };
-
-        let first, last;
-
-        if (sc.nodeType === Node.TEXT_NODE) {
-            if (so > 0 && so < sc.length) {
-                if (sc.parentNode !== ancestor) return false;
-                first = sc.splitText(so);
-            } else {
-                first = so === 0 ? climb(sc) : climb(sc)?.nextSibling;
-            }
-        } else {
-            first = climb(sc.childNodes[so]);
-        }
-
-        if (ec.nodeType === Node.TEXT_NODE) {
-            if (eo > 0 && eo < ec.length) {
-                if (ec.parentNode !== ancestor) return false;
-                ec.splitText(eo);
-                last = ec;
-            } else {
-                last = eo > 0 ? climb(ec) : climb(ec)?.previousSibling;
-            }
-        } else {
-            last = eo > 0 ? climb(ec.childNodes[eo - 1]) : null;
-        }
-
-        if (!first || !last) return false;
-
-        ancestor.insertBefore(mark, first);
-        let cur = mark.nextSibling;
-        while (cur) {
-            const next = cur.nextSibling;
-            mark.appendChild(cur);
-            if (cur === last) break;
-            cur = next;
-        }
-        return true;
-    }
-
     _wrapRangeComplex(range, id, color, style, annotation) {
         const nodes = this._getTextNodesInRange(range);
         if (nodes.length === 0) return;

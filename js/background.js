@@ -64,20 +64,6 @@ async function validateToken(token) {
 }
 
 /**
- * 撤销 Token 并登出
- */
-async function revokeToken() {
-    try {
-        const stored = await browserAPI.storage.local.get('gdriveToken');
-        const token = stored.gdriveToken?.access_token;
-        if (token) {
-            await fetch(`https://accounts.google.com/o/oauth2/revoke?token=${token}`);
-            await browserAPI.storage.local.remove('gdriveToken');
-        }
-    } catch {}
-}
-
-/**
  * 查找 Google Drive 中的文件/文件夹
  * @param {string} token - Access Token
  * @param {string} name - 文件名

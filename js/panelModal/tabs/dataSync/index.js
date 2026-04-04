@@ -403,7 +403,7 @@ class DataSyncTab extends BaseTab {
             chrome.storage.local.get(null, (items) => {
                 const filtered = {};
                 for (const [key, value] of Object.entries(items)) {
-                    if (!key.startsWith('_')) {
+                    if (!key.startsWith('_') && key !== 'gdriveToken') {
                         filtered[key] = value;
                     }
                 }

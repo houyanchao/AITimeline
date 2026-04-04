@@ -6,6 +6,7 @@ mark.ait-highlight-pending {
     margin: 0;
     border: none;
     outline: none;
+    color: inherit;
     line-height: inherit;
     font-size: inherit;
     border-radius: 0;
@@ -17,6 +18,11 @@ mark.ait-highlight *,
 mark.ait-highlight-pending * {
     background: transparent !important;
     background-color: transparent !important;
+}
+
+mark.ait-highlight[data-hl-style="solid"],
+mark.ait-highlight-pending[data-hl-style="solid"] {
+    color: #222;
 }
 
 mark.ait-highlight[data-hl-style="textOnly"],
