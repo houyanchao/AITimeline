@@ -61,7 +61,7 @@ class DataSyncTab extends BaseTab {
                             <line x1="12" y1="12" x2="12" y2="21"/>
                             <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
                         </svg>
-                        上传到云端
+                        ${chrome.i18n.getMessage('gdriveUploadBtn') || '上传到云端'}
                     </button>
                     <button class="sync-btn gdrive-download-btn" id="gdrive-download-btn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
@@ -69,7 +69,7 @@ class DataSyncTab extends BaseTab {
                             <line x1="12" y1="12" x2="12" y2="21"/>
                             <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/>
                         </svg>
-                        从云端下载
+                        ${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}
                     </button>
                 </div>
 
@@ -89,7 +89,7 @@ class DataSyncTab extends BaseTab {
                 
                 <div class="local-sync-group">
                     <div class="local-sync-item">
-                        <div class="local-sync-label">导出</div>
+                        <div class="local-sync-label">${chrome.i18n.getMessage('exportLabel') || '导出'}</div>
                         <div class="local-sync-body">
                             <button class="sync-btn export-btn" id="export-btn">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -103,7 +103,7 @@ class DataSyncTab extends BaseTab {
                         </div>
                     </div>
                     <div class="local-sync-item">
-                        <div class="local-sync-label">导入</div>
+                        <div class="local-sync-label">${chrome.i18n.getMessage('importLabel') || '导入'}</div>
                         <div class="local-sync-body">
                             <div class="import-options">
                                 <label class="import-option">
@@ -188,7 +188,7 @@ class DataSyncTab extends BaseTab {
         const uploadBtn = document.getElementById('gdrive-upload-btn');
         if (uploadBtn) {
             uploadBtn.disabled = true;
-            uploadBtn.textContent = '上传中...';
+            uploadBtn.textContent = chrome.i18n.getMessage('gdriveUploading') || '上传中...';
         }
         
         try {
@@ -205,14 +205,14 @@ class DataSyncTab extends BaseTab {
             const resp = await chrome.runtime.sendMessage({ type: 'GDRIVE_UPLOAD', data: exportData });
             if (resp?.success) {
                 if (window.globalToastManager) {
-                    window.globalToastManager.success('已上传到 Google Drive', null, { color: this.toastColors });
+                    window.globalToastManager.success(chrome.i18n.getMessage('gdriveUploadSuccess') || '已上传到 Google Drive', null, { color: this.toastColors });
                 }
             } else {
-                throw new Error(resp?.error || '上传失败');
+                throw new Error(resp?.error || (chrome.i18n.getMessage('gdriveUploadFailed') || '上传失败'));
             }
         } catch (e) {
             if (window.globalToastManager) {
-                window.globalToastManager.error('上传失败: ' + e.message, null, { color: this.toastColors });
+                window.globalToastManager.error((chrome.i18n.getMessage('gdriveUploadFailed') || '上传失败') + ': ' + e.message, null, { color: this.toastColors });
             }
         } finally {
             if (uploadBtn) {
@@ -223,7 +223,7 @@ class DataSyncTab extends BaseTab {
                         <line x1="12" y1="12" x2="12" y2="21"/>
                         <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
                     </svg>
-                    上传到云端`;
+                    ${chrome.i18n.getMessage('gdriveUploadBtn') || '上传到云端'}`;
             }
         }
     }
@@ -235,18 +235,18 @@ class DataSyncTab extends BaseTab {
         const downloadBtn = document.getElementById('gdrive-download-btn');
         if (downloadBtn) {
             downloadBtn.disabled = true;
-            downloadBtn.textContent = '下载中...';
+            downloadBtn.textContent = chrome.i18n.getMessage('gdriveDownloading') || '下载中...';
         }
         
         try {
             const resp = await chrome.runtime.sendMessage({ type: 'GDRIVE_DOWNLOAD' });
             if (!resp?.success) {
-                throw new Error(resp?.error || '下载失败');
+                throw new Error(resp?.error || (chrome.i18n.getMessage('gdriveDownloadFailed') || '下载失败'));
             }
             
             if (!resp.data) {
                 if (window.globalToastManager) {
-                    window.globalToastManager.info('云端暂无备份数据', null, { color: this.toastColors });
+                    window.globalToastManager.info(chrome.i18n.getMessage('gdriveNoBackup') || '云端暂无备份数据', null, { color: this.toastColors });
                 }
                 return;
             }
@@ -254,7 +254,7 @@ class DataSyncTab extends BaseTab {
             // 验证数据格式
             const importData = resp.data;
             if (!importData.data || typeof importData.data !== 'object') {
-                throw new Error('云端数据格式无效');
+                throw new Error(chrome.i18n.getMessage('gdriveDataInvalid') || '云端数据格式无效');
             }
             
             // 使用合并模式导入
@@ -263,8 +263,8 @@ class DataSyncTab extends BaseTab {
             // 提醒用户刷新
             if (window.globalPopconfirmManager) {
                 const confirmed = await window.globalPopconfirmManager.show({
-                    title: '云端数据已合并',
-                    content: '数据已成功从 Google Drive 下载并合并，需要刷新页面后生效',
+                    title: chrome.i18n.getMessage('gdriveMergeSuccess') || '云端数据已合并',
+                    content: chrome.i18n.getMessage('gdriveMergeHint') || '数据已成功从 Google Drive 下载并合并，需要刷新页面后生效',
                     confirmText: chrome.i18n.getMessage('refreshPage') || '刷新页面',
                     cancelText: chrome.i18n.getMessage('refreshLater') || '稍后刷新',
                     confirmTextType: 'default'
@@ -273,7 +273,7 @@ class DataSyncTab extends BaseTab {
             }
         } catch (e) {
             if (window.globalToastManager) {
-                window.globalToastManager.error('下载失败: ' + e.message, null, { color: this.toastColors });
+                window.globalToastManager.error((chrome.i18n.getMessage('gdriveDownloadFailed') || '下载失败') + ': ' + e.message, null, { color: this.toastColors });
             }
         } finally {
             if (downloadBtn) {
@@ -284,7 +284,7 @@ class DataSyncTab extends BaseTab {
                         <line x1="12" y1="12" x2="12" y2="21"/>
                         <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/>
                     </svg>
-                    从云端下载`;
+                    ${chrome.i18n.getMessage('gdriveDownloadBtn') || '从云端下载'}`;
             }
         }
     }

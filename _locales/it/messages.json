@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Idee…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome Installa"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge Installa"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox Installa"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Documentazione"
+  },
+  "aboutFeedbackStore": {
+    "message": "Recensioni Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "Email"
+  },
+  "timelineDisplayLabel": {
+    "message": "Mostra timeline"
+  },
+  "starredDisplayLabel": {
+    "message": "Mostra cartelle"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Mostra pulsante prompt"
+  },
+  "promptBtnSwitch": {
+    "message": "Impostazioni"
+  },
+  "formulaFormatNone": {
+    "message": "Nessun wrapping"
+  },
+  "gdriveUploadBtn": {
+    "message": "Carica nel cloud"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Scarica dal cloud"
+  },
+  "exportLabel": {
+    "message": "Esporta"
+  },
+  "importLabel": {
+    "message": "Importa"
+  },
+  "gdriveUploading": {
+    "message": "Caricamento..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Caricato su Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Caricamento fallito"
+  },
+  "gdriveDownloading": {
+    "message": "Download in corso..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Download fallito"
+  },
+  "gdriveNoBackup": {
+    "message": "Nessun dato di backup nel cloud"
+  },
+  "gdriveDataInvalid": {
+    "message": "Formato dati cloud non valido"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Dati cloud uniti"
+  },
+  "gdriveMergeHint": {
+    "message": "Dati scaricati e uniti da Google Drive. Aggiorna la pagina per applicare."
   }
 }

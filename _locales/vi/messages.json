@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Ý tưởng…"
+  },
+  "aboutBtnChrome": {
+    "message": "Cài Chrome"
+  },
+  "aboutBtnEdge": {
+    "message": "Cài Edge"
+  },
+  "aboutBtnFirefox": {
+    "message": "Cài Firefox"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Tài liệu"
+  },
+  "aboutFeedbackStore": {
+    "message": "Đánh giá Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "Email"
+  },
+  "timelineDisplayLabel": {
+    "message": "Hiển thị dòng thời gian"
+  },
+  "starredDisplayLabel": {
+    "message": "Hiển thị thư mục"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Hiển thị nút gợi ý"
+  },
+  "promptBtnSwitch": {
+    "message": "Cài đặt"
+  },
+  "formulaFormatNone": {
+    "message": "Không bọc"
+  },
+  "gdriveUploadBtn": {
+    "message": "Tải lên đám mây"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Tải từ đám mây"
+  },
+  "exportLabel": {
+    "message": "Xuất"
+  },
+  "importLabel": {
+    "message": "Nhập"
+  },
+  "gdriveUploading": {
+    "message": "Đang tải lên..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Đã tải lên Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Tải lên thất bại"
+  },
+  "gdriveDownloading": {
+    "message": "Đang tải xuống..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Tải xuống thất bại"
+  },
+  "gdriveNoBackup": {
+    "message": "Không có dữ liệu sao lưu trên đám mây"
+  },
+  "gdriveDataInvalid": {
+    "message": "Định dạng dữ liệu đám mây không hợp lệ"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Đã hợp nhất dữ liệu đám mây"
+  },
+  "gdriveMergeHint": {
+    "message": "Dữ liệu đã tải và hợp nhất từ Google Drive. Làm mới trang để áp dụng."
   }
 }

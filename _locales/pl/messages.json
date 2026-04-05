@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Myśli…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome Zainstaluj"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge Zainstaluj"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox Zainstaluj"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Dokumentacja"
+  },
+  "aboutFeedbackStore": {
+    "message": "Opinie w Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "E-mail"
+  },
+  "timelineDisplayLabel": {
+    "message": "Pokaż oś czasu"
+  },
+  "starredDisplayLabel": {
+    "message": "Pokaż foldery"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Pokaż przycisk promptów"
+  },
+  "promptBtnSwitch": {
+    "message": "Ustawienia"
+  },
+  "formulaFormatNone": {
+    "message": "Bez opakowania"
+  },
+  "gdriveUploadBtn": {
+    "message": "Prześlij do chmury"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Pobierz z chmury"
+  },
+  "exportLabel": {
+    "message": "Eksportuj"
+  },
+  "importLabel": {
+    "message": "Importuj"
+  },
+  "gdriveUploading": {
+    "message": "Przesyłanie..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Przesłano na Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Błąd przesyłania"
+  },
+  "gdriveDownloading": {
+    "message": "Pobieranie..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Błąd pobierania"
+  },
+  "gdriveNoBackup": {
+    "message": "Brak danych kopii zapasowej w chmurze"
+  },
+  "gdriveDataInvalid": {
+    "message": "Nieprawidłowy format danych w chmurze"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Dane z chmury połączone"
+  },
+  "gdriveMergeHint": {
+    "message": "Dane pobrane i połączone z Google Drive. Odśwież stronę, aby zastosować."
   }
 }

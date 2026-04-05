@@ -656,5 +656,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "想法…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome 安裝"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge 安裝"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox 安裝"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub 開源"
+  },
+  "aboutBtnDocs": {
+    "message": "官方文件"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome 商店評價區"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "郵件聯繫"
+  },
+  "timelineDisplayLabel": {
+    "message": "顯示時間軸"
+  },
+  "starredDisplayLabel": {
+    "message": "顯示資料夾"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "顯示提示詞按鈕"
+  },
+  "promptBtnSwitch": {
+    "message": "設定"
+  },
+  "formulaFormatNone": {
+    "message": "無特殊附加"
+  },
+  "gdriveUploadBtn": {
+    "message": "上傳到雲端"
+  },
+  "gdriveDownloadBtn": {
+    "message": "從雲端下載"
+  },
+  "exportLabel": {
+    "message": "匯出"
+  },
+  "importLabel": {
+    "message": "匯入"
+  },
+  "gdriveUploading": {
+    "message": "上傳中..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "已上傳到 Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "上傳失敗"
+  },
+  "gdriveDownloading": {
+    "message": "下載中..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "下載失敗"
+  },
+  "gdriveNoBackup": {
+    "message": "雲端暫無備份資料"
+  },
+  "gdriveDataInvalid": {
+    "message": "雲端資料格式無效"
+  },
+  "gdriveMergeSuccess": {
+    "message": "雲端資料已合併"
+  },
+  "gdriveMergeHint": {
+    "message": "資料已成功從 Google Drive 下載並合併，需要重新整理頁面後生效"
   }
 }

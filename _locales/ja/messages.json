@@ -683,5 +683,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "考え…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome インストール"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge インストール"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox インストール"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "ドキュメント"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome ストアレビュー"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "メール"
+  },
+  "timelineDisplayLabel": {
+    "message": "タイムラインを表示"
+  },
+  "starredDisplayLabel": {
+    "message": "フォルダを表示"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "プロンプトボタンを表示"
+  },
+  "promptBtnSwitch": {
+    "message": "設定"
+  },
+  "formulaFormatNone": {
+    "message": "ラッピングなし"
+  },
+  "gdriveUploadBtn": {
+    "message": "クラウドにアップロード"
+  },
+  "gdriveDownloadBtn": {
+    "message": "クラウドからダウンロード"
+  },
+  "exportLabel": {
+    "message": "エクスポート"
+  },
+  "importLabel": {
+    "message": "インポート"
+  },
+  "gdriveUploading": {
+    "message": "アップロード中..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Google Drive にアップロードしました"
+  },
+  "gdriveUploadFailed": {
+    "message": "アップロード失敗"
+  },
+  "gdriveDownloading": {
+    "message": "ダウンロード中..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "ダウンロード失敗"
+  },
+  "gdriveNoBackup": {
+    "message": "クラウドにバックアップデータがありません"
+  },
+  "gdriveDataInvalid": {
+    "message": "クラウドデータの形式が無効です"
+  },
+  "gdriveMergeSuccess": {
+    "message": "クラウドデータを統合しました"
+  },
+  "gdriveMergeHint": {
+    "message": "Google Drive からデータをダウンロードし統合しました。ページを更新して反映してください。"
   }
 }

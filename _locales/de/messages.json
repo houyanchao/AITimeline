@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Gedanken…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome installieren"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge installieren"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox installieren"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Dokumentation"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome Store Bewertungen"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "E-Mail"
+  },
+  "timelineDisplayLabel": {
+    "message": "Timeline anzeigen"
+  },
+  "starredDisplayLabel": {
+    "message": "Ordner anzeigen"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Prompt-Button anzeigen"
+  },
+  "promptBtnSwitch": {
+    "message": "Einstellungen"
+  },
+  "formulaFormatNone": {
+    "message": "Kein Wrapping"
+  },
+  "gdriveUploadBtn": {
+    "message": "In die Cloud hochladen"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Aus der Cloud herunterladen"
+  },
+  "exportLabel": {
+    "message": "Exportieren"
+  },
+  "importLabel": {
+    "message": "Importieren"
+  },
+  "gdriveUploading": {
+    "message": "Wird hochgeladen..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Auf Google Drive hochgeladen"
+  },
+  "gdriveUploadFailed": {
+    "message": "Hochladen fehlgeschlagen"
+  },
+  "gdriveDownloading": {
+    "message": "Wird heruntergeladen..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Herunterladen fehlgeschlagen"
+  },
+  "gdriveNoBackup": {
+    "message": "Keine Backup-Daten in der Cloud"
+  },
+  "gdriveDataInvalid": {
+    "message": "Cloud-Datenformat ist ungültig"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Cloud-Daten zusammengeführt"
+  },
+  "gdriveMergeHint": {
+    "message": "Daten von Google Drive heruntergeladen und zusammengeführt. Seite aktualisieren, um Änderungen anzuwenden."
   }
 }

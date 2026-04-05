@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Ide…"
+  },
+  "aboutBtnChrome": {
+    "message": "Pasang Chrome"
+  },
+  "aboutBtnEdge": {
+    "message": "Pasang Edge"
+  },
+  "aboutBtnFirefox": {
+    "message": "Pasang Firefox"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Dokumentasi"
+  },
+  "aboutFeedbackStore": {
+    "message": "Ulasan Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "Email"
+  },
+  "timelineDisplayLabel": {
+    "message": "Tampilkan timeline"
+  },
+  "starredDisplayLabel": {
+    "message": "Tampilkan folder"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Tampilkan tombol prompt"
+  },
+  "promptBtnSwitch": {
+    "message": "Pengaturan"
+  },
+  "formulaFormatNone": {
+    "message": "Tanpa pembungkus"
+  },
+  "gdriveUploadBtn": {
+    "message": "Unggah ke cloud"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Unduh dari cloud"
+  },
+  "exportLabel": {
+    "message": "Ekspor"
+  },
+  "importLabel": {
+    "message": "Impor"
+  },
+  "gdriveUploading": {
+    "message": "Mengunggah..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Diunggah ke Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Gagal mengunggah"
+  },
+  "gdriveDownloading": {
+    "message": "Mengunduh..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Gagal mengunduh"
+  },
+  "gdriveNoBackup": {
+    "message": "Tidak ada data cadangan di cloud"
+  },
+  "gdriveDataInvalid": {
+    "message": "Format data cloud tidak valid"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Data cloud digabungkan"
+  },
+  "gdriveMergeHint": {
+    "message": "Data diunduh dan digabungkan dari Google Drive. Muat ulang halaman untuk menerapkan."
   }
 }

@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "ความคิด…"
+  },
+  "aboutBtnChrome": {
+    "message": "ติดตั้ง Chrome"
+  },
+  "aboutBtnEdge": {
+    "message": "ติดตั้ง Edge"
+  },
+  "aboutBtnFirefox": {
+    "message": "ติดตั้ง Firefox"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "เอกสาร"
+  },
+  "aboutFeedbackStore": {
+    "message": "รีวิวบน Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "อีเมล"
+  },
+  "timelineDisplayLabel": {
+    "message": "แสดงไทม์ไลน์"
+  },
+  "starredDisplayLabel": {
+    "message": "แสดงโฟลเดอร์"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "แสดงปุ่มพรอมต์"
+  },
+  "promptBtnSwitch": {
+    "message": "ตั้งค่า"
+  },
+  "formulaFormatNone": {
+    "message": "ไม่มีการห่อ"
+  },
+  "gdriveUploadBtn": {
+    "message": "อัปโหลดไปยังคลาวด์"
+  },
+  "gdriveDownloadBtn": {
+    "message": "ดาวน์โหลดจากคลาวด์"
+  },
+  "exportLabel": {
+    "message": "ส่งออก"
+  },
+  "importLabel": {
+    "message": "นำเข้า"
+  },
+  "gdriveUploading": {
+    "message": "กำลังอัปโหลด..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "อัปโหลดไปยัง Google Drive แล้ว"
+  },
+  "gdriveUploadFailed": {
+    "message": "อัปโหลดล้มเหลว"
+  },
+  "gdriveDownloading": {
+    "message": "กำลังดาวน์โหลด..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "ดาวน์โหลดล้มเหลว"
+  },
+  "gdriveNoBackup": {
+    "message": "ไม่มีข้อมูลสำรองบนคลาวด์"
+  },
+  "gdriveDataInvalid": {
+    "message": "รูปแบบข้อมูลคลาวด์ไม่ถูกต้อง"
+  },
+  "gdriveMergeSuccess": {
+    "message": "รวมข้อมูลคลาวด์แล้ว"
+  },
+  "gdriveMergeHint": {
+    "message": "ดาวน์โหลดและรวมข้อมูลจาก Google Drive แล้ว รีเฟรชหน้าเพื่อใช้งาน"
   }
 }

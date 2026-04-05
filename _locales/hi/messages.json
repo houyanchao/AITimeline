@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "विचार…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome इंस्टॉल"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge इंस्टॉल"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox इंस्टॉल"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "दस्तावेज़"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome स्टोर समीक्षा"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "ईमेल"
+  },
+  "timelineDisplayLabel": {
+    "message": "टाइमलाइन दिखाएँ"
+  },
+  "starredDisplayLabel": {
+    "message": "फ़ोल्डर दिखाएँ"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "प्रॉम्प्ट बटन दिखाएँ"
+  },
+  "promptBtnSwitch": {
+    "message": "सेटिंग्स"
+  },
+  "formulaFormatNone": {
+    "message": "कोई रैपिंग नहीं"
+  },
+  "gdriveUploadBtn": {
+    "message": "क्लाउड पर अपलोड करें"
+  },
+  "gdriveDownloadBtn": {
+    "message": "क्लाउड से डाउनलोड करें"
+  },
+  "exportLabel": {
+    "message": "निर्यात"
+  },
+  "importLabel": {
+    "message": "आयात"
+  },
+  "gdriveUploading": {
+    "message": "अपलोड हो रहा है..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Google Drive पर अपलोड हो गया"
+  },
+  "gdriveUploadFailed": {
+    "message": "अपलोड विफल"
+  },
+  "gdriveDownloading": {
+    "message": "डाउनलोड हो रहा है..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "डाउनलोड विफल"
+  },
+  "gdriveNoBackup": {
+    "message": "क्लाउड पर कोई बैकअप डेटा नहीं"
+  },
+  "gdriveDataInvalid": {
+    "message": "क्लाउड डेटा प्रारूप अमान्य है"
+  },
+  "gdriveMergeSuccess": {
+    "message": "क्लाउड डेटा मर्ज किया गया"
+  },
+  "gdriveMergeHint": {
+    "message": "Google Drive से डेटा डाउनलोड और मर्ज किया गया। लागू करने के लिए पेज रीफ्रेश करें।"
   }
 }

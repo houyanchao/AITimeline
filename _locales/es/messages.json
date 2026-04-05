@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Ideas…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome Instalar"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge Instalar"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox Instalar"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Documentación"
+  },
+  "aboutFeedbackStore": {
+    "message": "Reseñas Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "Correo"
+  },
+  "timelineDisplayLabel": {
+    "message": "Mostrar línea de tiempo"
+  },
+  "starredDisplayLabel": {
+    "message": "Mostrar carpetas"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Mostrar botón de prompts"
+  },
+  "promptBtnSwitch": {
+    "message": "Ajustes"
+  },
+  "formulaFormatNone": {
+    "message": "Sin formato"
+  },
+  "gdriveUploadBtn": {
+    "message": "Subir a la nube"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Descargar de la nube"
+  },
+  "exportLabel": {
+    "message": "Exportar"
+  },
+  "importLabel": {
+    "message": "Importar"
+  },
+  "gdriveUploading": {
+    "message": "Subiendo..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Subido a Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Error al subir"
+  },
+  "gdriveDownloading": {
+    "message": "Descargando..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Error al descargar"
+  },
+  "gdriveNoBackup": {
+    "message": "Sin datos de respaldo en la nube"
+  },
+  "gdriveDataInvalid": {
+    "message": "Formato de datos en la nube no válido"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Datos de la nube combinados"
+  },
+  "gdriveMergeHint": {
+    "message": "Datos descargados y combinados desde Google Drive. Actualiza la página para aplicar."
   }
 }

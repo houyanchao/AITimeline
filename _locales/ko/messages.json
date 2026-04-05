@@ -683,5 +683,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "생각…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome 설치"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge 설치"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox 설치"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "공식 문서"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome 스토어 리뷰"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "이메일"
+  },
+  "timelineDisplayLabel": {
+    "message": "타임라인 표시"
+  },
+  "starredDisplayLabel": {
+    "message": "폴더 표시"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "프롬프트 버튼 표시"
+  },
+  "promptBtnSwitch": {
+    "message": "설정"
+  },
+  "formulaFormatNone": {
+    "message": "래핑 없음"
+  },
+  "gdriveUploadBtn": {
+    "message": "클라우드에 업로드"
+  },
+  "gdriveDownloadBtn": {
+    "message": "클라우드에서 다운로드"
+  },
+  "exportLabel": {
+    "message": "내보내기"
+  },
+  "importLabel": {
+    "message": "가져오기"
+  },
+  "gdriveUploading": {
+    "message": "업로드 중..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Google Drive에 업로드되었습니다"
+  },
+  "gdriveUploadFailed": {
+    "message": "업로드 실패"
+  },
+  "gdriveDownloading": {
+    "message": "다운로드 중..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "다운로드 실패"
+  },
+  "gdriveNoBackup": {
+    "message": "클라우드에 백업 데이터가 없습니다"
+  },
+  "gdriveDataInvalid": {
+    "message": "클라우드 데이터 형식이 유효하지 않습니다"
+  },
+  "gdriveMergeSuccess": {
+    "message": "클라우드 데이터 병합 완료"
+  },
+  "gdriveMergeHint": {
+    "message": "Google Drive에서 데이터를 다운로드하고 병합했습니다. 페이지를 새로고침하여 적용하세요."
   }
 }

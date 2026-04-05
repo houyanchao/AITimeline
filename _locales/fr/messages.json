@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Idées…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome Installer"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge Installer"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox Installer"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Documentation"
+  },
+  "aboutFeedbackStore": {
+    "message": "Avis Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "E-mail"
+  },
+  "timelineDisplayLabel": {
+    "message": "Afficher la timeline"
+  },
+  "starredDisplayLabel": {
+    "message": "Afficher les dossiers"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Afficher le bouton prompt"
+  },
+  "promptBtnSwitch": {
+    "message": "Paramètres"
+  },
+  "formulaFormatNone": {
+    "message": "Sans habillage"
+  },
+  "gdriveUploadBtn": {
+    "message": "Envoyer vers le cloud"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Télécharger depuis le cloud"
+  },
+  "exportLabel": {
+    "message": "Exporter"
+  },
+  "importLabel": {
+    "message": "Importer"
+  },
+  "gdriveUploading": {
+    "message": "Envoi en cours..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Envoyé sur Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Échec de l'envoi"
+  },
+  "gdriveDownloading": {
+    "message": "Téléchargement en cours..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Échec du téléchargement"
+  },
+  "gdriveNoBackup": {
+    "message": "Aucune sauvegarde dans le cloud"
+  },
+  "gdriveDataInvalid": {
+    "message": "Format des données cloud invalide"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Données cloud fusionnées"
+  },
+  "gdriveMergeHint": {
+    "message": "Données téléchargées et fusionnées depuis Google Drive. Actualisez la page pour appliquer."
   }
 }

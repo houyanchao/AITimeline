@@ -737,5 +737,71 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "想法…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome 安装"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge 安装"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox 安装"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub 开源"
+  },
+  "aboutBtnDocs": {
+    "message": "官方文档"
+  },
+  "aboutFeedbackStore": {
+    "message": "Chrome 商店评价区"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "邮件联系"
+  },
+  "formulaFormatNone": {
+    "message": "无特殊附加"
+  },
+  "gdriveUploadBtn": {
+    "message": "上传到云端"
+  },
+  "gdriveDownloadBtn": {
+    "message": "从云端下载"
+  },
+  "exportLabel": {
+    "message": "导出"
+  },
+  "importLabel": {
+    "message": "导入"
+  },
+  "gdriveUploading": {
+    "message": "上传中..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "已上传到 Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "上传失败"
+  },
+  "gdriveDownloading": {
+    "message": "下载中..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "下载失败"
+  },
+  "gdriveNoBackup": {
+    "message": "云端暂无备份数据"
+  },
+  "gdriveDataInvalid": {
+    "message": "云端数据格式无效"
+  },
+  "gdriveMergeSuccess": {
+    "message": "云端数据已合并"
+  },
+  "gdriveMergeHint": {
+    "message": "数据已成功从 Google Drive 下载并合并，需要刷新页面后生效"
   }
 }

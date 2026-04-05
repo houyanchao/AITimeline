@@ -632,5 +632,83 @@
   },
   "highlightAnnotationPlaceholder": {
     "message": "Мысли…"
+  },
+  "aboutBtnChrome": {
+    "message": "Chrome Установить"
+  },
+  "aboutBtnEdge": {
+    "message": "Edge Установить"
+  },
+  "aboutBtnFirefox": {
+    "message": "Firefox Установить"
+  },
+  "aboutBtnGithub": {
+    "message": "GitHub"
+  },
+  "aboutBtnDocs": {
+    "message": "Документация"
+  },
+  "aboutFeedbackStore": {
+    "message": "Отзывы в Chrome Store"
+  },
+  "aboutFeedbackGithub": {
+    "message": "GitHub Issues"
+  },
+  "aboutFeedbackEmail": {
+    "message": "Эл. почта"
+  },
+  "timelineDisplayLabel": {
+    "message": "Показать хронологию"
+  },
+  "starredDisplayLabel": {
+    "message": "Показать папки"
+  },
+  "promptBtnDisplayLabel": {
+    "message": "Показать кнопку подсказок"
+  },
+  "promptBtnSwitch": {
+    "message": "Настройки"
+  },
+  "formulaFormatNone": {
+    "message": "Без обёртки"
+  },
+  "gdriveUploadBtn": {
+    "message": "Загрузить в облако"
+  },
+  "gdriveDownloadBtn": {
+    "message": "Скачать из облака"
+  },
+  "exportLabel": {
+    "message": "Экспорт"
+  },
+  "importLabel": {
+    "message": "Импорт"
+  },
+  "gdriveUploading": {
+    "message": "Загрузка..."
+  },
+  "gdriveUploadSuccess": {
+    "message": "Загружено на Google Drive"
+  },
+  "gdriveUploadFailed": {
+    "message": "Ошибка загрузки"
+  },
+  "gdriveDownloading": {
+    "message": "Скачивание..."
+  },
+  "gdriveDownloadFailed": {
+    "message": "Ошибка скачивания"
+  },
+  "gdriveNoBackup": {
+    "message": "Нет данных резервной копии в облаке"
+  },
+  "gdriveDataInvalid": {
+    "message": "Неверный формат облачных данных"
+  },
+  "gdriveMergeSuccess": {
+    "message": "Облачные данные объединены"
+  },
+  "gdriveMergeHint": {
+    "message": "Данные загружены и объединены из Google Drive. Обновите страницу для применения."
   }
 }

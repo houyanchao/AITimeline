@@ -26,23 +26,23 @@ class AboutTab extends BaseTab {
             <div class="about-share-actions">
                 <a href="https://chromewebstore.google.com/detail/fgebdnlceacaiaeikopldglhffljjlhh?utm_source=item-share-cb" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
-                    Chrome 安装
+                    ${chrome.i18n.getMessage('aboutBtnChrome') || 'Chrome 安装'}
                 </a>
                 <a href="https://microsoftedge.microsoft.com/addons/detail/ai-timeline%EF%BC%9Agemini%E3%80%81chatgp/ekednjjojnhlajfobalaaihkibbdcbab" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76a6 6 0 010 8.49m-8.48-.01a6 6 0 010-8.49"/></svg>
-                    Edge 安装
+                    ${chrome.i18n.getMessage('aboutBtnEdge') || 'Edge 安装'}
                 </a>
                 <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-timeline-ai" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zM17.9 17.39c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41C18.93 5.77 22 8.65 22 12c0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    Firefox 安装
+                    ${chrome.i18n.getMessage('aboutBtnFirefox') || 'Firefox 安装'}
                 </a>
                 <a href="https://github.com/houyanchao/AITimeline" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                    GitHub 开源
+                    ${chrome.i18n.getMessage('aboutBtnGithub') || 'GitHub 开源'}
                 </a>
                 <a href="https://timeline4ai.com/#/guide?section=timeline" target="_blank" class="about-share-action-btn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-                    官方文档
+                    ${chrome.i18n.getMessage('aboutBtnDocs') || '官方文档'}
                 </a>
             </div>
 
@@ -85,15 +85,15 @@ class AboutTab extends BaseTab {
                         <div class="about-feedback-blocks">
                             <a href="https://chromewebstore.google.com/detail/fgebdnlceacaiaeikopldglhffljjlhh?utm_source=item-share-cb" target="_blank" class="about-feedback-block">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
-                                <span>Chrome 商店评价区</span>
+                                <span>${chrome.i18n.getMessage('aboutFeedbackStore') || 'Chrome 商店评价区'}</span>
                             </a>
                             <a href="https://github.com/houyanchao/AITimeline/issues" target="_blank" class="about-feedback-block">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-                                <span>GitHub Issues</span>
+                                <span>${chrome.i18n.getMessage('aboutFeedbackGithub') || 'GitHub Issues'}</span>
                             </a>
                             <div class="about-feedback-block about-feedback-email" data-email="houyanchao@outlook.com">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                <span>邮件联系</span>
+                                <span>${chrome.i18n.getMessage('aboutFeedbackEmail') || '邮件联系'}</span>
                             </div>
                         </div>
                     </div>
