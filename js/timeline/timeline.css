@@ -112,19 +112,14 @@ html[data-timeline-theme="dark"] .timeline-toggle-btn:active {
     align-items: center;
     border-radius: 12px;
     background-color: var(--timeline-bar-bg);
+    /* ✅ 描边 + 投影（浅色/深色取值见 variables.css），让外框与页面底色区分开 */
+    box-shadow: var(--timeline-bar-shadow);
     backdrop-filter: blur(8px); /* ✅ 增强模糊效果：4px → 8px，深色主题下更有质感 */
     -webkit-backdrop-filter: blur(8px);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
     overflow: visible;
     /* ✅ 修改：移除 paint containment，允许图钉显示在时间轴外 */
     contain: layout;
-}
-
-/* ✅ 深色主题下添加微妙边框和光晕，增强时间轴的立体感 */
-html[data-timeline-theme="dark"] .ait-chat-timeline-bar {
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4), 
-                0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Scrollable track to host all dots (long canvas) */

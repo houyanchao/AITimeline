@@ -70,6 +70,39 @@ globalThis.CUSTOM_SITE_INFO = [
         },
     },
     {
+        // Consensus（学术搜索）：/search/{query-slug}/{threadId}/
+        // 每轮对话是 #main-content 下 <ul> 的一个 <li id="{turnId}">，用户提问在 h2 > button[aria-expanded] > span
+        // 页面整体滚动（无内部滚动容器），时间轴自动回退到 document 滚动
+        sites: ['consensus.app'],
+        conversationUrlPattern: '^(?:www\\.)?consensus\\.app/search/[^/?#]+/[A-Za-z0-9_-]+/?(?:[?#].*)?$',
+        userMessageSelector: '#main-content ul > li[id]:has(h2 button[aria-expanded])',
+        textSelector: 'h2 button[aria-expanded] span',
+        conversationContainerSelector: '#main-content ul',
+        turnIdAttribute: 'id',
+        features: {
+            timeline: true,
+            questionList: true,
+            notepad: true
+        },
+    },
+    {
+        // 百度文心助手（wenxin.baidu.com，与内置 yiyan.baidu.com 不是同一套 UI）：/search/{lid}
+        // 每轮问答是 #conversation-flow-content 下的 .chat-qa-container[data-qa-pair-id]，
+        // 提问在其内 .conversation-flow-question-container > .cs-question-bubble > .cs-question-pure-text；
+        // 追问建议用的是 cs-question-closely-* 类名，不会与提问选择器撞车
+        sites: ['wenxin.baidu.com'],
+        conversationUrlPattern: '^wenxin\\.baidu\\.com/search/\\d+(?:[/?#].*)?$',
+        userMessageSelector: '#conversation-flow-content .chat-qa-container:has(.conversation-flow-question-container .cs-question-pure-text)',
+        textSelector: '.cs-question-pure-text',
+        conversationContainerSelector: '#conversation-flow-content',
+        turnIdAttribute: 'data-qa-pair-id',
+        features: {
+            timeline: true,
+            questionList: true,
+            notepad: true
+        },
+    },
+    {
         sites: ['chatglm.cn'],
         conversationUrlPattern: '^chatglm\\.cn/main/.*[?&]cid=[A-Za-z0-9]+',
         userMessageSelector: '.conversation.question',

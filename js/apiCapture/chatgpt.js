@@ -55,6 +55,16 @@
   const isForUser = (m) => !m?.recipient || m.recipient === 'all';
   const isModelAuthored = (m) => !m?.author?.name; // 工具沙箱消息带 name，正文无 name
 
+  // 单个 part 的文本：
+  // - 普通文本：part 为字符串
+  // - 语音模式：part 为 { content_type: 'audio_transcription', text, direction, ... } 对象，
+  //   提问文字在 text 字段（图片/文件等 asset pointer 对象没有 text，自然被忽略）
+  const textFromPart = (p) => {
+    if (typeof p === 'string') return p;
+    if (p && typeof p === 'object' && typeof p.text === 'string') return p.text;
+    return '';
+  };
+
   const textFromMessage = (m) => {
     try {
       const content = m?.content;
@@ -62,7 +72,7 @@
       if (/thought|reason/i.test(content.content_type || '')) return '';
       const parts = content.parts;
       if (!Array.isArray(parts)) return '';
-      return parts.filter(p => typeof p === 'string').join('\n').trim();
+      return parts.map(textFromPart).filter(Boolean).join('\n').trim();
     } catch {
       return '';
     }

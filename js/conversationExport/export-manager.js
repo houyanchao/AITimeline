@@ -56,7 +56,9 @@ class CEExportManager {
                 this._removeButton();
                 return;
             }
-            const showLabel = this.adapter.platformId !== 'chatgpt';
+            // 仅图标/图标+文字由共享模块按平台约定统一决定（ChatGPT、Gemini 仅图标）
+            const showLabel = window.AITChatHeaderActions?.shouldShowLabel?.(this.adapter.platformId)
+                ?? (this.adapter.platformId !== 'chatgpt');
 
             const existingButton = document.querySelector(`.${CEExportManager.BUTTON_CLASS}`);
             if (existingButton) {

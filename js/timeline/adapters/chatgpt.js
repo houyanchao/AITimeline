@@ -137,10 +137,16 @@ class ChatGPTAdapter extends SiteAdapter {
      */
     syncCapturedChatsData() {
         const convId = this.extractConversationId(location.pathname);
-        if (convId === this._textCacheConvId) return; // 同一对话：已拉取过，直接用缓存
-        this._textCacheConvId = convId;
-        this._turnTextCache.clear();
-        this._capturedTextIds.clear();
+        if (convId !== this._textCacheConvId) {
+            // 切换对话：失效缓存归属
+            this._textCacheConvId = convId;
+            this._turnTextCache.clear();
+            this._capturedTextIds.clear();
+        } else if (this._capturedTextIds.size > 0) {
+            return; // 同一对话且已成功拉取过接口文本，直接用缓存
+        }
+        // 首次拉取，或上次拉取时接口尚未返回（SPA 切换时 pull 常早于响应，
+        // 且「更新事件」可能落在时间轴销毁/重建的空窗被漏掉）→ 每次重建时廉价重试
         this._pullConvTexts(convId);
     }
 

@@ -1,6 +1,7 @@
 /**
  * ChatGPT 顶部操作区共享容器。
  * 收藏和对话导出分别管理自己的按钮，这里只统一原生锚点、排列和位置校正。
+ * 另提供顶栏按钮「仅图标 / 图标+文字」的平台级约定，供两个模块共用。
  */
 (function initChatHeaderActions() {
     'use strict';
@@ -12,6 +13,21 @@
         star: 10,
         export: 20,
     };
+
+    /**
+     * 顶栏收藏/导出按钮只显示图标、不显示文字的平台。
+     * 这些平台原生顶栏本身就是纯图标按钮，加文字会显得突兀。
+     */
+    const ICON_ONLY_PLATFORMS = new Set(['chatgpt', 'gemini']);
+
+    /**
+     * 顶栏按钮是否显示文字标签
+     * @param {string|undefined} platformId
+     * @returns {boolean}
+     */
+    function shouldShowLabel(platformId) {
+        return !ICON_ONLY_PLATFORMS.has(platformId);
+    }
 
     function getInsertTarget() {
         const shareButton = document.querySelector('[data-testid="share-chat-button"]');
@@ -84,5 +100,6 @@
         ensureContainer,
         mount,
         removeEmptyContainer,
+        shouldShowLabel,
     };
 })();

@@ -25,7 +25,9 @@
     --timeline-tooltip-anim-in: 120ms cubic-bezier(0, 0, 0.2, 1);
     --timeline-tooltip-anim-out: 100ms linear;
 
-    --timeline-bar-bg: rgba(246, 246, 248, 0.8);
+    /* 浅色模式：略深于页面底色（白/#f9f9f9），配合 timeline.css 的 1px 内描边与页面区分 */
+    --timeline-bar-bg: rgba(240, 241, 245, 0.9);
+    --timeline-bar-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
     --ait-timeline-dot-size: 14px;
     --timeline-star-size: 17px; /* 五角星盒子尺寸（增加1px） */
     --timeline-active-ring: 3px;
@@ -115,6 +117,10 @@ html[data-timeline-theme="dark"] {
     --timeline-tooltip-text: #e5e7eb;
     --timeline-tooltip-border: #3f3f46;
     --timeline-bar-bg: rgba(45, 45, 48, 0.95); /* ✅✅ 更高不透明度：0.92 → 0.95，背景更扎实 */
+    /* 深色模式：微妙边框和光晕，增强立体感 */
+    --timeline-bar-shadow: 0 2px 16px rgba(0, 0, 0, 0.4),
+                           0 0 1px rgba(255, 255, 255, 0.1),
+                           inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     
     /* ✅ 追问按钮 - 深色主题 */
     --ait-quick-ask-bg: #f5f5f5;

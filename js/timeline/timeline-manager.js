@@ -735,7 +735,9 @@ class TimelineManager {
     async injectStarChatButton() {
         // 1. 获取Adapter提供的目标元素
         const targetElement = this.adapter.getStarChatButtonTarget?.();
-        const showLabel = this.adapter.platformId !== 'chatgpt';
+        // 仅图标/图标+文字由共享模块按平台约定统一决定（ChatGPT、Gemini 仅图标）
+        const showLabel = window.AITChatHeaderActions?.shouldShowLabel?.(this.adapter.platformId)
+            ?? (this.adapter.platformId !== 'chatgpt');
         
         // 如果没有目标元素，不显示按钮
         if (!targetElement) {
@@ -2620,6 +2622,8 @@ class TimelineManager {
      * @returns {number} 实际更新的 marker 数量
      */
     refreshPlaceholderSummaries() {
+        // 先让 adapter 有机会补拉接口数据（上次拉取时接口可能尚未返回）
+        this.adapter.syncCapturedChatsData?.();
         let updatedCount = 0;
         this.markers.forEach(marker => {
             const oldText = (marker.summary || '').trim();
